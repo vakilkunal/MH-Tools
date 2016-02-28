@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<head>
+    <title>Catch Rate Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="arrays.js"></script>
+    <script type="text/javascript" src="cre2.js"></script>
+    <script type="text/javascript" src="parse.js"></script>
+	<script type="text/javascript" src="jquery-2.0.3.min.js"></script> 
+	<script type="text/javascript" src="jquery.tablesorter.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" media="print, projection, screen" />
+
+    <style type="text/css">
+        * {
+            margin:0;
+            padding:0;
+        }
+        body {
+            font-family:Arial;
+            font-size: 12px;
+            line-height:20px;
+        }
+        .container {
+            width: 800px;
+            margin: 0 auto;
+            padding:20px;
+        }
+        td {
+            margin: 4px;
+            padding:4px 6px;
+        }
+        th {
+            margin: 4px;
+            padding:4px 6px;
+        }
+        select {
+            padding:4px;
+        }
+        a {
+            text-decoration: underline;
+        }
+        .center button {
+            padding:4px 8px;
+            font-family:Arial;
+            font-size: 15px;
+            line-height:20px;
+        }
+        #status {
+            font-weight: 700;
+            font-size: 16px;
+            text-align:left;
+        }
+        .header h1 {
+            font-weight: 700;
+            font-size: 24px;
+            padding-bottom: 10px;
+        }
+    </style>
+    <!--###################################################################################-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-31924811-5', 'dropboxusercontent.com');
+  ga('send', 'pageview');
+
+</script>
+
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td>
+                    <div class="header">
+                        	<h1>Catch Rate Calculator</h1>
+                        	<small>Thanks to the work of Chad, Nick, Ben, Paul, Yikai and Kat<br>
+                        	Maintained by Stuartt, Kat and Sophie<br>
+                        	<a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator" target="_blank">Report bugs and suggest features</a></small>
+							
+                    </div>
+                </td>
+            </tr>
+        </table>
+            <!--###################################################################################-->
+        <table>
+            <tr><td>Location:</td>
+                <td>
+                    <select id="location">
+                    </select>
+                </td>
+            </tr>
+            
+			<tr>
+				<td>Sublocation:</td>
+				<td>
+                    <select id="phase">
+                    	<option>-</option>
+                    </select>
+				</td>
+			</tr>
+            
+            <tr><td>Cheese:</td>
+                <td>
+                    <select id="cheese">
+                    	<option>Select a location</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>Weapon:</td>
+                <td>
+                    <select id="weapon">
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>Base:</td>
+                <td>
+                    <select id="base">
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>Charm:</td>
+            	<td>
+            		<select id="charm">
+                    </select>
+            	</td>
+            </tr>
+            
+            <tr><td>Golden Shield:</td>
+                <td>
+                    <select id="gs">
+						<option value='Y'>Yes</option>
+						<option value='N'>No</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>+5 Luck:</td>
+                <td>
+                    <select id="lbw">
+						<option value='N'>No</option>
+						<option value='Y'>Yes</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>Tourney:</td>
+                <td>
+                    <select id="tourney">
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>Amp:</td>
+                <td>
+                    <input id="ampLevel" type="text" size="3" value="100">%
+                </td>
+            </tr>
+            
+            <tr><td>Cheese cost:</td>
+                <td>
+                    <input id="cheeseCost" type="text" size="5" value="0">
+                </td>
+            </tr>
+            
+            <tr><td><a id="link" target="_blank">Link to setup</a></td></tr>
+            <tr id='status'><td>Loading...</td></tr>
+
+        </table>
+        
+        <table id='trapSetup'></table>
+        <table id='results' class='tablesorter'></table>
+    </div>
+</body>
+
+</html>
