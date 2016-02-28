@@ -125,7 +125,10 @@ function calculateTrapSetup(user) {
         if (locationName.indexOf("Claw Shot City") >= 0 && (weaponName == "S.L.A.C." || weaponName == "S.L.A.C. II") && baseName == "Claw Shot Base") {
             if (charmName.indexOf("Cactus Charm")>=0) specialPower += 2500;
             else specialPower += 1000;
-        } else if ((weaponName == "Soul Harvester" || weaponName == "Terrifying Spider Trap") && (locationName == "Seasonal Garden - Fall" || locationName.indexOf("Haunted Terrortories") >= 0)) specialLuck += 10;
+        } 
+        else if ((weaponName == "Soul Harvester" || weaponName == "Terrifying Spider Trap") && ((locationName == "Seasonal Garden" && phaseName == "Fall") || locationName.indexOf("Haunted Terrortories") >= 0)) {
+            specialLuck += 10;
+        }
         else if ((locationName.indexOf("Iceberg") >= 0 || locationName.indexOf("Slushy Shoreline") >= 0) && weaponName.indexOf("Steam Laser Mk.") >= 0) {
             if (weaponName == "Steam Laser Mk. I") {
                 specialPower += 1750;
@@ -179,6 +182,8 @@ function calculateTrapSetup(user) {
             specialLuck += 9;
         } else if (locationName == "Jungle of Dread" && weaponName == "Dreaded Totem Trap") {
             specialPower += 8500;
+        } else if (locationName == "Sunken City" && baseName == "Depth Charge Base" && phaseName != "Docked") {
+            specialPower += 1000;
         }
         
         if (cheeseName == "Limelight" && charmName == "Mining Charm") {
@@ -195,7 +200,7 @@ function calculateTrapSetup(user) {
             specialBonus += 20;
         } else if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
             braceBonus += .25;
-        } else if (baseName == "Polluted Base" && charmName.indexOf("Polluted Charm")>=0) {
+        } else if ((baseName == "Polluted Base" || baseName == "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm")>=0) {
             if (charmName=="Polluted Charm") {
                 specialLuck += 4;
             } else if (charmName=="Super Polluted Charm") {
@@ -1358,12 +1363,12 @@ basesArray["Birthday Cake Base"][1] = "	11%";
 basesArray["Birthday Cake Base"][2] = "	5%";
 basesArray["Birthday Cake Base"][3] = "	0";
 basesArray["Birthday Cake Base"][4] = "	No Effect";
-basesArray["Birthday DragÃ©e Cake Base"] = [];
-basesArray["Birthday DragÃ©e Cake Base"][0] = "	175";
-basesArray["Birthday DragÃ©e Cake Base"][1] = "	5%";
-basesArray["Birthday DragÃ©e Cake Base"][2] = "	15%";
-basesArray["Birthday DragÃ©e Cake Base"][3] = "	6";
-basesArray["Birthday DragÃ©e Cake Base"][4] = "	Very Fresh";
+basesArray["Birthday Dragée Cake Base"] = [];
+basesArray["Birthday Dragée Cake Base"][0] = "	175";
+basesArray["Birthday Dragée Cake Base"][1] = "	5%";
+basesArray["Birthday Dragée Cake Base"][2] = "	15%";
+basesArray["Birthday Dragée Cake Base"][3] = "	6";
+basesArray["Birthday Dragée Cake Base"][4] = "	Very Fresh";
 basesArray["Bronze Tournament Base"] = [];
 basesArray["Bronze Tournament Base"][0] = "	300";
 basesArray["Bronze Tournament Base"][1] = "	5%";
@@ -1424,6 +1429,12 @@ basesArray["Dehydration Base"][1] = "	0%";
 basesArray["Dehydration Base"][2] = "	5%";
 basesArray["Dehydration Base"][3] = "	4";
 basesArray["Dehydration Base"][4] = "	Insanely Fresh";
+basesArray["Depth Charge Base"] = [];
+basesArray["Depth Charge Base"][0] = "   450";
+basesArray["Depth Charge Base"][1] = "   10%";
+basesArray["Depth Charge Base"][2] = "   0%";
+basesArray["Depth Charge Base"][3] = "   10";
+basesArray["Depth Charge Base"][4] = "   No Effect";
 basesArray["Dragon Jade Base"] = [];
 basesArray["Dragon Jade Base"][0] = "	300";
 basesArray["Dragon Jade Base"][1] = "	10%";
@@ -1538,6 +1549,12 @@ basesArray["Molten Shrapnel Base"][1] = "	12%";
 basesArray["Molten Shrapnel Base"][2] = "	5%";
 basesArray["Molten Shrapnel Base"][3] = "	8";
 basesArray["Molten Shrapnel Base"][4] = "	Extremely Stale";
+basesArray["Monkey Jade Base"] = [];
+basesArray["Monkey Jade Base"][0] = "   350";
+basesArray["Monkey Jade Base"][1] = "   12%";
+basesArray["Monkey Jade Base"][2] = "   10%";
+basesArray["Monkey Jade Base"][3] = "   10";
+basesArray["Monkey Jade Base"][4] = "   Stale";
 basesArray["Monolith Base"] = [];
 basesArray["Monolith Base"][0] = "	300";
 basesArray["Monolith Base"][1] = "	12%";
@@ -1568,6 +1585,12 @@ basesArray["Polluted Base"][1] = "	10%";
 basesArray["Polluted Base"][2] = "	0%";
 basesArray["Polluted Base"][3] = "	5";
 basesArray["Polluted Base"][4] = "	Stale";
+basesArray["Refined Pollutinum Base"] = [];
+basesArray["Refined Pollutinum Base"][0] = "  500";
+basesArray["Refined Pollutinum Base"][1] = "  12%";
+basesArray["Refined Pollutinum Base"][2] = "  5%";
+basesArray["Refined Pollutinum Base"][3] = "  10";
+basesArray["Refined Pollutinum Base"][4] = "  No Effect";
 basesArray["Remote Detonator Base"] = [];
 basesArray["Remote Detonator Base"][0] = "	300";
 basesArray["Remote Detonator Base"][1] = "	10%";
@@ -1658,6 +1681,12 @@ basesArray["Tribal Base"][1] = "	18%";
 basesArray["Tribal Base"][2] = "	2%";
 basesArray["Tribal Base"][3] = "	0";
 basesArray["Tribal Base"][4] = "	Fresh";
+basesArray["Tribal Kaboom Base"] = [];
+basesArray["Tribal Kaboom Base"][0] = "  200";
+basesArray["Tribal Kaboom Base"][1] = "  18%";
+basesArray["Tribal Kaboom Base"][2] = "  2%";
+basesArray["Tribal Kaboom Base"][3] = "  0";
+basesArray["Tribal Kaboom Base"][4] = "  Very Fresh";
 basesArray["Washboard Base"] = [];
 basesArray["Washboard Base"][0] = "	250";
 basesArray["Washboard Base"][1] = "	10%";
@@ -1767,13 +1796,13 @@ weaponsArray["Birthday Candle Kaboom"][2] = "   30%";
 weaponsArray["Birthday Candle Kaboom"][3] = "   20%";
 weaponsArray["Birthday Candle Kaboom"][4] = "   14";
 weaponsArray["Birthday Candle Kaboom"][5] = "   Very Stale";
-weaponsArray["Birthday Party PiÃ±ata Bonanza"] = [];
-weaponsArray["Birthday Party PiÃ±ata Bonanza"][0] = "    Physical";
-weaponsArray["Birthday Party PiÃ±ata Bonanza"][1] = "    2500";
-weaponsArray["Birthday Party PiÃ±ata Bonanza"][2] = "    35%";
-weaponsArray["Birthday Party PiÃ±ata Bonanza"][3] = "    0%";
-weaponsArray["Birthday Party PiÃ±ata Bonanza"][4] = "    10";
-weaponsArray["Birthday Party PiÃ±ata Bonanza"][5] = "    Stale";
+weaponsArray["Birthday Party Piñata Bonanza"] = [];
+weaponsArray["Birthday Party Piñata Bonanza"][0] = "    Physical";
+weaponsArray["Birthday Party Piñata Bonanza"][1] = "    2500";
+weaponsArray["Birthday Party Piñata Bonanza"][2] = "    35%";
+weaponsArray["Birthday Party Piñata Bonanza"][3] = "    0%";
+weaponsArray["Birthday Party Piñata Bonanza"][4] = "    10";
+weaponsArray["Birthday Party Piñata Bonanza"][5] = "    Stale";
 weaponsArray["Blackstone Pass Trap"] = [];
 weaponsArray["Blackstone Pass Trap"][0] = " Tactical";
 weaponsArray["Blackstone Pass Trap"][1] = " 3000";
