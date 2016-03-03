@@ -2,7 +2,6 @@
 
 function loadWeaponDropdown() {
 	var weaponDropdown = document.getElementById("weapon");
-	var weaponDropdown2 = document.getElementById("weapon2");
 	var weaponDropdownHTML = '<option></option>';
 
 	var weaponsArrayLength = Object.size(weaponsArray);
@@ -12,7 +11,6 @@ function loadWeaponDropdown() {
 	}
 	
 	weaponDropdown.innerHTML = weaponDropdownHTML;
-	weaponDropdown2.innerHTML = weaponDropdownHTML;
 
 	var weaponParameter = getURLParameter("weapon");
 	if(weaponParameter != "null") {
@@ -21,20 +19,7 @@ function loadWeaponDropdown() {
 			var child = select.children[i];
 			if (child.innerHTML == weaponParameter) {
 				child.selected = true;
-		    	weaponChanged("weapon");
-				break;
-			}
-		}
-	}
-
-	var weaponParameter2 = getURLParameter("weapon2");
-	if(weaponParameter2 != "null") {
-		var select = document.getElementById("weapon2");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == weaponParameter2) {
-				child.selected = true;
-		    	weaponChanged("weapon2");
+		    	weaponChanged();
 				break;
 			}
 		}
@@ -43,7 +28,6 @@ function loadWeaponDropdown() {
 
 function loadBaseDropdown() {
 	var baseDropdown = document.getElementById("base");
-	var baseDropdown2 = document.getElementById("base2");
 	var baseDropdownHTML = '<option></option>';
 
 	var basesArrayLength = Object.size(basesArray);
@@ -53,7 +37,6 @@ function loadBaseDropdown() {
 	}
 	
 	baseDropdown.innerHTML = baseDropdownHTML;
-	baseDropdown2.innerHTML = baseDropdownHTML;
 
 	var baseParameter = getURLParameter("base");
 	if(baseParameter != "null") {
@@ -62,20 +45,7 @@ function loadBaseDropdown() {
 			var child = select.children[i];
 			if (child.innerHTML == baseParameter) {
 				child.selected = true;
-		    	baseChanged("base");
-				break;
-			}
-		}
-	}
-
-	var baseParameter2 = getURLParameter("base2");
-	if(baseParameter2 != "null") {
-		var select = document.getElementById("base2");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == baseParameter2) {
-				child.selected = true;
-		    	baseChanged("base2");
+		    	baseChanged();
 				break;
 			}
 		}
@@ -84,7 +54,6 @@ function loadBaseDropdown() {
 
 function loadCharmDropdown() {
 	var charmDropdown = document.getElementById("charm");
-	var charmDropdown2 = document.getElementById("charm2");
 	var charmDropdownHTML = '<option>No Charm</option>';
 
 	var charmsArrayLength = Object.size(charmsArray);
@@ -94,7 +63,6 @@ function loadCharmDropdown() {
 	}
 	
 	charmDropdown.innerHTML = charmDropdownHTML;
-	charmDropdown2.innerHTML = charmDropdownHTML;
 
 	var charmParameter = getURLParameter("charm");
 	if(charmParameter != "null") {
@@ -103,20 +71,7 @@ function loadCharmDropdown() {
 			var child = select.children[i];
 			if (child.innerHTML == charmParameter) {
 				child.selected = true;
-		    	charmChanged("charm");
-				break;
-			}
-		}
-	}
-
-	var charmParameter2 = getURLParameter("charm2");
-	if(charmParameter2 != "null") {
-		var select = document.getElementById("charm2");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == charmParameter2) {
-				child.selected = true;
-		    	charmChanged("charm2");
+		    	charmChanged();
 				break;
 			}
 		}
@@ -143,9 +98,7 @@ specialCharm["Spellbook Base"] = 1;
 function checkLoadState() {
 	var loadPercentage = (popLoaded + baselineLoaded)/2*100;
 	var status = document.getElementById("status")
-	var status = document.getElementById("status2")
 	status.innerHTML = "<td>Loaded "+loadPercentage+"%...</td>";
-	status2.innerHTML = "<td>Loaded "+loadPercentage+"%...</td>";
 	
 	if(loadPercentage == 100) {
 		loadLocationDropdown();
@@ -154,8 +107,6 @@ function checkLoadState() {
 		
 		status.innerHTML = "<td>All set!</td>";
 		setTimeout(function() {status.innerHTML = '<td><br></td>'}, 3000);
-		status2.innerHTML = "<td>All set!</td>";
-		setTimeout(function() {status2.innerHTML = '<td><br></td>'}, 3000);
 	}
 
 }
@@ -244,21 +195,7 @@ window.onload = function () {
 			var child = select.children[i];
 			if (child.innerHTML == gsParameter) {
 				child.selected = true;
-		    	gsChanged("gs");
-				break;
-			}
-		}
-	}
-
-	var gsParameter2 = getURLParameter("gs2");
-	if(gsParameter2 != "null") {
-		gsParameter2 = "No";
-		var select = document.getElementById("gs2");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == gsParameter2) {
-				child.selected = true;
-		    	gsChanged("gs2");
+		    	gsChanged();
 				break;
 			}
 		}
@@ -272,21 +209,7 @@ window.onload = function () {
 			var child = select.children[i];
 			if (child.innerHTML == lbwParameter) {
 				child.selected = true;
-		    	lbwChanged("lbw");
-				break;
-			}
-		}
-	}
-
-	var lbwParameter2 = getURLParameter("lbw2");
-	if(lbwParameter2 != "null") {
-		lbwParameter2 = "Yes";
-		var select = document.getElementById("lbw2");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == lbwParameter2) {
-				child.selected = true;
-		    	lbwChanged("lbw2");
+		    	lbwChanged();
 				break;
 			}
 		}
@@ -307,24 +230,24 @@ window.onload = function () {
     };
 
     document.getElementById("weapon").onchange = function () {
-    	weaponChanged("weapon");
+    	weaponChanged();
     };
-
+    
     document.getElementById("base").onchange = function () {
-		baseChanged("base");
+		baseChanged();
     };
 
     document.getElementById("charm").onchange = function () {
-		charmChanged("charm");
+		charmChanged();
     };
 
     document.getElementById("gs").onchange = function () {
-		gsChanged("gs");
-	};
+		gsChanged();
+	}
 	
     document.getElementById("lbw").onchange = function () {
-		lbwChanged("lbw");
-	};
+		lbwChanged();
+	}
 	
     document.getElementById("tourney").onchange = function () {
 		tourneyChanged();
@@ -344,60 +267,7 @@ window.onload = function () {
 	//Send to google analytics that link to setup was clicked
     document.getElementById("link").onclick = function () {
 		ga('send', 'event', 'setup link', 'click');
-    };
-
-    //2nd tab handling
-    document.getElementById("location2").onchange = function () {
-		locationChanged("location2");
-    };
-	
-    document.getElementById("phase2").onchange = function () {
-		phaseChanged("phase2");
-    };
-
-    document.getElementById("cheese2").onchange = function () {
-		cheeseChanged("cheese2");
-    };
-
-    document.getElementById("weapon2").onchange = function () {
-    	weaponChanged("weapon2");
-    };
-
-    document.getElementById("base2").onchange = function () {
-		baseChanged("base2");
-    };
-
-    document.getElementById("charm2").onchange = function () {
-		charmChanged("charm2");
-    };
-
-	document.getElementById("gs2").onchange = function () {
-		gsChanged("gs2");
-	};
-
-	document.getElementById("lbw2").onchange = function () {
-		lbwChanged("lbw2");
-	};
-	
-    document.getElementById("tourney2").onchange = function () {
-		tourneyChanged("tourney2");
-    };     
-
-    document.getElementById("ampLevel2").onchange = function () {
-        ztAmp = parseInt(document.getElementById("ampLevel2").value);
-		calculateTrapSetup("cre");
-    };
-
-    document.getElementById("cheeseCost2").onchange = function () {
-        cheeseCost = parseInt(document.getElementById("cheeseCost2").value);
-        showPop();
-    };
-
-
-	//Send to google analytics that link to setup was clicked
-    document.getElementById("link2").onclick = function () {
-		ga('send', 'event', 'setup link', 'click');
-    };
+    }
 	    
     //Setup tablesorter
     $.tablesorter.addParser({
@@ -422,8 +292,8 @@ function showTrapSetup(type) {
 	}
 }
 
-function showPop (type, name) { //type = 2 means don't reset charms
-	var results = document.getElementById(name);
+function showPop (type) { //type = 2 means don't reset charms
+	var results = document.getElementById("results");
 
 	if (locationName == '' || type == 0) {
 		results.innerHTML = ''
@@ -633,9 +503,9 @@ function showPop (type, name) { //type = 2 means don't reset charms
 	}
 }
 
-function resetCharms (name) {
+function resetCharms () {
 	console.log("Reloading charm list");
-    var select = document.getElementById(name);
+    var select = document.getElementById("charm");
     var charmsDropdownHTML = '';
     
 	var nCharms = Object.size(charmsArray);
@@ -644,7 +514,7 @@ function resetCharms (name) {
 		charmsDropdownHTML += "<option>"+option+"</option>\n";
 	}
 	select.innerHTML = "<option>No Charm</option>"+charmsDropdownHTML;
-	charmChanged(name);
+	charmChanged();
 }
 
 function highlightSpecialCharms (charmList) {
@@ -777,16 +647,16 @@ function loadCheeseDropdown () {
 	cheeseChanged();
 }
 
-function selectCharm (name) {
+function selectCharm () {
 	console.log("Selecting charm");
-	var charmParameter = getURLParameter(name);//.replace('*','');
+	var charmParameter = getURLParameter("charm");//.replace('*','');
 	if(charmParameter != "null" && charmLoaded<4) {
 		var select = document.getElementById("charm");
 		for (var i=0; i<select.children.length; i++) {
 			var child = select.children[i];
 			if (child.innerHTML == charmParameter) {
 				child.selected = true;
-		    	charmChanged(name);
+		    	charmChanged();
 		    	charmLoaded++;
 				break;
 			}
@@ -973,7 +843,7 @@ function getURLParameter (name) {
 }
 
 function updateLink () {
-	var URLString = 'cre.html?';
+	var URLString = 'index.html?';
 	
 	if(locationName != "") URLString+= "&location="+locationName;
 	if(phaseName != "" && phaseName != "-") URLString+= "&phase="+phaseName;
@@ -1071,9 +941,9 @@ function locationChanged () {
 }
 
 
-function phaseChanged (name) {
+function phaseChanged () {
 	console.log("Phase changed");
-    var select = document.getElementById(name);
+    var select = document.getElementById("phase");
 	phaseName = select.children[select.selectedIndex].innerHTML;
 	
 	var autoBase = ''
@@ -1088,7 +958,7 @@ function phaseChanged (name) {
 			var child = select.children[i];
 			if (child.innerHTML == autoBase) {
 				child.selected = true;
-	    		baseChanged(name);
+	    		baseChanged();
 				break;
 			}
 		}
@@ -1120,8 +990,8 @@ function cheeseChanged () {
 	selectCharm();
 }
 
-function weaponChanged(name) {
-        var select = document.getElementById(name);
+function weaponChanged() {
+        var select = document.getElementById("weapon");
 
 		weaponName = select.children[select.selectedIndex].innerHTML;
 		updateLink();
@@ -1139,9 +1009,9 @@ function weaponChanged(name) {
 		calculateTrapSetup("cre");
 }
 
-function baseChanged (name) {
+function baseChanged () {
 	console.log("Base changed");
-        var select = document.getElementById(name);
+        var select = document.getElementById("base");
 
 		baseName = select.children[select.selectedIndex].innerHTML;
 		updateLink();
@@ -1208,9 +1078,9 @@ function baseChanged (name) {
 		calculateTrapSetup("cre");
 }
 
-function charmChanged (name) {
+function charmChanged () {
 	console.log("Charm changed");
-        var select = document.getElementById(name);
+        var select = document.getElementById("charm");
 
 		charmName = select.children[select.selectedIndex].innerHTML;
 		updateLink();
@@ -1250,8 +1120,8 @@ function charmChanged (name) {
 		showPop(2);
 }
 
-function gsChanged(name) {
-        var select = document.getElementById(name);
+function gsChanged() {
+        var select = document.getElementById("gs");
 
         if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
         else gsLuck = 0;
@@ -1260,8 +1130,8 @@ function gsChanged(name) {
 		calculateTrapSetup("cre");
 }
 
-function lbwChanged(name) {
-        var select = document.getElementById(name);
+function lbwChanged() {
+        var select = document.getElementById("lbw");
 
         if (select.children[select.selectedIndex].innerHTML == "Yes") lbwLuck = 5;
         else lbwLuck = 0;
