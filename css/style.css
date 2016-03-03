@@ -34,3 +34,70 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
+
+/* tabs */
+body
+{
+	background:#FFF;
+}
+
+/*a,*/
+a:hover{
+	text-decoration:none;
+	color:#FFF;
+}
+
+ul,ol
+{
+	list-style:none;
+}
+
+.wrapper
+{
+	max-width:1280px;
+	width:95%;
+	margin:0 auto;
+	position:relative;
+}
+
+.main
+{
+	width:100%;
+	max-width:500px;
+	margin:50px auto;
+}
+
+.main-desc{
+	font-size:16px;
+	margin:0 0 50px 0;
+}
+
+.tab
+{
+	float:left;
+	display:block;
+	padding:10px 20px;
+	text-decoration:none;
+	border-radius:5px 5px 0 0;
+	background:#F9F9F9;
+	color:#777;
+}
+
+.tab.active,.tab:hover
+{
+	background:#DDD;
+	color:#222;
+}
+
+.content
+{
+	display:none;
+	clear:both;
+	background:#FFF;
+	padding:20px;
+}
+
+.content.active
+{
+	display:block;
+}
