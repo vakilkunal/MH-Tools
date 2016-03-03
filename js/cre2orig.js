@@ -843,7 +843,7 @@ function getURLParameter (name) {
 }
 
 function updateLink () {
-	var URLString = 'cre.html?';
+	var URLString = 'index.html?';
 	
 	if(locationName != "") URLString+= "&location="+locationName;
 	if(phaseName != "" && phaseName != "-") URLString+= "&phase="+phaseName;
