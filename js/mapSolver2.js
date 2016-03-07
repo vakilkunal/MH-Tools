@@ -155,11 +155,11 @@ function loadMouseDropdown() {
 
 
 window.onload = function () {
-	/*document.getElementById("map").onchange = function () {
+	document.getElementById("map").onchange = function () {
     	var mapText = document.getElementById("map").value;
 	    //console.log(mapText);
 	    processMap(mapText);
-	};*/
+	};
 
 	document.getElementById("map").onkeyup = function () {
     	var mapText = document.getElementById("map").value;
@@ -182,7 +182,7 @@ function processMap(mapText) {
 	
 	for (var i=0; i<mouseArrayLength; i++) {
 		var mouseName = mouseArray[i];
-		if (mouseName.length == 0) return;
+		if (mouseName.length == 0) continue;
 		mouseName = mouseName.capitalise();
 		mouseName = mouseName.trim();
 		var indexOfMouse = mouseName.indexOf(" Mouse");
