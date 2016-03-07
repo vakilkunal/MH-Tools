@@ -98,7 +98,7 @@ Object.size = function(obj) {
 
 
 var pop = new XMLHttpRequest();
-pop.open("get", "https://dl.dropboxusercontent.com/u/14589881/populations2.csv", true);
+pop.open("get", "http://tsitu.github.io/MH-Tools/data/populations2.csv", true);
 pop.onreadystatechange = function() {
 	if (pop.readyState == 4) {
 		processPop();
