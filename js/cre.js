@@ -260,7 +260,8 @@ window.onload = function () {
 
     document.getElementById("cheeseCost").onchange = function () {
         cheeseCost = parseInt(document.getElementById("cheeseCost").value);
-        showPop();
+        //showPop();
+        showPop(2);
     };
 
 
@@ -315,6 +316,24 @@ function showPop (type) { //type = 2 means don't reset charms
 			}
 			popArrayLPC = popArray[locationName][phaseName][commonCheeseIndex];
 		}
+
+		/*var shownSpecialCharms = document.getElementById("charm");
+		if (shownSpecialCharms.length > Object.size(charmsArray) + 1) {
+			//Reset only the special charm selection
+			var nDifference = shownSpecialCharms.length - Object.size(charmsArray) - 1;
+			for (var i=0; i<nDifference; i++) {
+				shownSpecialCharms.remove(1);
+			}
+
+			//Clean up remaining asterisk-appended special charms
+			for (var i=0; i<shownSpecialCharms.length; i++) {
+				if (shownSpecialCharms[i].value.indexOf("*") >= 0) {
+					console.log("Before: " + shownSpecialCharms[i].value);
+					shownSpecialCharms.children[i].innerHTML = shownSpecialCharms[i].value.replace("*", "");
+					console.log("After: " + shownSpecialCharms[i].value);
+				}
+			}
+		}*/
 		
 		//Highlight special charms
 		if (Object.size(popArrayLPC)>1) {
@@ -545,6 +564,28 @@ function highlightSpecialCharms (charmList) {
 		}
 	}
 }
+
+/*function highlightSpecialCharms (charmList) {
+    var select = document.getElementById("charm");
+	
+	for (var i=0; i<charmList.length; i++) {
+		//console.log("Modifying", charmList[i]);
+		for (var j=0; j<select.children.length; j++) {
+			var child = select.children[j];
+			if (child.value == charmList[i]+" Charm") {
+				//console.log(select.innerHTML);
+				child.innerHTML = child.innerHTML+"*";
+				if (child.selected == true) {
+					charmName = child.innerHTML;
+					showPop(2);
+				}
+				select.innerHTML = select.innerHTML.slice(0,25) + "<option>"+child.innerHTML+"</option>" + select.innerHTML.slice(25);
+				break;
+				//continue;
+			}
+		}
+	}
+}*/
 
 
 function loadLocationDropdown () {
@@ -935,6 +976,7 @@ function locationChanged () {
 	updateLink();
 	
 	showPop(0);
+	//showPop(2);
 	
 	//Populate sublocation dropdown and select first option
 	populateSublocationDropdown(locationName);
@@ -987,6 +1029,7 @@ function cheeseChanged () {
 	updateLink();
 	
 	showPop();
+	//showPop(2);
 	selectCharm();
 }
 
@@ -1145,6 +1188,7 @@ function tourneyChanged() {
 		tournamentName = select.children[select.selectedIndex].innerHTML;
 		updateLink();
 
-		showPop();
+		//showPop();
+		showPop(2);
 }
 

@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<head>
+    <title>Best Setup Tool</title>
+
+    <script type="text/javascript" src="js/arrays.js"></script>
+    <script type="text/javascript" src="js/bestsetup.js"></script>
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script> 
+	<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<link rel="stylesheet" href="style.css" type="text/css" media="print, projection, screen" />
+
+    <style type="text/css">
+        * {
+            margin:0;
+            padding:0;
+        }
+        body {
+            font-family:Arial;
+            font-size: 12px;
+            line-height:20px;
+        }
+        .container {
+            /*width: 800px;*/
+            margin: 0 auto;
+            padding:20px;
+        }
+        td {
+            margin: 4px;
+            padding:4px 6px;
+        }
+        th {
+            margin: 4px;
+            padding:4px 6px;
+        }
+        select {
+            padding:4px;
+        }
+        a {
+            text-decoration: underline;
+        }
+        .center button {
+            padding:4px 8px;
+            font-family:Arial;
+            font-size: 15px;
+            line-height:20px;
+        }
+        #status {
+            font-weight: 700;
+            font-size: 16px;
+            text-align:left;
+        }
+        #pleaseWaitMessage {
+            font-weight: 700;
+            font-size: 16px;
+            text-align:center;
+            display: none;
+        }
+        .header h1 {
+            font-weight: 700;
+            font-size: 24px;
+            padding-bottom: 10px;
+        }
+    </style>
+    <!--###################################################################################-->
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-31924811-6', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td>
+                    <div class="header">
+                        	<h1>Best Setup Tool</h1>
+                        	<small>Thanks to the work of Chad, Nick, Ben, Paul, Yikai and Kat</small>
+                    </div>
+                </td>
+            </tr>
+        </table>
+            <!--###################################################################################-->
+        <table>
+            <tr><td>Location:</td>
+                <td>
+                    <select id="location">
+                    </select>
+                </td>
+            </tr>
+            
+			<tr>
+				<td>Sublocation:</td>
+				<td>
+                    <select id="phase">
+                    	<option>-</option>
+                    </select>
+				</td>
+			</tr>
+            
+            <tr><td>Cheese:</td>
+                <td>
+                    <select id="cheese">
+                    	<option>Select a location</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!--<tr><td>Charm:</td>
+            	<td>
+            		<select id="charm">
+						<option>No Charm</option>
+						<option>2014 Charm</option>
+						<option>Airship Charm</option>
+						<option>Amplifier Charm</option>
+						<option>Ancient Charm</option>
+						<option>Antiskele Charm</option>
+						<option>Artisan Charm</option>
+						<option>Athlete Charm</option>
+						<option>Attraction Charm</option>
+						<option>Black Powder Charm</option>
+						<option>Brain Charm</option>						
+						<option>Bravery Charm</option>
+						<option>Cackle Charm</option>
+						<option>Cactus Charm</option>
+						<option>Champion Charm</option>
+						<option>Chrome Charm</option>
+						<option>Clarity Charm</option>
+						<option>Dark Chocolate Charm</option>
+						<option>Derr Power Charm</option>
+						<option>Door Guard Charm</option>
+						<option>Double Sponge Charm</option>
+						<option>Dragonbane Charm</option>
+						<option>Dragonbreath Charm</option>
+						<option>Dreaded Charm</option>
+						<option>Dusty Coal Charm</option>
+						<option>Eggscavator Charge Charm</option>
+						<option>Eggstra Charm</option>
+						<option>Elub Power Charm</option>
+						<option>EMP400 Charm</option>
+						<option>Empowered Anchor Charm</option>
+						<option>Extreme Luck Charm</option>
+						<option>Extreme Polluted Charm</option>
+						<option>Firecracker Charm</option>
+						<option>First Ever Charm</option>
+						<option>Flamebane Charm</option>
+						<option>Freshness Charm</option>
+						<option>Greasy Glob Charm</option>
+						<option>Growth Charm</option>
+						<option>Grub Salt Charm</option>
+						<option>Grub Scent Charm</option>
+						<option>Grubling Bonanza Charm</option>
+						<option>Grubling Chow Charm</option>
+						<option>Luck Charm</option>
+						<option>Lucky Power Charm</option>
+						<option>Lucky Rabbit Charm</option>
+						<option>Magmatic Crystal Charm</option>
+						<option>Mining Charm</option>
+						<option>Mobile Charm</option>
+						<option>Monger Charm</option>
+						<option>Nanny Charm</option>
+						<option>Nerg Power Charm</option>
+						<option>Nitropop Charm</option>
+						<option>Party Charm</option>
+						<option>Polluted Charm</option>
+						<option>Power Charm</option>
+						<option>Prospector's Charm</option>
+						<option>Red Double Sponge Charm</option>
+						<option>Red Sponge Charm</option>
+						<option>Regal Charm</option>
+						<option>Roof Rack Charm</option>
+						<option>Rook Crumble Charm</option>
+						<option>Rotten Charm</option>
+						<option>Safeguard Charm</option>
+						<option>Scholar Charm</option>
+						<option>Shine Charm</option>
+						<option>Scientist's Charm</option>
+						<option>Searcher Charm</option>
+						<option>Shamrock Charm</option>
+						<option>Shattering Charm</option>
+						<option>Sheriff's Badge Charm</option>
+						<option>Snakebite Charm</option>
+						<option>Snowball Charm</option>
+						<option>Soap Charm</option>
+						<option>Softserve Charm</option>
+						<option>Spellbook Charm</option>
+						<option>Spooky Charm</option>
+						<option>Sponge Charm</option>
+						<option>Sticky Charm</option>
+						<option>Super Cactus Charm</option>
+						<option>Super Luck Charm</option>
+						<option>Super Polluted Charm</option>
+						<option>Super Power Charm</option>
+						<option>Super Rotten Charm</option>
+						<option>Super Salt Charm</option>
+						<option>Super Soap Charm</option>
+						<option>Super Warpath Archer Charm</option>
+						<option>Super Warpath Cavalry Charm</option>
+						<option>Super Warpath Commander's Charm</option>
+						<option>Super Warpath Mage Charm</option>
+						<option>Super Warpath Scout Charm</option>
+						<option>Super Warpath Warrior Charm</option>
+						<option>Supply Schedule Charm</option>
+						<option>Tarnished Charm</option>
+						<option>Ultimate Charm</option>
+						<option>Ultimate Luck Charm</option>
+						<option>Ultimate Polluted Charm</option>
+						<option>Ultimate Power Charm</option>
+						<option>Uncharged Scholar Charm</option>
+						<option>Unstable Charm</option>
+						<option>Valentine Charm</option>
+						<option>Warpath Archer Charm</option>
+						<option>Warpath Cavalry Charm</option>
+						<option>Warpath Commander's Charm</option>
+						<option>Warpath Mage Charm</option>
+						<option>Warpath Scout Charm</option>
+						<option>Warpath Warrior Charm</option>
+						<option>Wealth Charm</option>
+						<option>Wild Growth Charm</option>
+						<option>Winter Charm</option>
+						<option>Winter Screw Charm</option>
+						<option>Winter Spring Charm</option>
+						<option>Winter Wood Charm</option>
+						<option>Wax Charm</option>
+						<option>Yellow Double Sponge Charm</option>
+						<option>Yellow Sponge Charm</option>
+                    </select>
+            	</td>
+            </tr>
+            -->
+            
+            <tr><td>Golden Shield:</td>
+                <td>
+                    <select id="gs">
+						<option value='Y'>Yes</option>
+						<option value='N'>No</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr><td>+5 Luck:</td>
+                <td>
+                    <select id="lbw">
+						<option value='N'>No</option>
+						<option value='Y'>Yes</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!--
+            <tr><td>Tourney:</td>
+                <td>
+                    <select id="tourney">
+                    </select>
+                </td>
+            </tr>
+            -->
+            <tr><td><a id="link" target="_blank">Link to setup</a></td></tr>
+        </table>
+        <table>
+            <tr>
+            	<td>
+	            	<button id="show_weapons_button">Select weapons</button>&nbsp
+            	</td>
+            	<td>
+	            	<button id="show_bases_button">Select bases</button>&nbsp
+            	</td>
+            	<td>
+	            	<button id="show_charms_button">Select charms</button>&nbsp
+            	</td>
+                <td>
+                    <button id="save_setup_button">Save setup</button>
+                </td>
+            </tr>
+
+            <tr><td colspan='3'><button id='show_pop_button'><big><b>Find best setup (Click me!)</b></big></button></td></tr>
+            <tr id='status'><td>Loading...</td></tr>
+            <tr id='pleaseWaitMessage'><td colspan='2'>Please Wait...</td></tr>
+
+        </table>
+
+        <table id="weapons_selector_table" style="display: none">
+        	<tr><td style="padding:0"><input type="checkbox" checked id="all_weapons_checkbox">&nbspAll</td></tr>
+        </table>
+
+        <table id="bases_selector_table" style="display: none">
+        	<tr><td style="padding:0"><input type="checkbox" checked id="all_bases_checkbox">&nbspAll</td></tr>
+        </table>
+
+        <table id="charms_selector_table" style="display: none">
+        	<tr><td style="padding:0"><input type="checkbox" checked id="all_charms_checkbox">&nbspAll</td></tr>
+        </table>
+        
+        <table id='trapSetup'></table>
+        <table id='results' class='tablesorter'></table>
+    </div>
+</body>
+
+</html>
