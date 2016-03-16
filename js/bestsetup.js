@@ -138,7 +138,22 @@ window.onload = function () {
 		var savedWeapons = savedSetup['weapons'];
 		var savedBases = savedSetup['bases'];
 		var savedCharms = savedSetup['charms'];
+		console.log(savedCharms);
 
+		//Unticks 'All' if there was an unticked box stored in the cookie
+		if (savedWeapons.indexOf(0) >= 0) {
+			$("#all_weapons_checkbox").prop('checked', false);
+		}
+
+		if (savedBases.indexOf(0) >= 0) {
+			$("#all_bases_checkbox").prop('checked', false);
+		}
+
+		if (savedCharms.indexOf(0) >= 0) {
+			$("#all_charms_checkbox").prop('checked', false);
+		}
+
+		//Iterates through arrays saved in cookie and unticks checkboxes accordingly
 		for (var i=0; i<savedWeapons.length; i++) {
 			if (savedWeapons[i] == 0) {
 				$(".weapon_checkbox").get(i).checked = false;
