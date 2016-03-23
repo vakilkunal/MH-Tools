@@ -1845,6 +1845,13 @@ weaponsArray["Cackle Lantern Trap"][2] = "  5%";
 weaponsArray["Cackle Lantern Trap"][3] = "  10%";
 weaponsArray["Cackle Lantern Trap"][4] = "  12";
 weaponsArray["Cackle Lantern Trap"][5] = "  Extremely Stale";
+weaponsArray["Candy Crusher Trap"] = [];
+weaponsArray["Candy Crusher Trap"][0] = "  Shadow";
+weaponsArray["Candy Crusher Trap"][1] = "  2000";
+weaponsArray["Candy Crusher Trap"][2] = "  3%";
+weaponsArray["Candy Crusher Trap"][3] = "  15%";
+weaponsArray["Candy Crusher Trap"][4] = "  15";
+weaponsArray["Candy Crusher Trap"][5] = "  No Effect";
 weaponsArray["Chesla's Revenge"] = [];
 weaponsArray["Chesla's Revenge"][0] = " Tactical";
 weaponsArray["Chesla's Revenge"][1] = " 5000";
@@ -2062,6 +2069,13 @@ weaponsArray["The Forgotten Art of Dance"][2] = "   12%";
 weaponsArray["The Forgotten Art of Dance"][3] = "   6%";
 weaponsArray["The Forgotten Art of Dance"][4] = "   6";
 weaponsArray["The Forgotten Art of Dance"][5] = "   No Effect";
+weaponsArray["Forgotten Pressure Plate Trap"] = [];
+weaponsArray["Forgotten Pressure Plate Trap"][0] = "   Forgotten";
+weaponsArray["Forgotten Pressure Plate Trap"][1] = "   3500";
+weaponsArray["Forgotten Pressure Plate Trap"][2] = "   10%";
+weaponsArray["Forgotten Pressure Plate Trap"][3] = "   10%";
+weaponsArray["Forgotten Pressure Plate Trap"][4] = "   2";
+weaponsArray["Forgotten Pressure Plate Trap"][5] = "   Fresh";
 weaponsArray["Giant Speaker"] = [];
 weaponsArray["Giant Speaker"][0] = "    Tactical";
 weaponsArray["Giant Speaker"][1] = "    2850";
@@ -2426,6 +2440,13 @@ weaponsArray["S.L.A.C. II"][2] = "  6%";
 weaponsArray["S.L.A.C. II"][3] = "  15%";
 weaponsArray["S.L.A.C. II"][4] = "  0";
 weaponsArray["S.L.A.C. II"][5] = "  No Effect";
+weaponsArray["S.U.P.E.R. Scum Scrubber"] = [];
+weaponsArray["S.U.P.E.R. Scum Scrubber"][0] = "  Hydro";
+weaponsArray["S.U.P.E.R. Scum Scrubber"][1] = "  4000";
+weaponsArray["S.U.P.E.R. Scum Scrubber"][2] = "  15%";
+weaponsArray["S.U.P.E.R. Scum Scrubber"][3] = "  15%";
+weaponsArray["S.U.P.E.R. Scum Scrubber"][4] = "  15";
+weaponsArray["S.U.P.E.R. Scum Scrubber"][5] = "  Stale";
 weaponsArray["Sandstorm MonstroBot"] = [];
 weaponsArray["Sandstorm MonstroBot"][0] = " Physical";
 weaponsArray["Sandstorm MonstroBot"][1] = " 8000";
@@ -2659,6 +2680,17 @@ weaponsArray["Zurreal's Folly"][4] = "  12";
 weaponsArray["Zurreal's Folly"][5] = "  Ultimately Stale";
 var weaponsLoaded = 1;
 
+/*Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+// Get the size of an object
+var arrsize = Object.size(weaponsArray);
+console.log("weaponsArray size: " + arrsize);*/
 
 
 
