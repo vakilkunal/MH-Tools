@@ -408,6 +408,7 @@ function showPop (type) { //type = 2 means don't reset charms
 			//Exceptions, modifications to catch rates
 			//Dragonbane Charm
 			if (charmName == "Ultimate Charm") catchRate = 1;
+			else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
 			else if (mouseName == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
 			else if (mouseName == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
 			else if (mouseName == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
@@ -884,7 +885,7 @@ function getURLParameter (name) {
 }
 
 function updateLink () {
-	var URLString = 'index.html?';
+	var URLString = 'cre.html?';
 	
 	if(locationName != "") URLString+= "&location="+locationName;
 	if(phaseName != "" && phaseName != "-") URLString+= "&phase="+phaseName;

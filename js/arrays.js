@@ -118,6 +118,12 @@ function calculateTrapSetup(user) {
 
         if (charmName == "Forgotten Charm") {
             trapType = "Forgotten";
+        } else if (charmName == "Nanny Charm") {
+            trapType = "Parental";
+        } else if (charmName == "Hydro Charm") {
+            trapType = "Hydro";
+        } else if (charmName == "Shadow Charm") {
+            trapType = "Shadow";
         } else {
             trapType = weaponsArray[weaponName][0].trim();
         }
@@ -2709,6 +2715,12 @@ charmsArray["2015 Charm"][1] = "    0%";
 charmsArray["2015 Charm"][2] = "    0%";
 charmsArray["2015 Charm"][3] = "    0";
 charmsArray["2015 Charm"][4] = "    No Effect";
+charmsArray["2016 Charm"] = [];
+charmsArray["2016 Charm"][0] = "    2016";
+charmsArray["2016 Charm"][1] = "    0%";
+charmsArray["2016 Charm"][2] = "    0%";
+charmsArray["2016 Charm"][3] = "    0";
+charmsArray["2016 Charm"][4] = "    No Effect";
 charmsArray["Airship Charm"] = [];
 charmsArray["Airship Charm"][0] = " 800";
 charmsArray["Airship Charm"][1] = " 0%";
@@ -2914,11 +2926,17 @@ charmsArray["Empowered Anchor Charm"][2] = "    0%";
 charmsArray["Empowered Anchor Charm"][3] = "    0";
 charmsArray["Empowered Anchor Charm"][4] = "    No Effect";
 charmsArray["Extra Spooky Charm"] = [];
-charmsArray["Extra Spooky Charm"][0] = "    350";
+charmsArray["Extra Spooky Charm"][0] = "    500";
 charmsArray["Extra Spooky Charm"][1] = "    3%";
 charmsArray["Extra Spooky Charm"][2] = "    0%";
 charmsArray["Extra Spooky Charm"][3] = "    0";
 charmsArray["Extra Spooky Charm"][4] = "    No Effect";
+charmsArray["Extra Sweet Cupcake Charm"] = [];
+charmsArray["Extra Sweet Cupcake Charm"][0] = "    0";
+charmsArray["Extra Sweet Cupcake Charm"][1] = "    0%";
+charmsArray["Extra Sweet Cupcake Charm"][2] = "    8%";
+charmsArray["Extra Sweet Cupcake Charm"][3] = "    8";
+charmsArray["Extra Sweet Cupcake Charm"][4] = "    Fresh";
 charmsArray["Extreme Ancient Charm"] = [];
 charmsArray["Extreme Ancient Charm"][0] = " 800";
 charmsArray["Extreme Ancient Charm"][1] = " 7%";
@@ -3003,6 +3021,12 @@ charmsArray["Gemstone Boost Charm"][1] = "  0%";
 charmsArray["Gemstone Boost Charm"][2] = "  0%";
 charmsArray["Gemstone Boost Charm"][3] = "  0";
 charmsArray["Gemstone Boost Charm"][4] = "  No Effect";
+charmsArray["Glowing Gourd Charm"] = [];
+charmsArray["Glowing Gourd Charm"][0] = "  0";
+charmsArray["Glowing Gourd Charm"][1] = "  10%";
+charmsArray["Glowing Gourd Charm"][2] = "  0%";
+charmsArray["Glowing Gourd Charm"][3] = "  0";
+charmsArray["Glowing Gourd Charm"][4] = "  No Effect";
 charmsArray["Gnarled Charm"] = [];
 charmsArray["Gnarled Charm"][0] = " 250";
 charmsArray["Gnarled Charm"][1] = " 0%";
@@ -3063,6 +3087,12 @@ charmsArray["Horsepower Charm"][1] = "  0%";
 charmsArray["Horsepower Charm"][2] = "  0%";
 charmsArray["Horsepower Charm"][3] = "  0";
 charmsArray["Horsepower Charm"][4] = "  No Effect";
+charmsArray["Hydro Charm"] = [];
+charmsArray["Hydro Charm"][0] = "  0";
+charmsArray["Hydro Charm"][1] = "  0%";
+charmsArray["Hydro Charm"][2] = "  0%";
+charmsArray["Hydro Charm"][3] = "  0";
+charmsArray["Hydro Charm"][4] = "  No Effect";
 charmsArray["Luck Charm"] = [];
 charmsArray["Luck Charm"][0] = "    0";
 charmsArray["Luck Charm"][1] = "    0%";
@@ -3105,6 +3135,12 @@ charmsArray["Monger Charm"][1] = "  0%";
 charmsArray["Monger Charm"][2] = "  0%";
 charmsArray["Monger Charm"][3] = "  0";
 charmsArray["Monger Charm"][4] = "  No Effect";
+charmsArray["Monkey Fling Charm"] = [];
+charmsArray["Monkey Fling Charm"][0] = "  0";
+charmsArray["Monkey Fling Charm"][1] = "  0%";
+charmsArray["Monkey Fling Charm"][2] = "  0%";
+charmsArray["Monkey Fling Charm"][3] = "  0";
+charmsArray["Monkey Fling Charm"][4] = "  No Effect";
 charmsArray["Nanny Charm"] = [];
 charmsArray["Nanny Charm"][0] = "   120";
 charmsArray["Nanny Charm"][1] = "   1%";
@@ -3255,6 +3291,12 @@ charmsArray["Searcher Charm"][1] = "    0%";
 charmsArray["Searcher Charm"][2] = "    0%";
 charmsArray["Searcher Charm"][3] = "    0";
 charmsArray["Searcher Charm"][4] = "    No Effect";
+charmsArray["Shadow Charm"] = [];
+charmsArray["Shadow Charm"][0] = "    0";
+charmsArray["Shadow Charm"][1] = "    0%";
+charmsArray["Shadow Charm"][2] = "    0%";
+charmsArray["Shadow Charm"][3] = "    0";
+charmsArray["Shadow Charm"][4] = "    No Effect";
 charmsArray["Shattering Charm"] = [];
 charmsArray["Shattering Charm"][0] = "  0";
 charmsArray["Shattering Charm"][1] = "  0%";
@@ -3285,18 +3327,18 @@ charmsArray["Shine Charm"][1] = "   0%";
 charmsArray["Shine Charm"][2] = "   0%";
 charmsArray["Shine Charm"][3] = "   0";
 charmsArray["Shine Charm"][4] = "   No Effect";
-charmsArray["Smart Water Jet Charm"] = [];
-charmsArray["Smart Water Jet Charm"][0] = " 0";
-charmsArray["Smart Water Jet Charm"][1] = " 0%";
-charmsArray["Smart Water Jet Charm"][2] = " 0%";
-charmsArray["Smart Water Jet Charm"][3] = " 0";
-charmsArray["Smart Water Jet Charm"][4] = " No Effect";
 charmsArray["Shortcut Charm"] = [];
 charmsArray["Shortcut Charm"][0] = "    0";
 charmsArray["Shortcut Charm"][1] = "    0%";
 charmsArray["Shortcut Charm"][2] = "    0%";
 charmsArray["Shortcut Charm"][3] = "    0";
 charmsArray["Shortcut Charm"][4] = "    No Effect";
+charmsArray["Smart Water Jet Charm"] = [];
+charmsArray["Smart Water Jet Charm"][0] = " 0";
+charmsArray["Smart Water Jet Charm"][1] = " 0%";
+charmsArray["Smart Water Jet Charm"][2] = " 0%";
+charmsArray["Smart Water Jet Charm"][3] = " 0";
+charmsArray["Smart Water Jet Charm"][4] = " No Effect";
 charmsArray["Snakebite Charm"] = [];
 charmsArray["Snakebite Charm"][0] = "   0";
 charmsArray["Snakebite Charm"][1] = "   0%";
@@ -3307,7 +3349,7 @@ charmsArray["Snowball Charm"] = [];
 charmsArray["Snowball Charm"][0] = "    100";
 charmsArray["Snowball Charm"][1] = "    1%";
 charmsArray["Snowball Charm"][2] = "    1%";
-charmsArray["Snowball Charm"][3] = "    1";
+charmsArray["Snowball Charm"][3] = "    2";
 charmsArray["Snowball Charm"][4] = "    No Effect";
 charmsArray["Soap Charm"] = [];
 charmsArray["Soap Charm"][0] = "    10";
@@ -3378,7 +3420,7 @@ charmsArray["Super Ancient Charm"][4] = "   Extremely Fresh";
 charmsArray["Super Attraction Charm"] = [];
 charmsArray["Super Attraction Charm"][0] = "    0";
 charmsArray["Super Attraction Charm"][1] = "    0%";
-charmsArray["Super Attraction Charm"][2] = "    20%%";
+charmsArray["Super Attraction Charm"][2] = "    20%";
 charmsArray["Super Attraction Charm"][3] = "    0";
 charmsArray["Super Attraction Charm"][4] = "    No Effect";
 charmsArray["Super Brain Charm"] = [];
@@ -3411,6 +3453,12 @@ charmsArray["Super Power Charm"][1] = " 3%";
 charmsArray["Super Power Charm"][2] = " 0%";
 charmsArray["Super Power Charm"][3] = " 0";
 charmsArray["Super Power Charm"][4] = " No Effect";
+charmsArray["Super Regal Charm"] = [];
+charmsArray["Super Regal Charm"][0] = "    1500";
+charmsArray["Super Regal Charm"][1] = "    0%";
+charmsArray["Super Regal Charm"][2] = "    50%";
+charmsArray["Super Regal Charm"][3] = "    7";
+charmsArray["Super Regal Charm"][4] = "    No Effect";
 charmsArray["Super Rift Vacuum Charm"] = [];
 charmsArray["Super Rift Vacuum Charm"][0] = "   100";
 charmsArray["Super Rift Vacuum Charm"][1] = "   0%";
@@ -3501,12 +3549,24 @@ charmsArray["Taunting Charm"][1] = "    0%";
 charmsArray["Taunting Charm"][2] = "    0%";
 charmsArray["Taunting Charm"][3] = "    0";
 charmsArray["Taunting Charm"][4] = "    No Effect";
+charmsArray["Treasure Trawling Charm"] = [];
+charmsArray["Treasure Trawling Charm"][0] = "    0";
+charmsArray["Treasure Trawling Charm"][1] = "    0%";
+charmsArray["Treasure Trawling Charm"][2] = "    0%";
+charmsArray["Treasure Trawling Charm"][3] = "    0";
+charmsArray["Treasure Trawling Charm"][4] = "    No Effect";
 charmsArray["Ultimate Charm"] = [];
 charmsArray["Ultimate Charm"][0] = "    0";
 charmsArray["Ultimate Charm"][1] = "    0%";
 charmsArray["Ultimate Charm"][2] = "    0%";
 charmsArray["Ultimate Charm"][3] = "    0";
 charmsArray["Ultimate Charm"][4] = "    No Effect";
+charmsArray["Ultimate Anchor Charm"] = [];
+charmsArray["Ultimate Anchor Charm"][0] = "    0";
+charmsArray["Ultimate Anchor Charm"][1] = "    0%";
+charmsArray["Ultimate Anchor Charm"][2] = "    0%";
+charmsArray["Ultimate Anchor Charm"][3] = "    0";
+charmsArray["Ultimate Anchor Charm"][4] = "    No Effect";
 charmsArray["Ultimate Ancient Charm"] = [];
 charmsArray["Ultimate Ancient Charm"][0] = "    900";
 charmsArray["Ultimate Ancient Charm"][1] = "    8%";
@@ -3525,6 +3585,12 @@ charmsArray["Ultimate Luck Charm"][1] = "   0%";
 charmsArray["Ultimate Luck Charm"][2] = "   0%";
 charmsArray["Ultimate Luck Charm"][3] = "   20";
 charmsArray["Ultimate Luck Charm"][4] = "   No Effect";
+charmsArray["Ultimate Lucky Power Charm"] = [];
+charmsArray["Ultimate Lucky Power Charm"][0] = "   2400";
+charmsArray["Ultimate Lucky Power Charm"][1] = "   20%";
+charmsArray["Ultimate Lucky Power Charm"][2] = "   0%";
+charmsArray["Ultimate Lucky Power Charm"][3] = "   20";
+charmsArray["Ultimate Lucky Power Charm"][4] = "   No Effect";
 charmsArray["Ultimate Polluted Charm"] = [];
 charmsArray["Ultimate Polluted Charm"][0] = "   0";
 charmsArray["Ultimate Polluted Charm"][1] = "   0%";
@@ -3677,6 +3743,43 @@ charmsArray["Yellow Sponge Charm"][3] = "   0";
 charmsArray["Yellow Sponge Charm"][4] = "   No Effect";
 var charmsLoaded = 1;
 
+/*Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+// Get the size of an object
+var arrsize = Object.size(charmsArray);
+console.log("charmArray size: " + arrsize);
+
+var charmArray1 = [];
+var charmArray2 = [];
+for (var name in charmsArray) {
+    charmArray1.push(name);
+}
+
+console.log(charmArray1);
+
+window.onload = function() {
+    var cTable = document.getElementById("charmTable");
+    console.log("charmTable size: " + cTable.rows.length);
+    for (var i=1; i<cTable.rows.length; i++) {
+        var name = $(cTable.rows[i].cells[1]).text();
+        //var name2 = name.replace("Limited Edition", "");
+        name = name.replace("Limited Edition", "");
+        //name = name.replace(/\u21b5/g, '');
+        name = name.split("\u21b5").join('');
+        //name = name.replace("C\x21B5", "");
+        charmArray2.push(name);
+    }
+
+    console.log(charmArray2);
+    console.log($(cTable.rows[1].cells[1]).text());
+    console.log($(cTable.rows[cTable.rows.length-1].cells[1]).text());
+}*/
 
 
 

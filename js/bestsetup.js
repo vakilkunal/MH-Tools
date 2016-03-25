@@ -138,39 +138,53 @@ window.onload = function () {
 		var savedWeapons = savedSetup['weapons'];
 		var savedBases = savedSetup['bases'];
 		var savedCharms = savedSetup['charms'];
-		console.log(savedCharms);
 
-		//Unticks 'All' if there was an unticked box stored in the cookie
-		if (savedWeapons.indexOf(0) >= 0) {
-			$("#all_weapons_checkbox").prop('checked', false);
-		}
+		//Object size helper function
+		Object.size = function(obj) {
+		    var size = 0, key;
+		    for (key in obj) {
+		        if (obj.hasOwnProperty(key)) size++;
+		    }
+		    return size;
+		};
 
-		if (savedBases.indexOf(0) >= 0) {
-			$("#all_bases_checkbox").prop('checked', false);
-		}
-
-		if (savedCharms.indexOf(0) >= 0) {
-			$("#all_charms_checkbox").prop('checked', false);
-		}
-
-		//Iterates through arrays saved in cookie and unticks checkboxes accordingly
-		for (var i=0; i<savedWeapons.length; i++) {
-			if (savedWeapons[i] == 0) {
-				$(".weapon_checkbox").get(i).checked = false;
+		if (savedWeapons.length != Object.size(weaponsArray) || savedBases.length != Object.size(basesArray) || savedCharms.length != Object.size(charmsArray)) {
+			window.alert("New weapons/bases/charms have been added. Please re-tick what you own. Sorry for any inconvenience!")
+			//Delete cookie
+			$.removeCookie('setup');
+		} else {
+			//Unticks 'All' if there was an unticked box stored in the cookie
+			if (savedWeapons.indexOf(0) >= 0) {
+				$("#all_weapons_checkbox").prop('checked', false);
 			}
-		}
 
-		for (var i=0; i<savedBases.length; i++) {
-			if (savedBases[i] == 0) {
-				$(".base_checkbox").get(i).checked = false;
+			if (savedBases.indexOf(0) >= 0) {
+				$("#all_bases_checkbox").prop('checked', false);
 			}
-		}
 
-		for (var i=0; i<savedCharms.length; i++) {
-			if (savedCharms[i] == 0) {
-				$(".charm_checkbox").get(i).checked = false;
+			if (savedCharms.indexOf(0) >= 0) {
+				$("#all_charms_checkbox").prop('checked', false);
 			}
-		}	
+
+			//Iterates through arrays saved in cookie and unticks checkboxes accordingly
+			for (var i=0; i<savedWeapons.length; i++) {
+				if (savedWeapons[i] == 0) {
+					$(".weapon_checkbox").get(i).checked = false;
+				}
+			}
+
+			for (var i=0; i<savedBases.length; i++) {
+				if (savedBases[i] == 0) {
+					$(".base_checkbox").get(i).checked = false;
+				}
+			}
+
+			for (var i=0; i<savedCharms.length; i++) {
+				if (savedCharms[i] == 0) {
+					$(".charm_checkbox").get(i).checked = false;
+				}
+			}	
+		}
 	}
 
 	/*
@@ -991,7 +1005,9 @@ function printCombinations(micePopulation, tableHTML) {
 
 				//Exceptions, modifications to catch rates
 				if (charmName == "Ultimate Charm") catchRate = 1;
+				else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
 				else if (mouse == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
+				else if (mouseName == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
 				else if (mouse == "Zurreal the Eternal" && weapon != "Zurreal's Folly") catchRate = 0;
 
 				var catches = attractions*catchRate;

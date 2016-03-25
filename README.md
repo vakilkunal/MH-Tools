@@ -1,26 +1,43 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Landing Page](http://startbootstrap.com/template-overviews/landing-page/)
+# [MH Tools by tsitu](https://github.com/tsitu/MH-Tools)
 
-[Landing Page](http://startbootstrap.com/template-overviews/landing-page/) is a multipurpose landing page template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+## To-do
+* Update attraction rates for Labyrinth using SB+/Gouda/Brie + Glowing Gourd Charm
 
-## Getting Started
+## Changelog
 
-To use this template, choose one of the following options to get started:
-* Download the latest release on Start Bootstrap
-* Fork this repository on GitHub
+#### Mar 25 2016
+* Added charms: 2016, Extra Sweet Cupcake, Glowing Gourd, Hydro, Monkey Fling, Shadow, Super Regal, Treasure Trawling, Ultimate Anchor, and Ultimate Lucky Power
+* Added feature to notify user if weapons/bases/charms have been added, which deletes any cookie set earlier
+* Reverted 'index.html' to 'cre.html' for linking to setup in cre.js
 
-## Bugs and Issues
+#### Mar 22 2016
+* Added Candy Crusher, Forgotten Presure Plate, and S.U.P.E.R. Scum Scrubber traps
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-landing-page/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/landing-page/).
+#### Mar 16 2016
+* Added Bubbles: The Party Crasher Trap and Extra Sweet Cupcake Birthday Base
 
-## Creator
+#### Mar 15 2016
+* Ported best setup calculator and added JQuery cookie to remember ticked values
+* Added favicon and analytics to setup.html
+* Added a check to untick 'All' if there are unticked boxes stored in cookie
 
-Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+#### Mar 10 2016
+* Added a 100% ceiling to attraction rate
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+#### Mar 6 2016
+* Added haoala's map solver and related scripts, as well as populations2.csv
+* Added index page and related CSS/JS files, replacing Dropbox links with Github.io ones
+* Added favicon and Google Analytics objects
+* Fixed newlines affecting parsing and uncommented an onchange event (for map solver)
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+#### Mar 2 2016
+* Fixed accent marks in Birthday Party Pinata and Birthday Dragee
 
-## Copyright and License
+#### Feb 28 2016
+* Initial commit
+* Added Refined Pollutinum, Monkey Jade, Depth Charge, and Tribal Kaboom bases
 
-Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-landing-page/blob/gh-pages/LICENSE) license.
+## Credits
+
+* https://dl.dropboxusercontent.com/u/14589881/index.html (haoala's original tools)
+* https://github.com/davidtmiller (Start Bootstrap)
