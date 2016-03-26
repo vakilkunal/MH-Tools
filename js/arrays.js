@@ -116,18 +116,6 @@ function calculateTrapSetup(user) {
     
         //Exceptions
 
-        if (charmName == "Forgotten Charm") {
-            trapType = "Forgotten";
-        } else if (charmName == "Nanny Charm") {
-            trapType = "Parental";
-        } else if (charmName == "Hydro Charm") {
-            trapType = "Hydro";
-        } else if (charmName == "Shadow Charm") {
-            trapType = "Shadow";
-        } else {
-            trapType = weaponsArray[weaponName][0].trim();
-        }
-
         if (locationName.indexOf("Claw Shot City") >= 0 && (weaponName == "S.L.A.C." || weaponName == "S.L.A.C. II") && baseName == "Claw Shot Base") {
             if (charmName.indexOf("Cactus Charm")>=0) specialPower += 2500;
             else specialPower += 1000;
@@ -227,6 +215,18 @@ function calculateTrapSetup(user) {
         } else if (riftCount == 3) {
         	specialBonus += 10;
         	specialLuck += 5;
+        }
+
+        if (charmName == "Forgotten Charm") {
+            trapType = "Forgotten";
+        } else if (charmName == "Nanny Charm") {
+            trapType = "Parental";
+        } else if (charmName == "Hydro Charm") {
+            trapType = "Hydro";
+        } else if (charmName == "Shadow Charm") {
+            trapType = "Shadow";
+        } else {
+            trapType = weaponsArray[weaponName][0].trim();
         }
         
         var totalPower = weaponPower + basePower + charmPower + specialPower;
