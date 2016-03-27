@@ -1007,7 +1007,7 @@ function printCombinations(micePopulation, tableHTML) {
 				if (charmName == "Ultimate Charm") catchRate = 1;
 				else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
 				else if (mouse == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
-				else if (mouseName == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
+				else if (mouse == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
 				else if (mouse == "Zurreal the Eternal" && weapon != "Zurreal's Folly") catchRate = 0;
 
 				var catches = attractions*catchRate;
