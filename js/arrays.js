@@ -182,7 +182,7 @@ function calculateTrapSetup(user) {
         
         if (cheeseName == "Limelight" && charmName == "Mining Charm") {
             specialBonus += 30;
-        } else if (cheeseName.indexOf("Havarti") >= 0 && charmName == "Dreaded Charm") {
+        } else if (locationName == "Jungle of Dread" && charmName == "Dreaded Charm") {
             specialBonus += 300;
         } else if (cheeseName.indexOf("Fusion Fondue")>=0 && charmName == "EMP400 Charm") {
             specialPower += 25000;
