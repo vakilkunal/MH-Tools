@@ -228,6 +228,12 @@ function calculateTrapSetup(user) {
         } else {
             trapType = weaponsArray[weaponName][0].trim();
         }
+
+        if (weaponName == "Isle Idol Stakeshooter Skin") {
+            trapType = "Tactical";
+        } else if (weaponName == "Isle Idol Hydroplane Skin") {
+            trapType = "Hydro";
+        }
         
         var totalPower = weaponPower + basePower + charmPower + specialPower;
         var totalBonus = 1 + weaponBonus/100 + baseBonus/100 + charmBonus/100 + specialBonus/100;

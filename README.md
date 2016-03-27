@@ -5,6 +5,10 @@
 
 ## Changelog
 
+#### Mar 26 2016
+* Fixed multiple special effects power type issues (Isle Idol + skin + charms)
+* Added trap type row to setup results
+
 #### Mar 25 2016
 * Added charms: 2016, Extra Sweet Cupcake, Glowing Gourd, Hydro, Monkey Fling, Shadow, Super Regal, Treasure Trawling, Ultimate Anchor, and Ultimate Lucky Power
 * Added feature to notify user if weapons/bases/charms have been added, which deletes any cookie set earlier
