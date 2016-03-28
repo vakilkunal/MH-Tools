@@ -913,7 +913,7 @@ function showPop(type) {
 			var popArrayLLength = Object.size(popArray[locationName][phaseName]);
 			var commonCheeseIndex;
 			for (var i=0; i<popArrayLLength; i++) {
-				if (Object.keys(popArrayL)[i].indexOf(cheeseName) >= 0) {
+				if (Object.keys(popArrayL)[i].indexOf(cheeseName) >= 0 && Object.keys(popArrayL)[i].indexOf("/") >= 0) {
 					commonCheeseIndex = Object.keys(popArrayL)[i];
 					break;
 				}

@@ -309,7 +309,7 @@ function showPop (type) { //type = 2 means don't reset charms
 			var popArrayLLength = Object.size(popArray[locationName][phaseName]);
 			var commonCheeseIndex;
 			for (var i=0; i<popArrayLLength; i++) {
-				if (Object.keys(popArrayL)[i].indexOf(cheeseName) >= 0) {
+				if (Object.keys(popArrayL)[i].indexOf(cheeseName) >= 0 && Object.keys(popArrayL)[i].indexOf("/") >= 0) {
 					commonCheeseIndex = Object.keys(popArrayL)[i];
 					break;
 				}
