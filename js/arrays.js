@@ -236,7 +236,7 @@ function calculateTrapSetup(user) {
         }
         
         var totalPower = weaponPower + basePower + charmPower + specialPower;
-        var totalBonus = 1 + weaponBonus/100 + baseBonus/100 + charmBonus/100 + specialBonus/100;
+        var totalBonus = 1 + weaponBonus/100 + baseBonus/100 + charmBonus/100 + specialBonus/100 + cheeseBonus/100;
         var totalPourBonus = 1 + pourBonus/100 + pourBonus/100*(weaponBonus/100 + baseBonus/100 + charmBonus/100);
         var ampBonus = ztAmp/100 + braceBonus;
         trapPower = Math.round(totalPower * totalBonus * totalPourBonus * ampBonus);

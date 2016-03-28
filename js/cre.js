@@ -82,7 +82,7 @@ var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0, basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0, gsLuck = 7, lbwLuck = 0, charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0, pourBonus = 0, pourLuck = 0;
 var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
-var cheeseCost = 0;
+var cheeseCost = 0, cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 
 
@@ -227,6 +227,10 @@ window.onload = function () {
 
     document.getElementById("cheese").onchange = function () {
 		cheeseChanged();
+    };
+
+    document.getElementById("toxic").onchange = function () {
+		toxicChanged();
     };
 
     document.getElementById("weapon").onchange = function () {
@@ -1068,9 +1072,37 @@ function cheeseChanged () {
 		cheeseCost = 0;
 	}
 
+	//Toxic checks
+	var toxicDropdown = document.getElementById("toxic");
+	var toxicHTML = '';
+	toxicHTML += "<option>No</option>\n";
+	toxicHTML += "<option>Yes</option>\n";
+	var toxicDefaultHTML = "<option>-</option>";
+	if (cheeseName == "Brie" || cheeseName == "SB+") {
+		toxicDropdown.innerHTML = toxicHTML;
+		toxicChanged();
+	}
+	else {
+		toxicDropdown.innerHTML = toxicDefaultHTML;
+		toxicChanged();
+	}
+
 	showPop();
 	//showPop(2);
 	selectCharm();
+}
+
+function toxicChanged() {
+	var select = document.getElementById("toxic");
+	var isToxic = select.children[select.selectedIndex].innerHTML;
+	//console.log("isToxic: " + isToxic);
+	if (isToxic == "Yes" && (cheeseName == "Brie" || cheeseName == "SB+")) {
+		cheeseBonus = 20;
+	}
+	else {
+		cheeseBonus = 0;
+	}
+	showPop();
 }
 
 function weaponChanged() {
