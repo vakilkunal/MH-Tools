@@ -387,12 +387,12 @@ function showPop (type) { //type = 2 means don't reset charms
 		var overallPX2 = 0;
 		var percentSD = 0;
 		var minLuckOverall = 0;
-		
+
 		for (var i=0; i<noMice; i++) { 
-			var mouseName = Object.keys(popArrayLC)[i]
+			var mouseName = Object.keys(popArrayLC)[i];
 			var eff = findEff(mouseName);
 			
-			var mousePower = parseInt(powersArray[mouseName][0].replace(/,/g, ''))
+			var mousePower = parseInt(powersArray[mouseName][0].replace(/,/g, ''));
 			
 			if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
 				charmBonus += 300;
