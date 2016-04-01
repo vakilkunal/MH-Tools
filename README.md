@@ -5,6 +5,13 @@
 
 ## Changelog
 
+#### Apr 1 2016
+* Fixed Dreaded Charm behavior
+* Added Isle Idol skin checks for power type
+* Added check for '/' character in order to decide on commonCheeseIndex
+* Added toxic check for Brie and SB+
+* Fixed Mutated Behemoth typo in powersArray
+
 #### Mar 26 2016
 * Fixed multiple special effects power type issues (Isle Idol + skin + charms)
 * Added trap type row to setup results
