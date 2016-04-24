@@ -2,8 +2,13 @@
 
 ## To-do
 * Update attraction rates for Labyrinth using SB+/Gouda/Brie + Glowing Gourd Charm
+* Update attraction rates for Fiery Warpath mice that correspond to certain group while its charm is equipped
 
 ## Changelog
+
+#### Apr 23 2016
+* Fixed White Cheddar attraction rate
+* Fixed Coal Shoveller typo
 
 #### Apr 1 2016
 * Fixed Dreaded Charm behavior
@@ -11,6 +16,7 @@
 * Added check for '/' character in order to decide on commonCheeseIndex
 * Added toxic check for Brie and SB+
 * Fixed Mutated Behemoth typo in powersArray
+* Added tabbed CRE demo: http://tsitu.github.io/MH-Tools/tabs.html
 
 #### Mar 26 2016
 * Fixed multiple special effects power type issues (Isle Idol + skin + charms)

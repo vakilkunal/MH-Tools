@@ -61,6 +61,26 @@
       $("<div id='tabs-" + numTabs + "' class='tab'><iframe src='https://tsitu.github.io/MH-Tools/cre.html' width='100%' height='100%'></iframe>").appendTo(tabs);
       tabs.tabs("refresh");
     }
+
+    /*function nextTab() {
+      var active = $("#tabs").tabs("option", "active");
+      if (active == numTabs) {
+        location.href = "#tabs-1";
+      }
+      else {
+        location.href = "#tabs-" + (active + 1);
+      }
+    }
+
+    $("iframe").on("swipe",function(){
+      nextTab();
+    });
+
+    $(document).keydown(function(e) {
+      if (e.keyCode == 39 && e.ctrlKey) {
+        nextTab();
+      }
+    })*/
   </script>
 
   <!-- Google Analytics -->
