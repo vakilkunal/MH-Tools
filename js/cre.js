@@ -1131,26 +1131,26 @@ function baseChanged () {
 		baseName = select.children[select.selectedIndex].innerHTML;
 		updateLink();
 
-		var autoLocation = '';		
+		var autoPhase = '';		
 
-		if (locationName == "Iceberg: Bombing Run" && baseName == "Magnet Base") autoLocation = "Iceberg: Bombing Run (Magnet)";
-		else if (locationName == "Iceberg: Bombing Run (Magnet)" && baseName != "Magnet Base") autoLocation = "Iceberg: Bombing Run";
+		if (phaseName == "Bombing Run" && baseName == "Magnet Base") autoPhase = "Bombing Run (Magnet)";
+		else if (phaseName == "Bombing Run (Magnet)" && baseName != "Magnet Base") autoPhase = "Bombing Run";
 
-		else if (locationName == "Iceberg: Treacherous Tunnels" && baseName == "Magnet Base") autoLocation = "Iceberg: Treacherous Tunnels (Magnet)";
-		else if (locationName == "Iceberg: Treacherous Tunnels (Magnet)" && baseName != "Magnet Base") autoLocation = "Iceberg: Treacherous Tunnels";
+		else if (phaseName == "Treacherous Tunnels" && baseName == "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
+		else if (phaseName == "Treacherous Tunnels (Magnet)" && baseName != "Magnet Base") autoPhase = "Treacherous Tunnels";
 
-		else if ((locationName == "Iceberg: The Mad Depths" || locationName == "Iceberg: The Mad Depths (Magnet)") && baseName == "Hearthstone Base") autoLocation = "Iceberg: The Mad Depths (Hearthstone)";
-		else if ((locationName == "Iceberg: The Mad Depths" || locationName == "Iceberg: The Mad Depths (Hearthstone)") && baseName == "Magnet Base") autoLocation = "Iceberg: The Mad Depths (Magnet)";
-		else if (locationName == "Iceberg: The Mad Depths (Hearthstone)" && baseName != "Hearthstone Base") autoLocation = "Iceberg: The Mad Depths";
-		else if (locationName == "Iceberg: The Mad Depths (Magnet)" && baseName != "Magnet Base") autoLocation = "Iceberg: The Mad Depths";
+		else if ((phaseName == "The Mad Depths" || phaseName == "The Mad Depths (Magnet)") && baseName == "Hearthstone Base") autoPhase = "The Mad Depths (Hearthstone)";
+		else if ((phaseName == "The Mad Depths" || phaseName == "The Mad Depths (Hearthstone)") && baseName == "Magnet Base") autoPhase = "The Mad Depths (Magnet)";
+		else if (phaseName == "The Mad Depths (Hearthstone)" && baseName != "Hearthstone Base") autoPhase = "The Mad Depths";
+		else if (phaseName == "The Mad Depths (Magnet)" && baseName != "Magnet Base") autoPhase = "The Mad Depths";
 
-		if (autoLocation != "") {
-			var select = document.getElementById("location");
+		if (autoPhase != "") {
+			var select = document.getElementById("phase");
 			for (var i=0; i<select.children.length; i++) {
 				var child = select.children[i];
-				if (child.innerHTML == autoLocation) {
+				if (child.innerHTML == autoPhase) {
 					child.selected = true;
-			    	locationChanged();
+			    	phaseChanged();
 					break;
 				}
 			}
