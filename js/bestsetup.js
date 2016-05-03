@@ -109,7 +109,7 @@ var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 window.onload = function () {
 	
-	pop.open("get", "https://dl.dropboxusercontent.com/u/14589881/populations2.csv", true);
+	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations2.csv", true);
 	//pop.open("get", "file://localhost/Users/haoala/Desktop/MH/Chrome%20Extensions/CRE/populations.csv", false);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {
@@ -119,7 +119,7 @@ window.onload = function () {
 		}
 	}
 	pop.send();
-	baseline.open("get", "https://dl.dropboxusercontent.com/u/14589881/baselines.txt", true);
+	baseline.open("get", "https://tsitu.github.io/MH-Tools/data/baselines.txt", true);
 	baseline.onreadystatechange = function() {
 		if (baseline.readyState == 4) {
 			//console.log(baseline.responseText);
