@@ -6,6 +6,11 @@
 
 ## Changelog
 
+#### May 3 2016
+* Updated populations CSV format and added new Zokor data
+* Fixed automatic phase for Iceberg base interactions
+* Added points/gold values for Zokor mice
+
 #### Apr 23 2016
 * Fixed White Cheddar attraction rate
 * Fixed Coal Shoveller typo
