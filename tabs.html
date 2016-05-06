@@ -48,6 +48,7 @@
 
   <script>
     var numTabs = 3;
+    var savedUrl = '';
 
     $(function() {
       $("#tabs").tabs({active: 1});
@@ -58,8 +59,26 @@
       var tabs = $("#tabs").tabs();
       var ul = tabs.find("ul");
       $("<li><a href='#tabs-" + numTabs + "'>" + numTabs + "</a></li>").appendTo(ul)
-      $("<div id='tabs-" + numTabs + "' class='tab'><iframe src='https://tsitu.github.io/MH-Tools/cre.html' width='100%' height='100%'></iframe>").appendTo(tabs);
+      $("<div id='tabs-" + numTabs + "' class='tab'><iframe id='frame-" + numTabs + "' src='https://tsitu.github.io/MH-Tools/cre.html' width='100%' height='100%'></iframe>").appendTo(tabs);
       tabs.tabs("refresh");
+    }
+
+    function saveUrl() {
+      var active = $("#tabs").tabs("option", "active");
+      var activeName = "tabs-" + active;
+      var activeDiv = document.getElementById(activeName);
+      //console.log("active: " + active);
+      savedUrl = activeDiv.getElementsByTagName("iframe")[0].contentWindow.URLString;
+      console.log("savedUrl: " + savedUrl);
+    }
+
+    function pasteUrl() {
+      var active = $("#tabs").tabs("option", "active");
+      var activeName = "tabs-" + active;
+      var activeDiv = document.getElementById(activeName);
+      if (savedUrl.length != 0 ) {
+        activeDiv.getElementsByTagName("iframe")[0].src = savedUrl;
+      }
     }
 
     /*function nextTab() {
@@ -107,17 +126,22 @@
   <div id="tabs-add" class="tab"></div>
 
   <div id="tabs-1" class="tab">
-    <iframe src="https://tsitu.github.io/MH-Tools/cre.html" width="100%" height="100%"></iframe>
+    <iframe id="frame-1" src="https://tsitu.github.io/MH-Tools/cre.html" width="100%" height="100%"></iframe>
   </div>
 
   <div id="tabs-2" class="tab">
-    <iframe src="https://tsitu.github.io/MH-Tools/cre.html" width="100%" height="100%"></iframe>
+    <iframe id="frame-2" src="https://tsitu.github.io/MH-Tools/cre.html" width="100%" height="100%"></iframe>
   </div>
 
   <div id="tabs-3" class="tab">
-    <iframe src="https://tsitu.github.io/MH-Tools/cre.html" width="100%" height="100%"></iframe>
+    <iframe id="frame-3" src="https://tsitu.github.io/MH-Tools/cre.html" width="100%" height="100%"></iframe>
   </div>
 </div> 
+
+<div id="urlbutton">
+<button id="saveUrl" onclick="saveUrl()">Save Setup</button>
+<button id="pasteUrl" onclick="pasteUrl()">Paste Setup</button>
+</div>
 </body>
 
 </html>
