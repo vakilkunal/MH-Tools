@@ -75,7 +75,7 @@
       var active = $("#tabs").tabs("option", "active");
       var activeName = "tabs-" + active;
       var activeDiv = document.getElementById(activeName);
-      if (savedUrl.length >= 0) {
+      if (savedUrl.length > 0) {
         activeDiv.getElementsByTagName("iframe")[0].src = savedUrl;
       }
     }
