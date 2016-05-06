@@ -371,7 +371,11 @@ function showPop (type) { //type = 2 means don't reset charms
 			console.log("It's a special charm!");
 			var popArrayLC = popArrayLPC[charmName.slice(0,-7)];
 		}
-		else popArrayLC = popArrayLPC['-'];
+		else {
+			if (popArrayLPC != undefined) {
+				popArrayLC = popArrayLPC['-'];
+			}
+		}
 		
 		//console.log(popArrayLC);
 		

@@ -80,25 +80,14 @@
       }
     }
 
-    /*function nextTab() {
-      var active = $("#tabs").tabs("option", "active");
-      if (active == numTabs) {
-        location.href = "#tabs-1";
-      }
-      else {
-        location.href = "#tabs-" + (active + 1);
-      }
-    }
-
-    $("iframe").on("swipe",function(){
-      nextTab();
-    });
-
     $(document).keydown(function(e) {
-      if (e.keyCode == 39 && e.ctrlKey) {
-        nextTab();
+      if (e.keyCode == 67 && e.altKey) {
+        saveUrl();
       }
-    })*/
+      else if (e.keyCode == 86 && e.altKey) {
+        pasteUrl();
+      }
+    })
   </script>
 
   <!-- Google Analytics -->
@@ -138,8 +127,8 @@
 </div> 
 
 <div id="urlbutton">
-<button id="saveUrl" onclick="saveUrl()">Save Setup</button>
-<button id="pasteUrl" onclick="pasteUrl()">Paste Setup (to current tab)</button>
+  <button id="saveUrl" onclick="saveUrl()">Save Setup</button>
+  <button id="pasteUrl" onclick="pasteUrl()">Paste Setup (to current tab)</button>
 </div>
 </body>
 
