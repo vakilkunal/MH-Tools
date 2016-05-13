@@ -84,6 +84,7 @@ var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
 var cheeseCost = 0, cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
+var sampleSize = 0, sizeDescriptor = '';
 
 
 var specialCharm = [];
@@ -132,7 +133,14 @@ function processPop () {
 		if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
 		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
 		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][4]] = parseFloat(popCSV[i][5]);
+		
+		//Assign AR to a specific location/phase/cheese/charm/mouse
+		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
+		
+		//Assign sample size value to a specific location/phase/cheese/charm when available
+		if (popCSV[i][6].length > 0) {
+			popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
+		}
 	}
 
 	//console.log(popArray);
@@ -161,7 +169,7 @@ function processBaseline(baselineText) {
 
 window.onload = function () {
 	
-	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations2.csv", true);
+	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {
 			//console.log(pop.responseText);
@@ -309,6 +317,9 @@ function showTrapSetup(type) {
 
 function showPop (type) { //type = 2 means don't reset charms
 	var results = document.getElementById("results");
+	var commonCheeseIndex;
+
+	if (type != 0 && type != 2) charmName = "No Charm";
 
 	if (locationName == '' || type == 0) {
 		results.innerHTML = ''
@@ -321,7 +332,6 @@ function showPop (type) { //type = 2 means don't reset charms
 		if (popArrayLPC == undefined && cheeseName != "Cheese") {
 			var popArrayL = popArray[locationName][phaseName];
 			var popArrayLLength = Object.size(popArray[locationName][phaseName]);
-			var commonCheeseIndex;
 			for (var i=0; i<popArrayLLength; i++) {
 				if (Object.keys(popArrayL)[i].indexOf(cheeseName) >= 0 && Object.keys(popArrayL)[i].indexOf("/") >= 0) {
 					commonCheeseIndex = Object.keys(popArrayL)[i];
@@ -401,106 +411,130 @@ function showPop (type) { //type = 2 means don't reset charms
 		var overallPX2 = 0;
 		var percentSD = 0;
 		var minLuckOverall = 0;
+		sampleSize = 0;
 
 		for (var i=0; i<noMice; i++) { 
 			var mouseName = Object.keys(popArrayLC)[i];
-			var eff = findEff(mouseName);
+
+			if (mouseName != "SampleSize") {
+				var eff = findEff(mouseName);
 			
-			var mousePower = parseInt(powersArray[mouseName][0].replace(/,/g, ''));
-			
-			if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
-				charmBonus += 300;
-				calculateTrapSetup();
-			}
-			//console.log("calcCR()", eff, trapPower, trapLuck, mousePower)
-			var catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
-			if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
-				charmBonus -= 300;
-				calculateTrapSetup();
-			}
+				var mousePower = parseInt(powersArray[mouseName][0].replace(/,/g, ''));
+				
+				if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
+					charmBonus += 300;
+					calculateTrapSetup();
+				}
+				//console.log("calcCR()", eff, trapPower, trapLuck, mousePower)
+				var catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+				if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
+					charmBonus -= 300;
+					calculateTrapSetup();
+				}
 
-			var minLuckValue = minLuck(eff, mousePower);
-			var minLuckOverall = Math.max(minLuckValue, minLuckOverall);
-			//console.log("Min luck: " + minLuckValue);
+				var minLuckValue = minLuck(eff, mousePower);
+				var minLuckOverall = Math.max(minLuckValue, minLuckOverall);
+				//console.log("Min luck: " + minLuckValue);
 
-			//Exceptions, modifications to catch rates
-			//Dragonbane Charm
-			if (charmName == "Ultimate Charm") catchRate = 1;
-			else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
-			else if (mouseName == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
-			else if (mouseName == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
-			else if (mouseName == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
-			
-			var attractions = parseFloat(popArrayLC[mouseName])*overallAR;
-			
-			var catches = attractions*catchRate;
+				//Exceptions, modifications to catch rates
+				//Dragonbane Charm
+				if (charmName == "Ultimate Charm") catchRate = 1;
+				else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
+				else if (mouseName == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
+				else if (mouseName == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
+				else if (mouseName == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
+				
+				var attractions = parseFloat(popArrayLC[mouseName])*overallAR;
+				
+				var catches = attractions*catchRate;
 
-			//console.log(miceArray[mouseName]);
+				//console.log(miceArray[mouseName]);
 
-			if (miceArray[mouseName] == undefined) {
-				var mouseGold = 0;
-				var mousePoints = 0;
-			} else {
-				var mouseGold = miceArray[mouseName][0];
-				var mousePoints = miceArray[mouseName][1];
-			}
+				if (miceArray[mouseName] == undefined) {
+					var mouseGold = 0;
+					var mousePoints = 0;
+				} else {
+					var mouseGold = miceArray[mouseName][0];
+					var mousePoints = miceArray[mouseName][1];
+				}
 
-			//console.log("Gold: " + mouseGold);
-			if (charmName == "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
-			else if (charmName == "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
-			
-			var gold = catches*mouseGold/100;
-			var points = catches*mousePoints/100;
+				//console.log("Gold: " + mouseGold);
+				if (charmName == "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
+				else if (charmName == "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
+				
+				var gold = catches*mouseGold/100;
+				var points = catches*mousePoints/100;
 
-			if (tourneysArray[tournamentName] != undefined) {
-				var tourneyPoints = tourneysArray[tournamentName][mouseName];
-				if (tourneyPoints == undefined) tourneyPoints = 0;
-			} else tourneyPoints = 0;
-			var TP = catches*tourneyPoints/100;
-			var PX2 = TP*tourneyPoints;
+				if (tourneysArray[tournamentName] != undefined) {
+					var tourneyPoints = tourneysArray[tournamentName][mouseName];
+					if (tourneyPoints == undefined) tourneyPoints = 0;
+				} else tourneyPoints = 0;
+				var TP = catches*tourneyPoints/100;
+				var PX2 = TP*tourneyPoints;
 
-			overallCR += catches;
-			overallTP += TP;
-			overallPX2 += PX2;
-			overallGold += gold;
-			overallPoints += points;
-			
-			//Formatting
-			catchRate *= 100;
-			catchRate = catchRate.toFixed(2);
-			catches = catches.toFixed(2);
-			
-			resultsHTML += "<tr align='right'><td align='left'>" + mouseName + "</td><td>" + attractions.toFixed(2) + "%</td><td>" + catchRate + "%</td><td>" + catches + "</td><td>" + commafy(mouseGold) + "</td><td>" + commafy(mousePoints) + "</td><td>" + tourneyPoints + "</td><td>" + minLuckValue + "</td>";
-			if (locationName.indexOf("Seasonal Garden") >= 0) {
-				var dAmp = deltaAmp[mouseName];
-				if (charmName == "Amplifier Charm") dAmp *= 2;
-				resultsHTML += "<td>" + dAmp + "%</td>";
-				console.log("Amp bonus", dAmp);
-				deltaAmpOverall += catches/100 * dAmp;
-			} else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
-				var deltaDepthCatch = catchDepth[mouseName];
-				var deltaDepthFTC = ftcDepth[mouseName];
+				overallCR += catches;
+				overallTP += TP;
+				overallPX2 += PX2;
+				overallGold += gold;
+				overallPoints += points;
+				
+				//Formatting
+				catchRate *= 100;
+				catchRate = catchRate.toFixed(2);
+				catches = catches.toFixed(2);
+				
+				resultsHTML += "<tr align='right'><td align='left'>" + mouseName + "</td><td>" + attractions.toFixed(2) + "%</td><td>" + catchRate + "%</td><td>" + catches + "</td><td>" + commafy(mouseGold) + "</td><td>" + commafy(mousePoints) + "</td><td>" + tourneyPoints + "</td><td>" + minLuckValue + "</td>";
+				if (locationName.indexOf("Seasonal Garden") >= 0) {
+					var dAmp = deltaAmp[mouseName];
+					if (charmName == "Amplifier Charm") dAmp *= 2;
+					resultsHTML += "<td>" + dAmp + "%</td>";
+					console.log("Amp bonus", dAmp);
+					deltaAmpOverall += catches/100 * dAmp;
+				} else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
+					var deltaDepthCatch = catchDepth[mouseName];
+					var deltaDepthFTC = ftcDepth[mouseName];
 
-				if (charmName == "Wax Charm" && berglings.indexOf(mouseName) >= 0) {
-					deltaDepthCatch += 1;
-				} else if (charmName == "Sticky Charm" && berglings.indexOf(mouseName) >= 0) {
-					deltaDepthFTC = 0;
-				} else if (baseName == "Spiked Base" && brutes.indexOf(mouseName) >= 0) {
-					deltaDepthCatch = deltaDepthFTC = 0;
-				} else if (baseName == "Remote Detonator Base" && bombSquad.indexOf(mouseName) >= 0) {
-					deltaDepthCatch = 20;
+					if (charmName == "Wax Charm" && berglings.indexOf(mouseName) >= 0) {
+						deltaDepthCatch += 1;
+					} else if (charmName == "Sticky Charm" && berglings.indexOf(mouseName) >= 0) {
+						deltaDepthFTC = 0;
+					} else if (baseName == "Spiked Base" && brutes.indexOf(mouseName) >= 0) {
+						deltaDepthCatch = deltaDepthFTC = 0;
+					} else if (baseName == "Remote Detonator Base" && bombSquad.indexOf(mouseName) >= 0) {
+						deltaDepthCatch = 20;
+					}
+					
+					console.log("Catch dph:", deltaDepthCatch);
+					console.log("FTC dph:", deltaDepthFTC);
+					resultsHTML += "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
+
+					deltaDepthOverall += (catchRate/100 * deltaDepthCatch + (100-catchRate)/100 * deltaDepthFTC)*attractions/100;
+					//console.log("Here", (catchRate/100 * deltaDepthCatch + (100-catchRate)/100 * deltaDepthFTC)*attractions/100);
+					depthTest += deltaDepthCatch * catches/100 + deltaDepthFTC * (attractions-catches)/100;
 				}
 				
-				console.log("Catch dph:", deltaDepthCatch);
-				console.log("FTC dph:", deltaDepthFTC);
-				resultsHTML += "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
-
-				deltaDepthOverall += (catchRate/100 * deltaDepthCatch + (100-catchRate)/100 * deltaDepthFTC)*attractions/100;
-				//console.log("Here", (catchRate/100 * deltaDepthCatch + (100-catchRate)/100 * deltaDepthFTC)*attractions/100);
-				depthTest += deltaDepthCatch * catches/100 + deltaDepthFTC * (attractions-catches)/100;
+				resultsHTML += "</tr>";
 			}
-			
-			resultsHTML += "</tr>";
+			else {
+				//Assign sample size value if it is there
+				if (charmName == "No Charm") {
+					if (popArray[locationName][phaseName][cheeseName] != undefined) {
+						sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
+					}
+					else if (popArray[locationName][phaseName][commonCheeseIndex] != undefined) {
+						sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
+					}
+				}
+				else {
+					var slice = charmName.slice(0,-7);
+					if (popArray[locationName][phaseName][cheeseName] != undefined) {
+						sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
+					}
+					else if (popArray[locationName][phaseName][commonCheeseIndex] != undefined) {
+						sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
+					}
+				}
+			}
 		}
 		
 		//Formatting
@@ -536,9 +570,36 @@ function showPop (type) { //type = 2 means don't reset charms
 				5: {sorter: "fancyNumber"}
 			}//,
 			//sortList: [[0,0]]
-		});
-		
+		});	
 	}
+
+	//Set sample size and description of it
+	if (sampleSize == 0) {
+		sizeDescriptor = "N/A";
+	}
+	else if (sampleSize > 50000) {
+		var str = "excellent";
+		var colored = str.fontcolor("orange");
+		sizeDescriptor = sampleSize + " (" + colored + ")";
+	}
+	else if (sampleSize > 10000) {
+		var str = "good";
+		var colored = str.fontcolor("green");
+		sizeDescriptor = sampleSize + " (" + colored + ")";
+	}
+	else if (sampleSize > 3000 && sampleSize < 10000) {
+		var str = "average";
+		var colored = str.fontcolor("blue");
+		sizeDescriptor = sampleSize + " (" + colored + ")";
+	}
+	else if (sampleSize < 3000) {
+		var str = "poor";
+		var colored = str.fontcolor("red");
+		sizeDescriptor = sampleSize + " (" + colored + ")";
+	}
+
+	var ss = document.getElementById("sampleSize");
+	ss.innerHTML = "<tr><td id=\"ssid\">Sample Size</td><td>" + sizeDescriptor + "</td></tr>";
 }
 
 function resetCharms () {
@@ -1103,7 +1164,6 @@ function cheeseChanged () {
 
 	showPop();
 	//showPop(2);
-	selectCharm();
 }
 
 function toxicChanged() {
