@@ -1164,6 +1164,7 @@ function cheeseChanged () {
 
 	showPop();
 	//showPop(2);
+	selectCharm();
 }
 
 function toxicChanged() {
