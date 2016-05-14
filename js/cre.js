@@ -574,30 +574,34 @@ function showPop (type) { //type = 2 means don't reset charms
 	}
 
 	//Set sample size and description of it
+	var str = '';
+	var colored = '';
+
 	if (sampleSize == 0) {
 		sizeDescriptor = "N/A";
 	}
-	else if (sampleSize > 50000) {
-		var str = "excellent";
-		var colored = str.fontcolor("orange");
-		sizeDescriptor = sampleSize + " (" + colored + ")";
+	else if (sampleSize > 27000) {
+		str = "excellent";
+		colored = str.fontcolor("orange");
 	}
 	else if (sampleSize > 10000) {
-		var str = "good";
-		var colored = str.fontcolor("green");
-		sizeDescriptor = sampleSize + " (" + colored + ")";
+		str = "good";
+		colored = str.fontcolor("green");
 	}
-	else if (sampleSize > 3000 && sampleSize < 10000) {
-		var str = "average";
-		var colored = str.fontcolor("blue");
-		sizeDescriptor = sampleSize + " (" + colored + ")";
+	else if (sampleSize > 2400) {
+		str = "average";
+		colored = str.fontcolor("blue");
 	}
-	else if (sampleSize < 3000) {
-		var str = "poor";
-		var colored = str.fontcolor("red");
-		sizeDescriptor = sampleSize + " (" + colored + ")";
+	else if (sampleSize > 500) {
+		str = "poor";
+		colored = str.fontcolor("red");
+	}
+	else {
+		str = "very bad";
+		colored = str.fontcolor("purple");
 	}
 
+	sizeDescriptor = sampleSize + " (" + colored + ")";
 	var ss = document.getElementById("sampleSize");
 	ss.innerHTML = "<tr><td id=\"ssid\">Sample Size</td><td>" + sizeDescriptor + "</td></tr>";
 }
