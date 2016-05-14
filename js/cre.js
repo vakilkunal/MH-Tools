@@ -393,7 +393,10 @@ function showPop (type) { //type = 2 means don't reset charms
 		var overallPX2 = 0;
 		var percentSD = 0;
 		var minLuckOverall = 0;
-		sampleSize = 0;
+		
+		if (specialCharmsList != undefined && specialCharmsList.indexOf(charmName.slice(0,-1)) >= 0) {
+			sampleSize = 0;
+		}
 
 		for (var i=0; i<noMice; i++) { 
 			var mouseName = Object.keys(popArrayLC)[i];
@@ -497,37 +500,45 @@ function showPop (type) { //type = 2 means don't reset charms
 				
 				resultsHTML += "</tr>";
 			}
+		}
+
+		if (charmName == "No Charm") {
+			if (commonCheeseIndex != undefined) {
+				if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
+					sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
+				}
+			}
 			else {
-				// Assign sample size value if it exists
-				if (charmName == "No Charm") {
-					if (commonCheeseIndex != undefined) {
-						if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
-							sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
-						}
-					}
-					else {
-						if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
-							sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
-						}
-					}
+				if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
+					sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
+				}
+			}
+		}
+		else {
+			var slice = '';
+			if (charmName.indexOf("*") >= 0) {
+				slice = charmName.slice(0,-7);
+			}
+			else {
+				slice = charmName.slice(0,-6);
+			}
+			if (commonCheeseIndex != undefined) {
+				if (popArray[locationName][phaseName][commonCheeseIndex][slice] != undefined) {
+					sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
 				}
 				else {
-					var slice = '';
-					if (charmName.indexOf("*") >= 0) {
-						slice = charmName.slice(0,-7);
+					if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
+						sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
 					}
-					else {
-						slice = charmName.slice(0,-6);
-					}
-					if (commonCheeseIndex != undefined) {
-						if (popArray[locationName][phaseName][commonCheeseIndex][slice] != undefined) {
-							sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
-						}
-					}
-					else {
-						if (popArray[locationName][phaseName][cheeseName][slice] != undefined) {
-							sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
-						}
+				}
+			}
+			else {
+				if (popArray[locationName][phaseName][cheeseName][slice] != undefined) {
+					sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
+				}
+				else {
+					if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
+						sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
 					}
 				}
 			}
@@ -573,7 +584,7 @@ function showPop (type) { //type = 2 means don't reset charms
 	var str = '';
 	var colored = '';
 
-	if (sampleSize == 0) {
+	if (sampleSize == 0 || sampleSize == undefined) {
 		sizeDescriptor = "N/A";
 	}
 	else if (sampleSize > 27000) {
@@ -597,7 +608,7 @@ function showPop (type) { //type = 2 means don't reset charms
 		colored = str.fontcolor("purple");
 	}
 
-	if (sampleSize != 0) {
+	if (sampleSize != 0 && sampleSize != undefined) {
 		sizeDescriptor = sampleSize + " (" + colored + ")";
 	}
 	var ss = document.getElementById("sampleSize");
