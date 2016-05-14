@@ -601,7 +601,9 @@ function showPop (type) { //type = 2 means don't reset charms
 		colored = str.fontcolor("purple");
 	}
 
-	sizeDescriptor = sampleSize + " (" + colored + ")";
+	if (sampleSize != 0) {
+		sizeDescriptor = sampleSize + " (" + colored + ")";
+	}
 	var ss = document.getElementById("sampleSize");
 	ss.innerHTML = "<tr><td id=\"ssid\">Sample Size</td><td>" + sizeDescriptor + "</td></tr>";
 }
