@@ -526,7 +526,13 @@ function showPop (type) { //type = 2 means don't reset charms
 					}
 				}
 				else {
-					var slice = charmName.slice(0,-7);
+					var slice = '';
+					if (charmName.indexOf("*") >= 0) {
+						slice = charmName.slice(0,-7);
+					}
+					else {
+						slice = charmName.slice(0,-6);
+					}
 					if (popArray[locationName][phaseName][cheeseName] != undefined) {
 						sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
 					}

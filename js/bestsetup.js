@@ -53,7 +53,7 @@ function processPop () {
 		if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
 		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
 		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][4]] = parseFloat(popCSV[i][5]);
+		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
 	}
 
 	//console.log(popArray);
@@ -109,7 +109,7 @@ var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 window.onload = function () {
 	
-	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations2.csv", true);
+	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	//pop.open("get", "file://localhost/Users/haoala/Desktop/MH/Chrome%20Extensions/CRE/populations.csv", false);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {

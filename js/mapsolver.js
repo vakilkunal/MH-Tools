@@ -98,7 +98,7 @@ Object.size = function(obj) {
 
 
 var pop = new XMLHttpRequest();
-pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations2.csv", true);
+pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 pop.onreadystatechange = function() {
 	if (pop.readyState == 4) {
 		processPop();
@@ -123,9 +123,9 @@ function processPop() {
 		var phase = row[1];
 		var cheese = row[2];
 		var charm = row[3];
-		var mouseName = row[4];
+		var mouseName = row[5];
 		mouseName = mouseName.capitalise();
-		var population = row[5];
+		var population = row[4];
 
 		if (popArray[mouseName] == undefined) popArray[mouseName] = new Array(); //If mouse doesn't exist in array
 		if (popArray[mouseName][location] == undefined) popArray[mouseName][location] = new Array();
