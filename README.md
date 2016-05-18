@@ -6,6 +6,17 @@
 
 ## Changelog
 
+#### May 13 2016
+* Added sample size descriptor
+* Added Whisker Woods Rift attraction data and mice power/gold/points values
+
+#### May 11 2016
+* Fixed King's Gauntlet functionality
+* Fixed Zokor boss mice catch rates
+
+#### May 6 2016
+* Added save/paste setup functionality (with Alt-C and Alt-V keybindings) to the tabbed demo
+
 #### May 3 2016
 * Updated populations CSV format and added new Zokor data
 * Fixed automatic phase for Iceberg base interactions
