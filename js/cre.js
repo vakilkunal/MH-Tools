@@ -502,39 +502,12 @@ function showPop (type) { //type = 2 means don't reset charms
 			}
 		}
 
-		if (charmName == "No Charm") {
-			if (commonCheeseIndex != undefined) {
-				if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
-					sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
-				}
-			}
-			else {
-				if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
-					sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
-				}
-			}
-		}
-		else {
-			var slice = '';
-			if (charmName.indexOf("*") >= 0) {
-				slice = charmName.slice(0,-7);
-			}
-			else {
-				slice = charmName.slice(0,-6);
-			}
-			if (commonCheeseIndex != undefined) {
-				if (popArray[locationName][phaseName][commonCheeseIndex][slice] != undefined) {
-					sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
-				}
-				else {
+		if (popArray[locationName][phaseName][commonCheeseIndex] != undefined || popArray[locationName][phaseName][cheeseName] != undefined) {
+			if (charmName == "No Charm") {
+				if (commonCheeseIndex != undefined) {
 					if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
 						sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
 					}
-				}
-			}
-			else {
-				if (popArray[locationName][phaseName][cheeseName][slice] != undefined) {
-					sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
 				}
 				else {
 					if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
@@ -542,7 +515,36 @@ function showPop (type) { //type = 2 means don't reset charms
 					}
 				}
 			}
-		}
+			else {
+				var slice = '';
+				if (charmName.indexOf("*") >= 0) {
+					slice = charmName.slice(0,-7);
+				}
+				else {
+					slice = charmName.slice(0,-6);
+				}
+				if (commonCheeseIndex != undefined) {
+					if (popArray[locationName][phaseName][commonCheeseIndex][slice] != undefined) {
+						sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
+					}
+					else {
+						if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
+							sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
+						}
+					}
+				}
+				else {
+					if (popArray[locationName][phaseName][cheeseName][slice] != undefined) {
+						sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
+					}
+					else {
+						if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
+							sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
+						}
+					}
+				}
+			}
+		}		
 		
 		//Formatting
 		overallAR *= 100;

@@ -389,7 +389,7 @@ baselineAttArray["Terre Ricotta"] = 0.99;
 baselineAttArray["Polluted Parmesan"] = 0.99;
 baselineAttArray["Galleon Gouda"] = 0.95;
 baselineAttArray["Lactrodectus Lancashire"] = 0.9995;
-
+baselineAttArray["Magical String + Brie String"] = 0.9;
 
 
 var freshness2stale = [];
