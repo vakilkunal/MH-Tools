@@ -6,6 +6,9 @@
 
 ## Changelog
 
+#### May 20 2016
+* Added initial Furoma Rift implementation
+
 #### May 13 2016
 * Added sample size descriptor
 * Added Whisker Woods Rift attraction data and mice power/gold/points values
