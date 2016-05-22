@@ -78,8 +78,14 @@ function loadCharmDropdown() {
 	}
 }
 
+/*
+ * Variable Initialization
+ */
 var popLoaded = 0, baselineLoaded = 0;
-var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0, basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0, gsLuck = 7, lbwLuck = 0, charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0, pourBonus = 0, pourLuck = 0;
+var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
+var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
+var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
+var gsLuck = 7, lbwLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0;
 var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
 var cheeseCost = 0, cheeseBonus = 0;
@@ -105,6 +111,32 @@ function checkLoadState() {
 		loadLocationDropdown();
 		loadTourneyDropdown();
 		//updateLink();
+
+		var toxicParameter = getURLParameter("toxic");
+		if (toxicParameter != "null") {
+			var select = document.getElementById("toxic");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == toxicParameter) {
+					child.selected = true;
+			    	toxicChanged();
+					break;
+				}
+			}
+		}
+
+		var batteryParameter = getURLParameter("battery");
+		if (batteryParameter != "null") {
+			var select = document.getElementById("battery");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == batteryParameter) {
+					child.selected = true;
+			    	batteryChanged();
+					break;
+				}
+			}
+		}
 		
 		status.innerHTML = "<td>All set!</td>";
 		setTimeout(function() {status.innerHTML = '<td><br></td>'}, 3000);
@@ -196,7 +228,7 @@ window.onload = function () {
 	loadCharmDropdown();
 
 	var gsParameter = getURLParameter("gs");
-	if(gsParameter != "null") {
+	if (gsParameter != "null") {
 		gsParameter = "No";
 		var select = document.getElementById("gs");
 		for (var i=0; i<select.children.length; i++) {
@@ -210,7 +242,7 @@ window.onload = function () {
 	}
 	
 	var lbwParameter = getURLParameter("lbw");
-	if(lbwParameter != "null") {
+	if (lbwParameter != "null") {
 		lbwParameter = "Yes";
 		var select = document.getElementById("lbw");
 		for (var i=0; i<select.children.length; i++) {
@@ -222,7 +254,6 @@ window.onload = function () {
 			}
 		}
 	}
-
 
     //Listening for changes in dropdowns or textboxes
     document.getElementById("location").onchange = function () {
@@ -239,6 +270,10 @@ window.onload = function () {
 
     document.getElementById("toxic").onchange = function () {
 		toxicChanged();
+    };
+
+    document.getElementById("battery").onchange = function () {
+		batteryChanged();
     };
 
     document.getElementById("weapon").onchange = function () {
@@ -408,7 +443,7 @@ function showPop (type) { //type = 2 means don't reset charms
 				
 				if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
 					charmBonus += 300;
-					calculateTrapSetup();
+					calculateTrapSetup(); // not "cre" or else infinite loop
 				}
 				//console.log("calcCR()", eff, trapPower, trapLuck, mousePower)
 				var catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -959,15 +994,17 @@ function getURLParameter (name) {
 function updateLink () {
 	var URLString = 'cre.html?';
 	
-	if(locationName != "") URLString+= "&location="+locationName;
-	if(phaseName != "" && phaseName != "-") URLString+= "&phase="+phaseName;
-	if(cheeseName != "") URLString+= "&cheese="+cheeseName;
-	if(weaponName != "") URLString+= "&weapon="+weaponName;
-	if(baseName != "") URLString+= "&base="+baseName;
-	if(charmName != "") URLString+= "&charm="+charmName;
-	if(gsLuck == 0) URLString+= "&gs="+gsLuck;
-	if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
-	if(tournamentName != "") URLString+= "&tourney="+tournamentName;
+	if (locationName != "") URLString += "&location=" + locationName;
+	if (phaseName != "" && phaseName != "-") URLString += "&phase=" + phaseName;
+	if (cheeseName != "") URLString += "&cheese=" + cheeseName;
+	if (isToxic != "" && isToxic != "-") URLString += "&toxic=" + isToxic;
+	if (batteryPower != 0) URLString += "&battery=" + batteryPower;
+	if (weaponName != "") URLString += "&weapon=" + weaponName;
+	if (baseName != "") URLString += "&base=" + baseName;
+	if (charmName != "") URLString += "&charm=" + charmName;
+	if (gsLuck == 0) URLString += "&gs=" + gsLuck;
+	if (lbwLuck == 5) URLString += "&lbw=" + lbwLuck;
+	if (tournamentName != "") URLString += "&tourney=" + tournamentName;
 	
 	document.getElementById("link").href = URLString;
 	
@@ -1047,6 +1084,29 @@ function locationChanged () {
     var select = document.getElementById("location");
 	locationName = select.children[select.selectedIndex].innerHTML;
 	updateLink();
+
+	//Battery checks
+	var batteryDropdown = document.getElementById("battery");
+	var batteryDefaultHTML = "<option>-</option>";
+	var batteryHTML = '';
+	batteryHTML += "<option>-</option>\n";
+	batteryHTML += "<option>1</option>\n";
+	batteryHTML += "<option>2</option>\n";
+	batteryHTML += "<option>3</option>\n";
+	batteryHTML += "<option>4</option>\n";
+	batteryHTML += "<option>5</option>\n";
+	batteryHTML += "<option>6</option>\n";
+	batteryHTML += "<option>7</option>\n";
+	batteryHTML += "<option>8</option>\n";
+	batteryHTML += "<option>9</option>\n";
+	batteryHTML += "<option>10</option>\n";
+	if (locationName == "Furoma Rift") {
+		batteryDropdown.innerHTML = batteryHTML;
+	}
+	else {
+		batteryDropdown.innerHTML = batteryDefaultHTML;
+		batteryPower = 0;
+	}
 	
 	showPop(0);
 	//showPop(2);
@@ -1088,8 +1148,6 @@ function phaseChanged () {
 		pourLuck = 0;
 		calculateTrapSetup("cre");
 	}
-	
-	//calculateTrapSetup("cre");
 	
 	loadCheeseDropdown();
 	updateLink();
@@ -1142,13 +1200,12 @@ function cheeseChanged () {
 
 	//Toxic checks
 	var toxicDropdown = document.getElementById("toxic");
+	var toxicDefaultHTML = "<option>-</option>";
 	var toxicHTML = '';
 	toxicHTML += "<option>No</option>\n";
 	toxicHTML += "<option>Yes</option>\n";
-	var toxicDefaultHTML = "<option>-</option>";
 	if (cheeseName == "Brie" || cheeseName == "SB+") {
 		toxicDropdown.innerHTML = toxicHTML;
-		toxicChanged();
 	}
 	else {
 		toxicDropdown.innerHTML = toxicDefaultHTML;
@@ -1162,15 +1219,58 @@ function cheeseChanged () {
 
 function toxicChanged() {
 	var select = document.getElementById("toxic");
-	var isToxic = select.children[select.selectedIndex].innerHTML;
-	//console.log("isToxic: " + isToxic);
+	isToxic = select.children[select.selectedIndex].innerHTML;
+
 	if (isToxic == "Yes" && (cheeseName == "Brie" || cheeseName == "SB+")) {
 		cheeseBonus = 20;
 	}
 	else {
 		cheeseBonus = 0;
 	}
-	showPop();
+
+	updateLink();
+	calculateTrapSetup("cre");
+}
+
+function batteryChanged() {
+	var select = document.getElementById("battery");
+	var batteryLevel = select.children[select.selectedIndex].innerHTML;
+	if (batteryLevel == "1") {
+		batteryPower = 1;
+	}
+	else if (batteryLevel == "2") {
+		batteryPower = 2;
+	}
+	else if (batteryLevel == "3") {
+		batteryPower = 3;
+	}
+	else if (batteryLevel == "4") {
+		batteryPower = 4;
+	}
+	else if (batteryLevel == "5") {
+		batteryPower = 5;
+	}
+	else if (batteryLevel == "6") {
+		batteryPower = 6;
+	}
+	else if (batteryLevel == "7") {
+		batteryPower = 7;
+	}
+	else if (batteryLevel == "8") {
+		batteryPower = 8;
+	}
+	else if (batteryLevel == "9") {
+		batteryPower = 9;
+	}
+	else if (batteryLevel == "10") {
+		batteryPower = 10;
+	}
+	else if (batteryLevel == "-") {
+		batteryPower = 0;
+	}
+
+	updateLink();
+	calculateTrapSetup("cre");
 }
 
 function weaponChanged() {

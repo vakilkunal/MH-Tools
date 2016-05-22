@@ -217,6 +217,49 @@ function calculateTrapSetup(user) {
         	specialLuck += 5;
         }
 
+        /*
+         * Battery Levels
+         */
+        if (batteryPower == 1) {
+            specialPower += 90;
+        }
+        else if (batteryPower == 2) {
+            specialPower += 500;
+            specialLuck += 1;
+        }
+        else if (batteryPower == 3) {
+            specialPower += 3000;
+            specialLuck += 2;
+        }
+        else if (batteryPower == 4) {
+            specialPower += 8500;
+            specialLuck += 5;
+        }
+        else if (batteryPower == 5) {
+            specialPower += 16000;
+            specialLuck += 10;
+        }
+        else if (batteryPower == 6) {
+            specialPower += 30000;
+            specialLuck += 12;
+        }
+        else if (batteryPower == 7) {
+            specialPower += 50000;
+            specialLuck += 25;
+        }
+        else if (batteryPower == 8) {
+            specialPower += 90000;
+            specialLuck += 35;
+        }
+        else if (batteryPower == 9) {
+            specialPower += 190000;
+            specialLuck += 50;
+        }
+        else if (batteryPower == 10) {
+            specialPower += 300000;
+            specialLuck += 100;
+        }
+
         if (charmName == "Forgotten Charm") {
             trapType = "Forgotten";
         } else if (charmName == "Nanny Charm") {
