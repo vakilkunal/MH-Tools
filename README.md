@@ -6,6 +6,9 @@
 
 ## Changelog
 
+#### May 21 2016
+* Implemented Furoma Rift battery levels and added toxic/battery to URLString
+
 #### May 20 2016
 * Added initial Furoma Rift implementation
 
