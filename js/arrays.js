@@ -220,7 +220,8 @@ function calculateTrapSetup(user) {
         /*
          * Battery Levels
          */
-        if (batteryPower == 1) {
+        if (typeof batteryPower == 'undefined') {}
+        else if (batteryPower == 1) {
             specialPower += 90;
         }
         else if (batteryPower == 2) {
