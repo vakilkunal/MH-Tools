@@ -202,11 +202,11 @@ function processBaseline(baselineText) {
 window.onload = function () {
 
 	// Initial hiding
-	$("#ampRow").hide();
-	$("#sliderRow").hide();
-	$("#batteryRow").hide();
-	$("#toxicRow").hide();
-	$("#phaseRow").hide();
+	$("#ampRow").hide(500);
+	$("#sliderRow").hide(500);
+	$("#batteryRow").hide(500);
+	$("#toxicRow").hide(500);
+	$("#phaseRow").hide(500);
 	
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	pop.onreadystatechange = function() {
@@ -1104,22 +1104,27 @@ function locationChanged () {
 	batteryHTML += "<option>10</option>\n";
 	if (locationName == "Furoma Rift") {
 		batteryDropdown.innerHTML = batteryHTML;
-		$("#batteryRow").show();
+		$("#batteryRow").show(500);
 	}
 	else {
 		batteryDropdown.innerHTML = batteryDefaultHTML;
 		batteryPower = 0;
-		$("#batteryRow").hide();
+		$("#batteryRow").hide(500);
 	}
 
 	// ZT Amplifier jQuery hiding/showing
 	if (locationName == "Zugzwang's Tower") {
-		$("#ampRow").show();
-		$("#sliderRow").show();
+		$("#ampRow").show(500);
+		$("#sliderRow").show(500);
 	}
 	else {
-		$("#ampRow").hide();
-		$("#sliderRow").hide();
+		$("#ampRow").hide(500);
+		$("#sliderRow").hide(500);
+	}
+
+	if (locationName == "") {
+		$("#phaseRow").hide(500);
+		$("#toxicRow").hide(500);
 	}
 	
 	showPop(0);
@@ -1136,10 +1141,10 @@ function phaseChanged () {
 	phaseName = select.children[select.selectedIndex].innerHTML;
 
 	if (phaseName == "-") {
-		$("#phaseRow").hide();
+		$("#phaseRow").hide(500);
 	}
 	else {
-		$("#phaseRow").show();
+		$("#phaseRow").show(500);
 	}
 	
 	var autoBase = ''
@@ -1158,7 +1163,7 @@ function phaseChanged () {
 				break;
 			}
 		}
-	}	
+	}
 	
 	if (locationName=="Twisted Garden" && phaseName=="Poured" && pourBonus == 0) {
 		pourBonus = 5;
@@ -1226,12 +1231,12 @@ function cheeseChanged () {
 	toxicHTML += "<option>No</option>\n";
 	toxicHTML += "<option>Yes</option>\n";
 	if (cheeseName == "Brie" || cheeseName == "SB+") {
-		$("#toxicRow").show();
+		$("#toxicRow").show(500);
 		toxicDropdown.innerHTML = toxicHTML;
 		toxicChanged();
 	}
 	else {
-		$("#toxicRow").hide();
+		$("#toxicRow").hide(500);
 		toxicDropdown.innerHTML = toxicDefaultHTML;
 		toxicChanged();
 	}
