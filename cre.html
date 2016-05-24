@@ -7,8 +7,10 @@
     <script type="text/javascript" src="js/cre.js"></script>
     <script type="text/javascript" src="js/parse.js"></script>
 	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script> 
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
     <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <style type="text/css">
@@ -78,6 +80,24 @@
       ga('auto.send', 'pageview');
     </script>
 
+    <!-- Amplifier slider -->
+    <script>
+        $(function() {
+            $("#ampSlider").slider({
+                min: 0,
+                max: 175,
+                step: 1,
+                change: function(event, ui) {
+                    if (event.originalEvent) {
+                        $('#ampValue').val(ui.value);
+                        ztAmp = parseInt(ui.value);
+                        calculateTrapSetup("cre");
+                    }
+                }
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -97,14 +117,15 @@
         </table>
             <!--###################################################################################-->
         <table>
-            <tr><td>Location:</td>
+            <tr>
+                <td>Location:</td>
                 <td>
                     <select id="location">
                     </select>
                 </td>
             </tr>
             
-			<tr>
+			<tr id="phaseRow">
 				<td>Sublocation:</td>
 				<td>
                     <select id="phase">
@@ -113,7 +134,8 @@
 				</td>
 			</tr>
             
-            <tr><td>Cheese:</td>
+            <tr>
+                <td>Cheese:</td>
                 <td>
                     <select id="cheese">
                     	<option>Select a location</option>
@@ -121,7 +143,8 @@
                 </td>
             </tr>
 
-            <tr><td>Toxic:</td>
+            <tr id="toxicRow">
+                <td>Toxic:</td>
                 <td>
                     <select id="toxic">
                         <option>-</option>
@@ -129,7 +152,8 @@
                 </td>
             </tr>
 
-            <tr><td>Battery Level:</td>
+            <tr id="batteryRow">
+                <td>Battery Level:</td>
                 <td>
                     <select id="battery">
                         <option>-</option>
@@ -137,28 +161,32 @@
                 </td>
             </tr>
             
-            <tr><td>Weapon:</td>
+            <tr>
+                <td>Weapon:</td>
                 <td>
                     <select id="weapon">
                     </select>
                 </td>
             </tr>
             
-            <tr><td>Base:</td>
+            <tr>
+                <td>Base:</td>
                 <td>
                     <select id="base">
                     </select>
                 </td>
             </tr>
             
-            <tr><td>Charm:</td>
+            <tr>
+                <td>Charm:</td>
             	<td>
             		<select id="charm">
                     </select>
             	</td>
             </tr>
             
-            <tr><td>Golden Shield:</td>
+            <tr>
+                <td>Golden Shield:</td>
                 <td>
                     <select id="gs">
 						<option value='Y'>Yes</option>
@@ -167,7 +195,8 @@
                 </td>
             </tr>
             
-            <tr><td>+5 Luck:</td>
+            <tr>
+                <td>+5 Luck:</td>
                 <td>
                     <select id="lbw">
 						<option value='N'>No</option>
@@ -176,20 +205,30 @@
                 </td>
             </tr>
             
-            <tr><td>Tourney:</td>
+            <tr>
+                <td>Tourney:</td>
                 <td>
                     <select id="tourney">
                     </select>
                 </td>
             </tr>
             
-            <tr><td>Amp:</td>
+            <tr id="ampRow">
+                <td>Amp:</td>
                 <td>
-                    <input id="ampLevel" type="text" size="3" value="100">%
+                    <input id="ampValue" type="text" size="1" value="0" readonly>%
+                </td>
+            </tr>
+
+            <tr id="sliderRow"
+                ><td></td>
+                <td>
+                    <div id="ampSlider"></div>
                 </td>
             </tr>
             
-            <tr><td>Cheese cost:</td>
+            <tr>
+                <td>Cheese cost:</td>
                 <td>
                     <input id="cheeseCost" type="text" size="5" value="0">
                 </td>

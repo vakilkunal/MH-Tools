@@ -200,6 +200,13 @@ function processBaseline(baselineText) {
 
 
 window.onload = function () {
+
+	// Initial hiding
+	$("#ampRow").hide();
+	$("#sliderRow").hide();
+	$("#batteryRow").hide();
+	$("#toxicRow").hide();
+	$("#phaseRow").hide();
 	
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	pop.onreadystatechange = function() {
@@ -298,11 +305,6 @@ window.onload = function () {
 	
     document.getElementById("tourney").onchange = function () {
 		tourneyChanged();
-    };     
-
-    document.getElementById("ampLevel").onchange = function () {
-        ztAmp = parseInt(document.getElementById("ampLevel").value);
-		calculateTrapSetup("cre");
     };
 
     document.getElementById("cheeseCost").onchange = function () {
@@ -1102,10 +1104,22 @@ function locationChanged () {
 	batteryHTML += "<option>10</option>\n";
 	if (locationName == "Furoma Rift") {
 		batteryDropdown.innerHTML = batteryHTML;
+		$("#batteryRow").show();
 	}
 	else {
 		batteryDropdown.innerHTML = batteryDefaultHTML;
 		batteryPower = 0;
+		$("#batteryRow").hide();
+	}
+
+	// ZT Amplifier jQuery hiding/showing
+	if (locationName == "Zugzwang's Tower") {
+		$("#ampRow").show();
+		$("#sliderRow").show();
+	}
+	else {
+		$("#ampRow").hide();
+		$("#sliderRow").hide();
 	}
 	
 	showPop(0);
@@ -1120,6 +1134,13 @@ function phaseChanged () {
 	console.log("Phase changed");
     var select = document.getElementById("phase");
 	phaseName = select.children[select.selectedIndex].innerHTML;
+
+	if (phaseName == "-") {
+		$("#phaseRow").hide();
+	}
+	else {
+		$("#phaseRow").show();
+	}
 	
 	var autoBase = ''
 	if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
@@ -1205,9 +1226,12 @@ function cheeseChanged () {
 	toxicHTML += "<option>No</option>\n";
 	toxicHTML += "<option>Yes</option>\n";
 	if (cheeseName == "Brie" || cheeseName == "SB+") {
+		$("#toxicRow").show();
 		toxicDropdown.innerHTML = toxicHTML;
+		toxicChanged();
 	}
 	else {
+		$("#toxicRow").hide();
 		toxicDropdown.innerHTML = toxicDefaultHTML;
 		toxicChanged();
 	}
