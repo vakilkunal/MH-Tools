@@ -6,9 +6,10 @@
 
 ## Changelog
 
-#### May 24 2016
+#### May 23 2016
 * Added accurate power effectiveness percentages for 13 Furoma Rift mice
-* 
+* Implemented situational <tr> hiding
+* Changed Zugzwang's Tower amplifier to a slider
 
 #### May 21 2016
 * Implemented Furoma Rift battery levels and added toxic/battery to URLString
