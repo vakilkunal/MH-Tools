@@ -202,11 +202,11 @@ function processBaseline(baselineText) {
 window.onload = function () {
 
 	// Initial hiding
-	$("#ampRow").hide(500);
-	$("#sliderRow").hide(500);
-	$("#batteryRow").hide(500);
-	$("#toxicRow").hide(500);
-	$("#phaseRow").hide(500);
+	$("#ampRow").hide();
+	$("#sliderRow").hide();
+	$("#batteryRow").hide();
+	$("#toxicRow").hide();
+	$("#phaseRow").hide();
 	
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	pop.onreadystatechange = function() {
@@ -1104,27 +1104,29 @@ function locationChanged () {
 	batteryHTML += "<option>10</option>\n";
 	if (locationName == "Furoma Rift") {
 		batteryDropdown.innerHTML = batteryHTML;
-		$("#batteryRow").show(500);
+		$("#batteryRow").show(700);
 	}
 	else {
 		batteryDropdown.innerHTML = batteryDefaultHTML;
 		batteryPower = 0;
-		$("#batteryRow").hide(500);
+		$("#batteryRow").hide();
 	}
 
 	// ZT Amplifier jQuery hiding/showing
 	if (locationName == "Zugzwang's Tower") {
-		$("#ampRow").show(500);
-		$("#sliderRow").show(500);
+		ztAmp = parseInt($("#ampSlider").slider("value"));
+		$("#ampRow").show(700);
+		$("#sliderRow").show(700);
 	}
 	else {
-		$("#ampRow").hide(500);
-		$("#sliderRow").hide(500);
+		ztAmp = 100;
+		$("#ampRow").hide();
+		$("#sliderRow").hide();
 	}
 
 	if (locationName == "") {
-		$("#phaseRow").hide(500);
-		$("#toxicRow").hide(500);
+		$("#phaseRow").hide();
+		$("#toxicRow").hide();
 	}
 	
 	showPop(0);
@@ -1141,10 +1143,10 @@ function phaseChanged () {
 	phaseName = select.children[select.selectedIndex].innerHTML;
 
 	if (phaseName == "-") {
-		$("#phaseRow").hide(500);
+		$("#phaseRow").hide();
 	}
 	else {
-		$("#phaseRow").show(500);
+		$("#phaseRow").show(700);
 	}
 	
 	var autoBase = ''
@@ -1231,12 +1233,12 @@ function cheeseChanged () {
 	toxicHTML += "<option>No</option>\n";
 	toxicHTML += "<option>Yes</option>\n";
 	if (cheeseName == "Brie" || cheeseName == "SB+") {
-		$("#toxicRow").show(500);
+		$("#toxicRow").show(700);
 		toxicDropdown.innerHTML = toxicHTML;
 		toxicChanged();
 	}
 	else {
-		$("#toxicRow").hide(500);
+		$("#toxicRow").hide();
 		toxicDropdown.innerHTML = toxicDefaultHTML;
 		toxicChanged();
 	}
