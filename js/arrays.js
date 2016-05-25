@@ -95,7 +95,6 @@ Object.size = function(obj) {
     }
     //results.innerHTML += text;
     return size;
-    
 };
 
 
@@ -2764,17 +2763,9 @@ weaponsArray["Zurreal's Folly"][4] = "  12";
 weaponsArray["Zurreal's Folly"][5] = "  Ultimately Stale";
 var weaponsLoaded = 1;
 
-/*Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
 // Get the size of an object
-var arrsize = Object.size(weaponsArray);
-console.log("weaponsArray size: " + arrsize);*/
+// var arrsize = Object.size(weaponsArray);
+// console.log("weaponsArray size: " + arrsize);
 
 
 
@@ -6929,6 +6920,18 @@ powersArray["Scruffy"][7] = "100%";
 powersArray["Scruffy"][8] = "100%";
 powersArray["Scruffy"][9] = "100.00%";
 powersArray["Scruffy"][10] = "0.00%";
+powersArray["Captain Croissant"] = [];
+powersArray["Captain Croissant"][0] = "200";
+powersArray["Captain Croissant"][1] = "100%";
+powersArray["Captain Croissant"][2] = "100%";
+powersArray["Captain Croissant"][3] = "100%";
+powersArray["Captain Croissant"][4] = "100%";
+powersArray["Captain Croissant"][5] = "0%";
+powersArray["Captain Croissant"][6] = "100%";
+powersArray["Captain Croissant"][7] = "100%";
+powersArray["Captain Croissant"][8] = "100%";
+powersArray["Captain Croissant"][9] = "100.00%";
+powersArray["Captain Croissant"][10] = "0.00%";
 powersArray["Dwarf"] = [];
 powersArray["Dwarf"][0] = "200";
 powersArray["Dwarf"][1] = "100%";
