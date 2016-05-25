@@ -62,6 +62,9 @@
         #ssid {
             padding-right: 25px;
         }
+        .locationComment {
+            font-weight: bold;
+        }
     </style>
     <!--###################################################################################-->
 
@@ -133,7 +136,7 @@
                     <div class="header">
                         	<h1>Catch Rate Calculator</h1>
                         	<small>Thanks to the work of Adriel, Chad, Nick, Ben, Paul, Yikai and Kat<br>
-                        	Maintained by Stuartt, Kat, Sophie, and Tran<br>
+                        	Maintained by Tran, Sophie, and Stuartt<br>
                         	<a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator/page11" target="_blank">Report bugs and suggest features</a></small>
 							
                     </div>
@@ -142,6 +145,23 @@
         </table>
             <!--###################################################################################-->
         <table>
+            <!-- Location Comments -->
+            <tr id="wwrComment" style="display:none">
+                <td>Comments:</td>
+                <td class="locationComment">Still missing some rage states and charm populations.<br>Magical String + Brie String is a joint population meant to improve overall attraction/catch rate accuracy.</td>
+            </tr>
+
+            <tr id="frComment" style="display:none">
+                <td>Comments:</td>
+                <td class="locationComment">Still missing data to separate inside/outside of Grand Pagoda.<br>This is a new location - mouse powers and effectiveness values are subject to change.</td>
+            </tr>
+
+            <tr id="labyComment" style="display:none">
+                <td>Comments:</td>
+                <td class="locationComment">Average lantern clues coming soon!</td>
+            </tr>
+            <!--  -->
+
             <tr>
                 <td>Location:</td>
                 <td>
@@ -150,7 +170,7 @@
                 </td>
             </tr>
             
-			<tr id="phaseRow">
+			<tr id="phaseRow" style="display:none">
 				<td>Sublocation:</td>
 				<td>
                     <select id="phase">
@@ -168,7 +188,7 @@
                 </td>
             </tr>
 
-            <tr id="toxicRow">
+            <tr id="toxicRow" style="display:none">
                 <td>Toxic:</td>
                 <td>
                     <select id="toxic">
@@ -177,7 +197,7 @@
                 </td>
             </tr>
 
-            <tr id="batteryRow">
+            <tr id="batteryRow" style="display:none">
                 <td>Battery Level:</td>
                 <td>
                     <select id="battery">
@@ -238,15 +258,15 @@
                 </td>
             </tr>
             
-            <tr id="ampRow">
+            <tr id="ampRow" style="display:none">
                 <td>Amp:</td>
                 <td>
                     <input id="ampValue" type="text" size="3" value="0" readonly>%
                 </td>
             </tr>
 
-            <tr id="sliderRow"
-                ><td></td>
+            <tr id="sliderRow" style="display:none">
+                <td></td>
                 <td>
                     <div id="ampSlider"></div>
                 </td>

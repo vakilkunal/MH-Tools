@@ -1,83 +1,5 @@
 "use strict";
 
-function loadWeaponDropdown() {
-	var weaponDropdown = document.getElementById("weapon");
-	var weaponDropdownHTML = '<option></option>';
-
-	var weaponsArrayLength = Object.size(weaponsArray);
-
-	for (var i=0; i<weaponsArrayLength; i++) {
-		weaponDropdownHTML += "<option>"+Object.keys(weaponsArray)[i]+"</option>\n";
-	}
-	
-	weaponDropdown.innerHTML = weaponDropdownHTML;
-
-	var weaponParameter = getURLParameter("weapon");
-	if(weaponParameter != "null") {
-		var select = document.getElementById("weapon");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == weaponParameter) {
-				child.selected = true;
-		    	weaponChanged();
-				break;
-			}
-		}
-	}
-}
-
-function loadBaseDropdown() {
-	var baseDropdown = document.getElementById("base");
-	var baseDropdownHTML = '<option></option>';
-
-	var basesArrayLength = Object.size(basesArray);
-
-	for (var i=0; i<basesArrayLength; i++) {
-		baseDropdownHTML += "<option>"+Object.keys(basesArray)[i]+"</option>\n";
-	}
-	
-	baseDropdown.innerHTML = baseDropdownHTML;
-
-	var baseParameter = getURLParameter("base");
-	if(baseParameter != "null") {
-		var select = document.getElementById("base");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == baseParameter) {
-				child.selected = true;
-		    	baseChanged();
-				break;
-			}
-		}
-	}
-}
-
-function loadCharmDropdown() {
-	var charmDropdown = document.getElementById("charm");
-	var charmDropdownHTML = '<option>No Charm</option>';
-
-	var charmsArrayLength = Object.size(charmsArray);
-
-	for (var i=0; i<charmsArrayLength; i++) {
-		charmDropdownHTML += "<option>"+Object.keys(charmsArray)[i]+"</option>\n";
-	}
-	
-	charmDropdown.innerHTML = charmDropdownHTML;
-
-	var charmParameter = getURLParameter("charm");
-	if(charmParameter != "null") {
-		var select = document.getElementById("charm");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == charmParameter) {
-				child.selected = true;
-		    	charmChanged();
-				break;
-			}
-		}
-	}
-}
-
 /*
  * Variable Initialization
  */
@@ -92,122 +14,8 @@ var cheeseCost = 0, cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var sampleSize = 0, sizeDescriptor = '';
 
-
-var specialCharm = [];
-specialCharm["Champion Charm"] = 1;
-specialCharm["Growth Charm"] = 1;
-specialCharm["Spellbook Charm"] = 1;
-specialCharm["Wild Growth Charm"] = 1;
-specialCharm["Golden Tournament Base"] = 1;
-specialCharm["Soiled Base"] = 1;
-specialCharm["Spellbook Base"] = 1;
-
-function checkLoadState() {
-	var loadPercentage = (popLoaded + baselineLoaded)/2*100;
-	var status = document.getElementById("status")
-	status.innerHTML = "<td>Loaded "+loadPercentage+"%...</td>";
-	
-	if(loadPercentage == 100) {
-		loadLocationDropdown();
-		loadTourneyDropdown();
-		//updateLink();
-
-		var toxicParameter = getURLParameter("toxic");
-		if (toxicParameter != "null") {
-			var select = document.getElementById("toxic");
-			for (var i=0; i<select.children.length; i++) {
-				var child = select.children[i];
-				if (child.innerHTML == toxicParameter) {
-					child.selected = true;
-			    	toxicChanged();
-					break;
-				}
-			}
-		}
-
-		var batteryParameter = getURLParameter("battery");
-		if (batteryParameter != "null") {
-			var select = document.getElementById("battery");
-			for (var i=0; i<select.children.length; i++) {
-				var child = select.children[i];
-				if (child.innerHTML == batteryParameter) {
-					child.selected = true;
-			    	batteryChanged();
-					break;
-				}
-			}
-		}
-		
-		status.innerHTML = "<td>All set!</td>";
-		setTimeout(function() {status.innerHTML = '<td><br></td>'}, 3000);
-	}
-
-}
-
-
-//Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
-var popCSV = [];
-var popArray = [];
-var pop = new XMLHttpRequest();
-var baseline = new XMLHttpRequest();
-function processPop () {
-	var popText = pop.responseText;
-
-	popCSV = CSVToArray(popText);
-	//console.log(popCSV);	
-	
-	var popCSVLength = Object.size(popCSV);
-	//console.log("popCSVLength", popCSVLength);
-	
-	//Creating popArray
-	for(var i=1; i<popCSVLength; i++) {
-		if (popArray[popCSV[i][0]] == undefined) popArray[popCSV[i][0]] = [];
-		if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
-		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
-		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-		
-		//Assign AR to a specific location/phase/cheese/charm/mouse
-		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
-		
-		//Assign sample size value to a specific location/phase/cheese/charm when available
-		if (popCSV[i][6].length > 0) {
-			popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
-		}
-	}
-
-	//console.log(popArray);
-
-	popLoaded = 1;
-	checkLoadState();
-}
-
-
-var baselineArray = [];
-function processBaseline(baselineText) {
-	baselineArray = baselineText.split("\n");
-	var baselineArrayLength = baselineArray.length;
-	
-	for (var i=0; i<baselineArrayLength; i++) {
-		baselineArray[i] = baselineArray[i].split("\t");
-		//console.log(baselineArray[i][0]);
-		baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
-	}
-
-	baselineLoaded = 1;
-	checkLoadState();
-	//console.log(baselineArray);
-}
-
-
 window.onload = function () {
 
-	// Initial hiding
-	$("#ampRow").hide();
-	$("#sliderRow").hide();
-	$("#batteryRow").hide();
-	$("#toxicRow").hide();
-	$("#phaseRow").hide();
-	
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {
@@ -342,6 +150,188 @@ window.onload = function () {
 	console.log("miceArray: " + Object.size(miceArray));*/
 }
 
+function loadWeaponDropdown() {
+	var weaponDropdown = document.getElementById("weapon");
+	var weaponDropdownHTML = '<option></option>';
+
+	var weaponsArrayLength = Object.size(weaponsArray);
+
+	for (var i=0; i<weaponsArrayLength; i++) {
+		weaponDropdownHTML += "<option>"+Object.keys(weaponsArray)[i]+"</option>\n";
+	}
+	
+	weaponDropdown.innerHTML = weaponDropdownHTML;
+
+	var weaponParameter = getURLParameter("weapon");
+	if(weaponParameter != "null") {
+		var select = document.getElementById("weapon");
+		for (var i=0; i<select.children.length; i++) {
+			var child = select.children[i];
+			if (child.innerHTML == weaponParameter) {
+				child.selected = true;
+		    	weaponChanged();
+				break;
+			}
+		}
+	}
+}
+
+function loadBaseDropdown() {
+	var baseDropdown = document.getElementById("base");
+	var baseDropdownHTML = '<option></option>';
+
+	var basesArrayLength = Object.size(basesArray);
+
+	for (var i=0; i<basesArrayLength; i++) {
+		baseDropdownHTML += "<option>"+Object.keys(basesArray)[i]+"</option>\n";
+	}
+	
+	baseDropdown.innerHTML = baseDropdownHTML;
+
+	var baseParameter = getURLParameter("base");
+	if(baseParameter != "null") {
+		var select = document.getElementById("base");
+		for (var i=0; i<select.children.length; i++) {
+			var child = select.children[i];
+			if (child.innerHTML == baseParameter) {
+				child.selected = true;
+		    	baseChanged();
+				break;
+			}
+		}
+	}
+}
+
+function loadCharmDropdown() {
+	var charmDropdown = document.getElementById("charm");
+	var charmDropdownHTML = '<option>No Charm</option>';
+
+	var charmsArrayLength = Object.size(charmsArray);
+
+	for (var i=0; i<charmsArrayLength; i++) {
+		charmDropdownHTML += "<option>"+Object.keys(charmsArray)[i]+"</option>\n";
+	}
+	
+	charmDropdown.innerHTML = charmDropdownHTML;
+
+	var charmParameter = getURLParameter("charm");
+	if(charmParameter != "null") {
+		var select = document.getElementById("charm");
+		for (var i=0; i<select.children.length; i++) {
+			var child = select.children[i];
+			if (child.innerHTML == charmParameter) {
+				child.selected = true;
+		    	charmChanged();
+				break;
+			}
+		}
+	}
+}
+
+var specialCharm = [];
+specialCharm["Champion Charm"] = 1;
+specialCharm["Growth Charm"] = 1;
+specialCharm["Spellbook Charm"] = 1;
+specialCharm["Wild Growth Charm"] = 1;
+specialCharm["Golden Tournament Base"] = 1;
+specialCharm["Soiled Base"] = 1;
+specialCharm["Spellbook Base"] = 1;
+
+function checkLoadState() {
+	var loadPercentage = (popLoaded + baselineLoaded)/2*100;
+	var status = document.getElementById("status")
+	status.innerHTML = "<td>Loaded "+loadPercentage+"%...</td>";
+	
+	if(loadPercentage == 100) {
+		loadLocationDropdown();
+		loadTourneyDropdown();
+		//updateLink();
+
+		var toxicParameter = getURLParameter("toxic");
+		if (toxicParameter != "null") {
+			var select = document.getElementById("toxic");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == toxicParameter) {
+					child.selected = true;
+			    	toxicChanged();
+					break;
+				}
+			}
+		}
+
+		var batteryParameter = getURLParameter("battery");
+		if (batteryParameter != "null") {
+			var select = document.getElementById("battery");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == batteryParameter) {
+					child.selected = true;
+			    	batteryChanged();
+					break;
+				}
+			}
+		}
+		
+		status.innerHTML = "<td>All set!</td>";
+		setTimeout(function() {status.innerHTML = '<td><br></td>'}, 3000);
+	}
+
+}
+
+
+//Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
+var popCSV = [];
+var popArray = [];
+var pop = new XMLHttpRequest();
+var baseline = new XMLHttpRequest();
+function processPop () {
+	var popText = pop.responseText;
+
+	popCSV = CSVToArray(popText);
+	//console.log(popCSV);	
+	
+	var popCSVLength = Object.size(popCSV);
+	//console.log("popCSVLength", popCSVLength);
+	
+	//Creating popArray
+	for(var i=1; i<popCSVLength; i++) {
+		if (popArray[popCSV[i][0]] == undefined) popArray[popCSV[i][0]] = [];
+		if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
+		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
+		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
+		
+		//Assign AR to a specific location/phase/cheese/charm/mouse
+		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
+		
+		//Assign sample size value to a specific location/phase/cheese/charm when available
+		if (popCSV[i][6].length > 0) {
+			popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
+		}
+	}
+
+	//console.log(popArray);
+
+	popLoaded = 1;
+	checkLoadState();
+}
+
+
+var baselineArray = [];
+function processBaseline(baselineText) {
+	baselineArray = baselineText.split("\n");
+	var baselineArrayLength = baselineArray.length;
+	
+	for (var i=0; i<baselineArrayLength; i++) {
+		baselineArray[i] = baselineArray[i].split("\t");
+		//console.log(baselineArray[i][0]);
+		baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
+	}
+
+	baselineLoaded = 1;
+	checkLoadState();
+	//console.log(baselineArray);
+}
 
 function showTrapSetup(type) {
 	var trapSetup = document.getElementById("trapSetup");
@@ -441,6 +431,8 @@ function showPop (type) { //type = 2 means don't reset charms
 			if (mouseName != "SampleSize") {
 				var eff = findEff(mouseName);
 			
+				// mousename test
+				// if (powersArray[mouseName] == undefined) console.log("mouseName: " + mouseName);
 				var mousePower = parseInt(powersArray[mouseName][0].replace(/,/g, ''));
 				
 				if (mouseName.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
@@ -590,6 +582,7 @@ function showPop (type) { //type = 2 means don't reset charms
 		
 		percentSD = overallPX2/overallTP*100;
 		
+		// console.log("overallCR: " + overallCR);
 		resultsHTML += "</tbody><tr align='right'><td align='left'><b>Overall</b></td><td>" + overallAR.toFixed(2) + "%</td><td></td><td>" + overallCR.toFixed(2) + "</td><td>" + commafy(Math.round(overallGold)) + "</td><td>" + commafy(Math.round(overallPoints)) + "</td><td>" + overallTP.toFixed(2) + "</td><td>" + minLuckOverall + "</td>";
 		if (locationName.indexOf("Seasonal Garden") >= 0) {
 			deltaAmpOverall += (100-overallAR)/100 * -3; //Accounting for FTAs (-3%)
@@ -737,6 +730,8 @@ function populateSublocationDropdown (locationName) {
 	}
 	
 	sublDropdown.innerHTML = sublDropdownHTML;
+	// location test
+	// if (popArray[locationName] == undefined) console.log("locationName: " + locationName);
 	phaseName = Object.keys(popArray[locationName])[0];
 	
 	var phaseParameter = getURLParameter("phase");
@@ -1102,40 +1097,54 @@ function locationChanged () {
 	batteryHTML += "<option>8</option>\n";
 	batteryHTML += "<option>9</option>\n";
 	batteryHTML += "<option>10</option>\n";
+
 	if (locationName == "Furoma Rift") {
 		batteryDropdown.innerHTML = batteryHTML;
+		hideAllRows();
 		$("#batteryRow").show(700);
+		$("#frComment").show(700);
+	}
+	else if (locationName == "Whisker Woods Rift") {
+		hideAllRows();
+		$("#wwrComment").show(700);
+	}
+	else if (locationName == "Zugzwang's Tower") {
+		ztAmp = parseInt($("#ampSlider").slider("value"));
+		hideAllRows();
+		$("#ampRow").show(700);
+		$("#sliderRow").show(700);
+	}
+	else if (locationName == "Labyrinth") {
+		hideAllRows();
+		$("#labyComment").show(700);
 	}
 	else {
 		batteryDropdown.innerHTML = batteryDefaultHTML;
 		batteryPower = 0;
-		$("#batteryRow").hide();
-	}
-
-	// ZT Amplifier jQuery hiding/showing
-	if (locationName == "Zugzwang's Tower") {
-		ztAmp = parseInt($("#ampSlider").slider("value"));
-		$("#ampRow").show(700);
-		$("#sliderRow").show(700);
-	}
-	else {
 		ztAmp = 100;
-		$("#ampRow").hide();
-		$("#sliderRow").hide();
+		sampleSize = 0;
+		hideAllRows();
 	}
 
-	if (locationName == "") {
-		$("#phaseRow").hide();
-		$("#toxicRow").hide();
-	}
-	
 	showPop(0);
 	//showPop(2);
 	
 	//Populate sublocation dropdown and select first option
-	populateSublocationDropdown(locationName);
+	if (locationName != "") {
+		populateSublocationDropdown(locationName);
+	}
 }
 
+function hideAllRows() {
+	$("#phaseRow").hide();
+	$("#toxicRow").hide();
+	$("#batteryRow").hide();
+	$("#ampRow").hide();
+	$("#sliderRow").hide();
+	$("#wwrComment").hide();
+	$("#frComment").hide();
+	$("#labyComment").hide();
+}
 
 function phaseChanged () {
 	console.log("Phase changed");
