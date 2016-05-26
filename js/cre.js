@@ -863,6 +863,8 @@ function findEff (mouseName) {
 	var eff;
 	if (trapType == '') eff = 0;
 	else {
+		// mousename test
+		// if (powersArray[mouseName] == undefined) console.log("mouseName: " + mouseName);
 		var eff = parseInt(powersArray[mouseName][typeEff[trapType]])/100;
 		//console.log(powersArray[mouseName], typeEff[trapType])
 		//console.log(trapType, typeEff[trapType]);
@@ -1084,7 +1086,6 @@ function locationChanged () {
 
 	//Battery checks
 	var batteryDropdown = document.getElementById("battery");
-	var batteryDefaultHTML = "<option>-</option>";
 	var batteryHTML = '';
 	batteryHTML += "<option>-</option>\n";
 	batteryHTML += "<option>1</option>\n";
@@ -1098,34 +1099,27 @@ function locationChanged () {
 	batteryHTML += "<option>9</option>\n";
 	batteryHTML += "<option>10</option>\n";
 
+	hideAllRows();
 	if (locationName == "Furoma Rift") {
 		batteryDropdown.innerHTML = batteryHTML;
-		hideAllRows();
-		$("#batteryRow").show(700);
-		$("#frComment").show(700);
+		$("#batteryRow").show(500);
+		$("#frComment").show(500);
 	}
 	else if (locationName == "Whisker Woods Rift") {
-		hideAllRows();
-		$("#wwrComment").show(700);
+		$("#wwrComment").show(500);
 	}
 	else if (locationName == "Zugzwang's Tower") {
 		ztAmp = parseInt($("#ampSlider").slider("value"));
-		hideAllRows();
-		$("#ampRow").show(700);
-		$("#sliderRow").show(700);
+		$("#ampRow").show(500);
+		$("#sliderRow").show(500);
 	}
 	else if (locationName == "Labyrinth") {
-		hideAllRows();
-		$("#labyComment").show(700);
-	}
-	else {
-		batteryDropdown.innerHTML = batteryDefaultHTML;
-		batteryPower = 0;
-		ztAmp = 100;
-		sampleSize = 0;
-		hideAllRows();
+		$("#labyComment").show(500);
 	}
 
+	batteryPower = 0;
+	ztAmp = 100;
+	sampleSize = 0;
 	showPop(0);
 	//showPop(2);
 	
@@ -1155,7 +1149,7 @@ function phaseChanged () {
 		$("#phaseRow").hide();
 	}
 	else {
-		$("#phaseRow").show(700);
+		$("#phaseRow").show(500);
 	}
 	
 	var autoBase = ''
@@ -1237,18 +1231,16 @@ function cheeseChanged () {
 
 	//Toxic checks
 	var toxicDropdown = document.getElementById("toxic");
-	var toxicDefaultHTML = "<option>-</option>";
 	var toxicHTML = '';
 	toxicHTML += "<option>No</option>\n";
 	toxicHTML += "<option>Yes</option>\n";
 	if (cheeseName == "Brie" || cheeseName == "SB+") {
-		$("#toxicRow").show(700);
+		$("#toxicRow").show(500);
 		toxicDropdown.innerHTML = toxicHTML;
 		toxicChanged();
 	}
 	else {
 		$("#toxicRow").hide();
-		toxicDropdown.innerHTML = toxicDefaultHTML;
 		toxicChanged();
 	}
 
