@@ -395,6 +395,7 @@ deltaAmp["Whirleygig"] = 1;
 
 
 var baselineAttArray = [];
+baselineAttArray["Grilled"] = 0.976
 baselineAttArray["SB+"] = 1999 / 2000;
 baselineAttArray["Magical String"] = 1999 / 2000;
 baselineAttArray["Fusion Fondue"] = 1999 / 2000;
