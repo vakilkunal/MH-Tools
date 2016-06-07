@@ -226,15 +226,16 @@ function processMap(mapText) {
 						for (var m=0; m<noCharms; m++) {
 							var charmName = mouseCharm[m]
 
-							var locationPhaseCheeseCharm = locationName;
+							var locationPhaseCheeseCharm = locationName + "<br>";
 							
 							var URLString = 'best_setup.html?';
 							//Replace apostrophes with %27
 							URLString+= "location="+locationName;
+							//Implement URL
 
-							if (phaseName != "-") locationPhaseCheeseCharm += " (" + phaseName + ")";
-							if (cheeseName.indexOf("/") < 0) locationPhaseCheeseCharm += " " + cheeseName;
-							if (charmName != "-") locationPhaseCheeseCharm += " " + charmName;
+							if (phaseName != "-") locationPhaseCheeseCharm += "(" + phaseName + ")" + "<br>";
+							/*if (cheeseName.indexOf("/") < 0)*/ locationPhaseCheeseCharm += cheeseName + "<br>";
+							if (charmName != "-") locationPhaseCheeseCharm += "[" + charmName + "]";
 							
 							var attractionRate = parseFloat(popArray[mouseName][locationName][phaseName][cheeseName][charmName]);
 
