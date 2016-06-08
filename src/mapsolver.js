@@ -1,5 +1,7 @@
 "use strict";
 
+var columnLimit = 0;
+
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
@@ -92,11 +94,6 @@ Object.size = function(obj) {
     return size;
 };
 
-
-
-
-
-
 var pop = new XMLHttpRequest();
 pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 pop.onreadystatechange = function() {
@@ -105,6 +102,29 @@ pop.onreadystatechange = function() {
 	}
 }
 pop.send();
+
+var baseline = new XMLHttpRequest();
+baseline.open("get", "https://tsitu.github.io/MH-Tools/data/baselines.txt", true);
+baseline.onreadystatechange = function() {
+	if (baseline.readyState == 4) {
+		//console.log(baseline.responseText);
+
+		processBaseline(baseline.responseText);
+	}
+}
+baseline.send();
+
+var baselineArray = [];
+function processBaseline(baselineText) {
+	baselineArray = baselineText.split("\n");
+	var baselineArrayLength = baselineArray.length;
+	
+	for (var i=0; i<baselineArrayLength; i++) {
+		baselineArray[i] = baselineArray[i].split("\t");
+		//console.log(baselineArray[i][0]);
+		baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
+	}
+}
 
 var popCSV = new Array();
 var popArray = new Array();
@@ -157,15 +177,32 @@ function loadMouseDropdown() {
 window.onload = function () {
 	document.getElementById("map").onchange = function () {
     	var mapText = document.getElementById("map").value;
-	    //console.log(mapText);
 	    processMap(mapText);
 	};
 
 	document.getElementById("map").onkeyup = function () {
     	var mapText = document.getElementById("map").value;
-	    //console.log(mapText);
 	    processMap(mapText);
 	};
+
+	$("input[name='colLimit']").change(function() {
+		columnLimit = $(this).val();
+		var mapText = document.getElementById("map").value;
+		processMap(mapText);
+	});
+
+	$.tablesorter.addParser({
+    	id: "fancyNumber",
+		is: function(s) {
+		    return /^[0-9]?[0-9,\.]*$/.test(s);
+		},
+		format: function(s) {
+		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
+		},
+		type: "numeric"
+	});
+	
+	$.tablesorter.defaults.sortInitialOrder = 'desc';
 }
 
 function processMap(mapText) {
@@ -175,10 +212,11 @@ function processMap(mapText) {
 	var interpretedAs = document.getElementById("interpretedAs");
 	var mouseList = document.getElementById("mouseList");
 
-	var interpretedAsText = "Rectify:</b><br>";
+	var interpretedAsText = "<b>Rectify:</b><br>";
 	var mouseListText = '';
 	
 	var bestLocationArray = new Array();
+	var weightedBLA = new Array();
 	
 	for (var i=0; i<mouseArrayLength; i++) {
 		var mouseName = mouseArray[i];
@@ -192,18 +230,15 @@ function processMap(mapText) {
 		
 		if (popArray[mouseName] == undefined) { //Mouse name not recognised
 			interpretedAsText += "<div class='invalid'>" + mouseName+"</div>";
-			mouseListText += "<tr><td><b>" + mouseName + "</b></td></tr>";
+			// mouseListText += "<tr><td><b>" + mouseName + "</b></td></tr>";
 		} else {			
 		
 			var mouseLocationCheese = new Array();
 			
-			
-			mouseListText += "<tr><td><b>" + mouseName + "</b></td>";
+			mouseListText += "<td style='font-size: 12'><b>" + mouseName + "</b></td>";
 
 			var mouseLocation = Object.keys(popArray[mouseName]);
 			var noLocations = Object.size(popArray[mouseName]); //console.log(noLocations);
-			var mouseListTextRow2 = '<tr><td></td>';
-
 
 			for (var j=0; j<noLocations; j++) {
 				var locationName = mouseLocation[j];
@@ -228,27 +263,55 @@ function processMap(mapText) {
 
 							var locationPhaseCheeseCharm = locationName + "<br>";
 							
-							var URLString = 'best_setup.html?';
+							var URLString = 'setup.html?';
 							//Replace apostrophes with %27
-							URLString+= "location="+locationName;
-							//Implement URL
+							URLString += "location=" + locationName;
 
-							if (phaseName != "-") locationPhaseCheeseCharm += "(" + phaseName + ")" + "<br>";
-							/*if (cheeseName.indexOf("/") < 0)*/ locationPhaseCheeseCharm += cheeseName + "<br>";
-							if (charmName != "-") locationPhaseCheeseCharm += "[" + charmName + "]";
+							if (phaseName != "-") {
+								locationPhaseCheeseCharm += "(" + phaseName + ")" + "<br>";
+								URLString += "&phase=" + phaseName;
+							}
+
+							locationPhaseCheeseCharm += cheeseName + "<br>";
+							if (cheeseName.indexOf("/") > 0) {
+								var trimmedCheese = cheeseName.slice(0, cheeseName.indexOf("/"));
+								URLString += "&cheese=" + trimmedCheese;
+							}
+							else {
+								URLString += "&cheese=" + cheeseName;
+							}
+
+							if (charmName != "-") {
+								locationPhaseCheeseCharm += "[" + charmName + "]" + "<br>";
+							}
+
+							var modURLString = URLString.replace(/ /g, "%20");
+							locationPhaseCheeseCharm += "<a href=" + modURLString + " target=\"_blank\">Link to best setup</a>";
 							
 							var attractionRate = parseFloat(popArray[mouseName][locationName][phaseName][cheeseName][charmName]);
 
 							if (bestLocationArray[locationPhaseCheeseCharm] == undefined) {
 								bestLocationArray[locationPhaseCheeseCharm] = attractionRate;
-								
-							} else {
+								if (cheeseName.indexOf("/") > 0) {
+									var trimmedCheese = cheeseName.slice(0, cheeseName.indexOf("/"));
+									weightedBLA[locationPhaseCheeseCharm] = attractionRate * findBaseline(locationName, trimmedCheese);
+								}
+								else {
+									weightedBLA[locationPhaseCheeseCharm] = attractionRate * findBaseline(locationName, cheeseName);
+								}
+							} 
+							else {
 								bestLocationArray[locationPhaseCheeseCharm] += attractionRate;
+								if (cheeseName.indexOf("/") > 0) {
+									var trimmedCheese = cheeseName.slice(0, cheeseName.indexOf("/"));
+									weightedBLA[locationPhaseCheeseCharm] += (attractionRate * findBaseline(locationName, trimmedCheese));
+								}
+								else {
+									weightedBLA[locationPhaseCheeseCharm] += (attractionRate * findBaseline(locationName, cheeseName));
+								}
 							}
 							
 							mouseLocationCheese[locationPhaseCheeseCharm] = attractionRate;
-
-
 						}
 					}
 				}
@@ -256,44 +319,55 @@ function processMap(mapText) {
 			
 			var sortedMLC = sortBestLocation (mouseLocationCheese); //console.log(sortedMLC);
 			var sortedMLCLength = Object.size(sortedMLC);
+
+			//Horizontal column constraints
+			if (columnLimit != 0) {
+				if (sortedMLCLength > columnLimit) {
+					sortedMLCLength = columnLimit;
+				}
+			}
 			
 			for (var l=0; l<sortedMLCLength; l++) {
-					mouseListText += "<td>" + sortedMLC[l][0] + "</td>";// console.log(l);
-					mouseListTextRow2 += "<td>" + sortedMLC[l][1] + "</td>";
-
+				var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
+				mouseListText += "<td>" + sliceMLC + "<br>" + sortedMLC[l][1] + "</td>";
 			}
 			
 			mouseListText += "</tr>";
-			mouseListTextRow2 += "</tr>";
-			mouseListText += mouseListTextRow2;
 		}
 	}
 	
 	interpretedAs.innerHTML = interpretedAsText;
 	mouseList.innerHTML = mouseListText;
 	
-	var sortedLocation = sortBestLocation (bestLocationArray);
+	var sortedLocation = sortBestLocation (bestLocationArray, weightedBLA);
 	printBestLocation(sortedLocation);
 }
 
-
-
-function sortBestLocation (bestLocationArray) {
-
+function sortBestLocation (bestLocationArray, weightedBLA) {
 
 	var sortedLocation = new Array();
 	
 	var bLALength = Object.size(bestLocationArray);
 	var bLAKeys = Object.keys(bestLocationArray);
 	
-	for (var i=0; i<bLALength; i++) {
-		var locationCheese = bLAKeys[i];
-		//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
-		sortedLocation.push([locationCheese, bestLocationArray[locationCheese]])
+	if (typeof weightedBLA != 'undefined') {
+		for (var i=0; i<bLALength; i++) {
+			var locationCheese = bLAKeys[i];
+			//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
+			sortedLocation.push([locationCheese, bestLocationArray[locationCheese], weightedBLA[locationCheese]]);
+		}
+		
+		sortedLocation.sort(function(a,b) {return b[2]-a[2]});
 	}
-	
-	
-	sortedLocation.sort(function(a,b) {return b[1]-a[1]});
+	else {
+		for (var i=0; i<bLALength; i++) {
+			var locationCheese = bLAKeys[i];
+			//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
+			sortedLocation.push([locationCheese, bestLocationArray[locationCheese]]);
+		}
+
+		sortedLocation.sort(function(a,b) {return b[1]-a[1]});
+	}
 	
 	return sortedLocation;
 }
@@ -301,14 +375,27 @@ function sortBestLocation (bestLocationArray) {
 function printBestLocation (sortedLocation) {
 
 	var bestLocation = document.getElementById("bestLocation");
-	var bestLocationHTML = '';
+	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Raw AR</th><th align=\'center\' id=\'weightAR\'>Weighted AR</th></thead>';
+	bestLocationHTML += "<tbody>";
 	
 	var sortedLocationLength = Object.size(sortedLocation);
 	
 	for (var i=0; i<sortedLocationLength; i++) {
-		bestLocationHTML += "<tr><td><b>" + sortedLocation[i][0] + "</b></td><td>" + sortedLocation[i][1].toFixed(2) + "</td></tr>";
+		bestLocationHTML += "<tr><td><b>" + sortedLocation[i][0] + "</b></td><td>" + sortedLocation[i][1].toFixed(2) + "</td><td>" + sortedLocation[i][2].toFixed(2) + "</td></tr>";
 	}
 	
+	bestLocationHTML += "</tbody>";
 	bestLocation.innerHTML = bestLocationHTML;
 	
+	$("#bestLocation").tablesorter();
+	$("#weightAR").click();
+}
+
+function findBaseline(location, cheese) {
+	//TODO make common cheese ar be global
+	var baselineAtt = baselineAttArray[cheese];
+	if (baselineAtt == undefined) {
+		baselineAtt = baselineArray[location + " (" + cheese + ")"];
+	}
+	return baselineAtt;
 }

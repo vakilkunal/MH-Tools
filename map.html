@@ -2,10 +2,13 @@
 <head>
     <title>Map Solver and Mouse Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <script type="text/javascript" src="src/arrays.js"></script>
     <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="lib/jquery.a-tools.js"></script>
     <script type="text/javascript" src="lib/jquery.asuggest.js"></script>
+    <script type="text/javascript" src="lib/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="src/mapsolver.js"></script>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <style type="text/css">
@@ -34,17 +37,6 @@
         a {
             text-decoration: underline;
         }
-        .center button {
-            padding:4px 8px;
-            font-family:Century Gothic;
-            font-size: 15px;
-            line-height:20px;
-        }
-        #status {
-            font-weight: 700;
-            font-size: 16px;
-            text-align:left;
-        }
         .header {
         	font-size: 11px;
         }
@@ -57,6 +49,35 @@
         .invalid {
 			color: red;
 		}
+        #blank1 {
+            width: 30%;
+            display: inline-block;
+        }
+        #blank2{
+            width: 0%;
+            display: inline-block;
+        }
+        #mapId {
+            width: 25%;
+            display: inline-block;
+        }
+        #interpretedAs {
+            width: 20%;
+            display: inline-block;
+        }
+        #formId {
+            width: 15%;
+            display: inline-block;
+        }
+        #headerId {
+            width: 100%;
+            display: inline-block;
+        }
+        #mouseList {
+            padding-top: 5px;
+        }
+        #map {
+            resize: none;
         }
     </style>
 
@@ -76,37 +97,45 @@
     <div class="container">
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
-                <td colspan>
+                <td id="headerId">
                     <div class="header">
-                        	<h1>Map Solver and Mouse Finder</h1>
-                        	based on Chad Moore's<br><br>
-                        	Copy and paste mice from maps,<br>
-                        	or type names leaving a line break between each<br><br>
-                            Press <b>Enter</b> to autocomplete<br><br>
-                            <i>Note: </i>Values shown represent <ins>attraction proportions</ins> of cheese(s) in a location<br>
-                            Baseline attraction rates are not factored in<br><br>
-                            Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results
+                    	<h1>Map Solver and Mouse Finder</h1>
+                    	based on Chad Moore's<br><br>
+                    	Copy and paste mice from maps,<br>
+                    	or type names leaving a line break between each<br><br>
+                        Press <b>Enter</b> to autocomplete<br><br>
+                        <i>Note: </i>Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results<br>
+                        The first cheese listed is used to calculate a fuse's combined baseline attraction
                     </div>
                 </td>
             </tr>
             <!--###################################################################################-->
             <tr>
-                <td>
+                <td id="blank1"></td>
+                <td id="mapId">
                     <textarea id="map" rows="25" cols="40"></textarea>
                 </td>
-                <td id="interpretedAs">
+                <td id="blank2"></td>
+                <td id="formId" style="font-size: 14">
+                    Limit mouse list columns <br>(to increase performance): <br><br>
+                    <form action="">
+                      <input type="radio" name="colLimit" value="0" checked> &infin;<br>
+                      <input type="radio" name="colLimit" value="5"> 5<br>
+                      <input type="radio" name="colLimit" value="10"> 10<br>
+                      <input type="radio" name="colLimit" value="15"> 15<br>
+                      <input type="radio" name="colLimit" value="20"> 20<br>
+                    </form>
                 </td>
+                <td id="interpretedAs" style="font-size: 14"></td>
             </tr>
-
-            
         </table>
         
         <table>
         	<td>
-        		<table id='bestLocation'></table>
-        		</td><td>
+        		<table id='bestLocation' class='tablesorter'></table>
+        	</td>
+            <td>
        	        <table id='mouseList'></table>
-       	        </td>
         	</td>
        	</table>
     </div>
