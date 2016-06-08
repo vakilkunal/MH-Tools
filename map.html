@@ -7,8 +7,11 @@
     <script type="text/javascript" src="lib/jquery.a-tools.js"></script>
     <script type="text/javascript" src="lib/jquery.asuggest.js"></script>
     <script type="text/javascript" src="lib/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="src/mapsolver.js"></script>
     <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <style type="text/css">
@@ -50,7 +53,7 @@
 			color: red;
 		}
         #blank1 {
-            width: 30%;
+            width: 25%;
             display: inline-block;
         }
         #blank2{
@@ -71,13 +74,17 @@
         }
         #headerId {
             width: 100%;
-            display: inline-block;
+            /*display: inline-block;*/
         }
         #mouseList {
             padding-top: 5px;
         }
         #map {
             resize: none;
+        }
+        #ampSlider {
+            width: 50%;
+            display: inline-block;
         }
     </style>
 
@@ -90,6 +97,49 @@
 
       ga('create', 'UA-61581935-1', 'auto');
       ga('send', 'pageview');
+    </script>
+
+    <!-- Attraction slider -->
+    <script>
+        $(function() {
+            $("#ampSlider").slider({
+                range: "min",
+                min: 0,
+                max: 100,
+                step: 1,
+                slide: function(event, ui) {
+                    refreshSlider(ui);
+                },
+                change: function(event, ui) {
+                    refreshSlider(ui);
+                }
+            });
+        });
+
+        function getColor(colorVal) {
+            var theColor = "";
+            if (colorVal < 50) {
+                myRed = 255;
+                myGreen = parseInt( ( ( colorVal * 2 ) * 255 ) / 100 );
+            }
+            else  {
+                myRed = parseInt( ( ( 100 - colorVal ) * 2 ) * 255 / 100 );
+                myGreen = 255;
+            }
+            theColor = "rgb(" + myRed + "," + myGreen + ",0)";
+            return(theColor);
+        }
+
+        function refreshSlider(ui) {
+            var ampSlider = ui.value;
+            var myColor = getColor(ampSlider);
+            $("#ampSlider .ui-slider-range").css("background-color", myColor);
+            $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
+            $("#ampValue").val(ampSlider);
+            attractionBonus = parseInt(ampSlider);
+            var mapText = document.getElementById("map").value;
+            processMap(mapText);
+        }
     </script>
     <!--###################################################################################-->
 </head>
@@ -117,7 +167,7 @@
                 </td>
                 <td id="blank2"></td>
                 <td id="formId" style="font-size: 14">
-                    Limit mouse list columns <br>(to increase performance): <br><br>
+                    Limit mouse list columns <br>(to improve performance): <br><br>
                     <form action="">
                       <input type="radio" name="colLimit" value="0" checked> &infin;<br>
                       <input type="radio" name="colLimit" value="5"> 5<br>
@@ -125,8 +175,32 @@
                       <input type="radio" name="colLimit" value="15"> 15<br>
                       <input type="radio" name="colLimit" value="20"> 20<br>
                     </form>
+                    <br>
+                    Limit best location rows: <br><br>
+                    <form action="">
+                      <input type="radio" name="rowLimit" value="0" checked> &infin;<br>
+                      <input type="radio" name="rowLimit" value="5"> 5<br>
+                      <input type="radio" name="rowLimit" value="10"> 10<br>
+                      <input type="radio" name="rowLimit" value="15"> 15<br>
+                      <input type="radio" name="rowLimit" value="20"> 20<br>
+                    </form>
                 </td>
                 <td id="interpretedAs" style="font-size: 14"></td>
+            </tr>
+        </table>
+
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    Attraction Bonus:
+                    <input id="ampValue" type="text" size="3" value="0" readonly>%
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div id="ampSlider"></div>
+                </td>
             </tr>
         </table>
         

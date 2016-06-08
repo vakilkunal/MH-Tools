@@ -1,6 +1,6 @@
 "use strict";
 
-var columnLimit = 0;
+var columnLimit, rowLimit, attractionBonus = 0;
 
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -191,6 +191,12 @@ window.onload = function () {
 		processMap(mapText);
 	});
 
+	$("input[name='rowLimit']").change(function() {
+		rowLimit = $(this).val();
+		var mapText = document.getElementById("map").value;
+		processMap(mapText);
+	});
+
 	$.tablesorter.addParser({
     	id: "fancyNumber",
 		is: function(s) {
@@ -294,20 +300,24 @@ function processMap(mapText) {
 								bestLocationArray[locationPhaseCheeseCharm] = attractionRate;
 								if (cheeseName.indexOf("/") > 0) {
 									var trimmedCheese = cheeseName.slice(0, cheeseName.indexOf("/"));
-									weightedBLA[locationPhaseCheeseCharm] = attractionRate * findBaseline(locationName, trimmedCheese);
+									var baseline = findBaseline(locationName, trimmedCheese);
+									weightedBLA[locationPhaseCheeseCharm] = attractionRate * (baseline + attractionBonus/100 - attractionBonus/100*baseline);
 								}
 								else {
-									weightedBLA[locationPhaseCheeseCharm] = attractionRate * findBaseline(locationName, cheeseName);
+									var baseline = findBaseline(locationName, cheeseName);
+									weightedBLA[locationPhaseCheeseCharm] = attractionRate * (baseline + attractionBonus/100 - attractionBonus/100*baseline);
 								}
 							} 
 							else {
 								bestLocationArray[locationPhaseCheeseCharm] += attractionRate;
 								if (cheeseName.indexOf("/") > 0) {
 									var trimmedCheese = cheeseName.slice(0, cheeseName.indexOf("/"));
-									weightedBLA[locationPhaseCheeseCharm] += (attractionRate * findBaseline(locationName, trimmedCheese));
+									var baseline = findBaseline(locationName, trimmedCheese);
+									weightedBLA[locationPhaseCheeseCharm] += attractionRate * (baseline + attractionBonus/100 - attractionBonus/100*baseline);
 								}
 								else {
-									weightedBLA[locationPhaseCheeseCharm] += (attractionRate * findBaseline(locationName, cheeseName));
+									var baseline = findBaseline(locationName, cheeseName);
+									weightedBLA[locationPhaseCheeseCharm] += attractionRate * (baseline + attractionBonus/100 - attractionBonus/100*baseline);
 								}
 							}
 							
@@ -320,7 +330,7 @@ function processMap(mapText) {
 			var sortedMLC = sortBestLocation (mouseLocationCheese); //console.log(sortedMLC);
 			var sortedMLCLength = Object.size(sortedMLC);
 
-			//Horizontal column constraints
+			//Mouse list column constraints
 			if (columnLimit != 0) {
 				if (sortedMLCLength > columnLimit) {
 					sortedMLCLength = columnLimit;
@@ -379,6 +389,13 @@ function printBestLocation (sortedLocation) {
 	bestLocationHTML += "<tbody>";
 	
 	var sortedLocationLength = Object.size(sortedLocation);
+
+	//Best location row constraints
+	if (rowLimit != 0) {
+		if (sortedLocationLength > rowLimit) {
+			sortedLocationLength = rowLimit;
+		}
+	}
 	
 	for (var i=0; i<sortedLocationLength; i++) {
 		bestLocationHTML += "<tr><td><b>" + sortedLocation[i][0] + "</b></td><td>" + sortedLocation[i][1].toFixed(2) + "</td><td>" + sortedLocation[i][2].toFixed(2) + "</td></tr>";
