@@ -328,7 +328,7 @@ window.onload = function () {
 		cvalue['charms'] = checkedCharms;
 
     	$.cookie.json = true;
-    	$.cookie('setup', cvalue, {expires: 30}); //expires in 30 days
+    	$.cookie('setup', cvalue, {expires: 300}); //expires in 300 days
     });
 
     $("#show_pop_button").click(function() {
