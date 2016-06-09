@@ -14,13 +14,32 @@ var cheeseCost = 0, cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var sampleSize = 0, sizeDescriptor = '';
 
+// Special charms
+var specialCharm = [];
+specialCharm["Champion Charm"] = 1;
+specialCharm["Growth Charm"] = 1;
+specialCharm["Spellbook Charm"] = 1;
+specialCharm["Wild Growth Charm"] = 1;
+specialCharm["Golden Tournament Base"] = 1;
+specialCharm["Soiled Base"] = 1;
+specialCharm["Spellbook Base"] = 1;
+
+// Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
+var popCSV = [];
+var popArray = [];
+var pop = new XMLHttpRequest();
+var baseline = new XMLHttpRequest();
+
 window.onload = function () {
 
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
+	// Local testing
+	// http-server -p 8888 --cors 
+	// (installed using "npm install http-server -g")
+	// pop.open("get", "http://localhost:8888/testing/populationsayy.csv", false);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {
 			//console.log(pop.responseText);
-
 			processPop();
 		}
 	}
@@ -228,15 +247,6 @@ function loadCharmDropdown() {
 	}
 }
 
-var specialCharm = [];
-specialCharm["Champion Charm"] = 1;
-specialCharm["Growth Charm"] = 1;
-specialCharm["Spellbook Charm"] = 1;
-specialCharm["Wild Growth Charm"] = 1;
-specialCharm["Golden Tournament Base"] = 1;
-specialCharm["Soiled Base"] = 1;
-specialCharm["Spellbook Base"] = 1;
-
 function checkLoadState() {
 	var loadPercentage = (popLoaded + baselineLoaded)/2*100;
 	var status = document.getElementById("status")
@@ -279,12 +289,6 @@ function checkLoadState() {
 
 }
 
-
-//Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
-var popCSV = [];
-var popArray = [];
-var pop = new XMLHttpRequest();
-var baseline = new XMLHttpRequest();
 function processPop () {
 	var popText = pop.responseText;
 
@@ -379,7 +383,22 @@ function showPop (type) { //type = 2 means don't reset charms
 			}
 			//console.log("Highlighting charms");
 			if (type!=2) highlightSpecialCharms(specialCharmsList);
-		} else {
+		} 
+		/*
+		 * Allow pop with special charm(s) but without a "no charm" pop
+		 */
+
+		// else if (Object.keys(popArrayLPC)[0] != "-") {
+		// 	var nSpecialCharms = Object.size(popArrayLPC);
+		// 	var specialCharmsList = [];
+		// 	for (var i=0; i<nSpecialCharms; i++) {
+		// 		//console.log("Special charm", Object.keys(popArrayLPC)[i]);
+		// 		specialCharmsList.push(Object.keys(popArrayLPC)[i]);
+		// 	}
+		// 	//console.log("Highlighting charms");
+		// 	if (type!=2) highlightSpecialCharms(specialCharmsList);
+		// } 
+		else {
 			if (type!=2) {
 				console.log("Resetting charms");
 				resetCharms();
@@ -1112,6 +1131,7 @@ function locationChanged () {
 		ztAmp = parseInt($("#ampSlider").slider("value"));
 		$("#ampRow").show(500);
 		$("#sliderRow").show(500);
+		$("#ztComment").show(500);
 	}
 	else if (locationName == "Labyrinth") {
 		$("#labyComment").show(500);
@@ -1138,6 +1158,7 @@ function hideAllRows() {
 	$("#wwrComment").hide();
 	$("#frComment").hide();
 	$("#labyComment").hide();
+	$("#ztComment").hide();
 }
 
 function phaseChanged () {
