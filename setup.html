@@ -1,14 +1,21 @@
-
 <!DOCTYPE html>
+<html>
 <head>
     <title>Best Setup Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
 
     <script type="text/javascript" src="src/arrays.js"></script>
     <script type="text/javascript" src="src/bestsetup.js"></script>
-	<script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script> 
-	<script type="text/javascript" src="lib/jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="lib/jquery.tablesorter.pager.js"></script>
     <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui.touch-punch.min.js"></script>
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <style type="text/css">
@@ -38,7 +45,7 @@
             padding:4px;
         }
         a {
-            text-decoration: underline;
+            /*text-decoration: underline;*/
         }
         .center button {
             padding:4px 8px;
@@ -80,6 +87,63 @@
       ga('auto.send', 'pageview');
 	</script>
     
+    <!-- Amplifier slider -->
+    <script>
+        $(function() {
+            $("#ampSlider").slider({
+                range: "min",
+                min: 0,
+                max: 175,
+                step: 1,
+                slide: function(event, ui) {
+                    if (event.originalEvent) {
+                        refreshSlider(ui);
+                    }
+                    else {
+                        var myColor = getColor(100);
+                        $("#ampSlider .ui-slider-range").css("background-color", myColor);
+                        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
+                        $("#ampValue").val(100);
+                    }
+                },
+                change: function(event, ui) {
+                    if (event.originalEvent) {
+                        refreshSlider(ui);
+                    }
+                    else {
+                        var myColor = getColor(100);
+                        $("#ampSlider .ui-slider-range").css("background-color", myColor);
+                        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
+                        $("#ampValue").val(100);
+                    }
+                }
+            });
+        });
+
+        function getColor(colorVal) {
+            var theColor = "";
+            if (colorVal < 88) {
+                myRed = 255;
+                myGreen = parseInt( ( ( colorVal * 1.136 ) * 255 ) / 100 );
+            }
+            else  {
+                myRed = parseInt( ( ( 175 - colorVal ) * 1.136 ) * 255 / 100 );
+                myGreen = 255;
+            }
+            theColor = "rgb(" + myRed + "," + myGreen + ",0)";
+            return(theColor);
+        }
+
+        function refreshSlider(ui) {
+            var ampSlider = ui.value;
+            var myColor = getColor(ampSlider);
+            $("#ampSlider .ui-slider-range").css("background-color", myColor);
+            $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
+            $("#ampValue").val(ampSlider);
+            ztAmp = parseInt(ampSlider);
+            calculateTrapSetup();
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -118,129 +182,35 @@
                     </select>
                 </td>
             </tr>
-            
-            <!--<tr><td>Charm:</td>
-            	<td>
-            		<select id="charm">
-						<option>No Charm</option>
-						<option>2014 Charm</option>
-						<option>Airship Charm</option>
-						<option>Amplifier Charm</option>
-						<option>Ancient Charm</option>
-						<option>Antiskele Charm</option>
-						<option>Artisan Charm</option>
-						<option>Athlete Charm</option>
-						<option>Attraction Charm</option>
-						<option>Black Powder Charm</option>
-						<option>Brain Charm</option>						
-						<option>Bravery Charm</option>
-						<option>Cackle Charm</option>
-						<option>Cactus Charm</option>
-						<option>Champion Charm</option>
-						<option>Chrome Charm</option>
-						<option>Clarity Charm</option>
-						<option>Dark Chocolate Charm</option>
-						<option>Derr Power Charm</option>
-						<option>Door Guard Charm</option>
-						<option>Double Sponge Charm</option>
-						<option>Dragonbane Charm</option>
-						<option>Dragonbreath Charm</option>
-						<option>Dreaded Charm</option>
-						<option>Dusty Coal Charm</option>
-						<option>Eggscavator Charge Charm</option>
-						<option>Eggstra Charm</option>
-						<option>Elub Power Charm</option>
-						<option>EMP400 Charm</option>
-						<option>Empowered Anchor Charm</option>
-						<option>Extreme Luck Charm</option>
-						<option>Extreme Polluted Charm</option>
-						<option>Firecracker Charm</option>
-						<option>First Ever Charm</option>
-						<option>Flamebane Charm</option>
-						<option>Freshness Charm</option>
-						<option>Greasy Glob Charm</option>
-						<option>Growth Charm</option>
-						<option>Grub Salt Charm</option>
-						<option>Grub Scent Charm</option>
-						<option>Grubling Bonanza Charm</option>
-						<option>Grubling Chow Charm</option>
-						<option>Luck Charm</option>
-						<option>Lucky Power Charm</option>
-						<option>Lucky Rabbit Charm</option>
-						<option>Magmatic Crystal Charm</option>
-						<option>Mining Charm</option>
-						<option>Mobile Charm</option>
-						<option>Monger Charm</option>
-						<option>Nanny Charm</option>
-						<option>Nerg Power Charm</option>
-						<option>Nitropop Charm</option>
-						<option>Party Charm</option>
-						<option>Polluted Charm</option>
-						<option>Power Charm</option>
-						<option>Prospector's Charm</option>
-						<option>Red Double Sponge Charm</option>
-						<option>Red Sponge Charm</option>
-						<option>Regal Charm</option>
-						<option>Roof Rack Charm</option>
-						<option>Rook Crumble Charm</option>
-						<option>Rotten Charm</option>
-						<option>Safeguard Charm</option>
-						<option>Scholar Charm</option>
-						<option>Shine Charm</option>
-						<option>Scientist's Charm</option>
-						<option>Searcher Charm</option>
-						<option>Shamrock Charm</option>
-						<option>Shattering Charm</option>
-						<option>Sheriff's Badge Charm</option>
-						<option>Snakebite Charm</option>
-						<option>Snowball Charm</option>
-						<option>Soap Charm</option>
-						<option>Softserve Charm</option>
-						<option>Spellbook Charm</option>
-						<option>Spooky Charm</option>
-						<option>Sponge Charm</option>
-						<option>Sticky Charm</option>
-						<option>Super Cactus Charm</option>
-						<option>Super Luck Charm</option>
-						<option>Super Polluted Charm</option>
-						<option>Super Power Charm</option>
-						<option>Super Rotten Charm</option>
-						<option>Super Salt Charm</option>
-						<option>Super Soap Charm</option>
-						<option>Super Warpath Archer Charm</option>
-						<option>Super Warpath Cavalry Charm</option>
-						<option>Super Warpath Commander's Charm</option>
-						<option>Super Warpath Mage Charm</option>
-						<option>Super Warpath Scout Charm</option>
-						<option>Super Warpath Warrior Charm</option>
-						<option>Supply Schedule Charm</option>
-						<option>Tarnished Charm</option>
-						<option>Ultimate Charm</option>
-						<option>Ultimate Luck Charm</option>
-						<option>Ultimate Polluted Charm</option>
-						<option>Ultimate Power Charm</option>
-						<option>Uncharged Scholar Charm</option>
-						<option>Unstable Charm</option>
-						<option>Valentine Charm</option>
-						<option>Warpath Archer Charm</option>
-						<option>Warpath Cavalry Charm</option>
-						<option>Warpath Commander's Charm</option>
-						<option>Warpath Mage Charm</option>
-						<option>Warpath Scout Charm</option>
-						<option>Warpath Warrior Charm</option>
-						<option>Wealth Charm</option>
-						<option>Wild Growth Charm</option>
-						<option>Winter Charm</option>
-						<option>Winter Screw Charm</option>
-						<option>Winter Spring Charm</option>
-						<option>Winter Wood Charm</option>
-						<option>Wax Charm</option>
-						<option>Yellow Double Sponge Charm</option>
-						<option>Yellow Sponge Charm</option>
+
+            <tr id="toxicRow" style="display:none">
+                <td>Toxic:</td>
+                <td>
+                    <select id="toxic">
+                        <option>No</option>
+                        <option>Yes</option>
                     </select>
-            	</td>
+                </td>
             </tr>
-            -->
+
+            <tr id="batteryRow" style="display:none">
+                <td>Battery Level:</td>
+                <td>
+                    <select id="battery">
+                        <option>-</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                    </select>
+                </td>
+            </tr>
             
             <tr><td>Golden Shield:</td>
                 <td>
@@ -259,6 +229,20 @@
                     </select>
                 </td>
             </tr>
+
+            <tr id="ampRow" style="display:none">
+                <td>Amp:</td>
+                <td>
+                    <input id="ampValue" type="text" size="3" value="0" readonly>%
+                </td>
+            </tr>
+
+            <tr id="sliderRow" style="display:none">
+                <td></td>
+                <td>
+                    <div id="ampSlider"></div>
+                </td>
+            </tr>
             
             <!--
             <tr><td>Tourney:</td>
@@ -270,6 +254,7 @@
             -->
             <tr><td><a id="link" target="_blank">Link to setup</a></td></tr>
         </table>
+
         <table>
             <tr>
             	<td>
@@ -305,6 +290,19 @@
         </table>
         
         <table id='trapSetup'></table>
+        <div class="pager">
+            <img src="img/first.png" class="first" />
+            <img src="img/prev.png" class="prev" />
+            <input type="text" class="pagedisplay" readonly></input>
+            <img src="img/next.png" class="next" />
+            <img src="img/last.png" class="last" />
+            <select class="pagesize" title="Select page size">
+                <option selected="selected" value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+        </div>
         <table id='results' class='tablesorter'></table>
     </div>
 </body>

@@ -1,8 +1,10 @@
 "use strict";
 
-
 var popLoaded = 0, baselineLoaded = 0;
-var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0, basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0, gsLuck = 7, lbwLuck = 0, charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0, pourBonus = 0, pourLuck = 0;
+var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
+var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
+var gsLuck = 7, lbwLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0;
+var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
 var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', cheeseBonus = 0, tournamentName = '', weaponName = '', phaseName = '';
 var cheeseLoaded = 0, charmLoaded = 0;
@@ -29,12 +31,37 @@ function checkLoadState() {
 		loadLocationDropdown();
 		//loadTourneyDropdown();
 		//updateLink();
+
+		var toxicParameter = getURLParameter("toxic");
+		if (toxicParameter != "null") {
+			var select = document.getElementById("toxic");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == toxicParameter) {
+					child.selected = true;
+			    	toxicChanged();
+					break;
+				}
+			}
+		}
+
+		var batteryParameter = getURLParameter("battery");
+		if (batteryParameter != "null") {
+			var select = document.getElementById("battery");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == batteryParameter) {
+					child.selected = true;
+			    	batteryChanged();
+					break;
+				}
+			}
+		}
 		
 		status.innerHTML = "<td>All set!</td>";
 		setTimeout(function() {status.innerHTML = '<td><br></td>'}, 3000);
 	}
 }
-
 
 var popCSV = [];
 var popArray = [];
@@ -62,7 +89,6 @@ function processPop () {
 	checkLoadState();
 }
 
-
 var baselineArray = [];
 function processBaseline(baselineText) {
 	baselineArray = baselineText.split("\n");
@@ -79,8 +105,14 @@ function processBaseline(baselineText) {
 	//console.log(baselineArray);
 }
 
+function showTrapSetup(type) {
+	var trapSetup = document.getElementById("trapSetup");
 
-
+	if (type == 0) trapSetup.innerHTML = "<tr><td></td></tr>";
+	else {
+		trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr><tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr><tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
+	}
+}
 
 function loadWeaponSelection() {
 	var len = Object.size(weaponsArray);
@@ -100,17 +132,11 @@ function loadCharmSelection() {
 	$(".charm_checkbox").change(function() { $("#all_charms_checkbox").prop('checked', false);});
 }
 
-
-
-
-
-
 var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 window.onload = function () {
 	
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
-	//pop.open("get", "file://localhost/Users/haoala/Desktop/MH/Chrome%20Extensions/CRE/populations.csv", false);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {
 			//console.log(pop.responseText);
@@ -187,47 +213,6 @@ window.onload = function () {
 		}
 	}
 
-	/*
-	var weaponParameter = getURLParameter("weapon");
-	if(weaponParameter != "null") {
-		var select = document.getElementById("weapon");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == weaponParameter) {
-				child.selected = true;
-		    	weaponChanged();
-				break;
-			}
-		}
-	}
-	
-	var baseParameter = getURLParameter("base");
-	if(baseParameter != "null") {
-		var select = document.getElementById("base");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == baseParameter) {
-				child.selected = true;
-		    	baseChanged();
-				break;
-			}
-		}
-	}
-	
-	var charmParameter = getURLParameter("charm");
-	if(charmParameter != "null") {
-		var select = document.getElementById("charm");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == charmParameter) {
-				child.selected = true;
-		    	charmChanged();
-				break;
-			}
-		}
-	}
-	*/
-
 	var gsParameter = getURLParameter("gs");
 	if(gsParameter != "null") {
 		gsParameter = "No";
@@ -255,20 +240,7 @@ window.onload = function () {
 			}
 		}
 	}
-
-	//console.log(getURLParameter("location"));
-	/*
-	if(getURLParameter("location") != "null") console.log("boo");
-	console.log(getURLParameter("cheese"));
-	console.log(getURLParameter("base"));
-	console.log(getURLParameter("charm"));
-	console.log(getURLParameter("gs"));
-	console.log(getURLParameter("lbw"));
-	console.log(getURLParameter("tourney"));
-	*/
-
-
-    	
+  	
     document.getElementById("location").onchange = function () {
 		locationChanged();
     };
@@ -280,12 +252,14 @@ window.onload = function () {
     document.getElementById("cheese").onchange = function () {
 		cheeseChanged();
     };
-	    
-	/*
-    document.getElementById("charm").onchange = function () {
-		charmChanged();
+
+    document.getElementById("toxic").onchange = function () {
+		toxicChanged();
     };
-    */
+
+    document.getElementById("battery").onchange = function () {
+		batteryChanged();
+    };
 
     document.getElementById("gs").onchange = function () {
 		gsChanged();
@@ -294,12 +268,6 @@ window.onload = function () {
     document.getElementById("lbw").onchange = function () {
 		lbwChanged();
 	}
-	
-	/*
-    document.getElementById("tourney").onchange = function () {
-		tourneyChanged();
-    };
-    */
 
     $("#save_setup_button").click(function() {
     	var checkedWeapons = [];
@@ -390,17 +358,6 @@ window.onload = function () {
     })
 }
 
-
-function showTrapSetup(type) {
-	var trapSetup = document.getElementById("trapSetup");
-
-	if (type == 0) trapSetup.innerHTML = "<tr><td></td></tr>";
-	else {
-		trapSetup.innerHTML = "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr><tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr>";
-	}
-}
-
-
 function loadLocationDropdown() {
 	var locationDropdown = document.getElementById("location");
 	var locationDropdownHTML = '<option></option>';
@@ -426,8 +383,6 @@ function loadLocationDropdown() {
 		}
 	}
 }
-
-
 
 function populateSublocationDropdown (locationName) {
 	var sublDropdown = document.getElementById("phase");
@@ -459,8 +414,6 @@ function populateSublocationDropdown (locationName) {
    	phaseChanged();
 	//Load cheese dropdown
 }
-
-
 
 function loadCheeseDropdown() {
 	var cheeseDropdown = document.getElementById("cheese");
@@ -499,58 +452,6 @@ function loadCheeseDropdown() {
 
 	cheeseChanged();
 }
-
-function selectCharm () {
-	console.log("Selecting charm");
-	var charmParameter = getURLParameter("charm");//.replace('*','');
-	if(charmParameter != "null" && charmLoaded<4) {
-		var select = document.getElementById("charm");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == charmParameter) {
-				child.selected = true;
-		    	charmChanged();
-		    	charmLoaded++;
-				break;
-			}
-		}
-	}
-}
-
-
-
-
-function loadTourneyDropdown() {
-	var tourneyDropdown = document.getElementById("tourney");
-
-	var tourneyDropdownHTML = '<option></option>';
-	
-	var tourneyArrayLength = Object.size(tourneysArray);
-	//console.log(tourneyArrayLength);
-	
-	for (var i=0; i<tourneyArrayLength; i++) {
-		tourneyDropdownHTML += "<option>"+Object.keys(tourneysArray)[i]+"</option>\n";
-	}
-	
-	tourneyDropdown.innerHTML = tourneyDropdownHTML;
-	
-	var tourneyParameter = getURLParameter("tourney");
-	if(tourneyParameter != "null") {
-		var select = document.getElementById("tourney");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == tourneyParameter) {
-				child.selected = true;
-		    	tourneyChanged();
-				break;
-			}
-		}
-	}
-	
-}
-
-
-
 
 function calcCR(E, P, L, M) {
 //	console.log(E);
@@ -676,14 +577,13 @@ function getURLParameter(name) {
 }
 
 function updateLink() {
-	var URLString = 'best_setup.html?';
+	var URLString = 'setup.html?';
 	
 	if(locationName != "") URLString+= "&location="+locationName;
 	if(phaseName != "" && phaseName != "-") URLString+= "&phase="+phaseName;
 	if(cheeseName != "") URLString+= "&cheese="+cheeseName;
-	//if(weaponName != "") URLString+= "&weapon="+weaponName;
-	//if(baseName != "") URLString+= "&base="+baseName;
-	//if(charmName != "") URLString+= "&charm="+charmName;
+	if(isToxic != "" && isToxic != "-") URLString += "&toxic=" + isToxic;
+	if(batteryPower != 0) URLString += "&battery=" + batteryPower;
 	if(gsLuck == 0) URLString+= "&gs="+gsLuck;
 	if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
 	if(tournamentName != "") URLString+= "&tourney="+tournamentName;
@@ -712,9 +612,7 @@ function weaponChanged() {
 		weaponAtt = parseInt(weaponsArrayN[3]);
 		weaponLuck = parseInt(weaponsArrayN[4]);
 		weaponEff = parseFreshness[weaponsArrayN[5]];
-
 	
-		
 		calculateTrapSetup();
 }
 
@@ -723,11 +621,98 @@ function locationChanged () {
 	locationName = select.children[select.selectedIndex].innerHTML;
 	ga('send', 'event', 'location', 'changed', locationName);
 	updateLink();
+
+	hideAllRows();
+	if (locationName == "Furoma Rift") {
+		$("#batteryRow").show(500);
+		$("#frComment").show(500);
+	}
+	else if (locationName == "Whisker Woods Rift") {
+		$("#wwrComment").show(500);
+	}
+	else if (locationName == "Zugzwang's Tower") {
+		$("#ampSlider").slider('option','value',100);
+		$("#ampRow").show(500);
+		$("#sliderRow").show(500);
+		$("#ztComment").show(500);
+	}
+	else if (locationName == "Labyrinth") {
+		$("#labyComment").show(500);
+	}
+
+	batteryPower = 0;
+	ztAmp = 100;
 	
 	//showPop(0);
 	
 	//Populate sublocation dropdown and select first option
-	populateSublocationDropdown(locationName);
+	if (locationName != "") {
+		populateSublocationDropdown(locationName);
+	}
+}
+
+function hideAllRows() {
+	$("#toxicRow").hide();
+	$("#toxic").val('No');
+	$("#batteryRow").hide();
+	$("#battery").val('-');
+	$("#ampRow").hide();
+	$("#sliderRow").hide();
+}
+
+function toxicChanged() {
+	var select = document.getElementById("toxic");
+	isToxic = select.children[select.selectedIndex].innerHTML;
+
+	if (isToxic == "Yes" && (cheeseName == "Brie" || cheeseName == "SB+")) {
+		cheeseBonus = 20;
+	}
+	else {
+		cheeseBonus = 0;
+	}
+
+	updateLink();
+	calculateTrapSetup();
+}
+
+function batteryChanged() {
+	var select = document.getElementById("battery");
+	var batteryLevel = select.children[select.selectedIndex].innerHTML;
+	if (batteryLevel == "1") {
+		batteryPower = 1;
+	}
+	else if (batteryLevel == "2") {
+		batteryPower = 2;
+	}
+	else if (batteryLevel == "3") {
+		batteryPower = 3;
+	}
+	else if (batteryLevel == "4") {
+		batteryPower = 4;
+	}
+	else if (batteryLevel == "5") {
+		batteryPower = 5;
+	}
+	else if (batteryLevel == "6") {
+		batteryPower = 6;
+	}
+	else if (batteryLevel == "7") {
+		batteryPower = 7;
+	}
+	else if (batteryLevel == "8") {
+		batteryPower = 8;
+	}
+	else if (batteryLevel == "9") {
+		batteryPower = 9;
+	}
+	else if (batteryLevel == "10") {
+		batteryPower = 10;
+	}
+	else if (batteryLevel == "-") {
+		batteryPower = 0;
+	}
+
+	updateLink();
 }
 
 function phaseChanged () {
@@ -757,11 +742,11 @@ function phaseChanged () {
 	if (locationName=="Twisted Garden" && phaseName=="Poured" && pourBonus == 0) {
 		pourBonus = 5;
 		pourLuck = 5;
-		calculateTrapSetup("cre");
+		calculateTrapSetup();
 	} else if (!(locationName=="Twisted Garden" && phaseName=="Poured") && pourBonus == 5) {
 		pourBonus = 0;
 		pourLuck = 0;
-		calculateTrapSetup("cre");
+		calculateTrapSetup();
 	}
 	
 	//calculateTrapSetup("cre");
@@ -778,53 +763,29 @@ function cheeseChanged() {
 	//ga('send', 'event', 'charm', 'selected', charmName);
 	updateLink();
 
+	//Toxic checks
+	if (cheeseName == "Brie" || cheeseName == "SB+") {
+		$("#toxicRow").show(500);
+		toxicChanged();
+	}
+	else {
+		$("#toxicRow").hide();
+		toxicChanged();
+	}
+
 	//showPop();
 	//selectCharm();
 }
 
 function baseChanged() {
-		//updateLink();
-		
-		var basesArrayN = basesArray[baseName];
-		if (basesArrayN == undefined) basesArrayN=[0];
-		
-		//Bases with special effects when paired with particular charm
-		if (specialCharm[baseName]) calcSpecialCharms(charmName);
-		else {
-			var charmsArrayN = charmsArray[charmName];
-
-			//If No charm selected
-			if (charmsArrayN == undefined) {
-				charmsArrayN= [];
-				charmsArrayN[0] = 0;
-				charmsArrayN[1] = 0;
-				charmsArrayN[2] = 0;
-				charmsArrayN[3] = 0;
-				charmsArrayN[4] = 0;			
-			}
-		
-			else {
-				charmPower = parseInt(charmsArrayN[0]);
-				charmBonus = parseInt(charmsArrayN[1]);
-				charmAtt = parseInt(charmsArrayN[2]);
-				charmLuck = parseInt(charmsArrayN[3]);
-				charmEff = parseFreshness[charmsArrayN[4]];
-			}
-		}
-
-		basePower = parseInt(basesArrayN[0]);
-		baseBonus = parseInt(basesArrayN[1]);
-		baseAtt = parseInt(basesArrayN[2]);
-		baseLuck = parseInt(basesArrayN[3]);
-		baseEff = parseFreshness[basesArrayN[4]];
-		
-		calculateTrapSetup();
-}
-
-function charmChanged() {
-		ga('send', 'event', 'charm', 'changed', charmName);
-		updateLink();
-
+	//updateLink();
+	
+	var basesArrayN = basesArray[baseName];
+	if (basesArrayN == undefined) basesArrayN=[0];
+	
+	//Bases with special effects when paired with particular charm
+	if (specialCharm[baseName]) calcSpecialCharms(charmName);
+	else {
 		var charmsArrayN = charmsArray[charmName];
 
 		//If No charm selected
@@ -834,66 +795,91 @@ function charmChanged() {
 			charmsArrayN[1] = 0;
 			charmsArrayN[2] = 0;
 			charmsArrayN[3] = 0;
-
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = 0;
-
-			calculateTrapSetup();
-			//showPop();
+			charmsArrayN[4] = 0;			
 		}
-
-		//Charms with special effects when paired with particular base
-		else if (specialCharm[charmName]) {
-			calcSpecialCharms(charmName);
-		}
-		//console.log(specialCharm[charmName]);
-
+	
 		else {
 			charmPower = parseInt(charmsArrayN[0]);
 			charmBonus = parseInt(charmsArrayN[1]);
 			charmAtt = parseInt(charmsArrayN[2]);
 			charmLuck = parseInt(charmsArrayN[3]);
 			charmEff = parseFreshness[charmsArrayN[4]];
-
-			calculateTrapSetup();
-			//showPop();
 		}
-		//console.log(charmsArrayN);
+	}
+
+	basePower = parseInt(basesArrayN[0]);
+	baseBonus = parseInt(basesArrayN[1]);
+	baseAtt = parseInt(basesArrayN[2]);
+	baseLuck = parseInt(basesArrayN[3]);
+	baseEff = parseFreshness[basesArrayN[4]];
+	
+	calculateTrapSetup();
+}
+
+function charmChanged() {
+	ga('send', 'event', 'charm', 'changed', charmName);
+	updateLink();
+
+	var charmsArrayN = charmsArray[charmName];
+
+	//If No charm selected
+	if (charmsArrayN == undefined) {
+		charmsArrayN= [];
+		charmsArrayN[0] = 0;
+		charmsArrayN[1] = 0;
+		charmsArrayN[2] = 0;
+		charmsArrayN[3] = 0;
+
+		charmPower = parseInt(charmsArrayN[0]);
+		charmBonus = parseInt(charmsArrayN[1]);
+		charmAtt = parseInt(charmsArrayN[2]);
+		charmLuck = parseInt(charmsArrayN[3]);
+		charmEff = 0;
+
+		calculateTrapSetup();
+		//showPop();
+	}
+
+	//Charms with special effects when paired with particular base
+	else if (specialCharm[charmName]) {
+		calcSpecialCharms(charmName);
+	}
+	//console.log(specialCharm[charmName]);
+
+	else {
+		charmPower = parseInt(charmsArrayN[0]);
+		charmBonus = parseInt(charmsArrayN[1]);
+		charmAtt = parseInt(charmsArrayN[2]);
+		charmLuck = parseInt(charmsArrayN[3]);
+		charmEff = parseFreshness[charmsArrayN[4]];
+
+		calculateTrapSetup();
+		//showPop();
+	}
+	//console.log(charmsArrayN);
 }
 
 function gsChanged() {
-        var select = document.getElementById("gs");
+    var select = document.getElementById("gs");
 
-        if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
-        else gsLuck = 0;
-        
-		updateLink();
-		calculateTrapSetup();
-		//showPop();
+    if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
+    else gsLuck = 0;
+    
+	updateLink();
+	calculateTrapSetup();
+	//showPop();
 }
 
 function lbwChanged() {
-        var select = document.getElementById("lbw");
+    var select = document.getElementById("lbw");
 
-        if (select.children[select.selectedIndex].innerHTML == "Yes") lbwLuck = 5;
-        else lbwLuck = 0;
-        
-		updateLink();
-		calculateTrapSetup();
-		//showPop();
+    if (select.children[select.selectedIndex].innerHTML == "Yes") lbwLuck = 5;
+    else lbwLuck = 0;
+    
+	updateLink();
+	calculateTrapSetup();
+	//showPop();
 }
-
-function tourneyChanged() {
-        var select = document.getElementById("tourney");
-		tournamentName = select.children[select.selectedIndex].innerHTML;
-		updateLink();
-
-		//showPop();
-}
-
 
 function showPop(type) {
 	d = new Date();
@@ -938,7 +924,6 @@ function showPop(type) {
 function printCombinations(micePopulation, tableHTML) {
 	var results = document.getElementById("results");
 	
-	
 	var baseAR = findBaseline();
 	var noMice = Object.size(micePopulation)+1;
 	//console.log(noMice);
@@ -950,6 +935,7 @@ function printCombinations(micePopulation, tableHTML) {
 	
 	var nWeapons = Object.size(weaponsArray);
 	var nBases = Object.size(basesArray);
+
 	for (var i=0; i < nWeapons; i++) {
 		if (!$(".weapon_checkbox").get(i).checked) continue;
 		var weapon = Object.keys(weaponsArray)[i];
@@ -980,6 +966,8 @@ function printCombinations(micePopulation, tableHTML) {
 			if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
 			URLString+= "&weapon="+weapon;
 			URLString+= "&base="+base;
+			URLString+= "&toxic="+isToxic;
+			URLString+= "&battery="+batteryPower;
 			URLString = URLString.replace(/'/g, "%27");
 			
 			//console.log(URLString);
@@ -989,8 +977,7 @@ function printCombinations(micePopulation, tableHTML) {
 			for (var mouse in micePopulation) {
 
 				var attractions = parseFloat(micePopulation[mouse])*overallAR;
-			
-				
+					
 				if (mouse.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
 					charmBonus += 300;
 					calculateTrapSetup();
@@ -1023,8 +1010,7 @@ function printCombinations(micePopulation, tableHTML) {
 		}
 	}
 	//tableHTML.innerHTML += "<tr><td>" + "Maniacal" + "</td></tr>";
-	
-	
+		
 	tableHTML += "</tbody>"
 	results.innerHTML = tableHTML
 	
@@ -1040,6 +1026,7 @@ function printCombinations(micePopulation, tableHTML) {
     	printCharmCombinations(popArrayLPC["-"], resultsHTML);
     });
     
+    $(".pager *").unbind('click');
 	$("#results").tablesorter({
 		/*headers: {
 			4: {sorter: "fancyNumber"}, //For gold and points and numbers with commas. Use 0 indexing
@@ -1048,14 +1035,14 @@ function printCombinations(micePopulation, tableHTML) {
 		
 		//,sortList: [[noMice-1,1]]
 		sortForce: [[noMice,1]]
+	}).tablesorterPager({
+		container: $(".pager")
 	});
 	
 	$("#overallHeader").click();
 
 	console.log(new Date().getTime()-d.getTime());
 }
-
-
 
 function printCharmCombinations(micePopulation, tableHTML) {
 	var results = document.getElementById("results");
@@ -1138,6 +1125,7 @@ function printCharmCombinations(micePopulation, tableHTML) {
 	tableHTML += "</tbody>"
 	results.innerHTML = tableHTML
 	
+	$(".pager *").unbind('click');
 	$("#results").tablesorter({
 		/*headers: {
 			4: {sorter: "fancyNumber"}, //For gold and points and numbers with commas. Use 0 indexing
@@ -1146,6 +1134,8 @@ function printCharmCombinations(micePopulation, tableHTML) {
 		
 		//,sortList: [[noMice-1,1]]
 		sortForce: [[noMice,1]]
+	}).tablesorterPager({
+		container: $(".pager")
 	});
 	
 	$("#overallHeader").click();
