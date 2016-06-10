@@ -356,6 +356,7 @@ function showPop (type) { //type = 2 means don't reset charms
 		results.innerHTML = ''
 	} else {
 		//console.log(popArray[locationName][cheeseName]);
+		// console.log("locationName: " + locationName + ", phaseName: " + phaseName + ", cheeseName: " + cheeseName);
 		var popArrayLPC = popArray[locationName][phaseName][cheeseName];
 		//console.log(popArrayLPC)
 		
@@ -1103,24 +1104,8 @@ function locationChanged () {
 	locationName = select.children[select.selectedIndex].innerHTML;
 	updateLink();
 
-	//Battery checks
-	var batteryDropdown = document.getElementById("battery");
-	var batteryHTML = '';
-	batteryHTML += "<option>-</option>\n";
-	batteryHTML += "<option>1</option>\n";
-	batteryHTML += "<option>2</option>\n";
-	batteryHTML += "<option>3</option>\n";
-	batteryHTML += "<option>4</option>\n";
-	batteryHTML += "<option>5</option>\n";
-	batteryHTML += "<option>6</option>\n";
-	batteryHTML += "<option>7</option>\n";
-	batteryHTML += "<option>8</option>\n";
-	batteryHTML += "<option>9</option>\n";
-	batteryHTML += "<option>10</option>\n";
-
 	hideAllRows();
 	if (locationName == "Furoma Rift") {
-		batteryDropdown.innerHTML = batteryHTML;
 		$("#batteryRow").show(500);
 		$("#frComment").show(500);
 	}
@@ -1128,7 +1113,7 @@ function locationChanged () {
 		$("#wwrComment").show(500);
 	}
 	else if (locationName == "Zugzwang's Tower") {
-		ztAmp = parseInt($("#ampSlider").slider("value"));
+		$("#ampSlider").slider('option','value',100);
 		$("#ampRow").show(500);
 		$("#sliderRow").show(500);
 		$("#ztComment").show(500);
@@ -1152,7 +1137,9 @@ function locationChanged () {
 function hideAllRows() {
 	$("#phaseRow").hide();
 	$("#toxicRow").hide();
+	$("#toxic").val('No');
 	$("#batteryRow").hide();
+	$("#battery").val('-');
 	$("#ampRow").hide();
 	$("#sliderRow").hide();
 	$("#wwrComment").hide();
@@ -1251,13 +1238,8 @@ function cheeseChanged () {
 	}
 
 	//Toxic checks
-	var toxicDropdown = document.getElementById("toxic");
-	var toxicHTML = '';
-	toxicHTML += "<option>No</option>\n";
-	toxicHTML += "<option>Yes</option>\n";
 	if (cheeseName == "Brie" || cheeseName == "SB+") {
 		$("#toxicRow").show(500);
-		toxicDropdown.innerHTML = toxicHTML;
 		toxicChanged();
 	}
 	else {
