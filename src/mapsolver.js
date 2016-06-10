@@ -1,6 +1,6 @@
 "use strict";
 
-var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay;
+var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
 
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -236,6 +236,8 @@ function processMap(mapText) {
 	
 	var bestLocationArray = new Array();
 	var weightedBLA = new Array();
+	var seenMice = new Array();
+	remainingMice = 0;
 	
 	for (var i=0; i<mouseArrayLength; i++) {
 		var mouseName = mouseArray[i];
@@ -250,11 +252,19 @@ function processMap(mapText) {
 		if (popArray[mouseName] == undefined) { //Mouse name not recognised
 			interpretedAsText += "<div class='invalid'>" + mouseName+"</div>";
 			// mouseListText += "<tr><td><b>" + mouseName + "</b></td></tr>";
-		} else {			
-		
+		} 
+		else {			
+			if (seenMice.indexOf(mouseName) >= 0) {
+				continue;
+			}
+			else {
+				seenMice.push(mouseName);
+			}
+
 			var mouseLocationCheese = new Array();
 			
 			mouseListText += "<td style='font-size: 12'><b>" + mouseName + "</b></td>";
+			remainingMice++;
 
 			var mouseLocation = Object.keys(popArray[mouseName]);
 			var noLocations = Object.size(popArray[mouseName]); //console.log(noLocations);
@@ -361,7 +371,8 @@ function processMap(mapText) {
 	
 	interpretedAs.innerHTML = interpretedAsText;
 	mouseList.innerHTML = mouseListText;
-	
+	$("#remainValue").val(remainingMice);
+
 	var sortedLocation = sortBestLocation (bestLocationArray, weightedBLA);
 	printBestLocation(sortedLocation);
 }

@@ -87,6 +87,11 @@
             /*max-width: 500px;*/
             max-width: 36em;
         }
+        #remainText {
+            width: 100%;
+            /*max-width: 500px;*/
+            max-width: 36em;
+        }
     </style>
 
     <!-- Google Analytics -->
@@ -166,7 +171,7 @@
             <!--###################################################################################-->
             <tr>
                 <td id="mapId">
-                    <textarea id="map" rows="25" cols="45"></textarea>
+                    <textarea id="map" rows="20" cols="50"></textarea>
                 </td>
                 <td id="formId" style="font-size: 14">
                     Limit mouse list columns <br>(to improve performance): <br><br>
@@ -192,6 +197,15 @@
         </table>
 
         <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <div id="remainText">
+                        Unique Mice Remaining:
+                        <input id="remainValue" type="text" size="2" value="0" readonly>
+                    </div>
+                </td>
+            </tr>
+
             <tr>
                 <td>
                     <div id="ampText">
