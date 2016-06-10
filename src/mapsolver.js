@@ -1,6 +1,6 @@
 "use strict";
 
-var columnLimit, rowLimit, attractionBonus = 0;
+var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay;
 
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -157,9 +157,6 @@ function processPop() {
 	loadMouseDropdown();
 }
 
-
-
-
 function loadMouseDropdown() {
 	var popArrayLength = Object.size(popArray);
 	var suggests = [];
@@ -171,19 +168,35 @@ function loadMouseDropdown() {
 	
 	$("#map").asuggest(suggests);
 
-}
-
+} 
 
 window.onload = function () {
-	document.getElementById("map").onchange = function () {
-    	var mapText = document.getElementById("map").value;
-	    processMap(mapText);
-	};
 
-	document.getElementById("map").onkeyup = function () {
-    	var mapText = document.getElementById("map").value;
-	    processMap(mapText);
-	};
+	$("#map").keyup(function(event) {
+		// Checking for enter/return, backspace, and delete
+		// Then finding newlines and only processing when that differs from previous value
+		if (event.keyCode == 13 || event.keyCode == 8 || event.keyCode == 46) {
+			clearTimeout(timeDelay);
+			var mapText = document.getElementById("map").value;
+			var b = (mapText.match(/\n/g)||[]).length;
+			if (b != numLineBreaks) {
+				numLineBreaks = b;
+				processMap(mapText);
+			}
+			else {
+				clearTimeout(timeDelay);
+				var mapText = document.getElementById("map").value;
+				timeDelay = setTimeout(function() { processMap(mapText); }, 1000);
+			}
+		}
+		else {
+			// 1-second delay after every keypress before processing map
+			// Implicitly handles pasting
+			clearTimeout(timeDelay);
+			var mapText = document.getElementById("map").value;
+			timeDelay = setTimeout(function() { processMap(mapText); }, 1000);
+		}
+	});
 
 	$("input[name='colLimit']").change(function() {
 		columnLimit = $(this).val();

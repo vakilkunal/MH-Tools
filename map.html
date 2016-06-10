@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-        
+
     <script type="text/javascript" src="src/arrays.js"></script>
     <script type="text/javascript" src="src/mapsolver.js"></script>
     <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
@@ -31,6 +31,7 @@
         .container {
             margin: 0 auto;
             padding:20px;
+            white-space: nowrap;
         }
         td {
         	padding: 5px;
@@ -46,6 +47,7 @@
         }
         .header {
         	font-size: 11px;
+            text-align:center;
         }
         .header h1 {
             font-weight: 700;
@@ -56,29 +58,18 @@
         .invalid {
 			color: red;
 		}
-        #blank1 {
-            width: 25%;
-            display: inline-block;
-        }
-        #blank2{
-            width: 0%;
-            display: inline-block;
-        }
         #mapId {
             width: 25%;
-            display: inline-block;
         }
         #interpretedAs {
-            width: 20%;
+            width: 25%;
             display: inline-block;
+            min-width: 75px;
         }
         #formId {
-            width: 15%;
+            width: 25%;
             display: inline-block;
-        }
-        #headerId {
-            width: 100%;
-            /*display: inline-block;*/
+            min-width: 150px;
         }
         #mouseList {
             padding-top: 5px;
@@ -87,8 +78,14 @@
             resize: none;
         }
         #ampSlider {
-            width: 50%;
-            display: inline-block;
+            width: 100%;
+            /*max-width: 500px;*/
+            max-width: 36em;
+        }
+        #ampText {
+            width: 100%;
+            /*max-width: 500px;*/
+            max-width: 36em;
         }
     </style>
 
@@ -105,6 +102,8 @@
 
     <!-- Attraction slider -->
     <script>
+        var sliderDelay;
+
         $(function() {
             $("#ampSlider").slider({
                 range: "min",
@@ -135,6 +134,7 @@
         }
 
         function refreshSlider(ui) {
+            clearTimeout(sliderDelay);
             var ampSlider = ui.value;
             var myColor = getColor(ampSlider);
             $("#ampSlider .ui-slider-range").css("background-color", myColor);
@@ -142,7 +142,7 @@
             $("#ampValue").val(ampSlider);
             attractionBonus = parseInt(ampSlider);
             var mapText = document.getElementById("map").value;
-            processMap(mapText);
+            sliderDelay = setTimeout(function() { processMap(mapText); }, 500);
         }
     </script>
     <!--###################################################################################-->
@@ -151,13 +151,13 @@
     <div class="container">
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
-                <td id="headerId">
+                <td>
                     <div class="header">
                     	<h1>Map Solver and Mouse Finder</h1>
                     	based on Chad Moore's<br><br>
                     	Copy and paste mice from maps,<br>
-                    	or type names leaving a line break between each<br><br>
-                        Press <b>Enter</b> to autocomplete<br><br>
+                    	or type names leaving a line break between each,<br>
+                        pressing <b>Enter</b> to autocomplete<br><br>
                         <i>Note: </i>Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results<br>
                         The first cheese listed is used to calculate a fuse's combined baseline attraction
                     </div>
@@ -165,11 +165,9 @@
             </tr>
             <!--###################################################################################-->
             <tr>
-                <td id="blank1"></td>
                 <td id="mapId">
-                    <textarea id="map" rows="25" cols="40"></textarea>
+                    <textarea id="map" rows="25" cols="45"></textarea>
                 </td>
-                <td id="blank2"></td>
                 <td id="formId" style="font-size: 14">
                     Limit mouse list columns <br>(to improve performance): <br><br>
                     <form action="">
@@ -196,8 +194,10 @@
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td>
-                    Attraction Bonus:
-                    <input id="ampValue" type="text" size="3" value="0" readonly>%
+                    <div id="ampText">
+                        Attraction Bonus:
+                        <input id="ampValue" type="text" size="3" value="0" readonly>%
+                    </div>
                 </td>
             </tr>
 
