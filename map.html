@@ -97,10 +97,22 @@
                     if (event.originalEvent) {
                         refreshSlider(ui);
                     }
+                    else {
+                        var myColor = getColor(attractionBonus);
+                        $("#ampSlider .ui-slider-range").css("background-color", myColor);
+                        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
+                        $("#ampValue").val(attractionBonus);
+                    }
                 },
                 change: function(event, ui) {
                     if (event.originalEvent) {
                         refreshSlider(ui);
+                    }
+                    else {
+                        var myColor = getColor(attractionBonus);
+                        $("#ampSlider .ui-slider-range").css("background-color", myColor);
+                        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
+                        $("#ampValue").val(attractionBonus);
                     }
                 }
             });
