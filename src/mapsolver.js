@@ -172,12 +172,13 @@ function loadMouseDropdown() {
 
 window.onload = function () {
 
-	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/)) ;
+	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
 
     if (mouseList.length === 0) {
         var cookie = $.cookie('savedMice');
         if (cookie !== undefined) {
             $('#map').val($.cookie('savedMice'));
+            processMap($('#map').val());
         }
     } else {
         $('#map').val(mouseList);
