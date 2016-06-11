@@ -2,6 +2,75 @@
 
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
 
+window.onload = function () {
+
+	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
+
+    if (mouseList.length === 0) {
+        var cookie = $.cookie('savedMice');
+        if (cookie !== undefined) {
+            $('#map').val($.cookie('savedMice'));
+            processMap($('#map').val());
+            $("#weightAR").click();
+        }
+    } else {
+        $('#map').val(mouseList);
+        processMap($('#map').val());
+        $("#weightAR").click();
+    }
+
+	$("#map").keyup(function(event) {
+		// Checking for enter/return, backspace, and delete
+		// Then finding newlines and only processing when that differs from previous value
+		if (event.keyCode == 13 || event.keyCode == 8 || event.keyCode == 46) {
+			clearTimeout(timeDelay);
+			var mapText = document.getElementById("map").value;
+			var b = (mapText.match(/\n/g)||[]).length;
+			if (b != numLineBreaks) {
+				numLineBreaks = b;
+				processMap(mapText);
+			}
+			else {
+				clearTimeout(timeDelay);
+				var mapText = document.getElementById("map").value;
+				timeDelay = setTimeout(function() { processMap(mapText); }, 1000);
+			}
+		}
+		else {
+			// 1-second delay after every keypress before processing map
+			// Implicitly handles pasting
+			clearTimeout(timeDelay);
+			var mapText = document.getElementById("map").value;
+			timeDelay = setTimeout(function() { processMap(mapText); }, 1000);
+		}
+	});
+
+	$("input[name='colLimit']").change(function() {
+		columnLimit = $(this).val();
+		var mapText = document.getElementById("map").value;
+		processMap(mapText);
+	});
+
+	$("input[name='rowLimit']").change(function() {
+		rowLimit = $(this).val();
+		var mapText = document.getElementById("map").value;
+		processMap(mapText);
+	});
+
+	$.tablesorter.addParser({
+    	id: "fancyNumber",
+		is: function(s) {
+		    return /^[0-9]?[0-9,\.]*$/.test(s);
+		},
+		format: function(s) {
+		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
+		},
+		type: "numeric"
+	});
+	
+	$.tablesorter.defaults.sortInitialOrder = 'desc';
+}
+
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
@@ -168,73 +237,6 @@ function loadMouseDropdown() {
 	
 	$("#map").asuggest(suggests);
 
-} 
-
-window.onload = function () {
-
-	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
-
-    if (mouseList.length === 0) {
-        var cookie = $.cookie('savedMice');
-        if (cookie !== undefined) {
-            $('#map').val($.cookie('savedMice'));
-            processMap($('#map').val());
-            $("#weightAR").click();
-        }
-    } else {
-        $('#map').val(mouseList);
-    }
-
-	$("#map").keyup(function(event) {
-		// Checking for enter/return, backspace, and delete
-		// Then finding newlines and only processing when that differs from previous value
-		if (event.keyCode == 13 || event.keyCode == 8 || event.keyCode == 46) {
-			clearTimeout(timeDelay);
-			var mapText = document.getElementById("map").value;
-			var b = (mapText.match(/\n/g)||[]).length;
-			if (b != numLineBreaks) {
-				numLineBreaks = b;
-				processMap(mapText);
-			}
-			else {
-				clearTimeout(timeDelay);
-				var mapText = document.getElementById("map").value;
-				timeDelay = setTimeout(function() { processMap(mapText); }, 1000);
-			}
-		}
-		else {
-			// 1-second delay after every keypress before processing map
-			// Implicitly handles pasting
-			clearTimeout(timeDelay);
-			var mapText = document.getElementById("map").value;
-			timeDelay = setTimeout(function() { processMap(mapText); }, 1000);
-		}
-	});
-
-	$("input[name='colLimit']").change(function() {
-		columnLimit = $(this).val();
-		var mapText = document.getElementById("map").value;
-		processMap(mapText);
-	});
-
-	$("input[name='rowLimit']").change(function() {
-		rowLimit = $(this).val();
-		var mapText = document.getElementById("map").value;
-		processMap(mapText);
-	});
-
-	$.tablesorter.addParser({
-    	id: "fancyNumber",
-		is: function(s) {
-		    return /^[0-9]?[0-9,\.]*$/.test(s);
-		},
-		format: function(s) {
-		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
-		},
-		type: "numeric"
-	});
-	
-	$.tablesorter.defaults.sortInitialOrder = 'desc';
 }
 
 function processMap(mapText) {
