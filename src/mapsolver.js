@@ -172,6 +172,17 @@ function loadMouseDropdown() {
 
 window.onload = function () {
 
+	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/)) ;
+
+    if (mouseList.length === 0) {
+        var cookie = $.cookie('savedMice');
+        if (cookie !== undefined) {
+            $('#map').val($.cookie('savedMice'));
+        }
+    } else {
+        $('#map').val(mouseList);
+    }
+
 	$("#map").keyup(function(event) {
 		// Checking for enter/return, backspace, and delete
 		// Then finding newlines and only processing when that differs from previous value
@@ -225,6 +236,11 @@ window.onload = function () {
 }
 
 function processMap(mapText) {
+	//Save a cookie
+	$.cookie('savedMice', mapText, {
+        expires: 14
+    });
+
 	var mouseArray = mapText.split("\n");
 	var mouseArrayLength = Object.size(mouseArray);
 	
@@ -466,4 +482,16 @@ function findBaseline(location, cheese) {
 		baselineAtt = baselineArray[location + " (" + cheese + ")"];
 	}
 	return baselineAtt;
+}
+
+function getMouseListFromURL(parameters) {
+    if (parameters) {
+        parameters = decodeURI(parameters[1]);
+
+        return parameters
+            .split('/')
+            .join('\n');
+    } else {
+        return [];
+    }
 }
