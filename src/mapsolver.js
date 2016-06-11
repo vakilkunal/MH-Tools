@@ -22,7 +22,6 @@ window.onload = function () {
 
     if ($.cookie('savedAttraction') !== undefined) {
     	var x = parseInt($.cookie('savedAttraction'));
-    	$("#ampSlider").slider('option','value',x);
     	attractionBonus = x;
     }
 
@@ -40,6 +39,8 @@ window.onload = function () {
         setTimeout(function() { processMap(mapText); }, 100);
         $("#weightAR").click();
     }
+
+    $("#ampSlider").slider('option','value',attractionBonus);
 
 	$("#map").keyup(function(event) {
 		// Checking for enter/return, backspace, and delete
