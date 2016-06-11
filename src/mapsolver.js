@@ -19,6 +19,20 @@ window.onload = function () {
         $("#weightAR").click();
     }
 
+    //Row/column cookies
+    if ($.cookie('savedRows') !== undefined) {
+    	var x = parseInt($.cookie('savedRows'));
+    	var s = "#row" + x;
+    	$(s).prop('checked', true);
+    	rowLimit = x;
+    }
+    if ($.cookie('savedCols') !== undefined) {
+    	var x = parseInt($.cookie('savedCols'));
+    	var s = "#col" + x;
+    	$(s).prop('checked', true);
+    	colLimit = x;
+    }
+
 	$("#map").keyup(function(event) {
 		// Checking for enter/return, backspace, and delete
 		// Then finding newlines and only processing when that differs from previous value
@@ -47,12 +61,18 @@ window.onload = function () {
 
 	$("input[name='colLimit']").change(function() {
 		columnLimit = $(this).val();
+		$.cookie('savedCols', columnLimit, {
+	        expires: 30
+	    });
 		var mapText = document.getElementById("map").value;
 		processMap(mapText);
 	});
 
 	$("input[name='rowLimit']").change(function() {
 		rowLimit = $(this).val();
+		$.cookie('savedRows', rowLimit, {
+	        expires: 30
+	    });
 		var mapText = document.getElementById("map").value;
 		processMap(mapText);
 	});
