@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Map Solver and Mouse Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,77 +21,53 @@
 
     <style type="text/css">
         * {
-            margin:0;
-            padding:0;
+            margin: 0;
+            padding: 0;
         }
         body {
-            font-family:Arial;
+            font-family: Verdana;
             font-size: 12px;
-            line-height:20px;
+            line-height: 18px;
+        }
+        h1 {
+            font-size: 24px;
+            padding-bottom: 10px;
         }
         .container {
             margin: 0 auto;
-            padding:20px;
-            white-space: nowrap;
-        }
-        td {
-        	padding: 5px;
-            text-align:center;
-            vertical-align: top;
-            font-size: 10px;
-        }
-        select {
-            padding:4px;
-        }
-        a {
-            text-decoration: underline;
+            padding: 20px;
+            position: absolute;
         }
         .header {
         	font-size: 11px;
-            text-align:center;
-        }
-        .header h1 {
-            font-weight: 700;
-            font-size: 24px;
-            padding-bottom: 10px;
-            text-align:center;
+            width: 250px;
         }
         .invalid {
 			color: red;
 		}
-        #mapId {
-            width: 25%;
-        }
         #interpretedAs {
-            width: 25%;
-            display: inline-block;
-            min-width: 75px;
-        }
-        #formId {
-            width: 25%;
-            display: inline-block;
-            min-width: 150px;
+            width: 150px;
+            max-height: 382px;
+            font-size: 14px;
+            word-wrap: break-word;
+            overflow: auto;
         }
         #mouseList {
-            padding-top: 5px;
+            border-collapse: collapse;
         }
         #map {
             resize: none;
         }
         #ampSlider {
-            width: 100%;
-            /*max-width: 500px;*/
-            max-width: 36em;
+            width: 300px;
         }
-        #ampText {
-            width: 100%;
-            /*max-width: 500px;*/
-            max-width: 36em;
+        #main {
+            float: left;
+            width: 500px;
         }
-        #remainText {
-            width: 100%;
-            /*max-width: 500px;*/
-            max-width: 36em;
+        #location {
+            float: left;
+            width: 500px;
         }
     </style>
 
@@ -144,7 +121,7 @@
             var myColor = getColor(ampSlider);
             $("#ampSlider .ui-slider-range").css("background-color", myColor);
             $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-            $("#ampValue").val(ampSlider);
+            $("#ampText").text("Attraction Bonus: " + ampSlider + "%");
             attractionBonus = parseInt(ampSlider);
             var mapText = document.getElementById("map").value;
             sliderDelay = setTimeout(function() { processMap(mapText); }, 500);
@@ -152,85 +129,106 @@
     </script>
     <!--###################################################################################-->
 </head>
+
 <body>
-    <div class="container">
-        <table cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-                <td>
-                    <div class="header">
-                    	<h1>Map Solver and Mouse Finder</h1>
-                    	based on Chad Moore's<br><br>
-                    	Copy and paste mice from maps,<br>
-                    	or type names leaving a line break between each,<br>
-                        pressing <b>Enter</b> to autocomplete<br><br>
-                        <i>Note: </i>Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results<br>
-                        The first cheese listed is used to calculate a fuse's combined baseline attraction
-                    </div>
-                </td>
-            </tr>
-            <!--###################################################################################-->
-            <tr>
-                <td id="mapId">
-                    <textarea id="map" rows="20" cols="50"></textarea>
-                </td>
-                <td id="formId" style="font-size: 14">
-                    Limit mouse list columns <br>(to improve performance): <br><br>
-                    <form action="">
-                      <input type="radio" name="colLimit" value="0" checked> &infin;<br>
-                      <input type="radio" name="colLimit" value="5"> 5<br>
-                      <input type="radio" name="colLimit" value="10"> 10<br>
-                      <input type="radio" name="colLimit" value="15"> 15<br>
-                      <input type="radio" name="colLimit" value="20"> 20<br>
-                    </form>
-                    <br>
-                    Limit best location rows: <br><br>
-                    <form action="">
-                      <input type="radio" name="rowLimit" value="0" checked> &infin;<br>
-                      <input type="radio" name="rowLimit" value="5"> 5<br>
-                      <input type="radio" name="rowLimit" value="10"> 10<br>
-                      <input type="radio" name="rowLimit" value="15"> 15<br>
-                      <input type="radio" name="rowLimit" value="20"> 20<br>
-                    </form>
-                </td>
-                <td id="interpretedAs" style="font-size: 14"></td>
-            </tr>
-        </table>
+<div class="container">
+    <h1>Map Solver and Mouse Finder</h1>
 
-        <table cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-                <td>
-                    <div id="remainText">
-                        Unique Mice Remaining:
-                        <input id="remainValue" type="text" size="2" value="0" readonly>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <div id="ampText">
-                        Attraction Bonus:
-                        <input id="ampValue" type="text" size="3" value="0" readonly>%
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <div id="ampSlider"></div>
-                </td>
-            </tr>
-        </table>
-        
+    <div id="main">
         <table>
-        	<td>
-        		<table id='bestLocation' class='tablesorter'></table>
-        	</td>
-            <td>
-       	        <table id='mouseList'></table>
-        	</td>
-       	</table>
+        <tr>
+        <td>
+
+        <div class="header">
+            <p>based on Chad Moore's and <a href="http://olf.github.io/mhmapsolver/" target="_blank">Olaf's</a></p><br>
+        	<p>Copy and paste mice from maps, or type names leaving a line break between each. Press <b>Enter</b> to autocomplete and <b>Tab</b> to cycle through suggestions.</p><br>
+            <p><ins>Note</ins>: Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results.
+            The first cheese listed is used to calculate a fuse's combined baseline attraction.</p><br>
+        </div>
+
+        </td>
+        <td>
+
+        <div>
+            <br><br>
+            Limit best location rows: <br>
+            <form action="">
+                <table>
+                <tr>
+                <td>
+                  <input type="radio" name="rowLimit" value="0" checked> &infin;<br>
+                  <input type="radio" name="rowLimit" value="5"> 5<br>
+                  <input type="radio" name="rowLimit" value="10"> 10<br>
+                </td>
+                <td>
+                  <input type="radio" name="rowLimit" value="25"> 25<br>
+                  <input type="radio" name="rowLimit" value="50"> 50<br>
+                  <input type="radio" name="rowLimit" value="100"> 100<br>
+                </td>
+                </tr>
+                </table>
+            </form>
+            <br>
+
+            Limit mouse list columns: <br>
+            <form action="">
+                <table>
+                <tr>
+                <td>
+                  <input type="radio" name="colLimit" value="0" checked> &infin;<br>
+                  <input type="radio" name="colLimit" value="5"> 5<br>
+                  <input type="radio" name="colLimit" value="10"> 10<br>
+                </td>
+                <td>
+                  <input type="radio" name="colLimit" value="25"> 25<br>
+                  <input type="radio" name="colLimit" value="50"> 50<br>
+                  <input type="radio" name="colLimit" value="100"> 100<br>
+                </td>
+                </tr>
+                </table>
+            </form>
+        </div>
+
+        </td>
+        </tr>
+        </table>
+
+        <div>
+            <em>Unique Mice Remaining</em>:
+            <span id="remainValue">0</span>
+        </div><br>
+
+        <div id="ampText">
+            Attraction Bonus: 0%
+        </div>
+
+        <div id="ampSlider"></div><br>
+
+        <table>
+        <tr>
+        <td>
+        <textarea id="map" rows="25" cols="40"></textarea>
+        </td>
+
+        <td style="vertical-align: top">
+        <div id="interpretedAs"><b>Invalid:</b></div>
+        </td>
+        </tr>
+        </table>
     </div>
+
+    <div id="location">
+        <!-- <br><br><h2>Best Locations</h2><br> -->
+        <!-- <p><a href="#mouselistcontainer">Mouse List</a></p><br> -->
+		<table id='bestLocation' class='tablesorter'></table>
+    </div>
+
+    <br>
+    <div id="mouselistcontainer">
+        <!-- <br><h2>Mouse List</h2><br> -->
+        <table id='mouseList' border='1px solid' cellpadding='5'></table>
+    </div>
+</div>
 </body>
 
 </html>
