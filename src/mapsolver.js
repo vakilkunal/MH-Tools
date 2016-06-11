@@ -445,7 +445,7 @@ function sortBestLocation (bestLocationArray, weightedBLA) {
 function printBestLocation (sortedLocation, mouseLocationArray) {
 
 	var bestLocation = document.getElementById("bestLocation");
-	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Mice</th><th align=\'center\'>Raw AR</th><th align=\'center\' id=\'weightAR\'>Weighted AR</th></thead><tbody>';
+	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Mice (Raw AR)</th><th align=\'center\'>Total AR</th><th align=\'center\' id=\'weightAR\'>Weighted AR</th></thead><tbody>';
 	
 	var sortedLocationLength = Object.size(sortedLocation);
 
