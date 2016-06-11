@@ -24,12 +24,14 @@ window.onload = function () {
         var cookie = $.cookie('savedMice');
         if (cookie !== undefined) {
             $('#map').val($.cookie('savedMice'));
-            processMap($('#map').val());
+            var mapText = document.getElementById("map").value;
+            setTimeout(function() { processMap(mapText); }, 100);
             $("#weightAR").click();
         }
     } else {
         $('#map').val(mouseList);
-        processMap($('#map').val());
+        var mapText = document.getElementById("map").value;
+        setTimeout(function() { processMap(mapText); }, 100);
         $("#weightAR").click();
     }
 
