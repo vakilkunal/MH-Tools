@@ -20,6 +20,12 @@ window.onload = function () {
     	columnLimit = x;
     }
 
+    if ($.cookie('savedAttraction') !== undefined) {
+    	var x = parseInt($.cookie('savedAttraction'));
+    	$("#ampSlider").slider('option','value',x);
+    	attractionBonus = x;
+    }
+
     if (mouseList.length === 0) {
         var cookie = $.cookie('savedMice');
         if (cookie !== undefined) {
