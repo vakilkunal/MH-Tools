@@ -23,6 +23,7 @@ window.onload = function () {
     if ($.cookie('savedAttraction') !== undefined) {
     	var x = parseInt($.cookie('savedAttraction'));
     	attractionBonus = x;
+    	$("#ampSlider").slider('option','value',attractionBonus);
     }
 
     if (mouseList.length === 0) {
@@ -39,8 +40,6 @@ window.onload = function () {
         setTimeout(function() { processMap(mapText); }, 100);
         $("#weightAR").click();
     }
-
-    $("#ampSlider").slider('option','value',attractionBonus);
 
 	$("#map").keyup(function(event) {
 		// Checking for enter/return, backspace, and delete

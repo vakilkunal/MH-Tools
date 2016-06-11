@@ -94,10 +94,14 @@
                 max: 100,
                 step: 1,
                 slide: function(event, ui) {
-                    refreshSlider(ui);
+                    if (event.originalEvent) {
+                        refreshSlider(ui);
+                    }
                 },
                 change: function(event, ui) {
-                    refreshSlider(ui);
+                    if (event.originalEvent) {
+                        refreshSlider(ui);
+                    }
                 }
             });
         });
