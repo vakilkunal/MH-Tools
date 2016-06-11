@@ -179,6 +179,7 @@ window.onload = function () {
         if (cookie !== undefined) {
             $('#map').val($.cookie('savedMice'));
             processMap($('#map').val());
+            $("#weightAR").click();
         }
     } else {
         $('#map').val(mouseList);
