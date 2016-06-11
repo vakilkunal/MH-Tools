@@ -6,6 +6,20 @@ window.onload = function () {
 
 	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
 
+	//Row/column cookies
+    if ($.cookie('savedRows') !== undefined) {
+    	var x = parseInt($.cookie('savedRows'));
+    	var s = "#row" + x;
+    	$(s).prop('checked', true);
+    	rowLimit = x;
+    }
+    if ($.cookie('savedCols') !== undefined) {
+    	var x = parseInt($.cookie('savedCols'));
+    	var s = "#col" + x;
+    	$(s).prop('checked', true);
+    	columnLimit = x;
+    }
+
     if (mouseList.length === 0) {
         var cookie = $.cookie('savedMice');
         if (cookie !== undefined) {
@@ -17,20 +31,6 @@ window.onload = function () {
         $('#map').val(mouseList);
         processMap($('#map').val());
         $("#weightAR").click();
-    }
-
-    //Row/column cookies
-    if ($.cookie('savedRows') !== undefined) {
-    	var x = parseInt($.cookie('savedRows'));
-    	var s = "#row" + x;
-    	$(s).prop('checked', true);
-    	rowLimit = x;
-    }
-    if ($.cookie('savedCols') !== undefined) {
-    	var x = parseInt($.cookie('savedCols'));
-    	var s = "#col" + x;
-    	$(s).prop('checked', true);
-    	colLimit = x;
     }
 
 	$("#map").keyup(function(event) {
