@@ -258,6 +258,7 @@ function processMap(mapText) {
 	var weightedBLA = new Array();
 	var mouseLocationArray = new Array();
 	var seenMice = new Array();
+	var notRecognized = false;
 	remainingMice = 0;
 	
 	for (var i=0; i<mouseArrayLength; i++) {
@@ -272,6 +273,7 @@ function processMap(mapText) {
 		
 		if (popArray[mouseName] == undefined) { //Mouse name not recognised
 			interpretedAsText += mouseName + "<br>";
+			notRecognized = true;
 		}
 		else {			
 			if (seenMice.indexOf(mouseName) >= 0) {
@@ -399,6 +401,13 @@ function processMap(mapText) {
 	
 	interpretedAsText += "</span>";
 	interpretedAs.innerHTML = interpretedAsText;
+	if (notRecognized) {
+		$("#interpretedAs").show(500);
+	}
+	else {
+		$("#interpretedAs").hide(500);
+	}
+
 	mouseList.innerHTML = mouseListText;
 	$("#remainValue").text(remainingMice);
 
