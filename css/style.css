@@ -104,6 +104,16 @@ td.tablesorter-pager {
 	background-color: white;
 }
 
+/* filter row */
+.tablesorter-filter-row td {
+  line-height: normal;
+  text-align: center; /* center the input */
+  -webkit-transition: line-height 0.1s ease;
+  -moz-transition: line-height 0.1s ease;
+  -o-transition: line-height 0.1s ease;
+  transition: line-height 0.1s ease;
+}
+
 .tablesorter thead .disabled {display: none}
 
 /* tabs */

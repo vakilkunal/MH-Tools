@@ -1098,11 +1098,11 @@ function printCombinations(micePopulation, tableHTML) {
     var resort = true, callback = function() {
     	var header = $("#overallHeader");
     	if (header.hasClass("tablesorter-headerAsc")) {
-    		$("#overallHeader").click();
-    		$("#overallHeader").click();
+    		header.click();
+    		header.click();
     	}
     	else if (header.hasClass("tablesorter-headerUnSorted")) {
-    		$("#overallHeader").click();
+    		header.click();
     	}
     };
 	$("#results").trigger("updateAll", [ resort, callback ]);

@@ -4,6 +4,49 @@ var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeD
 
 window.onload = function () {
 
+	//Initialize tablesorter, bind to table
+	$.tablesorter.defaults.sortInitialOrder = 'desc';
+    $("#bestLocation").tablesorter({
+		// sortForce: [[noMice,1]],
+		sortReset: true,
+		widthFixed: true,
+		ignoreCase: false,
+		widgets: ["filter"],
+		widgetOptions: {
+			filter_childRows : false,
+			filter_childByColumn : false,
+			filter_childWithSibs : true,
+			filter_columnFilters : true,
+			filter_columnAnyMatch: true,
+			filter_cellFilter : '',
+			filter_cssFilter : '', // or []
+			filter_defaultFilter : {},
+			filter_excludeFilter : {},
+			filter_external : '',
+			filter_filteredRow : 'filtered',
+			filter_formatter : null,
+			filter_functions : null,
+			filter_hideEmpty : true,
+			filter_hideFilters : true,
+			filter_ignoreCase : true,
+			filter_liveSearch : true,
+			filter_matchType : { 'input': 'exact', 'select': 'exact' },
+			filter_onlyAvail : 'filter-onlyAvail',
+			filter_placeholder : { search : 'Filter results...', select : '' },
+			filter_reset : 'button.reset',
+			filter_resetOnEsc : true,
+			filter_saveFilters : false,
+			filter_searchDelay : 420,
+			filter_searchFiltered: true,
+			filter_selectSource  : null,
+			filter_serversideFiltering : false,
+			filter_startsWith : false,
+			filter_useParsedData : false,
+			filter_defaultAttrib : 'data-value',
+			filter_selectSourceSeparator : '|',
+		}
+	});
+
 	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
 
 	//Row/column cookies
@@ -84,19 +127,6 @@ window.onload = function () {
 		var mapText = document.getElementById("map").value;
 		processMap(mapText);
 	});
-
-	$.tablesorter.addParser({
-    	id: "fancyNumber",
-		is: function(s) {
-		    return /^[0-9]?[0-9,\.]*$/.test(s);
-		},
-		format: function(s) {
-		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
-		},
-		type: "numeric"
-	});
-	
-	$.tablesorter.defaults.sortInitialOrder = 'desc';
 }
 
 String.prototype.capitalise = function() {
@@ -482,7 +512,7 @@ function sortBestLocation (bestLocationArray, weightedBLA) {
 function printBestLocation (sortedLocation, mouseLocationArray) {
 
 	var bestLocation = document.getElementById("bestLocation");
-	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Mice (Raw AR)</th><th align=\'center\'>Total AR</th><th align=\'center\' id=\'weightAR\'>Weighted AR</th></thead><tbody>';
+	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Mice (Raw AR)</th><th align=\'center\' data-filter=\'false\'>Total AR</th><th align=\'center\' id=\'weightAR\' data-filter=\'false\'>Weighted AR</th></thead><tbody>';
 	
 	var sortedLocationLength = Object.size(sortedLocation);
 
@@ -506,14 +536,23 @@ function printBestLocation (sortedLocation, mouseLocationArray) {
 			mouseLocationHTML = 'N/A';
 		}
 
-		bestLocationHTML += "<tr><td align=\'center\' style=\'white-space: nowrap\'>" + sortedLocation[i][0] + "</td><td align=\'center\' style=\'font-size: 11px; white-space: nowrap\'>" + mouseLocationHTML + "</td><td align=\'center\'>" + sortedLocation[i][1].toFixed(2) + "%</td><td align=\'center\'>" + sortedLocation[i][2].toFixed(2) + "%</td></tr>";
+		bestLocationHTML += "<tr><td align=\'center\'>" + sortedLocation[i][0] + "</td><td align=\'center\' style=\'font-size: 11px; white-space: nowrap\'>" + mouseLocationHTML + "</td><td align=\'center\'>" + sortedLocation[i][1].toFixed(2) + "%</td><td align=\'center\'>" + sortedLocation[i][2].toFixed(2) + "%</td></tr>";
 	}
 	
 	bestLocationHTML += "</tbody>";
 	bestLocation.innerHTML = bestLocationHTML;
 	
-	$("#bestLocation").tablesorter();
-	$("#weightAR").click();
+	var resort = true, callback = function() {
+    	var header = $("#weightAR");
+    	if (header.hasClass("tablesorter-headerAsc")) {
+    		header.click();
+    		header.click();
+    	}
+    	else if (header.hasClass("tablesorter-headerUnSorted")) {
+    		header.click();
+    	}
+    };
+	$("#bestLocation").trigger("updateAll", [ resort, callback ]);
 }
 
 function findBaseline(location, cheese) {
