@@ -32,6 +32,48 @@ var baseline = new XMLHttpRequest();
 
 window.onload = function () {
 
+	//Initialize tablesorter, bind to table
+    $("#results").tablesorter({
+		// sortForce: [[noMice,1]],
+		sortReset: true,
+		widthFixed: true,
+		ignoreCase: false,
+		widgets: ["filter"],
+		widgetOptions: {
+			filter_childRows : false,
+			filter_childByColumn : false,
+			filter_childWithSibs : true,
+			filter_columnFilters : true,
+			filter_columnAnyMatch: true,
+			filter_cellFilter : '',
+			filter_cssFilter : '', // or []
+			filter_defaultFilter : {},
+			filter_excludeFilter : {},
+			filter_external : '',
+			filter_filteredRow : 'filtered',
+			filter_formatter : null,
+			filter_functions : null,
+			filter_hideEmpty : true,
+			filter_hideFilters : true,
+			filter_ignoreCase : true,
+			filter_liveSearch : true,
+			filter_matchType : { 'input': 'exact', 'select': 'exact' },
+			filter_onlyAvail : 'filter-onlyAvail',
+			filter_placeholder : { search : 'Filter results...', select : '' },
+			filter_reset : 'button.reset',
+			filter_resetOnEsc : true,
+			filter_saveFilters : false,
+			filter_searchDelay : 420,
+			filter_searchFiltered: true,
+			filter_selectSource  : null,
+			filter_serversideFiltering : false,
+			filter_startsWith : false,
+			filter_useParsedData : false,
+			filter_defaultAttrib : 'data-value',
+			filter_selectSourceSeparator : '|',
+		}
+	});
+
 	pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
 	// Local testing
 	// http-server -p 8888 --cors 
@@ -140,23 +182,10 @@ window.onload = function () {
         showPop(2);
     };
 
-
 	//Send to google analytics that link to setup was clicked
     document.getElementById("link").onclick = function () {
 		ga('send', 'event', 'setup link', 'click');
     }
-	    
-    //Setup tablesorter
-    $.tablesorter.addParser({
-    	id: "fancyNumber",
-		is: function(s) {
-		    return /^[0-9]?[0-9,\.]*$/.test(s);
-		},
-		format: function(s) {
-		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
-		},
-		type: "numeric"
-	});
 
     /*Object.size = function(obj) {
     var size = 0, key;
@@ -419,7 +448,7 @@ function showPop (type) { //type = 2 means don't reset charms
 		//console.log(popArrayLC);
 		
 		var noMice = Object.size(popArrayLC);
-		var resultsHTML = "<thead><tr align='left'><th align='left'>Mouse</th><th>Attraction<br>Rate</th><th>Catch<br>Rate</th><th>Catches per<br>100 hunts</th><th>Gold</th><th>Points</th><th>Tournament<br>Points</th><th>Min.<br>Luck</th>";
+		var resultsHTML = "<thead><tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
 		if (locationName.indexOf("Seasonal Garden") >= 0) {
 			var deltaAmpOverall = 0;
 			resultsHTML += "<th>Amp%</th>";
@@ -623,13 +652,10 @@ function showPop (type) { //type = 2 means don't reset charms
 		
 		results.innerHTML = resultsHTML;
 
-		$("#results").tablesorter({
-			headers: {
-				4: {sorter: "fancyNumber"},
-				5: {sorter: "fancyNumber"}
-			}//,
-			//sortList: [[0,0]]
-		});	
+		var resort = true, callback = function() {
+	    	// empty
+	    };
+		$("#results").trigger("updateAll", [ resort, callback ]);
 	}
 
 	//Set sample size and description of it
