@@ -301,7 +301,7 @@ window.onload = function () {
 
     $("#show_pop_button").click(function() {
     	$("#pleaseWaitMessage").show();
-    	setTimeout(function() {
+		setTimeout(function() {
     		showPop();
     	}, 1);
     });
@@ -356,6 +356,87 @@ window.onload = function () {
     	if (this.checked) $(".charm_checkbox").each(function() { this.checked = true; });
     	else $(".charm_checkbox").each(function() { this.checked = false; });
     })
+
+    //Initialize tablesorter, bind to table
+    $("#results").tablesorter({
+		// sortForce: [[noMice,1]],
+		widthFixed: true,
+		ignoreCase: false,
+		widgets: ["filter", "pager"],
+		widgetOptions: {
+			filter_childRows : false,
+			filter_childByColumn : false,
+			filter_childWithSibs : true,
+			filter_columnFilters : true,
+			filter_columnAnyMatch: true,
+			filter_cellFilter : '',
+			filter_cssFilter : '', // or []
+			filter_defaultFilter : {},
+			filter_excludeFilter : {},
+			filter_external : '',
+			filter_filteredRow : 'filtered',
+			filter_formatter : null,
+			filter_functions : null,
+			filter_hideEmpty : true,
+			filter_hideFilters : true,
+			filter_ignoreCase : true,
+			filter_liveSearch : true,
+			filter_matchType : { 'input': 'exact', 'select': 'exact' },
+			filter_onlyAvail : 'filter-onlyAvail',
+			filter_placeholder : { search : 'Filter results...', select : '' },
+			filter_reset : 'button.reset',
+			filter_resetOnEsc : true,
+			filter_saveFilters : false,
+			filter_searchDelay : 420,
+			filter_searchFiltered: true,
+			filter_selectSource  : null,
+			filter_serversideFiltering : false,
+			filter_startsWith : false,
+			filter_useParsedData : false,
+			filter_defaultAttrib : 'data-value',
+			filter_selectSourceSeparator : '|',
+	        pager_output: '{startRow:input} to {endRow} of {totalRows} rows', // '{page}/{totalPages}'
+	        pager_updateArrows: true,
+	        pager_startPage: 0,
+	        pager_size: 10,
+	        pager_savePages: false,
+	        pager_fixedHeight: false,
+	        pager_removeRows: false, // removing rows in larger tables speeds up the sort
+	        pager_ajaxUrl: null,
+	        pager_customAjaxUrl: function(table, url) { return url; },
+	        pager_ajaxError: null,
+	        pager_ajaxObject: {
+	          dataType: 'json'
+	        },
+	        pager_ajaxProcessing: function(ajax){ return [ 0, [], null ]; },
+
+	        // css class names that are added
+	        pager_css: {
+	          container   : 'tablesorter-pager',    // class added to make included pager.css file work
+	          errorRow    : 'tablesorter-errorRow', // error information row (don't include period at beginning); styled in theme file
+	          disabled    : 'disabled'              // class added to arrows @ extremes (i.e. prev/first arrows "disabled" on first page)
+	        },
+
+	        // jQuery selectors
+	        pager_selectors: {
+	          container   : '.pager',       // target the pager markup (wrapper)
+	          first       : '.first',       // go to first page arrow
+	          prev        : '.prev',        // previous page arrow
+	          next        : '.next',        // next page arrow
+	          last        : '.last',        // go to last page arrow
+	          gotoPage    : '.gotoPage',    // go to page selector - select dropdown that sets the current page
+	          pageDisplay : '.pagedisplay', // location of where the "output" is displayed
+	          pageSize    : '.pagesize'     // page size selector - select dropdown that sets the "size" option
+	        }
+		}
+	}).bind('pagerChange pagerComplete pagerInitialized pageMoved', function(e, c){
+      var p = c.pager, // NEW with the widget... it returns config, instead of config.pager
+        msg = '"</span> event triggered, ' + (e.type === 'pagerChange' ? 'going to' : 'now on') +
+        ' page <span class="typ">' + (p.page + 1) + '/' + p.totalPages + '</span>';
+      $('#display')
+        .append('<li><span class="str">"' + e.type + msg + '</li>')
+        .find('li:first').remove();
+    });
 }
 
 function loadLocationDropdown() {
@@ -912,9 +993,9 @@ function showPop(type) {
 		var noMice = Object.size(popArrayLPC["-"]);
 		resultsHTML = "<thead><tr><th align='left'>Setup</th>"
 		for (var i=0; i<noMice; i++) { 
-			resultsHTML += "<th>" + Object.keys(popArrayLPC["-"])[i] + "</th>"
+			resultsHTML += "<th data-sorter='false' data-filter='false'>" + Object.keys(popArrayLPC["-"])[i] + "</th>"
 		}		
-		resultsHTML += "<th id='overallHeader'>Overall</th></tr></thead><tbody>";
+		resultsHTML += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead><tbody>";
 		
 		printCombinations(popArrayLPC["-"], resultsHTML);
 
@@ -1011,8 +1092,8 @@ function printCombinations(micePopulation, tableHTML) {
 	}
 	//tableHTML.innerHTML += "<tr><td>" + "Maniacal" + "</td></tr>";
 		
-	tableHTML += "</tbody>"
-	results.innerHTML = tableHTML
+	tableHTML += "</tbody>";
+	results.innerHTML = tableHTML;
 	
     $(".find_best_charm_button").click(function(event) {
     	console.log("Finding best charm...");
@@ -1025,23 +1106,16 @@ function printCombinations(micePopulation, tableHTML) {
     	d = new Date();
     	printCharmCombinations(popArrayLPC["-"], resultsHTML);
     });
-    
-    $(".pager *").unbind('click');
-	$("#results").tablesorter({
-		/*headers: {
-			4: {sorter: "fancyNumber"}, //For gold and points and numbers with commas. Use 0 indexing
-			5: {sorter: "fancyNumber"}
-		}*/
-		
-		//,sortList: [[noMice-1,1]]
-		sortForce: [[noMice,1]]
-	}).tablesorterPager({
-		container: $(".pager")
-	});
-	
-	$("#overallHeader").click();
 
-	console.log(new Date().getTime()-d.getTime());
+    var resort = true, callback = function() {
+    	var header = $("#overallHeader");
+    	if (header.hasClass("tablesorter-headerAsc") || header.hasClass("tablesorter-headerUnSorted")) {
+    		$("#overallHeader").click();
+    	}
+    };
+	$("#results").trigger("updateAll", [ resort, callback ]);
+
+	// console.log(new Date().getTime()-d.getTime());
 }
 
 function printCharmCombinations(micePopulation, tableHTML) {
@@ -1125,20 +1199,13 @@ function printCharmCombinations(micePopulation, tableHTML) {
 	tableHTML += "</tbody>"
 	results.innerHTML = tableHTML
 	
-	$(".pager *").unbind('click');
-	$("#results").tablesorter({
-		/*headers: {
-			4: {sorter: "fancyNumber"}, //For gold and points and numbers with commas. Use 0 indexing
-			5: {sorter: "fancyNumber"}
-		}*/
-		
-		//,sortList: [[noMice-1,1]]
-		sortForce: [[noMice,1]]
-	}).tablesorterPager({
-		container: $(".pager")
-	});
-	
-	$("#overallHeader").click();
+	var resort = true, callback = function() {
+    	var header = $("#overallHeader");
+    	if (header.hasClass("tablesorter-headerAsc") || header.hasClass("tablesorter-headerUnSorted")) {
+    		$("#overallHeader").click();
+    	}
+    };
+	$("#results").trigger("updateAll", [ resort, callback ]);
 
-	console.log(new Date().getTime()-d.getTime());
+	// console.log(new Date().getTime()-d.getTime());
 }
