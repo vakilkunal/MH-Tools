@@ -8,7 +8,7 @@ table.tablesorter {
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
-	border: 2px solid #424242;
+	border: 2px solid #e7e7e7;
 	padding: 4px;
 }
 table.tablesorter thead tr .tablesorter-header {
@@ -23,7 +23,7 @@ table.tablesorter tbody td {
 	padding: 4px;
 	background-color: #FFF;
 	vertical-align: top;
-	border: 2px solid #424242;
+	border: 2px solid #e7e7e7;
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
@@ -97,6 +97,7 @@ td.tablesorter-pager {
 .tablesorter .tablesorter-filter {
     width: auto;
     border: none;
+    margin-left: 10px;
 }
 
 .tablesorter .tablesorter-filter-row.tablesorter-ignoreRow {
@@ -109,13 +110,13 @@ td.tablesorter-pager {
 
 .tablesorter .tablesorter-filter-row.tablesorter-ignoreRow td {
 	background-color: white;
-	border-left: 2px solid #424242;
+	border-left: 2px solid #e7e7e7;
 }
 
 .tablesorter .tablesorter-filter-row.tablesorter-ignoreRow td:last-child {
 	background-color: white;
-	border-left: 2px solid #424242;
-	border-right: 2px solid #424242;
+	border-left: 2px solid #e7e7e7;
+	border-right: 2px solid #e7e7e7;
 }
 
 /* filter row */
