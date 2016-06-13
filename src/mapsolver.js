@@ -47,6 +47,47 @@ window.onload = function () {
 		}
 	});
 
+	$("#mouseList").tablesorter({
+		// sortForce: [[noMice,1]],
+		sortReset: true,
+		widthFixed: true,
+		ignoreCase: false,
+		widgets: ["filter"],
+		widgetOptions: {
+			filter_childRows : false,
+			filter_childByColumn : false,
+			filter_childWithSibs : true,
+			filter_columnFilters : true,
+			filter_columnAnyMatch: true,
+			filter_cellFilter : '',
+			filter_cssFilter : '', // or []
+			filter_defaultFilter : {},
+			filter_excludeFilter : {},
+			filter_external : '',
+			filter_filteredRow : 'filtered',
+			filter_formatter : null,
+			filter_functions : null,
+			filter_hideEmpty : true,
+			filter_hideFilters : true,
+			filter_ignoreCase : true,
+			filter_liveSearch : true,
+			filter_matchType : { 'input': 'exact', 'select': 'exact' },
+			filter_onlyAvail : 'filter-onlyAvail',
+			filter_placeholder : { search : 'Filter results...', select : '' },
+			filter_reset : 'button.reset',
+			filter_resetOnEsc : true,
+			filter_saveFilters : false,
+			filter_searchDelay : 420,
+			filter_searchFiltered: true,
+			filter_selectSource  : null,
+			filter_serversideFiltering : false,
+			filter_startsWith : false,
+			filter_useParsedData : false,
+			filter_defaultAttrib : 'data-value',
+			filter_selectSourceSeparator : '|',
+		}
+	});
+
 	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
 
 	//Row/column cookies
@@ -310,7 +351,7 @@ function processMap(mapText) {
 	var mouseList = document.getElementById("mouseList");
 
 	var interpretedAsText = "<b>Invalid:<br></b><span class='invalid'>";
-	var mouseListText = '';
+	var mouseListText = '<thead><tr><th align=\'center\'>Mouse</th><th align=\'center\' id=\'locationAR\'>Location (Raw AR)</th></tr></thead><tbody>';
 	
 	var bestLocationArray = new Array();
 	var weightedBLA = new Array();
@@ -450,12 +491,24 @@ function processMap(mapText) {
 			
 			for (var l=0; l<sortedMLCLength; l++) {
 				var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
-				mouseListText += "<td style=\'font-size: 10px; white-space: nowrap; padding: 10px\'>" + sliceMLC + "<br>" + sortedMLC[l][1] + "%</td>";
+				mouseListText += "<td style=\'font-size: 11px; padding: 10px\'>" + "<p style='font-size: 16px'>" + sortedMLC[l][1] + "%</p><br>" + sliceMLC + "</td>";
 			}
-			
-			mouseListText += "</tr>";
 		}
 	}
+
+	mouseListText += "</tbody>";
+	mouseList.innerHTML = mouseListText;
+	var resort = true, callback = function() {
+    	var header = $("#locationAR");
+    	if (header.hasClass("tablesorter-headerAsc")) {
+    		header.click();
+    		header.click();
+    	}
+    	else if (header.hasClass("tablesorter-headerUnSorted")) {
+    		header.click();
+    	}
+    };
+	$("#mouseList").trigger("updateAll", [ resort, callback ]);
 	
 	interpretedAsText += "</span>";
 	interpretedAs.innerHTML = interpretedAsText;
@@ -466,7 +519,6 @@ function processMap(mapText) {
 		$("#interpretedAs").hide(500);
 	}
 
-	mouseList.innerHTML = mouseListText;
 	$("#remainValue").text(remainingMice);
 
 	//Sort mouseLocationArray
@@ -512,7 +564,7 @@ function sortBestLocation (bestLocationArray, weightedBLA) {
 function printBestLocation (sortedLocation, mouseLocationArray) {
 
 	var bestLocation = document.getElementById("bestLocation");
-	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Mice (Raw AR)</th><th align=\'center\' data-filter=\'false\'>Total AR</th><th align=\'center\' id=\'weightAR\' data-filter=\'false\'>Weighted AR</th></thead><tbody>';
+	var bestLocationHTML = '<thead><tr><th align=\'center\'>Location Info</th><th align=\'center\'>Mice (Raw AR)</th><th align=\'center\' data-filter=\'false\'>Total AR</th><th align=\'center\' id=\'weightAR\' data-filter=\'false\'>Weighted AR</th></tr></thead><tbody>';
 	
 	var sortedLocationLength = Object.size(sortedLocation);
 

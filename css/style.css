@@ -1,13 +1,14 @@
 /* tables */
 table.tablesorter {
-	background-color: #e7e7e7;
-	margin:10px 0pt 15px;
+	background-color: white;
+	margin: 10px 0pt 15px;
 	width: 100%;
 	text-align: left;
+	border-collapse: collapse;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
-	border: 1px solid #FFF;
+	border: 2px solid #424242;
 	padding: 4px;
 }
 table.tablesorter thead tr .tablesorter-header {
@@ -22,6 +23,7 @@ table.tablesorter tbody td {
 	padding: 4px;
 	background-color: #FFF;
 	vertical-align: top;
+	border: 2px solid #424242;
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
@@ -94,6 +96,7 @@ td.tablesorter-pager {
 
 .tablesorter .tablesorter-filter {
     width: auto;
+    border: none;
 }
 
 .tablesorter .tablesorter-filter-row.tablesorter-ignoreRow {
@@ -102,6 +105,17 @@ td.tablesorter-pager {
 
 .tablesorter .tablesorter-filter-row.tablesorter-ignoreRow.hideme {
 	background-color: white;
+}
+
+.tablesorter .tablesorter-filter-row.tablesorter-ignoreRow td {
+	background-color: white;
+	border-left: 2px solid #424242;
+}
+
+.tablesorter .tablesorter-filter-row.tablesorter-ignoreRow td:last-child {
+	background-color: white;
+	border-left: 2px solid #424242;
+	border-right: 2px solid #424242;
 }
 
 /* filter row */

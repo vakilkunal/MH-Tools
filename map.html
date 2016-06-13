@@ -53,9 +53,6 @@
             word-wrap: break-word;
             overflow: auto;
         }
-        #mouseList {
-            border-collapse: collapse;
-        }
         #map {
             resize: none;
         }
@@ -69,6 +66,10 @@
         #location {
             float: left;
             width: 500px;
+        }
+        #mouselistcontainer {
+            clear: both;
+            padding-top: 2ex;
         }
     </style>
 
@@ -239,14 +240,15 @@
     </div>
 
     <div id="location">
-        <!-- <br><br><h2>Best Locations</h2><br> -->
+        <h2>Best Locations</h2><br>
+        <p><a href="#mouselistcontainer">Mouse List</a></p>
 		<table id='bestLocation' class='tablesorter'><thead></thead><tbody></tbody></table>
     </div>
 
-    <br>
     <div id="mouselistcontainer">
-        <!-- <br><h2>Mouse List</h2><br> -->
-        <table id='mouseList' border='1px solid' cellpadding='5'></table>
+        <h2>Mouse List</h2><br>
+        <p><a href="#location">Best Locations</a></p>
+        <table id='mouseList' cellpadding='5' class='tablesorter'><thead></thead><tbody></tbody></table>
     </div>
 </div>
 </body>
