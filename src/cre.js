@@ -78,7 +78,7 @@ window.onload = function () {
 	// Local testing
 	// http-server -p 8888 --cors 
 	// (installed using "npm install http-server -g")
-	// pop.open("get", "http://localhost:8888/testing/populationsayy.csv", false);
+	// pop.open("get", "http://localhost:8888/testing/populationstest.csv", false);
 	pop.onreadystatechange = function() {
 		if (pop.readyState == 4) {
 			//console.log(pop.responseText);
@@ -331,9 +331,9 @@ function processPop () {
 	for(var i=1; i<popCSVLength; i++) {
 		if (popArray[popCSV[i][0]] == undefined) popArray[popCSV[i][0]] = [];
 		if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
-		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
+		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];	
 		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-		
+	
 		//Assign AR to a specific location/phase/cheese/charm/mouse
 		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
 		
@@ -413,21 +413,7 @@ function showPop (type) { //type = 2 means don't reset charms
 			}
 			//console.log("Highlighting charms");
 			if (type!=2) highlightSpecialCharms(specialCharmsList);
-		} 
-		/*
-		 * Allow pop with special charm(s) but without a "no charm" pop
-		 */
-
-		// else if (Object.keys(popArrayLPC)[0] != "-") {
-		// 	var nSpecialCharms = Object.size(popArrayLPC);
-		// 	var specialCharmsList = [];
-		// 	for (var i=0; i<nSpecialCharms; i++) {
-		// 		//console.log("Special charm", Object.keys(popArrayLPC)[i]);
-		// 		specialCharmsList.push(Object.keys(popArrayLPC)[i]);
-		// 	}
-		// 	//console.log("Highlighting charms");
-		// 	if (type!=2) highlightSpecialCharms(specialCharmsList);
-		// } 
+		}
 		else {
 			if (type!=2) {
 				console.log("Resetting charms");

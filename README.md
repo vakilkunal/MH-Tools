@@ -1,10 +1,43 @@
 # [MH Tools by tsitu](https://github.com/tsitu/MH-Tools)
 
 ## To-do
+* Average Lantern clues in Labyrinth
 * Update attraction rates for Labyrinth using SB+/Gouda/Brie + Glowing Gourd Charm
 * Update attraction rates for Fiery Warpath mice that correspond to certain group while its charm is equipped
 
 ## Changelog
+
+#### June 13 2016
+* Fixed some URLs and reverted tablesorter border color
+* Added District Dangers, Furoma Rift: Enter the Pagoda, Lost in the Labyrinth, Oxygen Collecting, Rift Undead Rising, Sunken Danger, Sunken Treasure Hunting, and Undead Rising tournaments
+
+#### June 12 2016
+* Migrated Best Setup to Mottie's tablesorter fork (with Pager and Filter widgets)
+* Implemented new tablesolver in CRE and Map Solver (with Filter)
+
+#### June 11 2016
+* Overhauled Map Solver UI, with location mice sorted by raw AR
+* Integrated Olaf's cookie and bookmarklet code (for basically every field in Map Solver)
+
+#### June 10 2016
+* Adjusted Furoma Rift mouse power and effectiveness percentages
+* Implemented Furoma Rift battery levels, toxic checks, and ZT amplifier for Best Setup
+* Implemented pager plugin to navigate through rows
+* Optimized Best Setup by implementing key events and delays (minimizing processMap function calls)
+* Added unique mice remaining field
+* Implemented duplicate mouse check
+
+#### June 8 2016
+* Added Map Solver mouse list column limiter
+* Added tablesorter for Best Locations
+* Implemented URLs to Best Setup tool
+* Implemented Weighted Attraction Rate
+* Added Best Location row limiter
+* Added attraction bonus slider
+* Significant population unfusing and touching up
+
+#### June 7 2016
+* Added differentiation of fused cheese rates in map solver, minor UI optimizations
 
 #### May 23 2016
 * Added accurate power effectiveness percentages for 13 Furoma Rift mice
