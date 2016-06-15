@@ -657,7 +657,7 @@ function showPop (type) { //type = 2 means don't reset charms
 			resultsHTML += "<td>" + diveMPH.toFixed(2) + "</td>";
 		} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
 			resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
-			var deadEnds = (100-overallCR)/100;
+			var deadEnds = (overallAR-overallCR)/100;
 			if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") deadEnds /= 2; //50% negate rate
 			resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
 		}
