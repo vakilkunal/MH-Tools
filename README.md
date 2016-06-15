@@ -7,37 +7,40 @@
 
 ## Changelog
 
+#### June 14 2016
+* Implemented per-hunt Labyrinth hallway and dead end clues \[*CRE*\]
+
 #### June 13 2016
-* Fixed some URLs and reverted tablesorter border color
-* Added District Dangers, Furoma Rift: Enter the Pagoda, Lost in the Labyrinth, Oxygen Collecting, Rift Undead Rising, Sunken Danger, Sunken Treasure Hunting, and Undead Rising tournaments
+* Fixed some URLs and reverted tablesorter border color \[*General*\]
+* Added District Dangers, Furoma Rift: Enter the Pagoda, Lost in the Labyrinth, Oxygen Collecting, Rift Undead Rising, Sunken Danger, Sunken Treasure Hunting, and Undead Rising tournaments \[*CRE*\]
 
 #### June 12 2016
-* Migrated Best Setup to Mottie's tablesorter fork (with Pager and Filter widgets)
-* Implemented new tablesolver in CRE and Map Solver (with Filter)
+* Migrated to Mottie's tablesorter fork (with Pager and Filter widgets) \[*Setup*\]
+* Implemented new tablesolver (with Filter) \[*CRE + Map*\]
 
 #### June 11 2016
-* Overhauled Map Solver UI, with location mice sorted by raw AR
-* Integrated Olaf's cookie and bookmarklet code (for basically every field in Map Solver)
+* Overhauled UI, with location mice sorted by raw AR \[*Map*\]
+* Integrated Olaf's cookie and bookmarklet code \[*Map*\]
 
 #### June 10 2016
-* Adjusted Furoma Rift mouse power and effectiveness percentages
-* Implemented Furoma Rift battery levels, toxic checks, and ZT amplifier for Best Setup
-* Implemented pager plugin to navigate through rows
-* Optimized Best Setup by implementing key events and delays (minimizing processMap function calls)
-* Added unique mice remaining field
-* Implemented duplicate mouse check
+* Adjusted Furoma Rift mouse power and effectiveness percentages \[*General*\]
+* Implemented Furoma Rift battery levels, toxic checks, and ZT amplifier \[*Setup*\]
+* Implemented pager plugin to navigate through rows \[*Setup*\]
+* Optimized by implementing key events and delays (minimizing processMap function calls) \[*Setup*\]
+* Added unique mice remaining field \[*Map*\]
+* Implemented duplicate mouse check \[*Map*\]
 
 #### June 8 2016
-* Added Map Solver mouse list column limiter
-* Added tablesorter for Best Locations
-* Implemented URLs to Best Setup tool
-* Implemented Weighted Attraction Rate
-* Added Best Location row limiter
-* Added attraction bonus slider
-* Significant population unfusing and touching up
+* Added mouse list column limiter \[*Map*\]
+* Added tablesorter for Best Locations \[*Map*\]
+* Implemented URLs to Best Setup tool \[*Map*\]
+* Implemented Weighted Attraction Rate \[*Map*\]
+* Added Best Location row limiter \[*Map*\]
+* Added attraction bonus slider \[*Map*\]
+* Significant population unfusing and touching up \[*General*\]
 
 #### June 7 2016
-* Added differentiation of fused cheese rates in map solver, minor UI optimizations
+* Added differentiation of fused cheese rates in, minor UI optimizations \[*Map*\]
 
 #### May 23 2016
 * Added accurate power effectiveness percentages for 13 Furoma Rift mice

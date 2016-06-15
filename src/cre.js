@@ -7,7 +7,7 @@ var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var gsLuck = 7, lbwLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0;
+var gsLuck = 7, lbwLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0, lanternStatus = '';
 var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
 var cheeseCost = 0, cheeseBonus = 0;
@@ -142,6 +142,10 @@ window.onload = function () {
 
     document.getElementById("cheese").onchange = function () {
 		cheeseChanged();
+    };
+
+    document.getElementById("lanternOil").onchange = function () {
+		oilChanged();
     };
 
     document.getElementById("toxic").onchange = function () {
@@ -285,6 +289,19 @@ function checkLoadState() {
 		loadLocationDropdown();
 		loadTourneyDropdown();
 		//updateLink();
+
+		var oilParameter = getURLParameter("oil");
+		if (oilParameter != "null") {
+			var select = document.getElementById("lanternOil");
+			for (var i=0; i<select.children.length; i++) {
+				var child = select.children[i];
+				if (child.innerHTML == oilParameter) {
+					child.selected = true;
+			    	oilChanged();
+					break;
+				}
+			}
+		}
 
 		var toxicParameter = getURLParameter("toxic");
 		if (toxicParameter != "null") {
@@ -437,13 +454,16 @@ function showPop (type) { //type = 2 means don't reset charms
 		var resultsHTML = "<thead><tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
 		if (locationName.indexOf("Seasonal Garden") >= 0) {
 			var deltaAmpOverall = 0;
-			resultsHTML += "<th>Amp%</th>";
+			resultsHTML += "<th data-filter='false'>Amp %</th>";
 		} else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0 ) {
 			var deltaDepthOverall = 0, depthTest = 0;
-			resultsHTML += "<th>Catch ft</th><th>FTC ft</th>";
+			resultsHTML += "<th data-filter='false'>Catch ft</th><th data-filter='false'>FTC ft</th>";
 		} else if (locationName.indexOf("Sunken City")>=0 && phaseName!="Docked") {
 			var diveMPH = 0;
-			resultsHTML += "<th>Metres<br>per hunt</th>";
+			resultsHTML += "<th data-filter='false'>Metres<br>per hunt</th>";
+		} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
+			var avgLanternClues = 0;
+			resultsHTML += "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
 		}
 		resultsHTML += "</tr></thead><tbody>";
 		var overallCR = 0;
@@ -537,7 +557,7 @@ function showPop (type) { //type = 2 means don't reset charms
 					var dAmp = deltaAmp[mouseName];
 					if (charmName == "Amplifier Charm") dAmp *= 2;
 					resultsHTML += "<td>" + dAmp + "%</td>";
-					console.log("Amp bonus", dAmp);
+					// console.log("Amp bonus", dAmp);
 					deltaAmpOverall += catches/100 * dAmp;
 				} else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
 					var deltaDepthCatch = catchDepth[mouseName];
@@ -553,13 +573,20 @@ function showPop (type) { //type = 2 means don't reset charms
 						deltaDepthCatch = 20;
 					}
 					
-					console.log("Catch dph:", deltaDepthCatch);
-					console.log("FTC dph:", deltaDepthFTC);
+					// console.log("Catch dph:", deltaDepthCatch);
+					// console.log("FTC dph:", deltaDepthFTC);
 					resultsHTML += "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
 
 					deltaDepthOverall += (catchRate/100 * deltaDepthCatch + (100-catchRate)/100 * deltaDepthFTC)*attractions/100;
 					//console.log("Here", (catchRate/100 * deltaDepthCatch + (100-catchRate)/100 * deltaDepthFTC)*attractions/100);
 					depthTest += deltaDepthCatch * catches/100 + deltaDepthFTC * (attractions-catches)/100;
+				} else if (locationName.indexOf("Sunken City")>=0 && phaseName!="Docked") {
+					resultsHTML += "<td></td>";
+				} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
+					var mouseClues = labyrinthMiceClues[mouseName];
+					if (lanternStatus == "On" && mouseClues != 0) mouseClues++;
+					avgLanternClues += mouseClues * catches/100;
+					resultsHTML += "<td>" + mouseClues + "</td><td></td>";
 				}
 				
 				resultsHTML += "</tr>";
@@ -624,16 +651,31 @@ function showPop (type) { //type = 2 means don't reset charms
 			resultsHTML += "<td>" + deltaAmpOverall.toFixed(2) + "%</td>";
 		} else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
 			resultsHTML += "<td colspan='2'>" + deltaDepthOverall.toFixed(2) + " ft/hunt</td>";
-			console.log("Depth test", depthTest);
+			// console.log("Depth test", depthTest);
 		} else if (locationName.indexOf("Sunken City")>=0 && phaseName!="Docked") {
 			diveMPH = 30*overallCR/100 + 10*(overallAR-overallCR)/100;
 			resultsHTML += "<td>" + diveMPH.toFixed(2) + "</td>";
+		} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
+			resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
+			var deadEnds = (100-overallCR)/100;
+			if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") deadEnds /= 2; //50% negate rate
+			resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
 		}
 
 		var cheeseEatenPerHunt = overallAR/100;
 		var cheeseStaledPerHunt = (100-overallAR)/100*freshness2stale[trapEff];
-		resultsHTML += "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" + Math.round(overallGold- cheeseCost*(cheeseEatenPerHunt + cheeseStaledPerHunt) ) + "</td><td></td><td></td><td></td></tr>";
+		resultsHTML += "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" + Math.round(overallGold- cheeseCost*(cheeseEatenPerHunt + cheeseStaledPerHunt) ) + "</td><td></td><td></td><td></td>";
 
+		if (locationName.indexOf("Seasonal Garden") >= 0 || locationName.indexOf("Sunken City")>=0 && phaseName!="Docked") {
+			resultsHTML += "<td></td>";
+		}
+		else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
+			resultsHTML += "<td colspan='2'></td>";
+		}
+		else if (locationName == "Labyrinth" && phaseName != "Intersection") {
+			resultsHTML += "<td></td><td></td>";
+		}
+		resultsHTML += "</tr>";
 		//resultsHTML += "<tr><td><b>Overall</b></td><td>" + overallAR.toFixed(2) + "%</td><td></td><td>" + overallCR.toFixed(2) + "%</td><td>" + overallGold.toFixed(2) + "</td><td>" + overallPoints.toFixed(2) + "</td><td>" + overallTP.toFixed(2) + "+-" + overallPX2.toFixed(2) + " (" + percentSD.toFixed(2) + "%)</td></tr>";
 		
 		results.innerHTML = resultsHTML;
@@ -1028,6 +1070,7 @@ function updateLink () {
 	if (locationName != "") URLString += "&location=" + locationName;
 	if (phaseName != "" && phaseName != "-") URLString += "&phase=" + phaseName;
 	if (cheeseName != "") URLString += "&cheese=" + cheeseName;
+	if (lanternStatus != "") URLString += "&oil=" + lanternStatus;
 	if (isToxic != "" && isToxic != "-") URLString += "&toxic=" + isToxic;
 	if (batteryPower != 0) URLString += "&battery=" + batteryPower;
 	if (weaponName != "") URLString += "&weapon=" + weaponName;
@@ -1132,6 +1175,7 @@ function locationChanged () {
 	}
 	else if (locationName == "Labyrinth") {
 		$("#labyComment").show(500);
+		$("#oilRow").show(500);
 	}
 
 	batteryPower = 0;
@@ -1148,6 +1192,7 @@ function locationChanged () {
 
 function hideAllRows() {
 	$("#phaseRow").hide();
+	$("#oilRow").hide();
 	$("#toxicRow").hide();
 	$("#toxic").val('No');
 	$("#batteryRow").hide();
@@ -1262,6 +1307,14 @@ function cheeseChanged () {
 	showPop();
 	//showPop(2);
 	selectCharm();
+}
+
+function oilChanged() {
+	var select = document.getElementById("lanternOil");
+	lanternStatus = select.children[select.selectedIndex].innerHTML;
+
+	updateLink();
+	calculateTrapSetup("cre");
 }
 
 function toxicChanged() {

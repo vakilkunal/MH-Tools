@@ -297,6 +297,33 @@ function calculateTrapSetup(user) {
     } else showTrapSetup(0);
 }
 
+var labyrinthMiceClues = [];
+labyrinthMiceClues["Ash Golem"] = 1;
+labyrinthMiceClues["Automated Stone Sentry"] = 2;
+labyrinthMiceClues["Corridor Bruiser"] = 0;
+labyrinthMiceClues["Dark Templar"] = 3;
+labyrinthMiceClues["Drudge"] = 1;
+labyrinthMiceClues["Fungal Technomorph"] = 3;
+labyrinthMiceClues["Hired Eidolon"] = 1;
+labyrinthMiceClues["Lost"] = 0;
+labyrinthMiceClues["Lost Legionnaire"] = 0;
+labyrinthMiceClues["Masked Pikeman"] = 1;
+labyrinthMiceClues["Mimic"] = 1;
+labyrinthMiceClues["Mind Tearer"] = 2;
+labyrinthMiceClues["Mush Monster"] = 1;
+labyrinthMiceClues["Mushroom Harvester"] = 1;
+labyrinthMiceClues["Mystic Guardian"] = 2;
+labyrinthMiceClues["Mystic Herald"] = 2;
+labyrinthMiceClues["Mystic Scholar"] = 3;
+labyrinthMiceClues["Nightshade Nanny"] = 2;
+labyrinthMiceClues["Reanimated Carver"] = 0;
+labyrinthMiceClues["RR-8"] = 1;
+labyrinthMiceClues["Sanguinarian"] = 1;
+labyrinthMiceClues["Shadow Stalker"] = 0;
+labyrinthMiceClues["Solemn Soldier"] = 2;
+labyrinthMiceClues["Summoning Scholar"] = 1;
+labyrinthMiceClues["Tech Golem"] = 2;
+labyrinthMiceClues["Treasure Brawler"] = 2;
 
 
 var berglings = ["Incompetent Ice Climber", "Polar Bear", "Snow Slinger", "Snow Soldier", "Iceblock", "Wolfskie", "Snowblind"];
