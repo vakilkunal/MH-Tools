@@ -51,8 +51,8 @@ javascript:void(function() {
         }
         counter++;
         if (counter === entriesNum || a.className.indexOf("disabled") >= 0 || a == null) {
-        	newWindow.location.assign(url);
+        	newWindow.location = url;
             clearInterval(interval);
         }
-    }, 0);
+    }, 1000);
 })();

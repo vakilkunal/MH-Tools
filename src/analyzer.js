@@ -143,7 +143,7 @@ function showTable(dataObject) {
 	$("#tableContainer").show(500);
 	var table = document.getElementById("table");
 	table.innerHTML = '';
-	var tableHTML = "<thead><tr><th>Date Closed</th><th>Item Name</th><th data-filter='false'>Action</th><th data-filter='false'>Quantity</th><th data-filter='false'>Unit Price</th><th data-filter='false'>Total</th></tr></thead><tbody>";
+	var tableHTML = "<thead><tr><th id='dateClosed'>Date Closed</th><th>Item Name</th><th data-filter='false'>Action</th><th data-filter='false'>Quantity</th><th data-filter='false'>Unit Price</th><th data-filter='false'>Total</th></tr></thead><tbody>";
 	for (var itemName in dataObject) {
 		for (var action in dataObject[itemName]) {
 			for (var date in dataObject[itemName][action]) {
@@ -157,7 +157,14 @@ function showTable(dataObject) {
 	table.innerHTML = tableHTML;
 
 	var resort = true, callback = function() {
-    	// empty
+    	var header = $("#dateClosed");
+    	if (header.hasClass("tablesorter-headerAsc")) {
+    		header.click();
+    		header.click();
+    	}
+    	else if (header.hasClass("tablesorter-headerUnSorted")) {
+    		header.click();
+    	}
     };
 	$("#table").trigger("updateAll", [ resort, callback ]);
 }
