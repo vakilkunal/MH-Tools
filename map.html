@@ -142,7 +142,7 @@
             $("#ampText").text("Attraction Bonus: " + ampSlider + "%");
             attractionBonus = parseInt(ampSlider);
             var mapText = document.getElementById("map").value;
-            $.cookie('savedAttraction', attractionBonus, {
+            Cookies.set('savedAttraction', attractionBonus, {
                 expires: 30
             });
             sliderDelay = setTimeout(function() { processMap(mapText); }, 500);
