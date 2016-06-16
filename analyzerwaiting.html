@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MouseHunt Marketplace Analyzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Verdana;
+            font-size: 12px;
+            line-height: 18px;
+        }
+        h1 {
+            font-size: 24px;
+            padding-bottom: 10px;
+        }
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+            position: absolute;
+        }
+        .header {
+        	font-size: 11px;
+            width: 250px;
+        }
+        #main {
+            float: left;
+            width: 1000px;
+        }
+        #tableContainer {
+            clear: both;
+            padding-top: 2ex;
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61581935-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+        var interval = setInterval(function() {
+            waitMessage($("#waitingText").text());
+        }, 500);
+
+        function waitMessage(text) {
+            console.log(text);
+            if (text == "Please wait...") {
+                $("#waitingText").text("Please wait.");
+            }
+            else if (text == "Please wait.") {
+                $("#waitingText").text("Please wait..");
+            }
+            else if (text == "Please wait..") {
+                $("#waitingText").text("Please wait...");
+            }
+        }
+    </script>
+    <!--###################################################################################-->
+</head>
+
+<body>
+<div class="container">
+    <h1>MouseHunt Marketplace Analyzer</h1>
+
+    <div id="main">
+        <table>
+        <tr>
+        <td>
+
+        <div class="header">
+            <p>by tsitu</a><br>
+            <a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost" target="_blank">Report bugs and suggest features</a></p><br>
+        	<p>Instructions: Bookmark this link.<br>Navigate to the first page of the "My History" tab in your Marketplace window on mousehuntgame.com.<br>Click the bookmarklet and wait 5-10 seconds or more depending on the number of entries.</p><br>
+        </div>
+
+        </td>
+        </tr>
+        </table>
+
+    <div id="waiting">
+        <h2 id="waitingText">Please wait...</h2><br>
+        <h3><i>Don't click away from this page!</i></h3>
+    </div>
+</div>
+</body>
+
+</html>
