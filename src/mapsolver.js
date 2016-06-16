@@ -91,29 +91,29 @@ window.onload = function () {
 	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
 
 	//Row/column cookies
-    if ($.cookie('savedRows') !== undefined) {
-    	var x = parseInt($.cookie('savedRows'));
+    if (Cookies.get('savedRows') !== undefined) {
+    	var x = parseInt(Cookies.get('savedRows'));
     	var s = "#row" + x;
     	$(s).prop('checked', true);
     	rowLimit = x;
     }
-    if ($.cookie('savedCols') !== undefined) {
-    	var x = parseInt($.cookie('savedCols'));
+    if (Cookies.get('savedCols') !== undefined) {
+    	var x = parseInt(Cookies.get('savedCols'));
     	var s = "#col" + x;
     	$(s).prop('checked', true);
     	columnLimit = x;
     }
 
-    if ($.cookie('savedAttraction') !== undefined) {
-    	var x = parseInt($.cookie('savedAttraction'));
+    if (Cookies.get('savedAttraction') !== undefined) {
+    	var x = parseInt(Cookies.get('savedAttraction'));
     	attractionBonus = x;
     	$("#ampSlider").slider('option','value',attractionBonus);
     }
 
     if (mouseList.length === 0) {
-        var cookie = $.cookie('savedMice');
+        var cookie = Cookies.get('savedMice');
         if (cookie !== undefined) {
-            $('#map').val($.cookie('savedMice'));
+            $('#map').val(Cookies.get('savedMice'));
             var mapText = document.getElementById("map").value;
             setTimeout(function() { processMap(mapText); }, 100);
             $("#weightAR").click();
@@ -153,7 +153,7 @@ window.onload = function () {
 
 	$("input[name='colLimit']").change(function() {
 		columnLimit = $(this).val();
-		$.cookie('savedCols', columnLimit, {
+		Cookies.set('savedCols', columnLimit, {
 	        expires: 30
 	    });
 		var mapText = document.getElementById("map").value;
@@ -162,7 +162,7 @@ window.onload = function () {
 
 	$("input[name='rowLimit']").change(function() {
 		rowLimit = $(this).val();
-		$.cookie('savedRows', rowLimit, {
+		Cookies.set('savedRows', rowLimit, {
 	        expires: 30
 	    });
 		var mapText = document.getElementById("map").value;
@@ -340,7 +340,7 @@ function loadMouseDropdown() {
 
 function processMap(mapText) {
 	//Save a cookie
-	$.cookie('savedMice', mapText, {
+	Cookies.set('savedMice', mapText, {
         expires: 14
     });
 

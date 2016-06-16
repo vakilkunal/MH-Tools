@@ -422,7 +422,7 @@ deltaAmp["Whirleygig"] = 1;
 
 
 var baselineAttArray = [];
-baselineAttArray["Grilled"] = 0.976
+baselineAttArray["Grilled"] = 0.976;
 baselineAttArray["SB+"] = 1999 / 2000;
 baselineAttArray["Magical String"] = 1999 / 2000;
 baselineAttArray["Fusion Fondue"] = 1999 / 2000;
@@ -456,7 +456,7 @@ baselineAttArray["Diamond"] = 99/100;
 baselineAttArray["Combat"] = 0.985;
 baselineAttArray["Susheese"] = 0.985;
 baselineAttArray["Glutter"] = 0.985;
-baselineAttArray["Terre Ricotta"] = 0.99;
+baselineAttArray["Terre Ricotta"] = 0.96;
 baselineAttArray["Polluted Parmesan"] = 0.99;
 baselineAttArray["Galleon Gouda"] = 0.95;
 baselineAttArray["Lactrodectus Lancashire"] = 0.9995;

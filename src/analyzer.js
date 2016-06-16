@@ -86,7 +86,7 @@ window.onload = function () {
 	var rawDataArray = getDataFromURL(window.location.search.match(/data=([^&]*)/));
 
     if (rawDataArray.length === 0) {
-        var cookieData = $.cookie('marketplaceData');
+        var cookieData = Cookies.get('marketplaceData');
         if (typeof cookieData !== 'undefined') {
             dataObject = $.parseJSON(cookieData);
         }
@@ -130,7 +130,7 @@ function processRawData(rawDataArray) {
 	//Create cookie of data
 	if (Object.size(dataObject) > 0) {
 		var stringify = JSON.stringify(dataObject);
-		$.cookie('marketplaceData', stringify, {
+		Cookies.set('marketplaceData', stringify, {
 	        expires: 30
 	    });
 	    setTimeout(function() {

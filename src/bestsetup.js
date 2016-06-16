@@ -242,8 +242,8 @@ window.onload = function () {
 	loadBaseSelection();
 	loadCharmSelection();
 
-	if (typeof $.cookie('setup') != 'undefined') {
-		var savedSetup = JSON.parse($.cookie('setup'));
+	if (typeof Cookies.get('setup') != 'undefined') {
+		var savedSetup = JSON.parse(Cookies.get('setup'));
 		var savedWeapons = savedSetup['weapons'];
 		var savedBases = savedSetup['bases'];
 		var savedCharms = savedSetup['charms'];
@@ -378,8 +378,8 @@ window.onload = function () {
 		cvalue['bases'] = checkedBases;
 		cvalue['charms'] = checkedCharms;
 
-    	$.cookie.json = true;
-    	$.cookie('setup', cvalue, {expires: 300}); //expires in 300 days
+    	// $.cookie.json = true;
+    	Cookies.set('setup', cvalue, {expires: 300}); //expires in 300 days
     });
 
     $("#show_pop_button").click(function() {
