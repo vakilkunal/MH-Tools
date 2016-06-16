@@ -133,7 +133,7 @@ function processRawData(rawDataArray) {
 		localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
 	    setTimeout(function() {
 	    	window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
-	    }, 1000);
+	    }, 500);
 	}
 }
 
