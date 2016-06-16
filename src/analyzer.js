@@ -86,12 +86,13 @@ window.onload = function () {
 	var rawDataArray = getDataFromURL(window.location.search.match(/data=([^&]*)/));
 
     if (rawDataArray.length === 0) {
-        var cookieData = Cookies.get('marketplaceData');
-        if (typeof cookieData !== 'undefined') {
-            dataObject = $.parseJSON(cookieData);
+        var storedData = localStorage.getItem("marketplaceData");
+        if (typeof storedData !== 'undefined') {
+            dataObject = JSON.parse(storedData);
+            showTable(dataObject);
         }
-        showTable(dataObject);
-    } else {
+    }
+    else {
     	$("#almostDone").show(500);
         processRawData(rawDataArray);
     }
@@ -127,12 +128,9 @@ function processRawData(rawDataArray) {
 
 	// console.log(dataObject);
 
-	//Create cookie of data
+	//Store data in local storage
 	if (Object.size(dataObject) > 0) {
-		var stringify = JSON.stringify(dataObject);
-		Cookies.set('marketplaceData', stringify, {
-	        expires: 30
-	    });
+		localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
 	    setTimeout(function() {
 	    	window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
 	    }, 1000);
