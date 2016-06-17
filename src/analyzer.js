@@ -139,7 +139,7 @@ function processRawData(rawDataArray, isDone) {
     	dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]].push(rowSplit[wordCount+6]);
     }
 
-	console.log(dataObject);
+	// console.log(dataObject);
 
 	//Store data in local storage
 	if (Object.size(dataObject) > 0) {

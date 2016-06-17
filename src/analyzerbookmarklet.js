@@ -12,7 +12,7 @@ javascript:void(function() {
     var timeout = '';
     var interval = '';
     var domTrack = '';
-    var timePassed = 0;
+    // var timePassed = 0;
     var newWindow = window.open('http://tsitu.github.io/MH-Tools/analyzerwaiting.html', '_blank');
 
     function parse() {
@@ -61,7 +61,9 @@ javascript:void(function() {
 	        }
 	        else {
 	        	if (counter % 6 == 0) {
-	        		//Split data
+	        		/*
+	        		 *Split data to contain URL length
+	        		 */
 	        		newWindow.location = url + "&isDone=false";
 	        		url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
 	        	}
@@ -77,11 +79,11 @@ javascript:void(function() {
     };
 
     function checkDOM() {
-    	timePassed = 0;
+    	// timePassed = 0;
     	interval = setInterval(function() {
-    		timePassed += 100;
+    		// timePassed += 100;
     		if (domTrack != document.querySelector("div.history-details .dataTables_info").innerHTML) {
-    			console.log("timePassed: " + timePassed);
+    			// console.log("timePassed: " + timePassed);
     			domTrack = document.querySelector("div.history-details .dataTables_info").innerHTML;
     			clearTimeout(timeout);
     			clearInterval(interval);
