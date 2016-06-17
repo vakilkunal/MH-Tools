@@ -82,12 +82,21 @@ window.onload = function () {
         .find('li:first').remove();
     });
 
+    $("#summaryTable").tablesorter({
+    	sortReset: true,
+		widthFixed: true,
+		ignoreCase: false,
+    });
+
     $("#resetButton").click(function() {
-    	var storedData = localStorage.getItem("marketplaceData");
-        if (storedData != null) {
-            localStorage.removeItem("marketplaceData");
-        }
-        location.reload();
+    	var reset = confirm("Are you sure you want to reset marketplace data?");
+    	if (reset == true) {
+    		var storedData = localStorage.getItem("marketplaceData");
+	        if (storedData != null) {
+	            localStorage.removeItem("marketplaceData");
+	        }
+	        location.reload();
+    	}
     });
 
 	var dataObject = {};
@@ -98,7 +107,9 @@ window.onload = function () {
         var storedData = localStorage.getItem("marketplaceData");
         if (storedData != null) {
             dataObject = JSON.parse(storedData);
+            // console.log(dataObject);
             showTable(dataObject);
+            showSummary(dataObject);
         }
     }
     else {
@@ -158,7 +169,6 @@ function processRawData(rawDataArray, isDone) {
 
 function showTable(dataObject) {
 	$("#almostDone").hide();
-	$("#pagerContainer").show(500);
 	$("#tableContainer").show(500);
 	var table = document.getElementById("table");
 	table.innerHTML = '';
@@ -188,6 +198,69 @@ function showTable(dataObject) {
 	$("#table").trigger("updateAll", [ resort, callback ]);
 }
 
+function showSummary(dataObject) {
+	$("#summaryContainer").show(500);
+	var totalSellQuantity = 0, totalBuyQuantity = 0;
+	var sellCounter = 0, buyCounter = 0;
+	var totalSellUnitPrice = 0, totalBuyUnitPrice = 0;
+	var totalSellAmt = 0, totalBuyAmt = 0;
+	var table = document.getElementById("summaryTable");
+	table.innerHTML = '';
+	var tableHTML = "<thead><tr><th id='summaryAction'>Action</th><th>Transactions</th><th>Average Transaction</th><th>Average Price</th><th>Average Unit Price</th><th>Total Quantity</th><th>Total Amount</th><th>Total Tariffs</th></tr></thead><tbody>";
+	for (var itemName in dataObject) {
+		for (var action in dataObject[itemName]) {
+			for (var date in dataObject[itemName][action]) {
+				var currentData = dataObject[itemName][action][date];
+				if (action == "Sell") {
+					for (var i=0; i<currentData.length/3; i++) {
+						totalSellQuantity += parseInt((currentData[i*3]).replace(/,/g,""));
+						sellCounter++;
+						totalSellUnitPrice += parseInt((currentData[i*3+1]).replace(/,/g,""));
+						totalSellAmt += parseInt((currentData[i*3+2]).replace(/,/g,""));
+					}
+				}
+				else if (action == "Buy") {
+					for (var i=0; i<currentData.length/3; i++) {
+						totalBuyQuantity += parseInt((currentData[i*3]).replace(/,/g,""));
+						buyCounter++;
+						totalBuyUnitPrice += parseInt((currentData[i*3+1]).replace(/,/g,""));
+						totalBuyAmt += parseInt((currentData[i*3+2]).replace(/,/g,""));
+					}
+				}
+			}
+		}
+	}
+
+	var avgTxSell = totalSellAmt/sellCounter;
+	var avgTxBuy = totalBuyAmt/buyCounter;
+	var avgSellPrice = totalSellAmt/totalSellQuantity;
+	var avgBuyPrice = totalBuyAmt/totalBuyQuantity;
+	var avgSellUnitPrice = totalSellUnitPrice/sellCounter;
+	var avgBuyUnitPrice = totalBuyUnitPrice/buyCounter;
+	var totalTariffs = totalBuyAmt/11;
+	tableHTML += "<tr><td>Sell</td><td>" + sellCounter + "</td><td>" + commafy(avgTxSell.toFixed(2)) + "</td><td>" + commafy(avgSellPrice.toFixed(2)) + "</td><td>" + commafy(avgSellUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellQuantity) + "</td><td>" + commafy(totalSellAmt) + "</td><td>0</td></tr>" 
+	tableHTML += "<tr><td>Buy</td><td>" + buyCounter + "</td><td>" + commafy(avgTxBuy.toFixed(2)) + "</td><td>" + commafy(avgBuyPrice.toFixed(2)) + "</td><td>" + commafy(avgBuyUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalBuyQuantity) + "</td><td>" + commafy(totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr>";
+	
+	var avgTxAll = (totalSellAmt+totalBuyAmt)/(sellCounter+buyCounter);
+	var avgAllPrice = (totalSellAmt+totalBuyAmt)/(totalSellQuantity+totalBuyQuantity);
+	var avgAllUnitPrice = (totalSellUnitPrice+totalBuyUnitPrice)/(sellCounter+buyCounter);
+	tableHTML += "<tr><td>All</td><td>" + (sellCounter+buyCounter) + "</td><td>" + commafy(avgTxAll.toFixed(2)) + "</td><td>" + commafy(avgAllPrice.toFixed(2)) + "</td><td>" + commafy(avgAllUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellQuantity+totalBuyQuantity) + "</td><td>" + commafy(totalSellAmt+totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr></tbody>";
+
+	table.innerHTML = tableHTML;
+
+	var resort = true, callback = function() {
+    	var header = $("#summaryAction");
+    	if (header.hasClass("tablesorter-headerAsc")) {
+    		header.click();
+    		header.click();
+    	}
+    	else if (header.hasClass("tablesorter-headerUnSorted")) {
+    		header.click();
+    	}
+    };
+	$("#summaryTable").trigger("updateAll", [ resort, callback ]);
+}
+
 /*
  * Utilities
  */
@@ -209,4 +282,15 @@ Object.size = function(obj) {
         if (obj.hasOwnProperty(key)) size++;
     }
     return size;
+}
+
+function commafy(num) {
+    var str = num.toString().split('.');
+    if (str[0].length >= 4) {
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    if (str[1] && str[1].length >= 4) {
+        str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+    }
+    return str.join('.');
 }
