@@ -348,15 +348,36 @@ function processPop () {
 	for(var i=1; i<popCSVLength; i++) {
 		if (popArray[popCSV[i][0]] == undefined) popArray[popCSV[i][0]] = [];
 		if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
-		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];	
-		if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-	
-		//Assign AR to a specific location/phase/cheese/charm/mouse
-		popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
+
+		//Check for fuse constituents
+		if (popCSV[i][2].indexOf("/") >= 0) {
+			var sliced = popCSV[i][2].split("/");
+			for (var j=0; j<sliced.length; j++) {
+				if (popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]] = [];
+				
+				if (popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]] = [];
+
+				//Assign AR to a specific location/phase/cheese/charm/mouse
+				popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
+				
+				//Assign sample size value to a specific location/phase/cheese/charm when available
+				if (popCSV[i][6].length > 0) {
+					popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
+				}
+			}
+		}
+		else {
+			if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
 		
-		//Assign sample size value to a specific location/phase/cheese/charm when available
-		if (popCSV[i][6].length > 0) {
-			popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
+			if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
+		
+			//Assign AR to a specific location/phase/cheese/charm/mouse
+			popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
+			
+			//Assign sample size value to a specific location/phase/cheese/charm when available
+			if (popCSV[i][6].length > 0) {
+				popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
+			}
 		}
 	}
 
@@ -425,6 +446,20 @@ function showPop (type) { //type = 2 means don't reset charms
 			var nSpecialCharms = Object.size(popArrayLPC);
 			var specialCharmsList = [];
 			for (var i=1; i<nSpecialCharms; i++) {
+				//console.log("Special charm", Object.keys(popArrayLPC)[i]);
+				specialCharmsList.push(Object.keys(popArrayLPC)[i]);
+			}
+			//console.log("Highlighting charms");
+			if (type!=2) highlightSpecialCharms(specialCharmsList);
+		}
+		/*
+		 * Allow pop with special charm(s) but without a "no charm" pop
+		 */
+		else if (Object.keys(popArrayLPC)[0] != "-") {
+			sampleSize = 0;
+			var nSpecialCharms = Object.size(popArrayLPC);
+			var specialCharmsList = [];
+			for (var i=0; i<nSpecialCharms; i++) {
 				//console.log("Special charm", Object.keys(popArrayLPC)[i]);
 				specialCharmsList.push(Object.keys(popArrayLPC)[i]);
 			}
