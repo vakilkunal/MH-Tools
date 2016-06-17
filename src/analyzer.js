@@ -84,7 +84,7 @@ window.onload = function () {
 
     $("#resetButton").click(function() {
     	var storedData = localStorage.getItem("marketplaceData");
-        if (typeof storedData != 'undefined') {
+        if (storedData != null) {
             localStorage.removeItem("marketplaceData");
         }
         location.reload();
@@ -96,7 +96,7 @@ window.onload = function () {
 
     if (rawDataArray.length === 0) {
         var storedData = localStorage.getItem("marketplaceData");
-        if (typeof storedData != 'undefined') {
+        if (storedData != null) {
             dataObject = JSON.parse(storedData);
             showTable(dataObject);
         }
@@ -110,7 +110,7 @@ window.onload = function () {
 function processRawData(rawDataArray, isDone) {
     var dataObject = {};
     var storedData = localStorage.getItem("marketplaceData");
-	if (typeof storedData != 'undefined') {
+	if (storedData != null) {
         dataObject = JSON.parse(storedData);
     }
 
