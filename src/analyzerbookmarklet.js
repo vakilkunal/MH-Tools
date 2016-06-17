@@ -3,14 +3,19 @@ javascript:void(function() {
 	var sellString = "div.history-details .dataTable .sell";
 	var buyString = "div.history-details .dataTable .buy";
 	var initPage = parseInt(document.querySelector("div.history-details .paginate_button.current").innerHTML);
-	var entries = document.querySelector("div.history-details .dataTables_info").innerHTML;
-    var entriesSlice = parseInt(entries.slice(entries.indexOf("entries")-3, entries.indexOf("entries")));
+	var orig = document.querySelector("div.history-details .dataTables_info").innerHTML;
+	var entries = orig.slice(orig.indexOf("of")+3, orig.length);
+    var entriesSlice = parseInt(entries.slice(0, entries.indexOf("entries")));
     var totalPages = Math.ceil(entriesSlice/10);
-    var entriesNum = totalPages-initPage+1;
+    var iterations = totalPages-initPage+1;
     var counter = 0;
+    var timeout = '';
+    var interval = '';
+    var domTrack = '';
+    var timePassed = 0;
     var newWindow = window.open('http://tsitu.github.io/MH-Tools/analyzerwaiting.html', '_blank');
 
-    var interval = setInterval(function() {
+    function parse() {
         var a = document.querySelector("div.history-details .paginate_button.next");
         if (a.className.indexOf("disabled") < 0 || parseInt(document.querySelector("div.history-details .paginate_button.current").innerHTML) == totalPages) {
         	var sell = document.querySelectorAll(sellString + " .sorting_1, " + sellString + " .item-name, " + sellString + " .numeric.quantity, " + sellString + " .numeric, " + sellString + " .numeric.total");
@@ -47,12 +52,43 @@ javascript:void(function() {
 		        url += "/";
 		    }
 
-            a.click();
+		    counter++;
+	        if (counter === iterations || a.className.indexOf("disabled") >= 0 || a == null) {
+	        	url += "&isDone=true";
+	        	newWindow.location = url;
+	            clearTimeout(timeout);
+	            clearInterval(interval);
+	        }
+	        else {
+	        	if (counter % 6 == 0) {
+	        		//Split data
+	        		newWindow.location = url + "&isDone=false";
+	        		url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
+	        	}
+	        	a.click();
+	        	timeout = setTimeout(function() {
+		    		alert("Parse timed out! Please check your connection and try again.");
+		    		clearInterval(interval);
+		    		newWindow.close();
+		    	}, 3000);
+        		checkDOM();
+	        }
         }
-        counter++;
-        if (counter === entriesNum || a.className.indexOf("disabled") >= 0 || a == null) {
-        	newWindow.location = url;
-            clearInterval(interval);
-        }
-    }, 1000);
+    };
+
+    function checkDOM() {
+    	timePassed = 0;
+    	interval = setInterval(function() {
+    		timePassed += 100;
+    		if (domTrack != document.querySelector("div.history-details .dataTables_info").innerHTML) {
+    			console.log("timePassed: " + timePassed);
+    			domTrack = document.querySelector("div.history-details .dataTables_info").innerHTML;
+    			clearTimeout(timeout);
+    			clearInterval(interval);
+    			parse();
+    		}
+    	}, 100);
+    };
+
+    checkDOM();
 })();

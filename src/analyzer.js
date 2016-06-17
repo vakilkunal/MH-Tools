@@ -82,24 +82,37 @@ window.onload = function () {
         .find('li:first').remove();
     });
 
+    $("#resetButton").click(function() {
+    	var storedData = localStorage.getItem("marketplaceData");
+        if (typeof storedData != 'undefined') {
+            localStorage.removeItem("marketplaceData");
+        }
+        location.reload();
+    });
+
 	var dataObject = {};
 	var rawDataArray = getDataFromURL(window.location.search.match(/data=([^&]*)/));
+	var isDone = getDataFromURL(window.location.search.match(/isDone=([^&]*)/));
 
     if (rawDataArray.length === 0) {
         var storedData = localStorage.getItem("marketplaceData");
-        if (typeof storedData !== 'undefined') {
+        if (typeof storedData != 'undefined') {
             dataObject = JSON.parse(storedData);
             showTable(dataObject);
         }
     }
     else {
     	$("#almostDone").show(500);
-        processRawData(rawDataArray);
+        processRawData(rawDataArray, isDone);
     }
 }
 
-function processRawData(rawDataArray) {
+function processRawData(rawDataArray, isDone) {
     var dataObject = {};
+    var storedData = localStorage.getItem("marketplaceData");
+	if (typeof storedData != 'undefined') {
+        dataObject = JSON.parse(storedData);
+    }
 
     var dataLen = rawDataArray.split("\n").length - 1;
     var dataSplit = rawDataArray.split("\n");
@@ -126,14 +139,20 @@ function processRawData(rawDataArray) {
     	dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]].push(rowSplit[wordCount+6]);
     }
 
-	// console.log(dataObject);
+	console.log(dataObject);
 
 	//Store data in local storage
 	if (Object.size(dataObject) > 0) {
-		localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
-	    setTimeout(function() {
-	    	window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
-	    }, 500);
+        localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
+
+		if (isDone == "false") {
+			window.location.replace("http://tsitu.github.io/MH-Tools/analyzerwaiting.html");
+		}
+		else if (isDone == "true") {
+			setTimeout(function() {
+		    	window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
+		    }, 500);
+		}
 	}
 }
 
