@@ -2,6 +2,15 @@
 
 window.onload = function () {
 
+	//Bookmarklet cookie logic
+	if (analyzerBookmarklet != Cookies.get('analyzerBookmarklet')) {
+		alert("Bookmarklet has changed! Please update accordingly.");
+		Cookies.set('analyzerBookmarklet', analyzerBookmarklet, {
+    		expires: 365
+    	});
+	}
+    $("#bookmarklet").attr("href", analyzerBookmarklet);
+
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';
     $("#table").tablesorter({
