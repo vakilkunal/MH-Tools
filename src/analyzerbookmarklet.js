@@ -1,7 +1,15 @@
 javascript:void(function() {
+	if (location.href.indexOf("www.mousehuntgame.com") < 0) {
+		alert("You are not on mousehuntgame.com! Please try again.");
+		return;
+	}
 	var url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
 	var sellString = "div.history-details .dataTable .sell";
 	var buyString = "div.history-details .dataTable .buy";
+	if (document.querySelector("div.history-details .paginate_button.current") == null) {
+		alert("Please navigate to Marketplace -> My History");
+		return;
+	}
 	var initPage = parseInt(document.querySelector("div.history-details .paginate_button.current").innerHTML);
 	var orig = document.querySelector("div.history-details .dataTables_info").innerHTML;
 	var entries = orig.slice(orig.indexOf("of")+3, orig.length);
@@ -12,7 +20,6 @@ javascript:void(function() {
     var timeout = '';
     var interval = '';
     var domTrack = '';
-    // var timePassed = 0;
     var newWindow = window.open('http://tsitu.github.io/MH-Tools/analyzerwaiting.html', '_blank');
 
     function parse() {
@@ -72,24 +79,21 @@ javascript:void(function() {
 		    		alert("Parse timed out! Please check your connection and try again.");
 		    		clearInterval(interval);
 		    		newWindow.close();
-		    	}, 3000);
+		    	}, 3500);
         		checkDOM();
 	        }
         }
     };
 
     function checkDOM() {
-    	// timePassed = 0;
     	interval = setInterval(function() {
-    		// timePassed += 100;
     		if (domTrack != document.querySelector("div.history-details .dataTables_info").innerHTML) {
-    			// console.log("timePassed: " + timePassed);
     			domTrack = document.querySelector("div.history-details .dataTables_info").innerHTML;
     			clearTimeout(timeout);
     			clearInterval(interval);
     			parse();
     		}
-    	}, 100);
+    	}, 150);
     };
 
     checkDOM();
