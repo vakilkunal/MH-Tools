@@ -72,7 +72,7 @@ window.onload = function () {
 	        },
 	        // jQuery selectors
 	        pager_selectors: {
-	          container   : '.pager',       // target the pager markup (wrapper)
+	          container   : '.dataPager',       // target the pager markup (wrapper)
 	          first       : '.first',       // go to first page arrow
 	          prev        : '.prev',        // previous page arrow
 	          next        : '.next',        // next page arrow
@@ -91,7 +91,85 @@ window.onload = function () {
         .find('li:first').remove();
     });
 
-    $("#summaryTable").tablesorter({
+    $("#itemSummaryTable").tablesorter({
+		sortReset: true,
+		widthFixed: true,
+		ignoreCase: false,
+		widgets: ["filter", "pager"],
+		widgetOptions: {
+			filter_childRows : false,
+			filter_childByColumn : false,
+			filter_childWithSibs : true,
+			filter_columnFilters : true,
+			filter_columnAnyMatch: true,
+			filter_cellFilter : '',
+			filter_cssFilter : '', // or []
+			filter_defaultFilter : {},
+			filter_excludeFilter : {},
+			filter_external : '',
+			filter_filteredRow : 'filtered',
+			filter_formatter : null,
+			filter_functions : null,
+			filter_hideEmpty : true,
+			filter_hideFilters : true,
+			filter_ignoreCase : true,
+			filter_liveSearch : true,
+			filter_matchType : { 'input': 'exact', 'select': 'exact' },
+			filter_onlyAvail : 'filter-onlyAvail',
+			filter_placeholder : { search : 'Filter results...', select : '' },
+			filter_reset : 'button.reset',
+			filter_resetOnEsc : true,
+			filter_saveFilters : false,
+			filter_searchDelay : 420,
+			filter_searchFiltered: true,
+			filter_selectSource  : null,
+			filter_serversideFiltering : false,
+			filter_startsWith : false,
+			filter_useParsedData : false,
+			filter_defaultAttrib : 'data-value',
+			filter_selectSourceSeparator : '|',pager_output: '{startRow:input} to {endRow} of {totalRows} rows', // '{page}/{totalPages}'
+	        
+	        pager_updateArrows: true,
+	        pager_startPage: 0,
+	        pager_size: 10,
+	        pager_savePages: false,
+	        pager_fixedHeight: false,
+	        pager_removeRows: false, // removing rows in larger tables speeds up the sort
+	        pager_ajaxUrl: null,
+	        pager_customAjaxUrl: function(table, url) { return url; },
+	        pager_ajaxError: null,
+	        pager_ajaxObject: {
+	          dataType: 'json'
+	        },
+	        pager_ajaxProcessing: function(ajax){ return [ 0, [], null ]; },
+	        // css class names that are added
+	        pager_css: {
+	          container   : 'tablesorter-pager',    // class added to make included pager.css file work
+	          errorRow    : 'tablesorter-errorRow', // error information row (don't include period at beginning); styled in theme file
+	          disabled    : 'disabled'              // class added to arrows @ extremes (i.e. prev/first arrows "disabled" on first page)
+	        },
+	        // jQuery selectors
+	        pager_selectors: {
+	          container   : '.itemPager',       // target the pager markup (wrapper)
+	          first       : '.first',       // go to first page arrow
+	          prev        : '.prev',        // previous page arrow
+	          next        : '.next',        // next page arrow
+	          last        : '.last',        // go to last page arrow
+	          gotoPage    : '.gotoPage',    // go to page selector - select dropdown that sets the current page
+	          pageDisplay : '.pagedisplay', // location of where the "output" is displayed
+	          pageSize    : '.pagesize'     // page size selector - select dropdown that sets the "size" option
+	        }
+		}
+	}).bind('pagerChange pagerComplete pagerInitialized pageMoved', function(e, c){
+      var p = c.pager, // NEW with the widget... it returns config, instead of config.pager
+        msg = '"</span> event triggered, ' + (e.type === 'pagerChange' ? 'going to' : 'now on') +
+        ' page <span class="typ">' + (p.page + 1) + '/' + p.totalPages + '</span>';
+      $('#display')
+        .append('<li><span class="str">"' + e.type + msg + '</li>')
+        .find('li:first').remove();
+    });
+
+    $("#overallSummaryTable").tablesorter({
     	sortReset: true,
 		widthFixed: true,
 		ignoreCase: false,
@@ -118,7 +196,8 @@ window.onload = function () {
             dataObject = JSON.parse(storedData);
             // console.log(dataObject);
             showTable(dataObject);
-            showSummary(dataObject);
+            showItemSummary(dataObject);
+            showOverallSummary(dataObject);
         }
     }
     else {
@@ -205,35 +284,109 @@ function showTable(dataObject) {
 	$("#table").trigger("updateAll", [ resort, callback ]);
 }
 
-function showSummary(dataObject) {
-	$("#summaryContainer").show(500);
+function showItemSummary(dataObject) {
+	$("#itemSummaryContainer").show(500);
+	var table = document.getElementById("itemSummaryTable");
+	table.innerHTML = '';
+	var tableHTML = "<thead><tr><th>Item Name</th><th data-filter='false'>Action</th><th data-filter='false'>Transactions</th><th data-filter='false'>Quantity</th><th data-filter='false'>Transaction (Avg)</th><th data-filter='false'>Price (Avg)</th><th data-filter='false'>Unit Price (Low)</th><th data-filter='false'>Unit Price (High)</th><th data-filter='false'>Unit Price (Avg)</th><th id='itemSummaryAction' data-filter='false'>Amount</th><th data-filter='false'>Tariffs</th></tr></thead><tbody>";
+	for (var itemName in dataObject) {
+		var totalSellQuantity = 0, totalBuyQuantity = 0;
+		var sellCounter = 0, buyCounter = 0;
+		var totalSellUnitPrice = 0, totalBuyUnitPrice = 0;
+		var totalSellAmt = 0, totalBuyAmt = 0;
+		var lowSellUnitPrice = 0, lowBuyUnitPrice = 0;
+		var highSellUnitPrice = 0, highBuyUnitPrice = 0;
+		for (var action in dataObject[itemName]) {
+			for (var date in dataObject[itemName][action]) {
+				var currentData = dataObject[itemName][action][date];
+				for (var i=0; i<currentData.length/3; i++) {
+					var quantity = parseInt((currentData[i*3]).replace(/,/g,""));
+					var unitPrice = parseInt((currentData[i*3+1]).replace(/,/g,""));
+					var totalAmt = parseInt((currentData[i*3+2]).replace(/,/g,""));
+					if (action == "Sell") {
+						sellCounter++;
+						totalSellQuantity += quantity;
+						totalSellUnitPrice += unitPrice;
+						totalSellAmt += totalAmt;
+						if (lowSellUnitPrice == 0 || unitPrice < lowSellUnitPrice) {
+							lowSellUnitPrice = unitPrice;
+						}
+						if (unitPrice > highSellUnitPrice) {
+							highSellUnitPrice = unitPrice;
+						}
+					}
+					else if (action == "Buy") {
+						buyCounter++;
+						totalBuyQuantity += quantity;
+						totalBuyUnitPrice += unitPrice;
+						totalBuyAmt += totalAmt;
+						if (lowBuyUnitPrice == 0 || unitPrice < lowBuyUnitPrice) {
+							lowBuyUnitPrice = unitPrice;
+						}
+						if (unitPrice > highBuyUnitPrice) {
+							highBuyUnitPrice = unitPrice;
+						}
+					}
+				}
+			}
+		}
+		var avgTxSell = totalSellAmt/sellCounter;
+		var avgTxBuy = totalBuyAmt/buyCounter;
+		var avgSellPrice = totalSellAmt/totalSellQuantity;
+		var avgBuyPrice = totalBuyAmt/totalBuyQuantity;
+		var avgSellUnitPrice = totalSellUnitPrice/sellCounter;
+		var avgBuyUnitPrice = totalBuyUnitPrice/buyCounter;
+		var totalTariffs = totalBuyAmt/11;
+
+		if (sellCounter > 0) tableHTML += "<tr><td>" + itemName + "</td><td>Sell</td><td>" + sellCounter + "</td><td>" + commafy(totalSellQuantity) + "</td><td>" + commafy(avgTxSell.toFixed(2)) + "</td><td>" + commafy(avgSellPrice.toFixed(2)) + "</td><td>" + commafy(lowSellUnitPrice) + "</td><td>" + commafy(highSellUnitPrice) + "</td><td>" + commafy(avgSellUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellAmt) + "</td><td>0</td></tr>";
+		if (buyCounter > 0) tableHTML += "<tr><td>" + itemName + "</td><td>Buy</td><td>" + buyCounter + "</td><td>" + commafy(totalBuyQuantity) + "</td><td>" + commafy(avgTxBuy.toFixed(2)) + "</td><td>" + commafy(avgBuyPrice.toFixed(2)) + "</td><td>" + commafy(lowBuyUnitPrice) + "</td><td>" + commafy(highBuyUnitPrice) + "</td><td>" + commafy(avgBuyUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr>";
+	}
+	tableHTML += "</tbody>";
+	table.innerHTML = tableHTML;
+
+	var resort = true, callback = function() {
+    	var header = $("#itemSummaryAction");
+    	if (header.hasClass("tablesorter-headerAsc")) {
+    		header.click();
+    		header.click();
+    	}
+    	else if (header.hasClass("tablesorter-headerUnSorted")) {
+    		header.click();
+    	}
+    };
+	$("#itemSummaryTable").trigger("updateAll", [ resort, callback ]);
+}
+
+function showOverallSummary(dataObject) {
+	$("#overallSummaryContainer").show(500);
 	var totalSellQuantity = 0, totalBuyQuantity = 0;
 	var sellCounter = 0, buyCounter = 0;
 	var totalSellUnitPrice = 0, totalBuyUnitPrice = 0;
 	var totalSellAmt = 0, totalBuyAmt = 0;
-	var table = document.getElementById("summaryTable");
+	var table = document.getElementById("overallSummaryTable");
 	table.innerHTML = '';
-	var tableHTML = "<thead><tr><th id='summaryAction'>Action</th><th>Transactions</th><th>Average Transaction</th><th>Average Price</th><th>Average Unit Price</th><th>Total Quantity</th><th>Total Amount</th><th>Total Tariffs</th></tr></thead><tbody>";
+	var tableHTML = "<thead><tr><th id='overallSummaryAction'>Action</th><th>Transactions</th><th>Quantity</th><th>Transaction (Avg)</th><th>Price (Avg)</th><th>Unit Price (Avg)</th><th>Amount</th><th>Tariffs</th></tr></thead><tbody>";
 	for (var itemName in dataObject) {
 		for (var action in dataObject[itemName]) {
 			for (var date in dataObject[itemName][action]) {
 				var currentData = dataObject[itemName][action][date];
-				if (action == "Sell") {
-					for (var i=0; i<currentData.length/3; i++) {
-						totalSellQuantity += parseInt((currentData[i*3]).replace(/,/g,""));
+				for (var i=0; i<currentData.length/3; i++) {
+					var quantity = parseInt((currentData[i*3]).replace(/,/g,""));
+					var unitPrice = parseInt((currentData[i*3+1]).replace(/,/g,""));
+					var totalAmt = parseInt((currentData[i*3+2]).replace(/,/g,""));
+					if (action == "Sell") {
 						sellCounter++;
-						totalSellUnitPrice += parseInt((currentData[i*3+1]).replace(/,/g,""));
-						totalSellAmt += parseInt((currentData[i*3+2]).replace(/,/g,""));
+						totalSellQuantity += quantity;
+						totalSellUnitPrice += unitPrice;
+						totalSellAmt += totalAmt;
 					}
-				}
-				else if (action == "Buy") {
-					for (var i=0; i<currentData.length/3; i++) {
-						totalBuyQuantity += parseInt((currentData[i*3]).replace(/,/g,""));
+					else if (action == "Buy") {
 						buyCounter++;
-						totalBuyUnitPrice += parseInt((currentData[i*3+1]).replace(/,/g,""));
-						totalBuyAmt += parseInt((currentData[i*3+2]).replace(/,/g,""));
+						totalBuyQuantity += quantity;
+						totalBuyUnitPrice += unitPrice;
+						totalBuyAmt += totalAmt;
 					}
-				}
+				}	
 			}
 		}
 	}
@@ -245,18 +398,18 @@ function showSummary(dataObject) {
 	var avgSellUnitPrice = totalSellUnitPrice/sellCounter;
 	var avgBuyUnitPrice = totalBuyUnitPrice/buyCounter;
 	var totalTariffs = totalBuyAmt/11;
-	tableHTML += "<tr><td>Sell</td><td>" + sellCounter + "</td><td>" + commafy(avgTxSell.toFixed(2)) + "</td><td>" + commafy(avgSellPrice.toFixed(2)) + "</td><td>" + commafy(avgSellUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellQuantity) + "</td><td>" + commafy(totalSellAmt) + "</td><td>0</td></tr>" 
-	tableHTML += "<tr><td>Buy</td><td>" + buyCounter + "</td><td>" + commafy(avgTxBuy.toFixed(2)) + "</td><td>" + commafy(avgBuyPrice.toFixed(2)) + "</td><td>" + commafy(avgBuyUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalBuyQuantity) + "</td><td>" + commafy(totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr>";
+	tableHTML += "<tr><td>Sell</td><td>" + sellCounter + "</td><td>" + commafy(totalSellQuantity) + "</td><td>" + commafy(avgTxSell.toFixed(2)) + "</td><td>" + commafy(avgSellPrice.toFixed(2)) + "</td><td>" + commafy(avgSellUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellAmt) + "</td><td>0</td></tr>";
+	tableHTML += "<tr><td>Buy</td><td>" + buyCounter + "</td><td>" + commafy(totalBuyQuantity) + "</td><td>" + commafy(avgTxBuy.toFixed(2)) + "</td><td>" + commafy(avgBuyPrice.toFixed(2)) + "</td><td>" + commafy(avgBuyUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr>";
 	
 	var avgTxAll = (totalSellAmt+totalBuyAmt)/(sellCounter+buyCounter);
 	var avgAllPrice = (totalSellAmt+totalBuyAmt)/(totalSellQuantity+totalBuyQuantity);
 	var avgAllUnitPrice = (totalSellUnitPrice+totalBuyUnitPrice)/(sellCounter+buyCounter);
-	tableHTML += "<tr><td>All</td><td>" + (sellCounter+buyCounter) + "</td><td>" + commafy(avgTxAll.toFixed(2)) + "</td><td>" + commafy(avgAllPrice.toFixed(2)) + "</td><td>" + commafy(avgAllUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellQuantity+totalBuyQuantity) + "</td><td>" + commafy(totalSellAmt+totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr></tbody>";
+	tableHTML += "<tr><td>All</td><td>" + (sellCounter+buyCounter) + "</td><td>" + commafy(totalSellQuantity+totalBuyQuantity) + "</td><td>" + commafy(avgTxAll.toFixed(2)) + "</td><td>" + commafy(avgAllPrice.toFixed(2)) + "</td><td>" + commafy(avgAllUnitPrice.toFixed(2)) + "</td><td>" + commafy(totalSellAmt+totalBuyAmt) + "</td><td>" + commafy(totalTariffs.toFixed(2)) + "</td></tr></tbody>";
 
 	table.innerHTML = tableHTML;
 
 	var resort = true, callback = function() {
-    	var header = $("#summaryAction");
+    	var header = $("#overallSummaryAction");
     	if (header.hasClass("tablesorter-headerAsc")) {
     		header.click();
     		header.click();
@@ -265,7 +418,7 @@ function showSummary(dataObject) {
     		header.click();
     	}
     };
-	$("#summaryTable").trigger("updateAll", [ resort, callback ]);
+	$("#overallSummaryTable").trigger("updateAll", [ resort, callback ]);
 }
 
 /*

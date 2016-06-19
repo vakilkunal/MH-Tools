@@ -62,6 +62,7 @@ javascript:void(function() {
 		    counter++;
 	        if (counter == iterations || a.className.indexOf("disabled") >= 0 || a == null) {
 	        	newWindow.location = url + "&isDone=true";
+	        	alert("Parse complete! Redirecting...");
 	            clearTimeout(timeout);
 	            clearInterval(interval);
 	        }

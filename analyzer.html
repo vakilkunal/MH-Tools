@@ -92,8 +92,8 @@
     <div id="tableContainer" style="display: none">
         <h2>Marketplace Data &nbsp;&nbsp;<button id="resetButton">Reset</button></h2>
         <p><small><i>Hint:</i> Hold the &lt;SHIFT&gt; key to sort multiple columns!</small></p>
-        <p><a href="#summaryContainer">Summary</a></p><br>
-        <div id="pager" class="pager">
+        <p><a href="#itemSummaryContainer">Item Summary</a></p><br>
+        <div class="dataPager">
             <form>
             <img src="../MH-Tools/img/first.png" class="first" />
             <img src="../MH-Tools/img/prev.png" class="prev" />
@@ -118,10 +118,38 @@
         <table id="table" class="tablesorter"><thead></thead><tbody></tbody></table>
     </div>
 
-    <div id="summaryContainer" style="display: none">
-        <br><h2>Summary</h2>
+    <div id="itemSummaryContainer" style="display: none">
+        <br><h2>Item Summary</h2>
+        <p><a href="#overallSummaryContainer">Overall Summary</a></p><br>
+        <div class="itemPager">
+            <form>
+            <img src="../MH-Tools/img/first.png" class="first" />
+            <img src="../MH-Tools/img/prev.png" class="prev" />
+            <span class="pagedisplay"></span>
+            <img src="../MH-Tools/img/next.png" class="next" />
+            <img src="../MH-Tools/img/last.png" class="last" />
+            &nbsp;&nbsp; Page size:
+            <select class="pagesize">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="all">All</option>
+            </select>
+            &nbsp;&nbsp; Jump to:
+            <select class="gotoPage"></select>
+            </form>
+        </div>
+        <table id="itemSummaryTable" class="tablesorter"><thead></thead><tbody></tbody></table>
+    </div>
+
+    <div id="overallSummaryContainer" style="display: none">
+        <br><h2>Overall Summary</h2>
         <p><a href="#top">Top</a></p><br>
-        <table id="summaryTable" class="tablesorter"><thead></thead><tbody></tbody></table>
+        <table id="overallSummaryTable" class="tablesorter"><thead></thead><tbody></tbody></table>
     </div>
 </body>
 
