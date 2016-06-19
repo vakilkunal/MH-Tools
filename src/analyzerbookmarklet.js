@@ -60,9 +60,8 @@ javascript:void(function() {
 		    }
 
 		    counter++;
-	        if (counter === iterations || a.className.indexOf("disabled") >= 0 || a == null) {
-	        	url += "&isDone=true";
-	        	newWindow.location = url;
+	        if (counter == iterations || a.className.indexOf("disabled") >= 0 || a == null) {
+	        	newWindow.location = url + "&isDone=true";
 	            clearTimeout(timeout);
 	            clearInterval(interval);
 	        }
@@ -79,7 +78,7 @@ javascript:void(function() {
 		    		alert("Parse timed out! Please check your connection and try again.");
 		    		clearInterval(interval);
 		    		newWindow.close();
-		    	}, 3500);
+		    	}, 4000);
         		checkDOM();
 	        }
         }
@@ -93,7 +92,7 @@ javascript:void(function() {
     			clearInterval(interval);
     			parse();
     		}
-    	}, 150);
+    	}, 100);
     };
 
     checkDOM();

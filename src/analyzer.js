@@ -169,9 +169,7 @@ function processRawData(rawDataArray, isDone) {
 			window.location.replace("http://tsitu.github.io/MH-Tools/analyzerwaiting.html");
 		}
 		else if (isDone == "true") {
-			setTimeout(function() {
-		    	window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
-		    }, 500);
+			window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
 		}
 	}
 }
