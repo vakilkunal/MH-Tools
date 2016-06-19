@@ -241,6 +241,7 @@ function processRawData(rawDataArray, isDone) {
 	// console.log(dataObject);
 
 	//Store data in local storage
+	var analyzerURL = "http://tsitu.github.io/MH-Tools/analyzer.html";
 	if (Object.size(dataObject) > 0) {
         localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
 
@@ -248,14 +249,16 @@ function processRawData(rawDataArray, isDone) {
 			window.location.replace("http://tsitu.github.io/MH-Tools/analyzerwaiting.html");
 		}
 		else if (isDone == "true") {
-			window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
+			window.location.replace(analyzerURL);
 		}
 		else {
 			alert("Missing isDone flag! Please report this in the forums.");
+			window.location.replace(analyzerURL);
 		}
 	}
 	else {
 		alert("Raw data processing failed! Please report this in the forums.");
+		window.location.replace(analyzerURL);
 	}
 }
 
