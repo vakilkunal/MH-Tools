@@ -190,7 +190,7 @@ window.onload = function () {
 	var rawDataArray = getDataFromURL(window.location.search.match(/data=([^&]*)/));
 	var isDone = getDataFromURL(window.location.search.match(/isDone=([^&]*)/));
 
-    if (rawDataArray.length === 0) {
+    if (rawDataArray.length == 0) {
         var storedData = localStorage.getItem("marketplaceData");
         if (storedData != null) {
             dataObject = JSON.parse(storedData);
@@ -201,7 +201,7 @@ window.onload = function () {
         }
     }
     else {
-    	$("#almostDone").show(500);
+    	$("#almostDone").show();
         processRawData(rawDataArray, isDone);
     }
 }
@@ -250,6 +250,12 @@ function processRawData(rawDataArray, isDone) {
 		else if (isDone == "true") {
 			window.location.replace("http://tsitu.github.io/MH-Tools/analyzer.html");
 		}
+		else {
+			alert("Missing isDone flag! Please report this in the forums.");
+		}
+	}
+	else {
+		alert("Raw data processing failed! Please report this in the forums.");
 	}
 }
 
