@@ -245,6 +245,9 @@ function processRawData(rawDataArray, isDone) {
 	if (Object.size(dataObject) > 0) {
         localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
 
+        var isDoneSplit = isDone.split("\n");
+        isDone = isDoneSplit[0];
+
 		if (isDone == "false") {
 			window.location.replace("http://tsitu.github.io/MH-Tools/analyzerwaiting.html");
 		}

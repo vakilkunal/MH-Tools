@@ -1,5 +1,5 @@
 javascript:void(function() {
-	if (location.href.indexOf("www.mousehuntgame.com") < 0) {
+	if (location.href.indexOf("mousehuntgame.com") < 0) {
 		alert("You are not on mousehuntgame.com! Please try again.");
 		return;
 	}
@@ -16,6 +16,7 @@ javascript:void(function() {
     var entriesSlice = parseInt(entries.slice(0, entries.indexOf("entries")));
     var totalPages = Math.ceil(entriesSlice/10);
     var iterations = totalPages-initPage+1;
+    console.log("Total Pages: " + totalPages + " | Iterations: " + iterations);
     var counter = 0;
     var timeout = '';
     var interval = '';
@@ -60,9 +61,10 @@ javascript:void(function() {
 		    }
 
 		    counter++;
-	        if (counter == iterations || a.className.indexOf("disabled") >= 0 || a == null) {
-	        	newWindow.location = url + "&isDone=true";
-	        	alert("Parse complete! Redirecting...");
+	        if (counter == iterations) {
+	        	console.log("Parse complete!");
+	        	url += "&isDone=true";
+	        	newWindow.location = url;
 	            clearTimeout(timeout);
 	            clearInterval(interval);
 	        }
@@ -71,17 +73,22 @@ javascript:void(function() {
 	        		/*
 	        		 *Split data to contain URL length
 	        		 */
-	        		newWindow.location = url + "&isDone=false";
+	        		url += "&isDone=false";
+	        		newWindow.location = url;
 	        		url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
 	        	}
 	        	a.click();
-	        	timeout = setTimeout(function() {
-		    		alert("Parse timed out! Please check your connection and try again.");
-		    		clearInterval(interval);
-		    		newWindow.close();
-		    	}, 4000);
         		checkDOM();
 	        }
+        }
+        else if (a == null) {
+        	console.log("Next button is null.");
+        }
+        else if (document.querySelector("div.history-details .paginate_button.current") == null) {
+        	console.log("Current button is null.");
+        }
+        else {
+        	console.log("Unknown error.");
         }
     };
 
@@ -94,6 +101,11 @@ javascript:void(function() {
     			parse();
     		}
     	}, 100);
+    	timeout = setTimeout(function() {
+    		newWindow.close();
+    		clearInterval(interval);
+    		alert("Parse timed out! Please check your connection and try again.");
+    	}, 4000);
     };
 
     checkDOM();
