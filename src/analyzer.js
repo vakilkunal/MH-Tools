@@ -3,12 +3,9 @@
 window.onload = function () {
 
 	//Bookmarklet cookie logic
-	if (analyzerBookmarklet != Cookies.get('analyzerBookmarklet')) {
+	if (analyzerBookmarklet != localStorage.getItem('analyzerBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
-		Cookies.remove('analyzerBookmarklet');
-		Cookies.set('analyzerBookmarklet', analyzerBookmarklet, {
-    		expires: 365
-    	});
+		localStorage.setItem('analyzerBookmarklet', analyzerBookmarklet);
 	}
     $("#bookmarklet").attr("href", analyzerBookmarklet);
 
