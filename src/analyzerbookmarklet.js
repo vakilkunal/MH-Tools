@@ -4,6 +4,7 @@ javascript:void(function() {
 		return;
 	}
 	var url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
+	// var url = "http://192.168.0.101:8888/analyzer.html?data="; //debug
 	var sellString = "div.history-details .dataTable .sell";
 	var buyString = "div.history-details .dataTable .buy";
 	if (document.querySelector("div.history-details .paginate_button.current") == null) {
@@ -64,7 +65,7 @@ javascript:void(function() {
 	        if (counter == iterations) {
 	        	console.log("Parse complete!");
 	        	url += "&isDone=true";
-	        	newWindow.location = url;
+	            newWindow.location.href = url;
 	            clearTimeout(timeout);
 	            clearInterval(interval);
 	        }
@@ -74,8 +75,9 @@ javascript:void(function() {
 	        		 *Split data to contain URL length
 	        		 */
 	        		url += "&isDone=false";
-	        		newWindow.location = url;
+	        		newWindow.location.href = url;
 	        		url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
+	        		// url = "http://192.168.0.101:8888/analyzer.html?data="; //debug
 	        	}
 	        	a.click();
         		checkDOM();
