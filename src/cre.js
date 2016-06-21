@@ -455,7 +455,7 @@ function showPop (type) { //type = 2 means don't reset charms
 		/*
 		 * Allow pop with special charm(s) but without a "no charm" pop
 		 */
-		else if (Object.keys(popArrayLPC)[0] != "-") {
+		else if (popArrayLPC != null && Object.keys(popArrayLPC)[0] != "-") {
 			sampleSize = 0;
 			var nSpecialCharms = Object.size(popArrayLPC);
 			var specialCharmsList = [];
