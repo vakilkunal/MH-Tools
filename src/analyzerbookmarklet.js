@@ -14,7 +14,7 @@ javascript:void(function() {
 	var initPage = parseInt(document.querySelector("div.history-details .paginate_button.current").innerHTML);
 	var orig = document.querySelector("div.history-details .dataTables_info").innerHTML;
 	var entries = orig.slice(orig.indexOf("of")+3, orig.length);
-    var entriesSlice = parseInt(entries.slice(0, entries.indexOf("entries")));
+    var entriesSlice = parseInt(entries.slice(0, entries.indexOf("entries")).replace(/,/g,""));
     var totalPages = Math.ceil(entriesSlice/10);
     var iterations = totalPages-initPage+1;
     console.log("Total Pages: " + totalPages + " | Iterations: " + iterations);
