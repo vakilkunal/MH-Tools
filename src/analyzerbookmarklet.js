@@ -69,7 +69,7 @@ javascript:void(function() {
 	            clearInterval(interval);
 	        }
 	        else {
-	        	if (counter % 6 == 0) {
+	        	if (counter % 2 == 0) {
 	        		/*
 	        		 *Split data to contain URL length
 	        		 */
