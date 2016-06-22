@@ -92,7 +92,7 @@ javascript:void(function() {
 				var url = defaultURL + "?bases=";
 	        	url += encodeURI(slice.join('/'));
 	        	url += "/";
-	        	console.log(url);
+	        	// console.log(url);
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		baseIter += maxSize;
@@ -116,7 +116,7 @@ javascript:void(function() {
 				var url = defaultURL + "?weapons=";
 	        	url += encodeURI(slice.join('/'));
 	        	url += "/";
-	        	console.log(url);
+	        	// console.log(url);
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		weaponIter += maxSize;
@@ -140,7 +140,7 @@ javascript:void(function() {
 				var url = defaultURL + "?charms=";
 	        	url += encodeURI(slice.join('/'));
 	        	url += "/";
-	        	console.log(url);
+	        	// console.log(url);
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		charmIter += maxSize;

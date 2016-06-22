@@ -514,7 +514,7 @@ function checkCookies() {
 		var savedCharms = savedSetup['charms'];
 
 		if (savedWeapons.length != Object.size(weaponsArray) || savedBases.length != Object.size(basesArray) || savedCharms.length != Object.size(charmsArray)) {
-			window.alert("New weapons/bases/charms have been added. Please re-tick what you own. Sorry for any inconvenience!")
+			window.alert("New items have been added. Please re-tick what you own, or use the bookmarklet. Sorry for any inconvenience!")
 			//Delete cookie
 			Cookies.remove('setup');
 		} else {
