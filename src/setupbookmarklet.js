@@ -102,7 +102,9 @@ javascript:void(function() {
         		}
         		else {
         			sendingBases = "false";
-        			sendingWeapons = "true";
+        			setTimeout(function() {
+        				sendingWeapons = "true";
+        			}, 750);
         		}
 			}
 		}, 250);
@@ -126,7 +128,9 @@ javascript:void(function() {
         		}
         		else {
         			sendingWeapons = "false";
-        			sendingCharms = "true";
+        			setTimeout(function() {
+        				sendingCharms = "true";
+        			}, 750);
         		}
 			}
 		}, 250);
