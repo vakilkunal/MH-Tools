@@ -33,6 +33,7 @@ javascript:void(function() {
 			newWindow.close();
 			clearInterval(interval);
 			alert("XHR timed out! Please check your connection and try again.");
+			return;
 		}, 4000);
 		var interval = setInterval(function() {
 			if (document.querySelector("div.campPage-trap-itemBrowser.base") != null) {
@@ -162,5 +163,6 @@ javascript:void(function() {
 	}
 	else {
 		alert("Please navigate to the Camp page!");
+		return;
 	}
 })();
