@@ -2,7 +2,7 @@
 
 window.onload = function () {
 
-	//Bookmarklet cookie logic
+	//Bookmarklet storage logic
 	if (analyzerBookmarklet != localStorage.getItem('analyzerBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
 		localStorage.setItem('analyzerBookmarklet', analyzerBookmarklet);

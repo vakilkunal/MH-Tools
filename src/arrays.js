@@ -2063,7 +2063,7 @@ basesArray["Wooden Base with Target"][2] = "    20%";
 basesArray["Wooden Base with Target"][3] = "    0";
 basesArray["Wooden Base with Target"][4] = "    No Effect";
 var basesLoaded = 1;
-console.log("basesArray size: " + Object.size(basesArray));
+// console.log("basesArray size: " + Object.size(basesArray));
 
 
 var weaponsArray = [];
@@ -3034,7 +3034,7 @@ weaponsArray["Zurreal's Folly"][3] = "  15%";
 weaponsArray["Zurreal's Folly"][4] = "  12";
 weaponsArray["Zurreal's Folly"][5] = "  Ultimately Stale";
 var weaponsLoaded = 1;
-console.log("weaponsArray size: " + Object.size(weaponsArray));
+// console.log("weaponsArray size: " + Object.size(weaponsArray));
 
 
 var charmsArray = [];
@@ -4083,7 +4083,7 @@ charmsArray["Yellow Sponge Charm"][2] = "   0%";
 charmsArray["Yellow Sponge Charm"][3] = "   0";
 charmsArray["Yellow Sponge Charm"][4] = "   No Effect";
 var charmsLoaded = 1;
-console.log("charmsArray size: " + Object.size(charmsArray));
+// console.log("charmsArray size: " + Object.size(charmsArray));
 
 /*var charmArray1 = [];
 var charmArray2 = [];
