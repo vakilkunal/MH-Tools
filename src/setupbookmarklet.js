@@ -25,7 +25,7 @@ javascript:void(function() {
 	var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
 	var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
 	var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
-	var newWindow = window.open(waitingURL, '_blank');
+	var newWindow = '';
 
 	function checkDOM() {
 		baseButton.click();
@@ -160,6 +160,7 @@ javascript:void(function() {
 
 	if (baseButton != null && weaponButton != null && charmButton != null) {
 		checkDOM();
+		newWindow = window.open(waitingURL, '_blank');
 	}
 	else {
 		alert("Please navigate to the Camp page!");
