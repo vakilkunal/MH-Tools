@@ -2057,9 +2057,7 @@ basesArray["Wooden Base with Target"][2] = "    20%";
 basesArray["Wooden Base with Target"][3] = "    0";
 basesArray["Wooden Base with Target"][4] = "    No Effect";
 var basesLoaded = 1;
-
-
-
+console.log("basesArray size: " + Object.size(basesArray));
 
 
 var weaponsArray = [];
@@ -3030,13 +3028,7 @@ weaponsArray["Zurreal's Folly"][3] = "  15%";
 weaponsArray["Zurreal's Folly"][4] = "  12";
 weaponsArray["Zurreal's Folly"][5] = "  Ultimately Stale";
 var weaponsLoaded = 1;
-
-// Get the size of an object
-// var arrsize = Object.size(weaponsArray);
-// console.log("weaponsArray size: " + arrsize);
-
-
-
+console.log("weaponsArray size: " + Object.size(weaponsArray));
 
 
 var charmsArray = [];
@@ -4085,20 +4077,9 @@ charmsArray["Yellow Sponge Charm"][2] = "   0%";
 charmsArray["Yellow Sponge Charm"][3] = "   0";
 charmsArray["Yellow Sponge Charm"][4] = "   No Effect";
 var charmsLoaded = 1;
+console.log("charmsArray size: " + Object.size(charmsArray));
 
-/*Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
-// Get the size of an object
-var arrsize = Object.size(charmsArray);
-console.log("charmArray size: " + arrsize);
-
-var charmArray1 = [];
+/*var charmArray1 = [];
 var charmArray2 = [];
 for (var name in charmsArray) {
     charmArray1.push(name);
@@ -13285,7 +13266,7 @@ powersArray["Enlightened Labourer"][8] = "0%";
 powersArray["Enlightened Labourer"][9] = "0%";
 powersArray["Enlightened Labourer"][10] = "100%";
 powersArray["Dumpling Delivery"] = [];
-powersArray["Dumpling Delivery"][0] = "2,470.00";
+powersArray["Dumpling Delivery"][0] = "2,305.00";
 powersArray["Dumpling Delivery"][1] = "0%";
 powersArray["Dumpling Delivery"][2] = "0%";
 powersArray["Dumpling Delivery"][3] = "0%";
@@ -13297,7 +13278,7 @@ powersArray["Dumpling Delivery"][8] = "0%";
 powersArray["Dumpling Delivery"][9] = "0%";
 powersArray["Dumpling Delivery"][10] = "100%";
 powersArray["Armored Archer"] = [];
-powersArray["Armored Archer"][0] = "2,798.00";
+powersArray["Armored Archer"][0] = "2,590.00";
 powersArray["Armored Archer"][1] = "0%";
 powersArray["Armored Archer"][2] = "0%";
 powersArray["Armored Archer"][3] = "0%";
@@ -13309,7 +13290,7 @@ powersArray["Armored Archer"][8] = "0%";
 powersArray["Armored Archer"][9] = "0%";
 powersArray["Armored Archer"][10] = "100%";
 powersArray["Shinobi"] = [];
-powersArray["Shinobi"][0] = "2,945.00";
+powersArray["Shinobi"][0] = "2,910.00";
 powersArray["Shinobi"][1] = "0%";
 powersArray["Shinobi"][2] = "0%";
 powersArray["Shinobi"][3] = "0%";
@@ -13321,7 +13302,7 @@ powersArray["Shinobi"][8] = "0%";
 powersArray["Shinobi"][9] = "0%";
 powersArray["Shinobi"][10] = "100%";
 powersArray["Shaolin Kung Fu"] = [];
-powersArray["Shaolin Kung Fu"][0] = "10,892.00";
+powersArray["Shaolin Kung Fu"][0] = "12,374.00";
 powersArray["Shaolin Kung Fu"][1] = "0%";
 powersArray["Shaolin Kung Fu"][2] = "0%";
 powersArray["Shaolin Kung Fu"][3] = "0%";
@@ -13331,9 +13312,9 @@ powersArray["Shaolin Kung Fu"][6] = "0%";
 powersArray["Shaolin Kung Fu"][7] = "0%";
 powersArray["Shaolin Kung Fu"][8] = "0%";
 powersArray["Shaolin Kung Fu"][9] = "0%";
-powersArray["Shaolin Kung Fu"][10] = "175%";
+powersArray["Shaolin Kung Fu"][10] = "200%";
 powersArray["Wandering Monk"] = [];
-powersArray["Wandering Monk"][0] = "13,366.50";
+powersArray["Wandering Monk"][0] = "15,274.80";
 powersArray["Wandering Monk"][1] = "0%";
 powersArray["Wandering Monk"][2] = "0%";
 powersArray["Wandering Monk"][3] = "0%";
@@ -13343,9 +13324,9 @@ powersArray["Wandering Monk"][6] = "0%";
 powersArray["Wandering Monk"][7] = "0%";
 powersArray["Wandering Monk"][8] = "0%";
 powersArray["Wandering Monk"][9] = "0%";
-powersArray["Wandering Monk"][10] = "175%";
+powersArray["Wandering Monk"][10] = "200%";
 powersArray["Militant Samurai"] = [];
-powersArray["Militant Samurai"][0] = "15,750.00";
+powersArray["Militant Samurai"][0] = "18,000.00";
 powersArray["Militant Samurai"][1] = "0%";
 powersArray["Militant Samurai"][2] = "0%";
 powersArray["Militant Samurai"][3] = "0%";
@@ -13355,7 +13336,7 @@ powersArray["Militant Samurai"][6] = "0%";
 powersArray["Militant Samurai"][7] = "0%";
 powersArray["Militant Samurai"][8] = "0%";
 powersArray["Militant Samurai"][9] = "0%";
-powersArray["Militant Samurai"][10] = "175%";
+powersArray["Militant Samurai"][10] = "200%";
 powersArray["Dancing Assassin"] = [];
 powersArray["Dancing Assassin"][0] = "46,500.00";
 powersArray["Dancing Assassin"][1] = "0%";
@@ -13369,7 +13350,7 @@ powersArray["Dancing Assassin"][8] = "0%";
 powersArray["Dancing Assassin"][9] = "0%";
 powersArray["Dancing Assassin"][10] = "250%";
 powersArray["Student of the Chi Fang"] = [];
-powersArray["Student of the Chi Fang"][0] = "13,125.00";
+powersArray["Student of the Chi Fang"][0] = "15,000.00";
 powersArray["Student of the Chi Fang"][1] = "0%";
 powersArray["Student of the Chi Fang"][2] = "0%";
 powersArray["Student of the Chi Fang"][3] = "0%";
@@ -13379,9 +13360,9 @@ powersArray["Student of the Chi Fang"][6] = "0%";
 powersArray["Student of the Chi Fang"][7] = "0%";
 powersArray["Student of the Chi Fang"][8] = "0%";
 powersArray["Student of the Chi Fang"][9] = "0%";
-powersArray["Student of the Chi Fang"][10] = "175%";
+powersArray["Student of the Chi Fang"][10] = "200%";
 powersArray["Student of the Chi Belt"] = [];
-powersArray["Student of the Chi Belt"][0] = "13,125.00";
+powersArray["Student of the Chi Belt"][0] = "15,000.00";
 powersArray["Student of the Chi Belt"][1] = "0%";
 powersArray["Student of the Chi Belt"][2] = "0%";
 powersArray["Student of the Chi Belt"][3] = "0%";
@@ -13391,9 +13372,9 @@ powersArray["Student of the Chi Belt"][6] = "0%";
 powersArray["Student of the Chi Belt"][7] = "0%";
 powersArray["Student of the Chi Belt"][8] = "0%";
 powersArray["Student of the Chi Belt"][9] = "0%";
-powersArray["Student of the Chi Belt"][10] = "175%";
+powersArray["Student of the Chi Belt"][10] = "200%";
 powersArray["Student of the Chi Claw"] = [];
-powersArray["Student of the Chi Claw"][0] = "13,125.00";
+powersArray["Student of the Chi Claw"][0] = "15,000.00";
 powersArray["Student of the Chi Claw"][1] = "0%";
 powersArray["Student of the Chi Claw"][2] = "0%";
 powersArray["Student of the Chi Claw"][3] = "0%";
@@ -13403,7 +13384,7 @@ powersArray["Student of the Chi Claw"][6] = "0%";
 powersArray["Student of the Chi Claw"][7] = "0%";
 powersArray["Student of the Chi Claw"][8] = "0%";
 powersArray["Student of the Chi Claw"][9] = "0%";
-powersArray["Student of the Chi Claw"][10] = "175%";
+powersArray["Student of the Chi Claw"][10] = "200%";
 powersArray["Master of the Chi Fang"] = [];
 powersArray["Master of the Chi Fang"][0] = "57,500.00";
 powersArray["Master of the Chi Fang"][1] = "0%";
@@ -13441,7 +13422,7 @@ powersArray["Master of the Chi Claw"][8] = "0%";
 powersArray["Master of the Chi Claw"][9] = "0%";
 powersArray["Master of the Chi Claw"][10] = "250%";
 powersArray["Grand Master of the Dojo"] = [];
-powersArray["Grand Master of the Dojo"][0] = "413,845.00";
+powersArray["Grand Master of the Dojo"][0] = "331,208.00";
 powersArray["Grand Master of the Dojo"][1] = "0%";
 powersArray["Grand Master of the Dojo"][2] = "0%";
 powersArray["Grand Master of the Dojo"][3] = "0%";
@@ -13451,9 +13432,9 @@ powersArray["Grand Master of the Dojo"][6] = "0%";
 powersArray["Grand Master of the Dojo"][7] = "0%";
 powersArray["Grand Master of the Dojo"][8] = "0%";
 powersArray["Grand Master of the Dojo"][9] = "0%";
-powersArray["Grand Master of the Dojo"][10] = "250%";
+powersArray["Grand Master of the Dojo"][10] = "200%";
 powersArray["Supreme Sensei"] = [];
-powersArray["Supreme Sensei"][0] = "503,895.00";
+powersArray["Supreme Sensei"][0] = "404,000.00";
 powersArray["Supreme Sensei"][1] = "0%";
 powersArray["Supreme Sensei"][2] = "0%";
 powersArray["Supreme Sensei"][3] = "0%";
@@ -13463,9 +13444,9 @@ powersArray["Supreme Sensei"][6] = "0%";
 powersArray["Supreme Sensei"][7] = "0%";
 powersArray["Supreme Sensei"][8] = "0%";
 powersArray["Supreme Sensei"][9] = "0%";
-powersArray["Supreme Sensei"][10] = "250%";
+powersArray["Supreme Sensei"][10] = "200%";
 powersArray["Ascended Elder"] = [];
-powersArray["Ascended Elder"][0] = "374,972.00";
+powersArray["Ascended Elder"][0] = "375,011.00";
 powersArray["Ascended Elder"][1] = "0%";
 powersArray["Ascended Elder"][2] = "0%";
 powersArray["Ascended Elder"][3] = "0%";
