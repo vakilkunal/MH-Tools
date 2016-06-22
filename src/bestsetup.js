@@ -459,6 +459,9 @@ function checkCookies() {
 		bases = storedData["bases"];
 		weapons = storedData["weapons"];
 		charms = storedData["charms"];
+		console.log("Bases loaded: " + bases.length);
+		console.log("Weapons loaded: " + weapons.length);
+		console.log("Charms loaded: " + charms.length);
 	}
 	if (Object.size(storedData) > 0) {
 		for (var i=0; i<Object.size(basesArray); i++) {

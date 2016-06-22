@@ -25,7 +25,7 @@ javascript:void(function() {
 	var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
 	var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
 	var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
-	var newWindow = '';
+	var newWindow = window.open(waitingURL, '_blank');
 
 	function checkDOM() {
 		baseButton.click();
@@ -49,28 +49,28 @@ javascript:void(function() {
 		for (var i=0; i<baseText.length; i++) {
 			bases.push(baseText[i].textContent);
 		}
-		// console.log("Number of bases: " + bases.length);
+		console.log("Number of bases: " + bases.length);
 
 	    weaponButton.click();
 	    var weaponText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.weapon.clear-block .campPage-trap-itemBrowser-item-name");
 		for (var i=0; i<weaponText.length; i++) {
 			weapons.push(weaponText[i].textContent);
 		}
-		// console.log("Number of weapons: " + weapons.length);
+		console.log("Number of weapons: " + weapons.length);
 
 	    charmButton.click();
 	    var charmText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.trinket.clear-block .campPage-trap-itemBrowser-item-name");
 		for (var i=0; i<charmText.length; i++) {
 			charms.push(charmText[i].textContent);
 		}
-		// console.log("Number of charms: " + charms.length);
+		console.log("Number of charms: " + charms.length);
 
 		var closeButton = document.querySelector("a.campPage-trap-blueprint-closeButton");
 	    if (closeButton != null) {
 	    	closeButton.click();
 	    }
 
-	    if (bases.length > 0) {
+    	if (bases.length > 0) {
 	    	sendBases();
 	    	sendingBases = "true";
 	    }
@@ -98,14 +98,14 @@ javascript:void(function() {
         		newWindow.location.href = url;
         		baseIter += maxSize;
         		if (baseIter < bases.length) {
-        			setTimeout(sendBases, 500);
+        			setTimeout(sendBases, 750);
         		}
         		else {
         			sendingBases = "false";
         			sendingWeapons = "true";
         		}
 			}
-		}, 100);
+		}, 250);
 	}
 
 	function sendWeapons() {
@@ -122,14 +122,14 @@ javascript:void(function() {
         		newWindow.location.href = url;
         		weaponIter += maxSize;
         		if (weaponIter < weapons.length) {
-        			setTimeout(sendWeapons, 500);
+        			setTimeout(sendWeapons, 750);
         		}
         		else {
         			sendingWeapons = "false";
         			sendingCharms = "true";
         		}
 			}
-		}, 100);
+		}, 250);
 	}
 
 	function sendCharms() {
@@ -146,23 +146,23 @@ javascript:void(function() {
         		newWindow.location.href = url;
         		charmIter += maxSize;
         		if (charmIter < charms.length) {
-        			setTimeout(sendCharms, 500);
+        			setTimeout(sendCharms, 750);
         		}
         		else {
         			sendingCharms = "false";
         			setTimeout(function() {
         				newWindow.location.href = defaultURL;
-        			}, 500);
+        			}, 750);
         		}
 			}
-		}, 100);
+		}, 250);
 	}
 
 	if (baseButton != null && weaponButton != null && charmButton != null) {
 		checkDOM();
-		newWindow = window.open(waitingURL, '_blank');
 	}
 	else {
+		newWindow.close();
 		alert("Please navigate to the Camp page!");
 		return;
 	}
