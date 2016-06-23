@@ -699,7 +699,7 @@ function showPop (type) { //type = 2 means don't reset charms
 
 		var cheeseEatenPerHunt = overallAR/100;
 		var cheeseStaledPerHunt = (100-overallAR)/100*freshness2stale[trapEff];
-		resultsHTML += "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" + Math.round(overallGold- cheeseCost*(cheeseEatenPerHunt + cheeseStaledPerHunt) ) + "</td><td></td><td></td><td></td>";
+		resultsHTML += "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" + commafy(Math.round(overallGold- cheeseCost*(cheeseEatenPerHunt + cheeseStaledPerHunt))) + "</td><td></td><td></td><td></td>";
 
 		if (locationName.indexOf("Seasonal Garden") >= 0 || locationName.indexOf("Sunken City")>=0 && phaseName!="Docked") {
 			resultsHTML += "<td></td>";

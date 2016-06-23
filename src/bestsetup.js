@@ -454,9 +454,15 @@ function checkCookies() {
 	var charms = [];
 	if (localStorage.getItem("setupData") != null) {
 		storedData = JSON.parse(localStorage.getItem("setupData"));
-		bases = storedData["bases"];
-		weapons = storedData["weapons"];
-		charms = storedData["charms"];
+		if (storedData["bases"] != undefined) {
+			bases = storedData["bases"];
+		}
+		if (storedData["weapons"] != undefined) {
+			weapons = storedData["weapons"];
+		}
+		if (storedData["charms"] != undefined) {
+			charms = storedData["charms"];
+		}
 		console.log("Bases loaded: " + bases.length);
 		console.log("Weapons loaded: " + weapons.length);
 		console.log("Charms loaded: " + charms.length);
