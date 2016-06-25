@@ -101,7 +101,8 @@ Object.size = function(obj) {
 var ztAmp = 100;
 var riftWeapons = {"Crystal Tower": true, "Focused Crystal Laser": true,
 				   "Multi-Crystal Laser": true, "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes": true}
-var riftBases = {"Fissure Base": true, "Fracture Base": true, "Rift Base": true, "Enerchi Induction Base": true}
+var riftBases = {"Fissure Base": true, "Fracture Base": true, "Rift Base": true,
+                 "Enerchi Induction Base": true, "Attuned Enerchi Induction Base": true}
 var riftCharms = {"Cherry Charm": true, "Gnarled Charm": true,
 				  "Rift Power Charm": true, "Rift Ultimate Luck Charm": true,
 				  "Rift Ultimate Power Charm": true, "Rift Vacuum Charm": true,

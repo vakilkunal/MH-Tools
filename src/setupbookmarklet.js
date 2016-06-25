@@ -97,14 +97,15 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		baseIter += maxSize;
+        		var p = ping();
         		if (baseIter < bases.length) {
-        			setTimeout(sendBases, 750);
+        			setTimeout(sendBases, p + 500);
         		}
         		else {
         			sendingBases = "false";
         			setTimeout(function() {
         				sendingWeapons = "true";
-        			}, 750);
+        			}, p + 500);
         		}
 			}
 		}, 250);
@@ -123,14 +124,15 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		weaponIter += maxSize;
+        		var p = ping();
         		if (weaponIter < weapons.length) {
-        			setTimeout(sendWeapons, 750);
+        			setTimeout(sendWeapons, p + 500);
         		}
         		else {
         			sendingWeapons = "false";
         			setTimeout(function() {
         				sendingCharms = "true";
-        			}, 750);
+        			}, p + 500);
         		}
 			}
 		}, 250);
@@ -149,17 +151,38 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		charmIter += maxSize;
+        		var p = ping();
         		if (charmIter < charms.length) {
-        			setTimeout(sendCharms, 750);
+        			setTimeout(sendCharms, p + 500);
         		}
         		else {
         			sendingCharms = "false";
         			setTimeout(function() {
         				newWindow.location.href = defaultURL;
-        			}, 750);
+        			}, p + 500);
         		}
 			}
 		}, 250);
+	}
+
+	function ping() {
+		var started = new Date().getTime();
+		var cacheBuster = "?nnn=" + started;
+		var http = new XMLHttpRequest();
+		http.open("GET", "https://www.mousehuntgame.com" + cacheBuster, true);
+		http.onreadystatechange = function() {
+			if (http.readyState == 4) {
+			  var ended = new Date().getTime();
+			  var milliseconds = ended - started;
+			  console.log("Ping time: " + milliseconds + "ms");
+			  return milliseconds;
+			}
+		};
+		try {
+			http.send(null);
+		} catch(exception) {
+			// this is expected
+		}
 	}
 
 	if (baseButton != null && weaponButton != null && charmButton != null) {
