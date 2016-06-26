@@ -169,7 +169,7 @@ javascript:void(function() {
 		var started = new Date().getTime();
 		var cacheBuster = "?nnn=" + started;
 		var http = new XMLHttpRequest();
-		http.open("GET", "https://www.mousehuntgame.com" + cacheBuster, true);
+		http.open("GET", "//www.mousehuntgame.com" + cacheBuster, true);
 		http.onreadystatechange = function() {
 			if (http.readyState == 4) {
 			  var ended = new Date().getTime();
