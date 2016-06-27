@@ -71,8 +71,8 @@ javascript:void(function() {
 	    }
 
     	if (bases.length > 0) {
-	    	sendBases();
-	    	sendingBases = "true";
+    		sendingBases = "true";
+	    	sendBases(); 	
 	    }
 
 	    if (weapons.length > 0) {
@@ -97,15 +97,14 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		baseIter += maxSize;
-        		var p = ping();
         		if (baseIter < bases.length) {
-        			setTimeout(sendBases, p + 500);
+        			setTimeout(sendBases, ping() + 500);
         		}
         		else {
         			sendingBases = "false";
         			setTimeout(function() {
         				sendingWeapons = "true";
-        			}, p + 500);
+        			}, ping() + 500);
         		}
 			}
 		}, 250);
@@ -124,15 +123,14 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		weaponIter += maxSize;
-        		var p = ping();
         		if (weaponIter < weapons.length) {
-        			setTimeout(sendWeapons, p + 500);
+        			setTimeout(sendWeapons, ping() + 500);
         		}
         		else {
         			sendingWeapons = "false";
         			setTimeout(function() {
         				sendingCharms = "true";
-        			}, p + 500);
+        			}, ping() + 500);
         		}
 			}
 		}, 250);
@@ -151,15 +149,14 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		charmIter += maxSize;
-        		var p = ping();
         		if (charmIter < charms.length) {
-        			setTimeout(sendCharms, p + 500);
+        			setTimeout(sendCharms, ping() + 500);
         		}
         		else {
         			sendingCharms = "false";
         			setTimeout(function() {
         				newWindow.location.href = defaultURL;
-        			}, p + 500);
+        			}, ping() + 500);
         		}
 			}
 		}, 250);
