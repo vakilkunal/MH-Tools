@@ -565,6 +565,7 @@ function showPop (type) { //type = 2 means don't reset charms
 				//console.log("Gold: " + mouseGold);
 				if (charmName == "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
 				else if (charmName == "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
+				else if (charmName == "Extreme Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.20, 15000));
 				
 				var gold = catches*mouseGold/100;
 				var points = catches*mousePoints/100;
@@ -620,6 +621,7 @@ function showPop (type) { //type = 2 means don't reset charms
 				} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
 					var mouseClues = labyrinthMiceClues[mouseName];
 					if (lanternStatus == "On" && mouseClues != 0) mouseClues++;
+					if (charmName == "Lantern Oil Charm") mouseClues++;
 					avgLanternClues += mouseClues * catches/100;
 					resultsHTML += "<td>" + mouseClues + "</td><td></td>";
 				}
@@ -689,11 +691,18 @@ function showPop (type) { //type = 2 means don't reset charms
 			// console.log("Depth test", depthTest);
 		} else if (locationName.indexOf("Sunken City")>=0 && phaseName!="Docked") {
 			diveMPH = 30*overallCR/100 + 10*(overallAR-overallCR)/100;
+			if (charmName.indexOf("Anchor Charm") >= 0) {
+				diveMPH = 10*overallCR/100 + 10*(overallAR-overallCR)/100;
+			}
+			else if (charmName.indexOf("Water Jet Charm") >= 0) {
+				diveMPH = 500*overallCR/100 + 10*(overallAR-overallCR)/100;
+			}
 			resultsHTML += "<td>" + diveMPH.toFixed(2) + "</td>";
 		} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
 			resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
 			var deadEnds = (overallAR-overallCR)/100;
 			if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") deadEnds /= 2; //50% negate rate
+			if (charmName == "Compass Magnet Charm") deadEnds = 0;
 			resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
 		}
 
@@ -1008,13 +1017,29 @@ function calcSpecialCharms(charmName) {
 			charmLuck = parseInt(charmsArrayN[3])+4;
 			charmEff = parseFreshness[charmsArrayN[4].trim()];
 		
-		} else {
+		}
+		else if (baseName == "Silver Tournament Base") {
+			charmPower = parseInt(charmsArrayN[0]);
+			charmBonus = parseInt(charmsArrayN[1]);
+			charmAtt = parseInt(charmsArrayN[2]);
+			charmLuck = parseInt(charmsArrayN[3])+3;
+			charmEff = parseFreshness[charmsArrayN[4].trim()];
+		
+		}
+		else if (baseName == "Bronze Tournament Base") {
+			charmPower = parseInt(charmsArrayN[0]);
+			charmBonus = parseInt(charmsArrayN[1]);
+			charmAtt = parseInt(charmsArrayN[2]);
+			charmLuck = parseInt(charmsArrayN[3])+2;
+			charmEff = parseFreshness[charmsArrayN[4].trim()];
+		
+		}
+		else {
 			charmPower = parseInt(charmsArrayN[0]);
 			charmBonus = parseInt(charmsArrayN[1]);
 			charmAtt = parseInt(charmsArrayN[2]);
 			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4].trim()];
-		
+			charmEff = parseFreshness[charmsArrayN[4].trim()];	
 		}
 
 	} else if (charmName == "Growth Charm") {
