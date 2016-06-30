@@ -103,10 +103,11 @@ var riftWeapons = {"Biomolecular Re-atomizer Trap": true, "Crystal Tower": true,
 				   "Multi-Crystal Laser": true, "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes": true}
 var riftBases = {"Fissure Base": true, "Fracture Base": true, "Rift Base": true,
                  "Enerchi Induction Base": true, "Attuned Enerchi Induction Base": true}
-var riftCharms = {"Cherry Charm": true, "Gnarled Charm": true,
+var riftCharms = {"Cherry Charm": true, "Gnarled Charm": true, "Stagnant Charm": true,
 				  "Rift Power Charm": true, "Rift Ultimate Luck Charm": true,
 				  "Rift Ultimate Power Charm": true, "Rift Vacuum Charm": true,
-				  "Stagnant Charm": true, "Super Rift Vacuum Charm": true, "Enerchi Charm": true}
+				  "Super Rift Vacuum Charm": true, "Enerchi Charm": true,
+                  "Rift Ultimate Lucky Power Charm": true}
 
 function calculateTrapSetup(user) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
@@ -210,6 +211,9 @@ function calculateTrapSetup(user) {
         if (weaponName in riftWeapons) riftCount++;
         if (baseName in riftBases) riftCount++;
         if (charmName in riftCharms) riftCount++;
+        else if (charmName == "Gnarled Charm*" || charmName == "Cherry Charm*" || charmName == "Stagnant Charm*") {
+            riftCount++;
+        }
         if (riftCount == 2) {
         	specialBonus += 10;
         } else if (riftCount == 3) {
@@ -3631,6 +3635,12 @@ charmsArray["Rift Ultimate Luck Charm"][1] = "  0%";
 charmsArray["Rift Ultimate Luck Charm"][2] = "  0%";
 charmsArray["Rift Ultimate Luck Charm"][3] = "  20";
 charmsArray["Rift Ultimate Luck Charm"][4] = "  No Effect";
+charmsArray["Rift Ultimate Lucky Power Charm"] = [];
+charmsArray["Rift Ultimate Lucky Power Charm"][0] = "   2400";
+charmsArray["Rift Ultimate Lucky Power Charm"][1] = "   20%";
+charmsArray["Rift Ultimate Lucky Power Charm"][2] = "   0%";
+charmsArray["Rift Ultimate Lucky Power Charm"][3] = "   20";
+charmsArray["Rift Ultimate Lucky Power Charm"][4] = "   No Effect";
 charmsArray["Rift Ultimate Power Charm"] = [];
 charmsArray["Rift Ultimate Power Charm"][0] = " 2400";
 charmsArray["Rift Ultimate Power Charm"][1] = " 20%";
