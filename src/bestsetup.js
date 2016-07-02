@@ -162,11 +162,11 @@ window.onload = function () {
 	});
 
 	//Bookmarklet storage logic
-	if (setupBookmarklet != localStorage.getItem('setupBookmarklet')) {
+	if (setupBookmarkletString != localStorage.getItem('setupBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
-		localStorage.setItem('setupBookmarklet', setupBookmarklet);
+		localStorage.setItem('setupBookmarklet', setupBookmarkletString);
 	}
-    $("#bookmarklet").attr("href", setupBookmarklet);
+    $("#bookmarklet").attr("href", setupBookmarkletString);
 
 	//Initialize tablesorter, bind to table
     $.tablesorter.defaults.sortInitialOrder = 'desc';
