@@ -148,6 +148,19 @@ var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 window.onload = function () {
 
+	//Instructions
+	$("#instructions").click(function() {
+		var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";
+		instructionString += "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
+		instructionString += "\n- Copy the bookmarklet code by right-clicking the 'Best Setup' link and selecting 'Copy link address...'"
+		instructionString += "\n- Right click the newly created bookmark and select 'Edit...'"
+		instructionString += "\n- Paste into the 'URL' field, making sure to heed the bolded step 2)\n\n";
+		instructionString += "Firefox:\n- Right click the 'Best Setup' link and select 'Bookmark This Link'\n\n";
+		instructionString += "Internet Explorer:\n- Right click the 'Best Setup' link and select 'Add to favorites...'\n\n";
+		instructionString += "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
+		alert(instructionString);
+	});
+
 	//Bookmarklet storage logic
 	if (setupBookmarklet != localStorage.getItem('setupBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
@@ -408,7 +421,10 @@ function saveSetupCookie() {
 	cvalue['bases'] = checkedBases;
 	cvalue['charms'] = checkedCharms;
 
-	Cookies.set('setup', cvalue, {expires: 365}); //expires in a year
+	Cookies.set('setup', cvalue, {
+		expires: 365,
+		path: '/'
+	}); //expires in a year
 }
 
 function processRawData(rawDataArray, type) {
@@ -523,7 +539,12 @@ function checkCookies() {
 		if (savedWeapons.length != Object.size(weaponsArray) || savedBases.length != Object.size(basesArray) || savedCharms.length != Object.size(charmsArray)) {
 			window.alert("New items have been added. Please re-tick what you own, or use the bookmarklet. Sorry for any inconvenience!")
 			//Delete cookie
-			Cookies.remove('setup');
+			Cookies.remove('setup', {
+				path: '/'
+			});
+			Cookies.remove('setup', {
+				path: '/MH-Tools'
+			});
 		} else {
 			//Unticks 'All' if there was an unticked box stored in the cookie
 			if (savedWeapons.indexOf(0) >= 0) {

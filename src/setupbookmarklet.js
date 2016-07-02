@@ -16,12 +16,14 @@ javascript:void(function() {
 	var sendingBases = "false";
 	var sendingWeapons = "false";
 	var sendingCharms=  "false";
+	var waitingForPing = "true";
 	var baseIter = 0;
 	var weaponIter = 0;
 	var charmIter = 0;
 	var baseInterval = '';
 	var weaponInterval = '';
 	var charmInterval = '';
+	var pingInterval = '';
 	var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
 	var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
 	var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
@@ -97,15 +99,20 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		baseIter += maxSize;
-        		if (baseIter < bases.length) {
-        			setTimeout(sendBases, ping() + 500);
-        		}
-        		else {
-        			sendingBases = "false";
-        			setTimeout(function() {
-        				sendingWeapons = "true";
-        			}, ping() + 500);
-        		}
+        		waitingForPing = "true";
+        		ping();
+        		pingInterval = setInterval(function() {
+        			if (waitingForPing == "false") {
+        				clearInterval(pingInterval);
+        				if (baseIter < bases.length) {
+		        			sendBases();
+		        		}
+		        		else {
+		        			sendingBases = "false";
+	        				sendingWeapons = "true";
+		        		}
+        			}	
+        		}, 100);
 			}
 		}, 250);
 	}
@@ -123,15 +130,20 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		weaponIter += maxSize;
-        		if (weaponIter < weapons.length) {
-        			setTimeout(sendWeapons, ping() + 500);
-        		}
-        		else {
-        			sendingWeapons = "false";
-        			setTimeout(function() {
-        				sendingCharms = "true";
-        			}, ping() + 500);
-        		}
+        		waitingForPing = "true";
+        		ping();
+        		pingInterval = setInterval(function() {
+        			if (waitingForPing == "false") {
+        				clearInterval(pingInterval);
+        				if (weaponIter < weapons.length) {
+		        			sendWeapons();
+		        		}
+		        		else {
+		        			sendingWeapons = "false";
+	        				sendingCharms = "true";
+		        		}
+        			}	
+        		}, 100);
 			}
 		}, 250);
 	}
@@ -149,15 +161,20 @@ javascript:void(function() {
 	        	// console.log("URL length: " + url.length);
         		newWindow.location.href = url;
         		charmIter += maxSize;
-        		if (charmIter < charms.length) {
-        			setTimeout(sendCharms, ping() + 500);
-        		}
-        		else {
-        			sendingCharms = "false";
-        			setTimeout(function() {
-        				newWindow.location.href = defaultURL;
-        			}, ping() + 500);
-        		}
+        		waitingForPing = "true";
+        		ping();
+        		pingInterval = setInterval(function() {
+        			if (waitingForPing == "false") {
+        				clearInterval(pingInterval);
+        				if (charmIter < charms.length) {
+		        			sendCharms();
+		        		}
+		        		else {
+		        			sendingCharms = "false";
+	        				newWindow.location.href = defaultURL;
+		        		}
+        			}	
+        		}, 100);
 			}
 		}, 250);
 	}
@@ -172,7 +189,7 @@ javascript:void(function() {
 			  var ended = new Date().getTime();
 			  var milliseconds = ended - started;
 			  console.log("Ping time: " + milliseconds + "ms");
-			  return milliseconds;
+			  waitingForPing = "false";
 			}
 		};
 		try {
@@ -187,7 +204,7 @@ javascript:void(function() {
 	}
 	else {
 		newWindow.close();
-		alert("Please navigate to the Camp page!");
+		alert("Please ensure that you have FreshCoat enabled in Support -> User Preferences, then navigate to the Camp page!");
 		return;
 	}
 })();
