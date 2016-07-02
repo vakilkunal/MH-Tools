@@ -6,7 +6,6 @@ javascript:void(function() {
 	var defaultURL = "http://tsitu.github.io/MH-Tools/setup.html";
 	var waitingURL = "http://tsitu.github.io/MH-Tools/setupwaiting.html";
 	// var defaultURL = "http://localhost:8888/setup.html"; //debug
-	// var waitingURL = "http://localhost:8888/setupwaiting.html"; //debug
 	var bases = [];
 	var weapons = [];
 	var charms = [];
@@ -16,7 +15,7 @@ javascript:void(function() {
 	var sendingBases = "false";
 	var sendingWeapons = "false";
 	var sendingCharms=  "false";
-	var waitingForPing = "true";
+	var waitingForPing = "";
 	var baseIter = 0;
 	var weaponIter = 0;
 	var charmIter = 0;
@@ -34,7 +33,7 @@ javascript:void(function() {
 		var timeout = setTimeout(function() {
 			newWindow.close();
 			clearInterval(interval);
-			alert("XHR timed out! Please check your connection and try again.");
+			alert("Initial XHR timed out! Please check your connection and try again.");
 			return;
 		}, 4000);
 		var interval = setInterval(function() {
@@ -105,11 +104,13 @@ javascript:void(function() {
         			if (waitingForPing == "false") {
         				clearInterval(pingInterval);
         				if (baseIter < bases.length) {
-		        			sendBases();
+		        			setTimeout(sendBases, 500);
 		        		}
 		        		else {
 		        			sendingBases = "false";
-	        				sendingWeapons = "true";
+	        				setTimeout(function() {
+	        					sendingWeapons = "true";
+	        				}, 500);
 		        		}
         			}	
         		}, 100);
@@ -136,11 +137,13 @@ javascript:void(function() {
         			if (waitingForPing == "false") {
         				clearInterval(pingInterval);
         				if (weaponIter < weapons.length) {
-		        			sendWeapons();
+		        			setTimeout(sendWeapons, 500);
 		        		}
 		        		else {
 		        			sendingWeapons = "false";
-	        				sendingCharms = "true";
+	        				setTimeout(function() {
+	        					sendingCharms = "true";
+	        				}, 500);
 		        		}
         			}	
         		}, 100);
@@ -167,11 +170,13 @@ javascript:void(function() {
         			if (waitingForPing == "false") {
         				clearInterval(pingInterval);
         				if (charmIter < charms.length) {
-		        			sendCharms();
+		        			setTimeout(sendCharms, 500);
 		        		}
 		        		else {
 		        			sendingCharms = "false";
-	        				newWindow.location.href = defaultURL;
+	        				setTimeout(function() {
+	        					newWindow.location.href = defaultURL;
+	        				}, 500);
 		        		}
         			}	
         		}, 100);
@@ -180,23 +185,26 @@ javascript:void(function() {
 	}
 
 	function ping() {
+		var pingTimeout = setTimeout(function() {
+			newWindow.close();
+			clearInterval(pingInterval);
+			alert("Ping XHR timed out! Please check your connection and try again.");
+			return;
+		}, 4000);
 		var started = new Date().getTime();
 		var cacheBuster = "?nnn=" + started;
 		var http = new XMLHttpRequest();
 		http.open("GET", "//www.mousehuntgame.com" + cacheBuster, true);
 		http.onreadystatechange = function() {
-			if (http.readyState == 4) {
-			  var ended = new Date().getTime();
-			  var milliseconds = ended - started;
-			  console.log("Ping time: " + milliseconds + "ms");
-			  waitingForPing = "false";
+			if (http.readyState == 4 && http.status == 200) {
+				clearTimeout(pingTimeout);
+				var ended = new Date().getTime();
+				var milliseconds = ended - started;
+				console.log("Ping time: " + milliseconds + "ms");
+				waitingForPing = "false";
 			}
 		};
-		try {
-			http.send(null);
-		} catch(exception) {
-			// this is expected
-		}
+		try { http.send(null); } catch(exception) { }
 	}
 
 	if (baseButton != null && weaponButton != null && charmButton != null) {

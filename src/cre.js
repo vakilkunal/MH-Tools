@@ -621,7 +621,7 @@ function showPop (type) { //type = 2 means don't reset charms
 				} else if (locationName == "Labyrinth" && phaseName != "Intersection") {
 					var mouseClues = labyrinthMiceClues[mouseName];
 					if (lanternStatus == "On" && mouseClues != 0) mouseClues++;
-					if (charmName == "Lantern Oil Charm") mouseClues++;
+					if (charmName == "Lantern Oil Charm" && mouseClues != 0) mouseClues++;
 					avgLanternClues += mouseClues * catches/100;
 					resultsHTML += "<td>" + mouseClues + "</td><td></td>";
 				}
