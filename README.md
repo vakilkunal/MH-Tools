@@ -3,9 +3,9 @@
 ## To-do
 * Update attraction rates for Labyrinth using SB+/Gouda/Brie + Glowing Gourd Charm
 
-## Changelog (some details may be omitted - check the commit history)
+## Changelog (minor details omitted - check commit history)
 
-#### June 21 2016
+#### July 3 2016
 * Renamed items to match in-game names \[*General*\]
 
 #### July 1 2016
@@ -16,7 +16,7 @@
 * Added 2016 Ronza items \[*General*\]
 * Implemented various charm effects \[*General*\]
 
-#### June 21 2016
+#### June 22 2016
 * Added Best Setup bookmarklet amongst many other minor tweaks and fixes \[*Setup*\]
 
 #### June 21 2016
