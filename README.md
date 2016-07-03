@@ -1,11 +1,37 @@
 # [MH Tools by tsitu](https://github.com/tsitu/MH-Tools)
 
 ## To-do
-* Average Lantern clues in Labyrinth
 * Update attraction rates for Labyrinth using SB+/Gouda/Brie + Glowing Gourd Charm
-* Update attraction rates for Fiery Warpath mice that correspond to certain group while its charm is equipped
 
-## Changelog
+## Changelog (some details may be omitted - check the commit history)
+
+#### June 21 2016
+* Renamed items to match in-game names \[*General*\]
+
+#### July 1 2016
+* Updated Fiery Warpath populations with altering charms \[*General*\]
+* Implemented interval for XHR call within setup bookmarklet \[*Setup*\]
+
+#### June 28 2016
+* Added 2016 Ronza items \[*General*\]
+* Implemented various charm effects \[*General*\]
+
+#### June 21 2016
+* Added Best Setup bookmarklet amongst many other minor tweaks and fixes \[*Setup*\]
+
+#### June 21 2016
+* Fixed S.L.A.C. typo and popArrayLPC null check \[*CRE*\]
+* Fixed bookmarklet parsing bug with histories over 1000 entries \[*Analyzer*\]
+* Updated Furoma Rift mouse powers, added Attuned Enerchi Induction Base \[*CRE*\]
+
+#### June 17 2016
+* Added summary table and reset button \[*Analyzer*\]
+* Updated populations and implemented checks to allow fused/unfused cheese/charm combinations to co-exist peacefully \[*CRE*\]
+
+#### June 15 2016
+* Initial public upload of Marketplace Analyzer \[*Analyzer*\]
+* Migration to js-cookie \[*General*\]
+* Implementations of localStorage \[*General*\]
 
 #### June 14 2016
 * Implemented per-hunt Labyrinth hallway and dead end clues \[*CRE*\]
