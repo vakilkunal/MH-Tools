@@ -512,6 +512,10 @@ function checkCookies() {
 			for (var i=0; i<indexedWeapons.length; i++) {
 				if (weapons.indexOf(indexedWeapons[i]) >= 0) {
 					$(".weapon_checkbox").get(i).checked = true;
+					if (indexedWeapons[i] == "Isle Idol Trap") {
+						$(".weapon_checkbox").get(indexedWeapons.indexOf("Isle Idol Hydroplane Skin")).checked = true;
+						$(".weapon_checkbox").get(indexedWeapons.indexOf("Isle Idol Stakeshooter Skin")).checked = true;
+					}
 				}
 			}
 		}
