@@ -167,6 +167,7 @@ window.onload = function () {
 		localStorage.setItem('setupBookmarklet', setupBookmarkletString);
 	}
     $("#bookmarklet").attr("href", setupBookmarkletString);
+    $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/,500/g, ",2500"));
 
 	//Initialize tablesorter, bind to table
     $.tablesorter.defaults.sortInitialOrder = 'desc';
