@@ -168,6 +168,7 @@ window.onload = function () {
 	}
     $("#bookmarklet").attr("href", setupBookmarkletString);
     $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/,500/g, ",2500"));
+    $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/,500/g, ",6000"));
 
 	//Initialize tablesorter, bind to table
     $.tablesorter.defaults.sortInitialOrder = 'desc';
