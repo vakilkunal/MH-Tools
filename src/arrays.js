@@ -179,6 +179,8 @@ function calculateTrapSetup(user) {
             specialPower += 8500;
         } else if (locationName == "Sunken City" && baseName == "Depth Charge Base" && phaseName != "Docked") {
             specialPower += 1000;
+        } else if (locationName == "Seasonal Garden" && baseName == "Seasonal Base") {
+            specialBonus += 18;
         }
         
         if (cheeseName == "Limelight" && charmName == "Mining Charm") {
