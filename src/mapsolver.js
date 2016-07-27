@@ -4,6 +4,13 @@ var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeD
 
 window.onload = function () {
 
+	//Bookmarklet storage logic
+	if (mapBookmarklet != localStorage.getItem('mapBookmarklet')) {
+		alert("Bookmarklet has changed! Please update accordingly.");
+		localStorage.setItem('mapBookmarklet', mapBookmarklet);
+	}
+    $("#bookmarklet").attr("href", mapBookmarklet);
+
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';
     $("#bestLocation").tablesorter({
