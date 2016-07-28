@@ -11,7 +11,9 @@ javascript:void(function() {
 	var mice = [];
     var currLoc = document.getElementsByClassName("treasureMapPopup-mice-groups")[0].className;
     if (currLoc.indexOf("inotherenvironments") < 0) {
-        currLoc = currLoc.replace(/\./g, "\\.");
+        //Locations with periods
+        //Extra escapes are workaround for copy link address and JS string handling
+        currLoc = currLoc.replace(/\\./g, "\\\\.");
     	currLoc = currLoc.replace(" ", ".");
     	var uncaughtLoc = document.querySelectorAll("." + currLoc + " .treasureMapPopup-mice-group-mouse-name span");
     	for (var i=0; i<uncaughtLoc.length; i++) {
