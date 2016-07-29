@@ -3,11 +3,11 @@
 window.onload = function () {
 
 	//Bookmarklet storage logic
-	if (analyzerBookmarklet != localStorage.getItem('analyzerBookmarklet')) {
+	if (analyzerBookmarkletString != localStorage.getItem('analyzerBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
-		localStorage.setItem('analyzerBookmarklet', analyzerBookmarklet);
+		localStorage.setItem('analyzerBookmarklet', analyzerBookmarkletString);
 	}
-    $("#bookmarklet").attr("href", analyzerBookmarklet);
+    $("#bookmarklet").attr("href", analyzerBookmarkletString);
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';

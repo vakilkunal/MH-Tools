@@ -5,11 +5,11 @@ var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeD
 window.onload = function () {
 
 	//Bookmarklet storage logic
-	if (mapBookmarklet != localStorage.getItem('mapBookmarklet')) {
+	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
-		localStorage.setItem('mapBookmarklet', mapBookmarklet);
+		localStorage.setItem('mapBookmarklet', mapBookmarkletString);
 	}
-    $("#bookmarklet").attr("href", mapBookmarklet);
+    $("#bookmarklet").attr("href", mapBookmarkletString);
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';
