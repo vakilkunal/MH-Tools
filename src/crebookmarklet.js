@@ -135,7 +135,9 @@ javascript:void(function() {
 			}
 		}
 		else if (userLocation == "Twisted Garden") {
-			// Likely bucket_state
+			if (user["quests"]["QuestLivingGarden"]["minigame"]["vials_state"] == "dumped") {
+				sublocation = "Poured";
+			}
 		}
 		else if (userLocation == "Whisker Woods Rift") {
 			var zones = user["quests"]["QuestRiftWhiskerWoods"]["zones"];
@@ -154,7 +156,55 @@ javascript:void(function() {
 			// Manaforge = The Tech Manaforge
 		}
 		else if (userLocation == "Zugzwang's Tower") {
-			// (zzt mage/tech progress is num pieces? up to 16) (>8 is knight etc)
+			// Confirm chess master state
+			var mystic = user["viewing_atts"]["zzt_mage_progress"];
+			var tech = user["viewing_atts"]["zzt_tech_progress"];
+			if (mystic >= tech) {
+				if (mystic >= 0 && mystic < 8) {
+					sublocation = "Mystic Pawn Pincher";
+				}
+				else if (mystic >= 8 && mystic < 10) {
+					sublocation = "Mystic Knights";
+				}
+				else if (mystic >= 10 && mystic < 12) {
+					sublocation = "Mystic Bishops";
+				}
+				else if (mystic >= 12 && mystic < 14) {
+					sublocation = "Mystic Rooks";
+				}
+				else if (mystic == 14) {
+					sublocation = "Mystic Queen";
+				}
+				else if (mystic == 15) {
+					sublocation = "Mystic King";
+				}
+				else if (mystic >= 16) {
+					sublocation = "Chess Master";
+				}
+			}
+			else {
+				if (tech >= 0 && tech < 8) {
+					sublocation = "Tech Pawn Pincher";
+				}
+				else if (tech >= 8 && tech < 10) {
+					sublocation = "Tech Knights";
+				}
+				else if (tech >= 10 && tech < 12) {
+					sublocation = "Tech Bishops";
+				}
+				else if (tech >= 12 && tech < 14) {
+					sublocation = "Tech Rooks";
+				}
+				else if (tech == 14) {
+					sublocation = "Tech Queen";
+				}
+				else if (tech == 15) {
+					sublocation = "Tech King";
+				}
+				else if (tech >= 16) {
+					sublocation = "Chess Master";
+				}
+			}
 		}
 
 		return sublocation;
