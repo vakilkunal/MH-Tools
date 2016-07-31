@@ -22,7 +22,7 @@ javascript:void(function() {
     var timeout = '';
     var interval = '';
     var domTrack = '';
-    var newWindow = window.open('http://tsitu.github.io/MH-Tools/analyzerwaiting.html', '_blank');
+    var newWindow = window.open('http://tsitu.github.io/MH-Tools/analyzerwaiting.html', 'mhanalyzer');
 
     function parse() {
         var a = document.querySelector("div.history-details .paginate_button.next");

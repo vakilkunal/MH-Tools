@@ -62,6 +62,9 @@ javascript:void(function() {
 		}
 		else if (userLocation == "Iceberg") {
 			sublocation = user["quests"]["QuestIceberg"]["current_phase"];
+			if (sublocation == "General") {
+				sublocation = "Generals";
+			}
 			if ((sublocation == "Treacherous Tunnels" || sublocation == "Bombing Run" || sublocation == "The Mad Depths")
 				&& userBase == "Magnet Base") {
 				sublocation += " (Magnet)";
@@ -80,7 +83,9 @@ javascript:void(function() {
 			sublocation = hallwayName;
 		}
 		else if (userLocation == "Living Garden") {
-			// bucket_state filling/?
+			if (user["quests"]["QuestLivingGarden"]["minigame"]["bucket_state"] == "dumped") {
+				sublocation = "Poured";
+			}
 		}
 		else if (userLocation == "Lost City") {
 			if (user["quests"]["QuestLostCity"]["minigame"]["is_cursed"] == 1) {
@@ -100,12 +105,12 @@ javascript:void(function() {
 			else if (season == "wr") {
 				sublocation = "Winter";
 			}
-			// else if (season == "sg") {
-			// 	sublocation = "Spring";
-			// }
-			// else if (season == "sr") {
-			// 	sublocation = "Summer";
-			// }
+			else if (season == "sg") {
+				sublocation = "Spring";
+			}
+			else if (season == "sr") {
+				sublocation = "Summer";
+			}
 		}
 		else if (userLocation == "Sunken City") {
 			sublocation = user["quests"]["QuestSunkenCity"]["zone_name"];
@@ -211,7 +216,7 @@ javascript:void(function() {
 	}
 
 	if (user != null) {
-		// console.log(user); //Type in inspector console
+		// console.log(user); //Type in dev tools
 		// Some items may not correspond 1:1 with CRE (e.g. SB+)
 		var userRank = user["title_name"];
 		var userLocation = user["location"];
@@ -298,7 +303,7 @@ javascript:void(function() {
 		url += "&tourney=" + userTourney;
 	}
 
-	var newWindow = window.open(url, '_blank');
+	var newWindow = window.open(url, 'mhcre');
 
 	// Vintage DOM Inspection
 	// var currRank = document.querySelector("a.mousehuntHud-userStat.title span.label");

@@ -29,5 +29,5 @@ javascript:void(function() {
     }
 
     var url = "http://tsitu.github.io/MH-Tools/map.html";
-    window.open(url + "?mice=" + encodeURI(mice.join("/")), "_blank");
+    window.open(url + "?mice=" + encodeURI(mice.join("/")), "mhmapsolver");
 })();

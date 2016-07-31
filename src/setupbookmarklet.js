@@ -26,7 +26,7 @@ javascript:void(function() {
 	var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
 	var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
 	var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
-	var newWindow = window.open(waitingURL, '_blank');
+	var newWindow = window.open(waitingURL, 'mhsetup');
 
 	function checkDOM() {
 		baseButton.click();
