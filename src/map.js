@@ -4,6 +4,12 @@ var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeD
 
 window.onload = function () {
 
+	if (location.href.indexOf("https") >= 0) {
+		var currLoc = location.href;
+		currLoc = currLoc.replace("https", "http");
+		location.href = currLoc;
+	}
+
 	//Bookmarklet storage logic
 	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");

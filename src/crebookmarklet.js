@@ -189,22 +189,22 @@ javascript:void(function() {
 			}
 			else {
 				if (tech >= 0 && tech < 8) {
-					sublocation = "Tech Pawn Pincher";
+					sublocation = "Technic Pawn Pincher";
 				}
 				else if (tech >= 8 && tech < 10) {
-					sublocation = "Tech Knights";
+					sublocation = "Technic Knights";
 				}
 				else if (tech >= 10 && tech < 12) {
-					sublocation = "Tech Bishops";
+					sublocation = "Technic Bishops";
 				}
 				else if (tech >= 12 && tech < 14) {
-					sublocation = "Tech Rooks";
+					sublocation = "Technic Rooks";
 				}
 				else if (tech == 14) {
-					sublocation = "Tech Queen";
+					sublocation = "Technic Queen";
 				}
 				else if (tech == 15) {
-					sublocation = "Tech King";
+					sublocation = "Technic King";
 				}
 				else if (tech >= 16) {
 					sublocation = "Chess Master";

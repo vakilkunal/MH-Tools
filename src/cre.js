@@ -32,6 +32,12 @@ var baseline = new XMLHttpRequest();
 
 window.onload = function () {
 
+	if (location.href.indexOf("https") >= 0) {
+		var currLoc = location.href;
+		currLoc = currLoc.replace("https", "http");
+		location.href = currLoc;
+	}
+
 	//Instructions
 	$("#instructions").click(function() {
 		var instructionString = "Drag the blue 'CRE' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";

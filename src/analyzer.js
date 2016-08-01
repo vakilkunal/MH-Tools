@@ -2,6 +2,12 @@
 
 window.onload = function () {
 
+	if (location.href.indexOf("https") >= 0) {
+		var currLoc = location.href;
+		currLoc = currLoc.replace("https", "http");
+		location.href = currLoc;
+	}
+
 	//Bookmarklet storage logic
 	if (analyzerBookmarkletString != localStorage.getItem('analyzerBookmarklet')) {
 		alert("Bookmarklet has changed! Please update accordingly.");
