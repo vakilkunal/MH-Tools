@@ -302,6 +302,10 @@ javascript:void(function() {
 	if (userTourney != "N/A") {
 		url += "&tourney=" + userTourney;
 	}
+	if (userLocation == "Zugzwang's Tower") {
+		var userAmp = user["viewing_atts"]["zzt_amplifier"];
+		url += "&amplifier=" + userAmp;
+	}
 
 	var newWindow = window.open(url, 'mhcre');
 
