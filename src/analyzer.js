@@ -2,9 +2,9 @@
 
 window.onload = function () {
 
-	if (location.href.indexOf("https") >= 0) {
+	if (location.href.indexOf("https") < 0) {
 		var currLoc = location.href;
-		currLoc = currLoc.replace("https", "http");
+		currLoc = currLoc.replace("http", "https");
 		location.href = currLoc;
 	}
 
@@ -245,7 +245,7 @@ function processRawData(rawDataArray, isDone) {
 	// console.log(dataObject);
 
 	//Store data in local storage
-	var analyzerURL = "http://tsitu.github.io/MH-Tools/analyzer.html";
+	var analyzerURL = "https://tsitu.github.io/MH-Tools/analyzer.html";
 	if (Object.size(dataObject) > 0) {
         localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
 
@@ -253,7 +253,7 @@ function processRawData(rawDataArray, isDone) {
         isDone = isDoneSplit[0];
 
 		if (isDone == "false") {
-			window.location.replace("http://tsitu.github.io/MH-Tools/analyzerwaiting.html");
+			window.location.replace("https://tsitu.github.io/MH-Tools/analyzerwaiting.html");
 		}
 		else if (isDone == "true") {
 			window.location.replace(analyzerURL);

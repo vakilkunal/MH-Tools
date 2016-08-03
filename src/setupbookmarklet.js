@@ -3,9 +3,9 @@ javascript:void(function() {
 		alert("You are not on mousehuntgame.com! Please try again.");
 		return;
 	}
-	var defaultURL = "http://tsitu.github.io/MH-Tools/setup.html";
-	var waitingURL = "http://tsitu.github.io/MH-Tools/setupwaiting.html";
-	// var defaultURL = "http://localhost:8888/setup.html"; //debug
+	var defaultURL = "https://tsitu.github.io/MH-Tools/setup.html";
+	var waitingURL = "https://tsitu.github.io/MH-Tools/setupwaiting.html";
+	// var defaultURL = "https://localhost:8888/setup.html"; //debug
 	var bases = [];
 	var weapons = [];
 	var charms = [];

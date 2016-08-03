@@ -3,8 +3,8 @@ javascript:void(function() {
 		alert("You are not on mousehuntgame.com! Please try again.");
 		return;
 	}
-	var url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
-	// var url = "http://192.168.0.101:8888/analyzer.html?data="; //debug
+	var url = "https://tsitu.github.io/MH-Tools/analyzer.html?data=";
+	// var url = "https://192.168.0.101:8888/analyzer.html?data="; //debug
 	var sellString = "div.history-details .dataTable .sell";
 	var buyString = "div.history-details .dataTable .buy";
 	if (document.querySelector("div.history-details .paginate_button.current") == null) {
@@ -22,7 +22,7 @@ javascript:void(function() {
     var timeout = '';
     var interval = '';
     var domTrack = '';
-    var newWindow = window.open('http://tsitu.github.io/MH-Tools/analyzerwaiting.html', 'mhanalyzer');
+    var newWindow = window.open('https://tsitu.github.io/MH-Tools/analyzerwaiting.html', 'mhanalyzer');
 
     function parse() {
         var a = document.querySelector("div.history-details .paginate_button.next");
@@ -76,8 +76,8 @@ javascript:void(function() {
 	        		 */
 	        		url += "&isDone=false";
 	        		newWindow.location.href = url;
-	        		url = "http://tsitu.github.io/MH-Tools/analyzer.html?data=";
-	        		// url = "http://192.168.0.101:8888/analyzer.html?data="; //debug
+	        		url = "https://tsitu.github.io/MH-Tools/analyzer.html?data=";
+	        		// url = "https://192.168.0.101:8888/analyzer.html?data="; //debug
 	        	}
 	        	a.click();
         		checkDOM();

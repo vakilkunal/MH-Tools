@@ -32,9 +32,9 @@ var baseline = new XMLHttpRequest();
 
 window.onload = function () {
 
-	if (location.href.indexOf("https") >= 0) {
+	if (location.href.indexOf("https") < 0) {
 		var currLoc = location.href;
-		currLoc = currLoc.replace("https", "http");
+		currLoc = currLoc.replace("http", "https");
 		location.href = currLoc;
 	}
 

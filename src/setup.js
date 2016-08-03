@@ -148,9 +148,9 @@ var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 window.onload = function () {
 
-	if (location.href.indexOf("https") >= 0) {
+	if (location.href.indexOf("https") < 0) {
 		var currLoc = location.href;
-		currLoc = currLoc.replace("https", "http");
+		currLoc = currLoc.replace("http", "https");
 		location.href = currLoc;
 	}
 
@@ -457,8 +457,8 @@ function processRawData(rawDataArray, type) {
 
 	if (Object.size(dataObject) > 0) {
         localStorage.setItem("setupData", JSON.stringify(dataObject));
-        window.location.replace("http://tsitu.github.io/MH-Tools/setupwaiting.html");
-        // window.location.replace("http://localhost:8888/setupwaiting.html"); //debug
+        window.location.replace("https://tsitu.github.io/MH-Tools/setupwaiting.html");
+        // window.location.replace("https://localhost:8888/setupwaiting.html"); //debug
 	}
 }
 

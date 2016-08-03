@@ -29,6 +29,6 @@ javascript:void(function() {
     	}
     }
 
-    var url = "http://tsitu.github.io/MH-Tools/map.html";
+    var url = "https://tsitu.github.io/MH-Tools/map.html";
     window.open(url + "?mice=" + encodeURI(mice.join("/")), "mhmapsolver");
 })();

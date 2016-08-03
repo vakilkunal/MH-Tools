@@ -4,9 +4,9 @@ var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeD
 
 window.onload = function () {
 
-	if (location.href.indexOf("https") >= 0) {
+	if (location.href.indexOf("https") < 0) {
 		var currLoc = location.href;
-		currLoc = currLoc.replace("https", "http");
+		currLoc = currLoc.replace("http", "https");
 		location.href = currLoc;
 	}
 

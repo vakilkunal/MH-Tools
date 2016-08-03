@@ -58,7 +58,22 @@ javascript:void(function() {
 			}
 		}
 		else if (userLocation == "Gnawnian Express Station") {
-			// No stage data. (on_train true/false)
+			var onTrain = user["quests"]["QuestTrainStation"]["on_train"];
+			if (onTrain == true) {
+				var stageName = user["viewing_atts"]["tournament"]["minigame"]["name"];
+				if (stageName == "Supply Depot") {
+					var supplyHoarder = user["viewing_atts"]["tournament"]["minigame"]["supply_hoarder_turns"];
+					if (supplyHoarder > 0) {
+						sublocation = "Supply Depot (Supply Rush)";
+					}
+					else if (supplyHoarder == 0) {
+						sublocation = "Supply Depot (No Supply Rush)";
+					}
+				}
+				else if (stageName == "Raider River" || stageName == "Daredevil Canyon") {
+					sublocation = stageName;
+				}
+			}
 		}
 		else if (userLocation == "Iceberg") {
 			sublocation = user["quests"]["QuestIceberg"]["current_phase"];
@@ -114,7 +129,9 @@ javascript:void(function() {
 		}
 		else if (userLocation == "Sunken City") {
 			sublocation = user["quests"]["QuestSunkenCity"]["zone_name"];
-			// Docked?
+			if (sublocation == "Sunken City") {
+				sublocation = "Docked";
+			}
 		}
 		else if (userLocation == "Toxic Spill") {
 			if (userRank == "Archduke" || userRank == "Archduchess") {
@@ -157,11 +174,13 @@ javascript:void(function() {
 			sublocation = state;
 		}
 		else if (userLocation == "Zokor") {
-			// District names
-			// Manaforge = The Tech Manaforge
+			var district = user["quests"]["QuestAncientCity"]["district_name"];
+			if (district == "The Tech Manaforge") {
+				sublocation = "Manaforge Smith"; //remove "Smith"
+			}
+			// Many more else ifs
 		}
 		else if (userLocation == "Zugzwang's Tower") {
-			// Confirm chess master state
 			var mystic = user["viewing_atts"]["zzt_mage_progress"];
 			var tech = user["viewing_atts"]["zzt_tech_progress"];
 			if (mystic >= tech) {
@@ -278,7 +297,7 @@ javascript:void(function() {
 		}
 	}
 	
-	var url = "http://tsitu.github.io/MH-Tools/cre.html?";
+	var url = "https://tsitu.github.io/MH-Tools/cre.html?";
 	url += "location=" + userLocation;
 	if (userSublocation != "N/A") {
 		url += "&phase=" + userSublocation;
