@@ -32,11 +32,11 @@ var baseline = new XMLHttpRequest();
 
 window.onload = function () {
 
-	if (location.href.indexOf("https") < 0) {
-		var currLoc = location.href;
-		currLoc = currLoc.replace("http", "https");
-		location.href = currLoc;
-	}
+	// if (location.href.indexOf("https") < 0) {
+	// 	var currLoc = location.href;
+	// 	currLoc = currLoc.replace("http", "https");
+	// 	location.href = currLoc;
+	// }
 
 	//Instructions
 	$("#instructions").click(function() {
@@ -912,6 +912,7 @@ function highlightSpecialCharms (charmList) {
 			}
 		}
 	}
+	selectCharm();
 }
 
 
@@ -1020,11 +1021,12 @@ function loadCheeseDropdown () {
 function selectCharm () {
 	console.log("Selecting charm");
 	var charmParameter = getURLParameter("charm");//.replace('*','');
-	if(charmParameter != "null" && charmLoaded<4) {
+	var specialCharmParameter = charmParameter + "*";
+	if(charmParameter != "null" && charmLoaded<5) {
 		var select = document.getElementById("charm");
 		for (var i=0; i<select.children.length; i++) {
 			var child = select.children[i];
-			if (child.innerHTML == charmParameter) {
+			if (child.innerHTML == charmParameter || child.innerHTML == specialCharmParameter) {
 				child.selected = true;
 		    	charmChanged();
 		    	charmLoaded++;

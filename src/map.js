@@ -4,11 +4,11 @@ var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeD
 
 window.onload = function () {
 
-	if (location.href.indexOf("https") < 0) {
-		var currLoc = location.href;
-		currLoc = currLoc.replace("http", "https");
-		location.href = currLoc;
-	}
+	// if (location.href.indexOf("https") < 0) {
+	// 	var currLoc = location.href;
+	// 	currLoc = currLoc.replace("http", "https");
+	// 	location.href = currLoc;
+	// }
 
 	//Bookmarklet storage logic
 	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {

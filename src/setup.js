@@ -148,11 +148,11 @@ var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 window.onload = function () {
 
-	if (location.href.indexOf("https") < 0) {
-		var currLoc = location.href;
-		currLoc = currLoc.replace("http", "https");
-		location.href = currLoc;
-	}
+	// if (location.href.indexOf("https") < 0) {
+	// 	var currLoc = location.href;
+	// 	currLoc = currLoc.replace("http", "https");
+	// 	location.href = currLoc;
+	// }
 
 	//Instructions
 	$("#instructions").click(function() {
