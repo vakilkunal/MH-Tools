@@ -213,7 +213,7 @@ function calculateTrapSetup(user) {
         if (weaponName in riftWeapons) riftCount++;
         if (baseName in riftBases) riftCount++;
         if (charmName in riftCharms) riftCount++;
-        else if (charmName == "Gnarled Charm*" || charmName == "Cherry Charm*" || charmName == "Stagnant Charm*") {
+        else if (charmName.indexOf("Gnarled Charm") >= 0 || charmName.indexOf("Cherry Charm") >= 0 || charmName.indexOf("Stagnant Charm") >= 0) {
             riftCount++;
         }
         if (riftCount == 2) {

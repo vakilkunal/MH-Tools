@@ -338,6 +338,10 @@ window.onload = function () {
 		cheeseChanged();
     };
 
+    document.getElementById("charm").onchange = function () {
+		charmChanged();
+    };
+
     document.getElementById("toxic").onchange = function () {
 		toxicChanged();
     };
@@ -655,16 +659,24 @@ function loadCheeseDropdown() {
 	var cheeseDropdownHTML = '';
 	
 	var cheeseLength = Object.size(popArray[locationName][phaseName]);
+	var insertedCheeses = [];
 	
 	for (var i=0; i<cheeseLength; i++) {
 		var option = Object.keys(popArray[locationName][phaseName])[i];
 		if (option.indexOf("/") < 0 || option.indexOf("Combat") >= 0) { //Fix this master cheese thingy	
-			cheeseDropdownHTML += "<option>"+option+"</option>\n";
-		} else {
+			if (insertedCheeses.indexOf(option) < 0) {
+				cheeseDropdownHTML += "<option>"+option+"</option>\n";
+				insertedCheeses.push(option);
+			}
+		}
+		else {
 			var optionArray = option.split("/");
 			var optionArrayLength = Object.size(optionArray);
 			for (var j=0; j<optionArrayLength; j++) {
-				cheeseDropdownHTML += "<option>"+optionArray[j]+"</option>\n";				
+				if (insertedCheeses.indexOf(optionArray[j]) < 0) {
+					cheeseDropdownHTML += "<option>"+optionArray[j]+"</option>\n";
+					insertedCheeses.push(optionArray[j]);
+				}
 			}
 		}
 	}
@@ -686,6 +698,34 @@ function loadCheeseDropdown() {
 	}
 
 	cheeseChanged();
+}
+
+function loadCharmDropdown() {
+	var charmDropdown = document.getElementById("charm");
+	var charmDropdownHTML = '<option>-</option>';
+
+	var popArrayLPC = popArray[locationName][phaseName][cheeseName];
+	var nSpecialCharms = Object.size(popArrayLPC);
+	for (var i=0; i<nSpecialCharms; i++) {
+		if (Object.keys(popArrayLPC)[i] != "-") {
+			charmDropdownHTML += "<option>" + Object.keys(popArrayLPC)[i] + "</option>\n";
+		}
+	}
+	
+	charmDropdown.innerHTML = charmDropdownHTML;
+
+	var charmParameter = getURLParameter("charm");
+	if(charmParameter != "null") {
+		var select = document.getElementById("charm");
+		for (var i=0; i<select.children.length; i++) {
+			var child = select.children[i];
+			if (child.innerHTML == charmParameter) {
+				child.selected = true;
+		    	charmChanged();
+				break;
+			}
+		}
+	}
 }
 
 function calcCR(E, P, L, M) {
@@ -813,11 +853,14 @@ function getURLParameter(name) {
 
 function updateLink() {
 	var URLString = 'setup.html?';
+	var select = document.getElementById("charm");
+	var selectedCharm = select.children[select.selectedIndex].innerHTML;
 	
 	if(locationName != "") URLString+= "&location="+locationName;
 	if(phaseName != "" && phaseName != "-") URLString+= "&phase="+phaseName;
 	if(cheeseName != "") URLString+= "&cheese="+cheeseName;
-	if(isToxic != "" && isToxic != "-") URLString += "&toxic=" + isToxic;
+	if(selectedCharm != "-") URLString+= "&charm="+selectedCharm;
+	if(isToxic != "" && isToxic != "-" && $("#toxic").is(":visible")) URLString += "&toxic=" + isToxic;
 	if(batteryPower != 0) URLString += "&battery=" + batteryPower;
 	if(gsLuck == 0) URLString+= "&gs="+gsLuck;
 	if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
@@ -1010,6 +1053,7 @@ function cheeseChanged() {
 
 	//showPop();
 	//selectCharm();
+	loadCharmDropdown();
 }
 
 function baseChanged() {
@@ -1144,15 +1188,17 @@ function showPop(type) {
 		
 		//console.log(popArrayLC);
 
-		var noMice = Object.size(popArrayLPC["-"]);
+		var select = document.getElementById("charm");
+		var selectedCharm = select.children[select.selectedIndex].innerHTML;
+
+		var noMice = Object.size(popArrayLPC[selectedCharm]);
 		resultsHTML = "<thead><tr><th align='left'>Setup</th>"
 		for (var i=0; i<noMice; i++) { 
-			resultsHTML += "<th data-filter='false'>" + Object.keys(popArrayLPC["-"])[i] + "</th>"
+			resultsHTML += "<th data-filter='false'>" + Object.keys(popArrayLPC[selectedCharm])[i] + "</th>"
 		}		
 		resultsHTML += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead><tbody>";
 		
-		printCombinations(popArrayLPC["-"], resultsHTML);
-
+		printCombinations(popArrayLPC[selectedCharm], resultsHTML);
 	}
 }
 
@@ -1191,12 +1237,14 @@ function printCombinations(micePopulation, tableHTML) {
 
 			var overallAR = baseAR + trapAtt/100 - trapAtt/100*baseAR;
 			var overallCR = 0;
+			var select = document.getElementById("charm");
+			var selectedCharm = select.children[select.selectedIndex].innerHTML;
 			
 			var URLString = 'cre.html?';
 			URLString+= "location="+locationName;
 			if(phaseName != "-") URLString+= "&phase="+phaseName;
 			URLString+= "&cheese="+cheeseName;
-			//if(charmName != "") URLString+= "&charm="+charmName;
+			if(selectedCharm != "-") URLString+= "&charm="+selectedCharm+" Charm";
 			if(gsLuck == 0) URLString+= "&gs="+gsLuck;
 			if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
 			URLString+= "&weapon="+weapon;
@@ -1207,7 +1255,13 @@ function printCombinations(micePopulation, tableHTML) {
 			
 			//console.log(URLString);
 			
-			tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weapon + " / " + base + "</a><span style='float: right'><button class='find_best_charm_button'>Find best charm</button></span></td>";
+			if (selectedCharm == "-") {
+				tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weapon + " / " + base + "</a><span style='float: right'><button class='find_best_charm_button'>Find best charm</button></span></td>";
+			}
+			else {
+				tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weapon + " / " + base + "</td>";
+				charmName = selectedCharm + " Charm";
+			}
 			
 			for (var mouse in micePopulation) {
 

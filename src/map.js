@@ -448,6 +448,7 @@ function processMap(mapText) {
 
 							if (charmName != "-") {
 								locationPhaseCheeseCharm += "[" + charmName + "]" + "<br>";
+								URLString += "&charm=" + charmName;
 							}
 
 							var modURLString = URLString.replace(/ /g, "%20");

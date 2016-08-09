@@ -1631,44 +1631,44 @@ function baseChanged () {
 
 function charmChanged () {
 	console.log("Charm changed");
-        var select = document.getElementById("charm");
+    var select = document.getElementById("charm");
 
-		charmName = select.children[select.selectedIndex].innerHTML;
-		updateLink();
-		
-		var charmsArrayN = charmsArray[charmName.replace('*','')];
+	charmName = select.children[select.selectedIndex].innerHTML;
+	updateLink();
+	
+	var charmsArrayN = charmsArray[charmName.replace('*','')];
 
-		//If No charm selected
-		if (charmsArrayN == undefined) {
-			charmsArrayN= [];
-			charmsArrayN[0] = 0;
-			charmsArrayN[1] = 0;
-			charmsArrayN[2] = 0;
-			charmsArrayN[3] = 0;
+	//If No charm selected
+	if (charmsArrayN == undefined) {
+		charmsArrayN= [];
+		charmsArrayN[0] = 0;
+		charmsArrayN[1] = 0;
+		charmsArrayN[2] = 0;
+		charmsArrayN[3] = 0;
 
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = 0;
+		charmPower = parseInt(charmsArrayN[0]);
+		charmBonus = parseInt(charmsArrayN[1]);
+		charmAtt = parseInt(charmsArrayN[2]);
+		charmLuck = parseInt(charmsArrayN[3]);
+		charmEff = 0;
 
-			calculateTrapSetup("cre");
-		}
+		calculateTrapSetup("cre");
+	}
 
-		//Charms with special effects when paired with particular base
-		else if (specialCharm[charmName]) calcSpecialCharms(charmName);
-		//console.log(specialCharm[charmName]);
+	//Charms with special effects when paired with particular base
+	else if (specialCharm[charmName]) calcSpecialCharms(charmName);
+	//console.log(specialCharm[charmName]);
 
-		else {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4].trim()];
+	else {
+		charmPower = parseInt(charmsArrayN[0]);
+		charmBonus = parseInt(charmsArrayN[1]);
+		charmAtt = parseInt(charmsArrayN[2]);
+		charmLuck = parseInt(charmsArrayN[3]);
+		charmEff = parseFreshness[charmsArrayN[4].trim()];
 
-			calculateTrapSetup("cre");
-		}
-		showPop(2);
+		calculateTrapSetup("cre");
+	}
+	showPop(2);
 }
 
 function gsChanged() {
