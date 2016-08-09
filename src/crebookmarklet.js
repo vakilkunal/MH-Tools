@@ -178,7 +178,10 @@ javascript:void(function() {
 			if (district == "The Tech Manaforge") {
 				sublocation = "Manaforge Smith"; //remove "Smith"
 			}
-			// Many more else ifs
+			else if (district == "The Farming Garden") {
+				sublocation = "Farming Garden";
+			}
+			// More else ifs
 		}
 		else if (userLocation == "Zugzwang's Tower") {
 			var mystic = user["viewing_atts"]["zzt_mage_progress"];
@@ -277,6 +280,12 @@ javascript:void(function() {
 				userTourney = tourney["name"];
 			}
 		}
+
+		var userToxic = "N/A";
+		if (userCheese.indexOf("Toxic") >= 0) {
+			userToxic = "Yes";
+			userCheese = userCheese.slice(6, userCheese.length);
+		}
 	}
 	else {
 		alert("User object not found.");
@@ -303,8 +312,8 @@ javascript:void(function() {
 		url += "&phase=" + userSublocation;
 	}
 	url += "&cheese=" + userCheese;
-	if (userCheese.indexOf("Toxic ") >= 0) {
-		url += "&toxic=Yes";
+	if (userToxic != "N/A") {
+		url += "&toxic=" + userToxic;
 	}
 	if (userBattery != "N/A") {
 		url += "&battery=" + userBattery;
