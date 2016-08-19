@@ -705,6 +705,14 @@ function loadCharmDropdown() {
 	var charmDropdownHTML = '<option>-</option>';
 
 	var popArrayLPC = popArray[locationName][phaseName][cheeseName];
+	if (popArrayLPC == undefined) {
+		var popArrayLP = popArray[locationName][phaseName];
+		for (var cheese in popArrayLP) {
+			if (cheese.indexOf(cheeseName) >= 0) {
+				popArrayLPC = popArray[locationName][phaseName][cheese];
+			}
+		}
+	}
 	var nSpecialCharms = Object.size(popArrayLPC);
 	for (var i=0; i<nSpecialCharms; i++) {
 		if (Object.keys(popArrayLPC)[i] != "-") {
