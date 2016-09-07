@@ -494,7 +494,7 @@ freshness2stale[5] = 0.1;
 freshness2stale[6] = 0;
 
 var reverseParseFreshness = [];
-reverseParseFreshness[-6] = "Uber Stale (100% stale rate)";
+reverseParseFreshness[-6] = "Über Stale (100% stale rate)";
 reverseParseFreshness[-5] = "Ultimately Stale (90% stale rate)";
 reverseParseFreshness[-4] = "Insanely Stale (80% stale rate)";
 reverseParseFreshness[-3] = "Extremely Stale (70% stale rate)";
@@ -506,7 +506,7 @@ reverseParseFreshness[2] = "Very Fresh (40% stale rate)";
 reverseParseFreshness[3] = "Extremely Fresh (30% stale rate)";
 reverseParseFreshness[4] = "Insanely Fresh (20% stale rate)";
 reverseParseFreshness[5] = "Ultimately Fresh (10% stale rate)";
-reverseParseFreshness[6] = "Uber Fresh (0% stale rate)";
+reverseParseFreshness[6] = "Über Fresh (0% stale rate)";
 
 var parseFreshness = [];
 parseFreshness["Uber Stale"] = -6;

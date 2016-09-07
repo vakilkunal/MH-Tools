@@ -158,6 +158,81 @@ window.onload = function () {
 	}
 
     //Listening for changes in dropdowns or textboxes
+    document.getElementById("toggleCustom").onchange = function () {
+    	var toggle = document.getElementById("toggleCustom");
+    	if (toggle.checked) {
+    		$("#link").hide();
+    		$("#weaponRow").hide();
+    		$("#baseRow").hide();
+    		$("#charmRow").hide();
+    		$("#gsRow").hide();
+    		$("#lbwRow").hide();
+    		$("#trapSetup").hide();
+    		$("#customType").show(500);
+    		$("#customPower").show(500);
+    		$("#customLuck").show(500);
+    		$("#customAttraction").show(500);
+    		$("#customEffect").show(500);
+
+			$("#toxicRow").hide();
+			$("#toxic").val('No');
+			$("#batteryRow").hide();
+			$("#battery").val('-');
+			$("#ampRow").hide();
+			$("#sliderRow").hide();
+
+			updateCustomSetup();
+    	}
+    	else {
+    		$("#customType").hide();
+    		$("#customPower").hide();
+    		$("#customLuck").hide();
+    		$("#customAttraction").hide();
+    		$("#customEffect").hide();
+    		$("#link").show(500);
+    		$("#weaponRow").show(500);
+    		$("#baseRow").show(500);
+    		$("#charmRow").show(500);
+    		$("#gsRow").show(500);
+    		$("#lbwRow").show(500);
+    		$("#trapSetup").show(500);
+
+    		if (cheeseName == "Brie" || cheeseName == "SB+") {
+				$("#toxicRow").show(500);
+			}
+    		if (locationName == "Furoma Rift") {
+				$("#batteryRow").show(500);
+			}
+			else if (locationName == "Zugzwang's Tower") {
+				$("#ampSlider").slider('option','value',100);
+				$("#ampRow").show(500);
+				$("#sliderRow").show(500);
+			}
+
+    		calculateTrapSetup("cre");
+    	}
+    };
+
+    document.getElementById("trapPowerType").onchange = function () {
+		updateCustomSetup();
+    };
+
+    document.getElementById("trapPowerValue").onchange = function () {
+		updateCustomSetup();
+    };
+
+    document.getElementById("trapLuckValue").onchange = function () {
+		updateCustomSetup();
+    };
+
+    document.getElementById("trapAttractionValue").onchange = function () {
+		updateCustomSetup();
+    };
+
+    document.getElementById("trapEffect").onchange = function () {
+		updateCustomSetup();
+    };
+
     document.getElementById("location").onchange = function () {
 		locationChanged();
     };
@@ -226,6 +301,38 @@ window.onload = function () {
 	};
 
 	console.log("miceArray: " + Object.size(miceArray));*/
+}
+
+function updateCustomSetup() {
+	var type = document.getElementById("trapPowerType").value;
+	var power = document.getElementById("trapPowerValue").value;
+	var luck = document.getElementById("trapLuckValue").value;
+	var attraction = document.getElementById("trapAttractionValue").value;
+	var effect = document.getElementById("trapEffect").value;
+	if (power < 0) {
+		power = 0;
+		document.getElementById("trapPowerValue").value = 0;
+	}
+	if (luck < 0) {
+		luck = 0;
+		document.getElementById("trapLuckValue").value = 0;
+	}
+	if (attraction > 100) {
+		attraction = 100;
+		document.getElementById("trapAttractionValue").value = 100;
+	}
+	else if (attraction < 0) {
+		attraction = 0;
+		document.getElementById("trapAttractionValue").value = 0;
+	}
+	if (power >= 0) {
+        trapType = type;
+        trapPower = power;
+        trapLuck = luck;
+        trapAtt = attraction;
+        trapEff = parseFreshness[effect];
+        showPop(2);
+    }
 }
 
 function loadWeaponDropdown() {
@@ -1328,22 +1435,24 @@ function locationChanged () {
 	updateLink();
 
 	hideAllRows();
-	if (locationName == "Furoma Rift") {
-		$("#batteryRow").show(500);
-		$("#frComment").show(500);
-	}
-	else if (locationName == "Whisker Woods Rift") {
-		$("#wwrComment").show(500);
-	}
-	else if (locationName == "Zugzwang's Tower") {
-		$("#ampSlider").slider('option','value',100);
-		$("#ampRow").show(500);
-		$("#sliderRow").show(500);
-		$("#ztComment").show(500);
-	}
-	else if (locationName == "Labyrinth") {
-		$("#labyComment").show(500);
-		$("#oilRow").show(500);
+	if (document.getElementById("toggleCustom").checked == false) {
+		if (locationName == "Furoma Rift") {
+			$("#batteryRow").show(500);
+			$("#frComment").show(500);
+		}
+		else if (locationName == "Whisker Woods Rift") {
+			$("#wwrComment").show(500);
+		}
+		else if (locationName == "Zugzwang's Tower") {
+			$("#ampSlider").slider('option','value',100);
+			$("#ampRow").show(500);
+			$("#sliderRow").show(500);
+			$("#ztComment").show(500);
+		}
+		else if (locationName == "Labyrinth") {
+			$("#labyComment").show(500);
+			$("#oilRow").show(500);
+		}
 	}
 
 	batteryPower = 0;
@@ -1463,13 +1572,15 @@ function cheeseChanged () {
 	}
 
 	//Toxic checks
-	if (cheeseName == "Brie" || cheeseName == "SB+") {
-		$("#toxicRow").show(500);
-		toxicChanged();
-	}
-	else {
-		$("#toxicRow").hide();
-		toxicChanged();
+	if (document.getElementById("toggleCustom").checked == false) {
+		if (cheeseName == "Brie" || cheeseName == "SB+") {
+			$("#toxicRow").show(500);
+			toxicChanged();
+		}
+		else {
+			$("#toxicRow").hide();
+			toxicChanged();
+		}
 	}
 
 	showPop();
