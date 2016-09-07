@@ -3,7 +3,7 @@
 var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
-var gsLuck = 7, lbwLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0;
+var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
 var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', cheeseBonus = 0, tournamentName = '', weaponName = '', phaseName = '';
@@ -312,18 +312,10 @@ window.onload = function () {
 		}
 	}
 	
-	var lbwParameter = getURLParameter("lbw");
-	if(lbwParameter != "null") {
-		lbwParameter = "Yes";
-		var select = document.getElementById("lbw");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == lbwParameter) {
-				child.selected = true;
-		    	lbwChanged();
-				break;
-			}
-		}
+	var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
+	if (bonusLuckParameter >= 0) {
+		document.getElementById("bonusLuck").value = bonusLuckParameter;
+		bonusLuckChanged();
 	}
   	
     document.getElementById("location").onchange = function () {
@@ -354,8 +346,8 @@ window.onload = function () {
 		gsChanged();
 	}
 	
-    document.getElementById("lbw").onchange = function () {
-		lbwChanged();
+    document.getElementById("bonusLuck").onchange = function () {
+		bonusLuckChanged();
 	}
 
     $("#save_setup_button").click(function() {
@@ -871,7 +863,7 @@ function updateLink() {
 	if(isToxic != "" && isToxic != "-" && $("#toxic").is(":visible")) URLString += "&toxic=" + isToxic;
 	if(batteryPower != 0) URLString += "&battery=" + batteryPower;
 	if(gsLuck == 0) URLString+= "&gs="+gsLuck;
-	if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
+	if(bonusLuck >= 0) URLString+= "&bonusLuck="+bonusLuck;
 	if(tournamentName != "") URLString+= "&tourney="+tournamentName;
 	
 	document.getElementById("link").href = URLString;
@@ -1157,15 +1149,19 @@ function gsChanged() {
 	//showPop();
 }
 
-function lbwChanged() {
-    var select = document.getElementById("lbw");
+function bonusLuckChanged() {
+    var select = document.getElementById("bonusLuck").value;
 
-    if (select.children[select.selectedIndex].innerHTML == "Yes") lbwLuck = 5;
-    else lbwLuck = 0;
+    if (select >= 0) {
+    	bonusLuck = select;
+    }
+    else if (select < 0) {
+    	document.getElementById("bonusLuck").value = 0;
+    	bonusLuck = 0;
+    }
     
 	updateLink();
 	calculateTrapSetup();
-	//showPop();
 }
 
 function showPop(type) {
@@ -1254,7 +1250,7 @@ function printCombinations(micePopulation, tableHTML) {
 			URLString+= "&cheese="+cheeseName;
 			if(selectedCharm != "-") URLString+= "&charm="+selectedCharm+" Charm";
 			if(gsLuck == 0) URLString+= "&gs="+gsLuck;
-			if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
+			if(bonusLuck >= 0) URLString+= "&bonusLuck="+bonusLuck;
 			URLString+= "&weapon="+weapon;
 			URLString+= "&base="+base;
 			URLString+= "&toxic="+isToxic;
@@ -1371,7 +1367,7 @@ function printCharmCombinations(micePopulation, tableHTML) {
 		URLString+= "&cheese="+cheeseName;
 		if(charmName != "") URLString+= "&charm="+charmName;
 		if(gsLuck == 0) URLString+= "&gs="+gsLuck;
-		if(lbwLuck == 5) URLString+= "&lbw="+lbwLuck;
+		if(bonusLuck >= 0) URLString+= "&bonusLuck="+bonusLuck;
 		URLString+= "&weapon="+weaponName;
 		URLString+= "&base="+baseName;
 		URLString = URLString.replace(/'/g, "%27");

@@ -290,7 +290,7 @@ function calculateTrapSetup(user) {
         var totalPourBonus = 1 + pourBonus/100 + pourBonus/100*(weaponBonus/100 + baseBonus/100 + charmBonus/100);
         var ampBonus = ztAmp/100 + braceBonus;
         trapPower = Math.round(totalPower * totalBonus * totalPourBonus * ampBonus);
-        trapLuck = Math.floor((weaponLuck + baseLuck + parseInt(gsLuck) + charmLuck + parseInt(lbwLuck) + parseInt(pourLuck) + specialLuck)*Math.min(1,ampBonus));
+        trapLuck = Math.floor((weaponLuck + baseLuck + parseInt(gsLuck) + charmLuck + parseInt(bonusLuck) + parseInt(pourLuck) + specialLuck)*Math.min(1,ampBonus));
         trapAtt = weaponAtt + baseAtt + charmAtt;
         if (trapAtt > 100) trapAtt = 100;
         trapEff = weaponEff + baseEff + charmEff;

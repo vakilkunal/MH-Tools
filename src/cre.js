@@ -7,7 +7,7 @@ var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var gsLuck = 7, lbwLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0, lanternStatus = '';
+var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0, lanternStatus = '';
 var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
 var cheeseCost = 0, cheeseBonus = 0;
@@ -143,18 +143,10 @@ window.onload = function () {
 		}
 	}
 	
-	var lbwParameter = getURLParameter("lbw");
-	if (lbwParameter != "null") {
-		lbwParameter = "Yes";
-		var select = document.getElementById("lbw");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == lbwParameter) {
-				child.selected = true;
-		    	lbwChanged();
-				break;
-			}
-		}
+	var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
+	if (bonusLuckParameter >= 0) {
+		document.getElementById("bonusLuck").value = bonusLuckParameter;
+		bonusLuckChanged();
 	}
 
     //Listening for changes in dropdowns or textboxes
@@ -166,7 +158,7 @@ window.onload = function () {
     		$("#baseRow").hide();
     		$("#charmRow").hide();
     		$("#gsRow").hide();
-    		$("#lbwRow").hide();
+    		$("#bonusLuckRow").hide();
     		$("#trapSetup").hide();
     		$("#customType").show(500);
     		$("#customPower").show(500);
@@ -180,6 +172,9 @@ window.onload = function () {
 			$("#battery").val('-');
 			$("#ampRow").hide();
 			$("#sliderRow").hide();
+
+			$("#bonusLuck").val('0');
+			bonusLuck = 0;
 			batteryPower = 0;
 			ztAmp = 100;
 
@@ -196,7 +191,7 @@ window.onload = function () {
     		$("#baseRow").show(500);
     		$("#charmRow").show(500);
     		$("#gsRow").show(500);
-    		$("#lbwRow").show(500);
+    		$("#bonusLuckRow").show(500);
     		$("#trapSetup").show(500);
 
     		if (cheeseName == "Brie" || cheeseName == "SB+") {
@@ -275,8 +270,8 @@ window.onload = function () {
 		gsChanged();
 	}
 	
-    document.getElementById("lbw").onchange = function () {
-		lbwChanged();
+    document.getElementById("bonusLuck").onchange = function () {
+		bonusLuckChanged();
 	}
 	
     document.getElementById("tourney").onchange = function () {
@@ -1354,7 +1349,7 @@ function updateLink () {
 	if (baseName != "") URLString += "&base=" + baseName;
 	if (charmName != "") URLString += "&charm=" + charmName;
 	if (gsLuck == 0) URLString += "&gs=" + gsLuck;
-	if (lbwLuck == 5) URLString += "&lbw=" + lbwLuck;
+	if (bonusLuck >= 0) URLString += "&bonusLuck=" + bonusLuck;
 	if (tournamentName != "") URLString += "&tourney=" + tournamentName;
 	
 	document.getElementById("link").href = URLString;
@@ -1416,7 +1411,7 @@ function updateLink () {
 	if(charmName != "") ht_URLString+= "&charm="+trinkets[charmName];
 	if(gsLuck == 0) ht_URLString+= "&shield="+"0";
 	else ht_URLString+= "&shield="+"1";
-	if(lbwLuck == 5) ht_URLString+= "&lbw="+lbwLuck;
+	if(bonusLuck >= 0) ht_URLString+= "&bonusLuck="+bonusLuck;
 	if(tournamentName != "") ht_URLString+= "&tourney="+tournamentName;
 	//document.getElementById("ht_link").href = ht_URLString;
 	
@@ -1794,11 +1789,16 @@ function gsChanged() {
 		calculateTrapSetup("cre");
 }
 
-function lbwChanged() {
-        var select = document.getElementById("lbw");
+function bonusLuckChanged() {
+        var select = document.getElementById("bonusLuck").value;
 
-        if (select.children[select.selectedIndex].innerHTML == "Yes") lbwLuck = 5;
-        else lbwLuck = 0;
+        if (select >= 0) {
+        	bonusLuck = select;
+        }
+        else if (select < 0) {
+	    	document.getElementById("bonusLuck").value = 0;
+	    	bonusLuck = 0;
+	    }
         
 		updateLink();
 		calculateTrapSetup("cre");
