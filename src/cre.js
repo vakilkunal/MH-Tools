@@ -180,6 +180,8 @@ window.onload = function () {
 			$("#battery").val('-');
 			$("#ampRow").hide();
 			$("#sliderRow").hide();
+			batteryPower = 0;
+			ztAmp = 100;
 
 			updateCustomSetup();
     	}
