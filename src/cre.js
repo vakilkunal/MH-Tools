@@ -143,7 +143,7 @@ window.onload = function () {
 		}
 	}
 	
-	var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
+	var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(getURLParameter("totalluck")) - trapLuck);
 	if (bonusLuckParameter >= 0) {
 		document.getElementById("bonusLuck").value = bonusLuckParameter;
 		bonusLuckChanged();

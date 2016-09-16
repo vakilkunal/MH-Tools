@@ -247,6 +247,7 @@ javascript:void(function() {
 		var userBase = user["base_name"];
 		var userCharm = user["trinket_name"];
 		var userShield = user["has_shield"];
+		var userLuck = user["trap_luck"];
 		var userSublocation = findSublocation();
 
 		var userBattery = "N/A";
@@ -324,6 +325,7 @@ javascript:void(function() {
 	url += "&weapon=" + userWeapon;
 	url += "&base=" + userBase;
 	url += "&charm=" + userCharm;
+	url += "&totalluck=" + userLuck;
 	if (userShield == false) {
 		url += "&gs=No";
 	}
