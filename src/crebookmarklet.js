@@ -43,19 +43,9 @@ javascript:void(function() {
 			}
 		}
 		else if (userLocation == "Fiery Warpath") {
+			//Single digit string - "1", "2", "3", "4"
 			var wave = user["viewing_atts"]["desert_warpath"]["wave"];
-			if (wave == "1") {
-				sublocation = "Wave 1";
-			}
-			else if (wave == "2") {
-				sublocation = "Wave 2";
-			}
-			else if (wave == "3") {
-				sublocation = "Wave 3";
-			}
-			else if (wave == "4") {
-				sublocation = "Wave 4";
-			}
+			sublocation = "Wave " + wave;
 		}
 		else if (userLocation == "Gnawnian Express Station") {
 			var onTrain = user["quests"]["QuestTrainStation"]["on_train"];
@@ -237,66 +227,78 @@ javascript:void(function() {
 		return sublocation;
 	}
 
-	if (user != null) {
-		// console.log(user); //Type in dev tools
-		// Some items may not correspond 1:1 with CRE (e.g. SB+)
-		var userRank = user["title_name"];
-		var userLocation = user["location"];
-		var userCheese = user["bait_name"];
-		var userWeapon = user["weapon_name"];
-		var userBase = user["base_name"];
-		var userCharm = user["trinket_name"];
-		var userShield = user["has_shield"];
-		var userSublocation = findSublocation();
 
-		var userBattery = "N/A";
-		if (userLocation == "Furoma Rift") {
-			var chargeLevel = user["quests"]["QuestRiftFuroma"]["droid"]["charge_level"];
-			if (chargeLevel != "") {
-				if (chargeLevel == "charge_level_one") userBattery = 1;
-				else if (chargeLevel == "charge_level_two") userBattery = 2;
-				else if (chargeLevel == "charge_level_three") userBattery = 3;
-				else if (chargeLevel == "charge_level_four") userBattery = 4;
-				else if (chargeLevel == "charge_level_five") userBattery = 5;
-				else if (chargeLevel == "charge_level_six") userBattery = 6;
-				else if (chargeLevel == "charge_level_seven") userBattery = 7;
-				else if (chargeLevel == "charge_level_eight") userBattery = 8;
-				else if (chargeLevel == "charge_level_nine") userBattery = 9;
-				else if (chargeLevel == "charge_level_ten") userBattery = 10;
-			}
-		}
 
-		var userOil = "N/A";
-		if (userLocation == "Labyrinth") {
-			if (user["quests"]["QuestLabyrinth"]["lantern_status"] == "active") {
-				userOil = "On";
-			}
-		}
-		
-		var userTourney = "N/A";
-		if (document.querySelector("div.tournamentStatusHud") != null) {
-			var tourney = user["viewing_atts"]["tournament"];
-			if (tourney["status"] == "active" || tourney["status"] == "pending") {
-				userTourney = tourney["name"];
-			}
-		}
-
-		var userToxic = "N/A";
-		if (userCheese.indexOf("Toxic") >= 0) {
-			userToxic = "Yes";
-			userCheese = userCheese.slice(6, userCheese.length);
-		}
-	}
-	else {
+    if (!user) { /*!user handles null and undefined */
 		alert("User object not found.");
 		return;
 	}
 
+	/**
+	 * Controls the names and values placed in URL
+	 */
+	var urlParams = {};
+		// console.log(user); //Type in dev tools
+		// Some items may not correspond 1:1 with CRE (e.g. SB+)
+		var userRank = user["title_name"];
+		var userLocation = user["location"];
+		urlParams["location"] = userLocation;
+		var userCheese = user["bait_name"];
+		urlParams["weapon"] = user["weapon_name"];
+		var userBase = user["base_name"]; /*Also used in find sublocation */
+		urlParams["base"] = userBase;
+		urlParams["charm"] = user["trinket_name"];
+		if (!user["has_shield"]) {
+			urlParams["gs"] = "No";
+		}
+		urlParams["totalluck"] = user["trap_luck"];
+		var userSublocation = findSublocation();
+
+		if (userLocation == "Furoma Rift") {
+			var chargeLevel = user["quests"]["QuestRiftFuroma"]["droid"]["charge_level"];
+			if (chargeLevel != "") {
+				/*Replaced if-else with dictionary lookup -- less code*/
+				var levels = {
+					"charge_level_one": 1,
+					"charge_level_two": 2,
+					"charge_level_three": 3,
+					"charge_level_four": 4,
+					"charge_level_five": 5,
+					"charge_level_six": 6,
+					"charge_level_seven": 7,
+					"charge_level_eight": 8,
+					"charge_level_nine": 9,
+					"charge_level_ten": 10
+				};
+				urlParams["battery"] = levels[chargeLevel];
+			}
+		}
+
+		if (userLocation == "Labyrinth") {
+			if (user["quests"]["QuestLabyrinth"]["lantern_status"] == "active") {
+				/* Set url param directly instead of using temp variable */
+				urlParams["oil"] = "On";
+			}
+		}
+
+		if (document.querySelector("div.tournamentStatusHud") != null) {
+			var tourney = user["viewing_atts"]["tournament"];
+			if (tourney["status"] == "active" || tourney["status"] == "pending") {
+				/* Set url param directly instead of using temp variable */
+				urlParams["tourney"] = tourney["name"];
+			}
+		}
+
 	// Cheese edge cases
+	if (userCheese.indexOf("Toxic") >= 0) {
+		var userToxic = "Yes";
+		userCheese = userCheese.slice(6, userCheese.length);
+		urlParams["toxic"] = userToxic;
+	}
+
 	if (userCheese.indexOf("SUPER|brie+") >= 0) {
 		userCheese = "SB+";
-	}
-	if (userCheese.indexOf(" Cheese") >= 0) {
+	} else if (userCheese.indexOf(" Cheese") >= 0) {
 		if (userCheese.indexOf("Gauntlet") >= 0) {
 			userCheese = userCheese.slice(16, userCheese.length);
 			userSublocation = userCheese;
@@ -305,34 +307,21 @@ javascript:void(function() {
 			userCheese = userCheese.slice(0, userCheese.indexOf(" Cheese"));
 		}
 	}
-	
-	var url = "https://tsitu.github.io/MH-Tools/cre.html?";
-	url += "location=" + userLocation;
+	urlParams["cheese"] = userCheese;
+
 	if (userSublocation != "N/A") {
-		url += "&phase=" + userSublocation;
+		urlParams["phase"] = userSublocation;
 	}
-	url += "&cheese=" + userCheese;
-	if (userToxic != "N/A") {
-		url += "&toxic=" + userToxic;
-	}
-	if (userBattery != "N/A") {
-		url += "&battery=" + userBattery;
-	}
-	if (userOil != "N/A") {
-		url += "&oil=" + userOil;
-	}
-	url += "&weapon=" + userWeapon;
-	url += "&base=" + userBase;
-	url += "&charm=" + userCharm;
-	if (userShield == false) {
-		url += "&gs=No";
-	}
-	if (userTourney != "N/A") {
-		url += "&tourney=" + userTourney;
-	}
+
 	if (userLocation == "Zugzwang's Tower") {
-		var userAmp = user["viewing_atts"]["zzt_amplifier"];
-		url += "&amplifier=" + userAmp;
+		urlParams["amplifier"] = user["viewing_atts"]["zzt_amplifier"];
+	}
+
+	var url = "https://tsitu.github.io/MH-Tools/cre.html?";
+	/* Buld URL with loop instead of everything separately */
+	for (var key in urlParams) {
+		var value = encodeURIComponent(urlParams[key]);
+		url += key + "=" + value + "&"
 	}
 
 	var newWindow = window.open(url, 'mhcre');
