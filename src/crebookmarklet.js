@@ -171,6 +171,12 @@ javascript:void(function() {
 			else if (district == "The Farming Garden") {
 				sublocation = "Farming Garden";
 			}
+			else if (district == "The Overgrown Farmhouse") {
+				sublocation = "Overgrown Farmhouse";
+			}
+			else if (district == "The Treasure Vault") {
+				sublocation = "Treasure Vault";
+			}
 			// More else ifs
 		}
 		else if (userLocation == "Zugzwang's Tower") {
@@ -318,9 +324,15 @@ javascript:void(function() {
 	}
 
 	var url = "https://tsitu.github.io/MH-Tools/cre.html?";
-	/* Buld URL with loop instead of everything separately */
+	/* Build URL with loop instead of everything separately */
 	for (var key in urlParams) {
-		var value = encodeURIComponent(urlParams[key]);
+		if (urlParams[key].toString().indexOf("/") >= 0) {
+			/* Don't encode certain special characters, like forward slash */
+			var value = urlParams[key];
+		}
+		else {
+			var value = encodeURIComponent(urlParams[key]);
+		}
 		url += key + "=" + value + "&"
 	}
 
