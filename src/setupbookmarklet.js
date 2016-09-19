@@ -22,7 +22,8 @@ javascript:void(function() {
 	var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
 	var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
 	var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
-	var newWindow = window.open(waitingURL, 'mhsetup');
+	// Open default URL and give it time to preload, should solve problem of only bases not loading
+	var newWindow = window.open(defaultURL, 'mhsetup');
 
 	function openURL(category, items) {
 		var url = defaultURL + "?" + category + "=";
@@ -80,7 +81,7 @@ javascript:void(function() {
 		weaponIter = 0;
 		charmIter = 0;
 		//Do not call bases, weapons, charms separately
-		sendBases();
+		setTimeout(sendBases, SUBMIT_DELAY);
 	}
 
 
