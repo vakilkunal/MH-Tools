@@ -1337,7 +1337,8 @@ function commafy(x) {
 }
 
 function getURLParameter (name) {
-    return decodeURI(
+	//Use component here to ensure correct decoding
+    return decodeURIComponent(
         (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
     );
 }
