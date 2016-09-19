@@ -1278,6 +1278,13 @@ function printCombinations(micePopulation, tableHTML) {
 				var catchRate = calcCR(eff[mouse], trapPower, trapLuck, power[mouse]);
 				//console.log("CR: " + catchRate);
 				//console.log(power[mouse]);
+
+				if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
+					if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
+						catchRate += ((1-catchRate)/2);
+					}
+				}
+
 				if (mouse.indexOf("Rook")>=0 && charmName=="Rook Crumble Charm") {
 					charmBonus -= 300;
 					calculateTrapSetup();
