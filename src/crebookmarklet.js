@@ -245,13 +245,14 @@ javascript:void(function() {
 		urlParams["location"] = userLocation;
 		var userCheese = user["bait_name"];
 		urlParams["weapon"] = user["weapon_name"];
-		var userBase = user["base_name"]; /*Also used in find sublocation */
+		var userBase = user["base_name"]; //Also used in find sublocation
 		urlParams["base"] = userBase;
 		urlParams["charm"] = user["trinket_name"];
 		if (!user["has_shield"]) {
 			urlParams["gs"] = "No";
 		}
-		urlParams["totalluck"] = user["trap_luck"];
+		var luck_element = document.querySelector(".campPage-trap-trapStat.luck > .value");
+    	urlParams["totalluck"] = luck_element && luck_element.textContent ? Number(luck_element.textContent) : user["trap_luck"];
 		var userSublocation = findSublocation();
 
 		if (userLocation == "Furoma Rift") {
