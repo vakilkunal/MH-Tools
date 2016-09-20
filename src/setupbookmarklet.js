@@ -6,191 +6,134 @@ javascript:void(function() {
 	var defaultURL = "https://tsitu.github.io/MH-Tools/setup.html";
 	var waitingURL = "https://tsitu.github.io/MH-Tools/setupwaiting.html";
 	// var defaultURL = "https://localhost:8888/setup.html"; //debug
+
+	var PING_DELAY = 4000;
+	var MAX_SIZE = 30;
+	var SUBMIT_DELAY = 500;
+
 	var bases = [];
 	var weapons = [];
 	var charms = [];
-	var maxSize = 30;
-	var interval = '';
-	var timeout = '';
-	var sendingBases = "false";
-	var sendingWeapons = "false";
-	var sendingCharms=  "false";
-	var waitingForPing = "";
+
 	var baseIter = 0;
 	var weaponIter = 0;
 	var charmIter = 0;
-	var baseInterval = '';
-	var weaponInterval = '';
-	var charmInterval = '';
 	var pingInterval = '';
 	var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
 	var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
 	var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
-	var newWindow = window.open(waitingURL, 'mhsetup');
+	// Open default URL and give it time to preload, should solve problem of only bases not loading
+	var newWindow = window.open(defaultURL, 'mhsetup');
 
+	function openURL(category, items) {
+		var url = defaultURL + "?" + category + "=";
+		url += encodeURI(items.join('/'));
+		url += "/";
+		newWindow.location.href = url;
+	}
 	function checkDOM() {
 		baseButton.click();
 		var timeout = setTimeout(function() {
 			newWindow.close();
 			clearInterval(interval);
 			alert("Initial XHR timed out! Please check your connection and try again.");
-			return;
-		}, 4000);
+			throw new Error("Initial XHR timed out! Please check your connection and try again.")
+		}, PING_DELAY);
 		var interval = setInterval(function() {
-			if (document.querySelector("div.campPage-trap-itemBrowser.base") != null) {
+			if (document.querySelector("div.campPage-trap-itemBrowser.base")) {
 				clearTimeout(timeout);
 				clearInterval(interval);
 				parse();
 			}
 		}, 100);
 	}
-
 	function parse() {
+		function toArray(nodeList) {
+                    var tmp = [];
+                    for (var i=0; i<nodeList.length; i++) {
+                        tmp.push(nodeList[i].textContent);
+                    }
+
+                    return tmp;
+                }
+		baseButton.click();
 		var baseText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.base.clear-block .campPage-trap-itemBrowser-item-name");
-		for (var i=0; i<baseText.length; i++) {
-			bases.push(baseText[i].textContent);
-		}
+
+		bases = toArray(baseText);
 		console.log("Number of bases: " + bases.length);
 
 	    weaponButton.click();
 	    var weaponText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.weapon.clear-block .campPage-trap-itemBrowser-item-name");
-		for (var i=0; i<weaponText.length; i++) {
-			weapons.push(weaponText[i].textContent);
-		}
+		weapons = toArray(weaponText);
 		console.log("Number of weapons: " + weapons.length);
 
 	    charmButton.click();
 	    var charmText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.trinket.clear-block .campPage-trap-itemBrowser-item-name");
-		for (var i=0; i<charmText.length; i++) {
-			charms.push(charmText[i].textContent);
-		}
+		charms = toArray(charmText);
 		console.log("Number of charms: " + charms.length);
 
 		var closeButton = document.querySelector("a.campPage-trap-blueprint-closeButton");
-	    if (closeButton != null) {
+	    if (closeButton) {
 	    	closeButton.click();
 	    }
 
-    	if (bases.length > 0) {
-    		sendingBases = "true";
-	    	sendBases(); 	
-	    }
-
-	    if (weapons.length > 0) {
-	    	sendWeapons();
-	    }
-
-	    if (charms.length > 0) {
-	    	sendCharms();
-	    }
+		baseIter = 0;
+		weaponIter = 0;
+		charmIter = 0;
+		//Do not call bases, weapons, charms separately
+		setTimeout(sendBases, SUBMIT_DELAY);
 	}
 
+
 	function sendBases() {
-		baseInterval = setInterval(function() {
-			if (sendingBases == "true") {
-				clearInterval(baseInterval);
-				var slice = bases.slice(baseIter,baseIter+maxSize);
-				// console.log("slice size: " + slice.length);
-				var url = defaultURL + "?bases=";
-	        	url += encodeURI(slice.join('/'));
-	        	url += "/";
-	        	// console.log(url);
-	        	// console.log("URL length: " + url.length);
-        		newWindow.location.href = url;
-        		baseIter += maxSize;
-        		waitingForPing = "true";
-        		ping();
-        		pingInterval = setInterval(function() {
-        			if (waitingForPing == "false") {
-        				clearInterval(pingInterval);
-        				if (baseIter < bases.length) {
-		        			setTimeout(sendBases, 500);
-		        		}
-		        		else {
-		        			sendingBases = "false";
-	        				setTimeout(function() {
-	        					sendingWeapons = "true";
-	        				}, 500);
-		        		}
-        			}	
-        		}, 100);
+		ping(function() {
+            if (baseIter < bases.length) {
+				var slice = bases.slice(baseIter,baseIter+MAX_SIZE);
+				openURL("bases", slice);
+				baseIter += MAX_SIZE;
+				setTimeout(sendBases, SUBMIT_DELAY);
+			} else {
+				sendWeapons()
 			}
-		}, 250);
+		});
 	}
 
 	function sendWeapons() {
-		weaponInterval = setInterval(function() {
-			if (sendingWeapons == "true") {
-				clearInterval(weaponInterval);
-				var slice = weapons.slice(weaponIter,weaponIter+maxSize);
-				// console.log("slice size: " + slice.length);
-				var url = defaultURL + "?weapons=";
-	        	url += encodeURI(slice.join('/'));
-	        	url += "/";
-	        	// console.log(url);
-	        	// console.log("URL length: " + url.length);
-        		newWindow.location.href = url;
-        		weaponIter += maxSize;
-        		waitingForPing = "true";
-        		ping();
-        		pingInterval = setInterval(function() {
-        			if (waitingForPing == "false") {
-        				clearInterval(pingInterval);
-        				if (weaponIter < weapons.length) {
-		        			setTimeout(sendWeapons, 500);
-		        		}
-		        		else {
-		        			sendingWeapons = "false";
-	        				setTimeout(function() {
-	        					sendingCharms = "true";
-	        				}, 500);
-		        		}
-        			}	
-        		}, 100);
+		ping(function() {
+			if (weaponIter < weapons.length) {
+				var slice = weapons.slice(weaponIter,weaponIter+MAX_SIZE);
+				openURL("weapons", slice);
+				weaponIter += MAX_SIZE;
+				setTimeout(sendWeapons, SUBMIT_DELAY);
 			}
-		}, 250);
+			else {
+				sendCharms()
+			}
+		});
+
 	}
 
 	function sendCharms() {
-		charmInterval = setInterval(function() {
-			if (sendingCharms == "true") {
-				clearInterval(charmInterval);
-				var slice = charms.slice(charmIter,charmIter+maxSize);
-				// console.log("slice size: " + slice.length);
-				var url = defaultURL + "?charms=";
-	        	url += encodeURI(slice.join('/'));
-	        	url += "/";
-	        	// console.log(url);
-	        	// console.log("URL length: " + url.length);
-        		newWindow.location.href = url;
-        		charmIter += maxSize;
-        		waitingForPing = "true";
-        		ping();
-        		pingInterval = setInterval(function() {
-        			if (waitingForPing == "false") {
-        				clearInterval(pingInterval);
-        				if (charmIter < charms.length) {
-		        			setTimeout(sendCharms, 500);
-		        		}
-		        		else {
-		        			sendingCharms = "false";
-	        				setTimeout(function() {
-	        					newWindow.location.href = defaultURL;
-	        				}, 500);
-		        		}
-        			}	
-        		}, 100);
+		ping(function() {
+			if (charmIter < charms.length) {
+				var slice = charms.slice(charmIter,charmIter+MAX_SIZE);
+				openURL("charms", slice);
+				charmIter += MAX_SIZE;
+				setTimeout(sendCharms, SUBMIT_DELAY);
 			}
-		}, 250);
+			else {
+				newWindow.location.href = defaultURL;
+			}
+		});
 	}
 
-	function ping() {
-		var pingTimeout = setTimeout(function() {
+	function ping(callback) {
+        var pingTimeout = setTimeout(function() {
 			newWindow.close();
-			clearInterval(pingInterval);
 			alert("Ping XHR timed out! Please check your connection and try again.");
-			return;
-		}, 4000);
+			//Return doesn't work in callbacks, throw exception
+			throw new Error("Ping XHR timed out! Please check your connection and try again.");
+		}, PING_DELAY);
 		var started = new Date().getTime();
 		var cacheBuster = "?nnn=" + started;
 		var http = new XMLHttpRequest();
@@ -201,18 +144,19 @@ javascript:void(function() {
 				var ended = new Date().getTime();
 				var milliseconds = ended - started;
 				console.log("Ping time: " + milliseconds + "ms");
-				waitingForPing = "false";
+				if (callback)
+					callback()
 			}
 		};
-		try { http.send(null); } catch(exception) { }
+		try { http.send(null); } catch(exception) { console.log("Exception:" , exception)}
 	}
 
-	if (baseButton != null && weaponButton != null && charmButton != null) {
+	if (baseButton && weaponButton && charmButton) {
 		checkDOM();
 	}
 	else {
 		newWindow.close();
 		alert("Please ensure that you have FreshCoat enabled in Support -> User Preferences, then navigate to the Camp page!");
-		return;
+		throw new Error("Please ensure that you have FreshCoat enabled in Support -> User Preferences, then navigate to the Camp page!");
 	}
 })();

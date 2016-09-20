@@ -235,7 +235,7 @@ javascript:void(function() {
 
 
 
-    if (!user) { /*!user handles null and undefined */
+    if (!user) { /* Handles null and undefined */
 		alert("User object not found.");
 		return;
 	}
@@ -251,13 +251,14 @@ javascript:void(function() {
 		urlParams["location"] = userLocation;
 		var userCheese = user["bait_name"];
 		urlParams["weapon"] = user["weapon_name"];
-		var userBase = user["base_name"]; /*Also used in find sublocation */
+		var userBase = user["base_name"]; //Also used in find sublocation
 		urlParams["base"] = userBase;
 		urlParams["charm"] = user["trinket_name"];
 		if (!user["has_shield"]) {
 			urlParams["gs"] = "No";
 		}
-		urlParams["totalluck"] = user["trap_luck"];
+		var luck_element = document.querySelector(".campPage-trap-trapStat.luck > .value");
+    	urlParams["totalluck"] = luck_element && luck_element.textContent ? Number(luck_element.textContent) : user["trap_luck"];
 		var userSublocation = findSublocation();
 
 		if (userLocation == "Furoma Rift") {
@@ -324,39 +325,13 @@ javascript:void(function() {
 	}
 
 	var url = "https://tsitu.github.io/MH-Tools/cre.html?";
-	/* Build URL with loop instead of everything separately */
+	// url = "http://localhost:63342/MH-Tools-Fork/cre.html?";
+	// Build URL with loop instead of everything separately
 	for (var key in urlParams) {
-		if (urlParams[key].toString().indexOf("/") >= 0) {
-			/* Don't encode certain special characters, like forward slash */
-			var value = urlParams[key];
-		}
-		else {
-			var value = encodeURIComponent(urlParams[key]);
-		}
+		//Server side changed to decode Component, makes 'if' here unnecessary
+		var value = encodeURIComponent(urlParams[key]);
 		url += key + "=" + value + "&"
 	}
 
 	var newWindow = window.open(url, 'mhcre');
-
-	// Vintage DOM Inspection
-	// var currRank = document.querySelector("a.mousehuntHud-userStat.title span.label");
-	// var currLocation = document.querySelector("div.mousehuntHud-environmentName");
-	// var currSublocation = "N/A";
-	// var currCheese = document.querySelector("span.campPage-trap-baitName");
-	// var currWeapon = document.querySelector("a.mousehuntHud-userStat.trap.weapon");
-	// var currBase = document.querySelector("a.mousehuntHud-userStat.trap.base");
-	// var currCharm = document.querySelector("a.mousehuntHud-userStat.trinket span.label");
-	// var currShield = document.querySelector("a.mousehuntHud-shield.golden");
-	// var currTourney = document.querySelector("div.tournamentStatusHud a.name");
-	// if (currRank == null || currLocation == null || currCheese == null || currWeapon == null || 
-	// 	currBase == null || currCharm == null || currShield == null) {
-	// 	alert("Please ensure that you have FreshCoat enabled in Support -> User Preferences, then navigate to the Camp page!");
-	// 	return;
-	// }
-	// currRank = currRank.innerHTML;
-	// currLocation = currLocation.innerHTML;
-	// currCheese = currCheese.innerHTML;
-	// currWeapon = currWeapon.title;
-	// currBase = currBase.title;
-	// currCharm = currCharm.innerHTML;
 })();
