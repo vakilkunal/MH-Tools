@@ -173,8 +173,9 @@ window.onload = function () {
 		localStorage.setItem('setupBookmarklet', setupBookmarkletString);
 	}
     $("#bookmarklet").attr("href", setupBookmarkletString);
-    $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/,500/g, ",2500"));
-    $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/,500/g, ",6000"));
+    $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=2500"));
+    $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=6000"));
+    // Hacky, use more precise "SUBMIT_DELAY" replacement
 
 	//Initialize tablesorter, bind to table
     $.tablesorter.defaults.sortInitialOrder = 'desc';
