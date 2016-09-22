@@ -124,7 +124,6 @@ window.onload = function () {
 	}
 	baseline.send();
 
-
 	loadWeaponDropdown();
 	loadBaseDropdown();
 	loadCharmDropdown();
@@ -141,12 +140,6 @@ window.onload = function () {
 				break;
 			}
 		}
-	}
-	
-	var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(getURLParameter("totalluck")) - trapLuck);
-	if (bonusLuckParameter >= 0) {
-		document.getElementById("bonusLuck").value = bonusLuckParameter;
-		bonusLuckChanged();
 	}
 
     //Listening for changes in dropdowns or textboxes
@@ -415,7 +408,7 @@ function checkLoadState() {
 	var status = document.getElementById("status")
 	status.innerHTML = "<td>Loaded "+loadPercentage+"%...</td>";
 	
-	if(loadPercentage == 100) {
+	if (loadPercentage == 100) {
 		loadLocationDropdown();
 		loadTourneyDropdown();
 		//updateLink();
@@ -469,6 +462,12 @@ function checkLoadState() {
             ztAmp = amplifierParameter;
             calculateTrapSetup("cre");
 		}
+
+		var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(getURLParameter("totalluck")) - trapLuck);
+        if (bonusLuckParameter >= 0) {
+            document.getElementById("bonusLuck").value = bonusLuckParameter;
+            bonusLuckChanged();
+        }
 		
 		status.innerHTML = "<td>All set!</td>";
 		setTimeout(function() {status.innerHTML = '<td><br></td>'}, 3000);
