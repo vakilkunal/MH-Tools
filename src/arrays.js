@@ -13340,7 +13340,8 @@ var weapons = {
     "Ultra MegaMouser MechaBot Trap": 172,
     "Mouse Hot Tub": 173,
     "S.L.A.C.": 174,
-    "S.L.A.C. II": 175
+    "S.L.A.C. II": 175,
+    "Sandcastle Shard Trap" : 245
 };
 
 var bases = {
