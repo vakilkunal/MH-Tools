@@ -155,11 +155,12 @@ window.onload = function () {
             $("#gsRow").hide();
             $("#bonusLuckRow").hide();
             $("#trapSetup").hide();
-            $("#customType").show(500);
-            $("#customPower").show(500);
-            $("#customLuck").show(500);
-            $("#customAttraction").show(500);
-            $("#customEffect").show(500);
+
+            $("#customType").show(500).find('select').val(trapType);
+            $("#customPower").show(500).find('input').val(trapPower);
+            $("#customLuck").show(500).find('input').val(trapLuck);
+            $("#customAttraction").show(500).find('input').val(trapAtt);
+            $("#customEffect").show(500).find('select').val(trapEff);
 
             $("#toxicRow").hide();
             $("#toxic").val('No');
@@ -322,7 +323,7 @@ function updateCustomSetup() {
         trapPower = power;
         trapLuck = luck;
         trapAtt = attraction;
-        trapEff = parseFreshness[effect];
+        trapEff = effect;
         showPop(2);
     }
 }
