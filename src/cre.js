@@ -1009,7 +1009,7 @@ function highlightSpecialCharms(charmList) {
     var charmsDropdownHTML = '';
 
     var charmNames = Object.keys(charmsArray || []);
-    var nCharms = charmsArray.length();
+    var nCharms = charmsArray.length;
     for (var c = 0; c < nCharms; c++) {
         charmsDropdownHTML += "<option>" + charmNames[c] + "</option>\n";
     }
