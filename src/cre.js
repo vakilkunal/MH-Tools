@@ -640,7 +640,6 @@ function showPop(type) { //type = 2 means don't reset charms
         else if (popArrayLPC != null && specialCharms[0] != "-") {
             sampleSize = 0;
             specialCharmsList = [];
-            var nSpecialCharms = Object.size(popArrayLPC);
             for (var key in specialCharms) {
 
                 specialCharmsList.push(specialCharms[key]);
@@ -695,8 +694,8 @@ function showPop(type) { //type = 2 means don't reset charms
             sampleSize = 0;
         }
 
-        var noMice = Object.size(popArrayLC);
         var miceNames = Object.keys(popArrayLC || []);
+        var noMice = miceNames.length;
         for (var i = 0; i < noMice; i++) {
             var mouseName = miceNames[i];
 
