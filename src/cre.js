@@ -15,6 +15,7 @@ var baseline = new XMLHttpRequest();
 
 
 window.onload = function () {
+    user = "cre";
 
     // if (location.href.indexOf("https") < 0) {
     // 	var currLoc = location.href;
@@ -101,8 +102,6 @@ window.onload = function () {
     baseline.open("get", "https://tsitu.github.io/MH-Tools/data/baselines.txt", true);
     baseline.onreadystatechange = function () {
         if (baseline.readyState == 4) {
-
-
             processBaseline(baseline.responseText);
         }
     };
@@ -172,77 +171,28 @@ window.onload = function () {
                 $("#sliderRow").show(500);
             }
 
-            calculateTrapSetup("cre");
+            calculateTrapSetup();
         }
     };
 
-    document.getElementById("trapPowerType").onchange = function () {
-        updateCustomSetup();
-    };
+    document.getElementById("trapPowerType").onchange = updateCustomSetup;
+    document.getElementById("trapPowerValue").onchange = updateCustomSetup;
+    document.getElementById("trapLuckValue").onchange =   updateCustomSetup;
+    document.getElementById("trapAttractionValue").onchange = updateCustomSetup;
+    document.getElementById("trapEffect").onchange = updateCustomSetup;
 
-    document.getElementById("trapPowerValue").onchange = function () {
-        updateCustomSetup();
-    };
-
-    document.getElementById("trapLuckValue").onchange = function () {
-        updateCustomSetup();
-    };
-
-    document.getElementById("trapAttractionValue").onchange = function () {
-        updateCustomSetup();
-    };
-
-    document.getElementById("trapEffect").onchange = function () {
-        updateCustomSetup();
-    };
-
-    document.getElementById("location").onchange = function () {
-        locationChanged();
-    };
-
-    document.getElementById("phase").onchange = function () {
-        phaseChanged();
-    };
-
-    document.getElementById("cheese").onchange = function () {
-        cheeseChanged();
-    };
-
-    document.getElementById("lanternOil").onchange = function () {
-        oilChanged();
-    };
-
-    document.getElementById("toxic").onchange = function () {
-        toxicChanged("cre");
-    };
-
-    document.getElementById("battery").onchange = function () {
-        batteryChanged(true);
-    };
-
-    document.getElementById("weapon").onchange = function () {
-        weaponChanged();
-    };
-
-    document.getElementById("base").onchange = function () {
-        baseChanged();
-    };
-
-    document.getElementById("charm").onchange = function () {
-        charmChanged();
-    };
-
-    document.getElementById("gs").onchange = function () {
-        gsChanged();
-    };
-
-    document.getElementById("bonusLuck").onchange = function () {
-        bonusLuckChanged();
-    };
-
-    document.getElementById("tourney").onchange = function () {
-        tourneyChanged();
-    };
+    document.getElementById("location").onchange = locationChanged;
+    document.getElementById("phase").onchange = phaseChanged;
+    document.getElementById("cheese").onchange = cheeseChanged;
+    document.getElementById("lanternOil").onchange = oilChanged;
+    document.getElementById("toxic").onchange = toxicChanged;
+    document.getElementById("battery").onchange = batteryChanged;
+    document.getElementById("weapon").onchange = weaponChanged;
+    document.getElementById("base").onchange = baseChanged;
+    document.getElementById("charm").onchange =  charmChanged;
+    document.getElementById("gs").onchange = gsChanged;
+    document.getElementById("bonusLuck").onchange = bonusLuckChanged;
+    document.getElementById("tourney").onchange = tourneyChanged;
 
     document.getElementById("cheeseCost").onchange = function () {
         cheeseCost = parseInt(document.getElementById("cheeseCost").value);
@@ -254,16 +204,6 @@ window.onload = function () {
     document.getElementById("link").onclick = function () {
         ga('send', 'event', 'setup link', 'click');
     };
-
-    /*Object.size = function(obj) {
-     var size = 0, key;
-     for (key in obj) {
-     if (obj.hasOwnProperty(key)) size++;
-     }
-     return size;
-     };
-
-     console.log("miceArray: " + Object.size(miceArray));*/
 };
 
 function updateCustomSetup() {
@@ -371,16 +311,9 @@ function loadCharmDropdown() {
         var select = document.getElementById("charm");
         select.value = charmParameter;
         charmChanged();
-        /*for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == charmParameter) {
-                child.selected = true;
-                charmChanged();
-                break;
-            }
-        }*/
     }
 }
+
 
 function checkLoadState() {
     var loadPercentage = (popLoaded + baselineLoaded) / 2 * 100;
@@ -405,18 +338,7 @@ function checkLoadState() {
             }
         }
 
-        var toxicParameter = getURLParameter("toxic");
-        if (toxicParameter != "null") {
-            var select = document.getElementById("toxic");
-            for (var i = 0; i < select.children.length; i++) {
-                var child = select.children[i];
-                if (child.innerHTML == toxicParameter) {
-                    child.selected = true;
-                    toxicChanged("cre");
-                    break;
-                }
-            }
-        }
+        checkToxicParam();
 
         var batteryParameter = getURLParameter("battery");
         if (batteryParameter != "null") {
@@ -439,7 +361,7 @@ function checkLoadState() {
             $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
             $("#ampValue").val(amplifierParameter);
             ztAmp = amplifierParameter;
-            calculateTrapSetup("cre");
+            calculateTrapSetup();
         }
 
         var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(getURLParameter("totalluck")) - trapLuck);
@@ -1229,49 +1151,7 @@ function hideAllRows() {
     $("#ztComment").hide();
 }
 
-function phaseChanged() {
-    var user = "cre";
-    console.log("Phase changed");
-    if (phaseName == "-") {
-        $("#phaseRow").hide();
-    }
-    else {
-        $("#phaseRow").show(500);
-    }
 
-    var select = document.getElementById("phase");
-    phaseName = select.children[select.selectedIndex].innerHTML;
-
-    var autoBase = '';
-    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-    else if ((phaseName == "Bombing Run"
-        || phaseName == "The Mad Depths"
-        || phaseName == "Treacherous Tunnels")
-        && baseName == "Magnet Base") autoBase = " ";
-    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
-    else if (phaseName == "The Mad Depths"
-        && baseName == "Hearthstone Base") autoBase = " ";
-
-    if (autoBase != "") {
-        var selectBase = document.getElementById("base");
-        selectBase.value = autoBase;
-        baseChanged();
-    }
-
-    if (locationName == "Twisted Garden"
-        && phaseName == "Poured" ) {
-        pourBonus = 5;
-        pourLuck = 5;
-        calculateTrapSetup(user);
-    } else {
-        pourBonus = 0;
-        pourLuck = 0;
-        calculateTrapSetup(user);
-    }
-
-    loadCheeseDropdown();
-    updateLink();
-}
 
 function cheeseChanged() {
     console.log("Cheese changed");
@@ -1322,11 +1202,11 @@ function cheeseChanged() {
     if (document.getElementById("toggleCustom").checked == false) {
         if (cheeseName == "Brie" || cheeseName == "SB+") {
             $("#toxicRow").show(500);
-            toxicChanged("cre");
+            toxicChanged();
         }
         else {
             $("#toxicRow").hide();
-            toxicChanged("cre");
+            toxicChanged();
         }
     }
 
@@ -1340,7 +1220,7 @@ function oilChanged() {
     lanternStatus = select.children[select.selectedIndex].innerHTML;
 
     updateLink();
-    calculateTrapSetup("cre");
+    calculateTrapSetup();
 }
 
 function weaponChanged() {
@@ -1359,7 +1239,7 @@ function weaponChanged() {
     weaponLuck = weaponsArrayN[4];
     weaponEff = parseFreshness[weaponsArrayN[5].trim()];
 
-    calculateTrapSetup("cre");
+    calculateTrapSetup();
 }
 
 function baseChanged() {
@@ -1406,7 +1286,7 @@ function baseChanged() {
 
     //Bases with special effects when paired with particular charm
     charmChangeCommon();
-    calculateTrapSetup("cre");
+    calculateTrapSetup();
 }
 
 function charmChanged() {
@@ -1414,34 +1294,11 @@ function charmChanged() {
     var select = document.getElementById("charm");
     charmName = select.children[select.selectedIndex].innerHTML;
     charmChangeCommon();
-    calculateTrapSetup("cre");
+    calculateTrapSetup();
     showPop(2);
 }
 
-function gsChanged() {
-    var select = document.getElementById("gs");
 
-    if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
-    else gsLuck = 0;
-
-    updateLink();
-    calculateTrapSetup("cre");
-}
-
-function bonusLuckChanged() {
-    var luckInput = document.getElementById("bonusLuck").value;
-
-    if (luckInput >= 0) {
-        bonusLuck = luckInput;
-    }
-    else if (luckInput < 0) {
-        document.getElementById("bonusLuck").value = 0;
-        bonusLuck = 0;
-    }
-
-    updateLink();
-    calculateTrapSetup("cre");
-}
 
 function tourneyChanged() {
     var select = document.getElementById("tourney");
