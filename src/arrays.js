@@ -83,7 +83,16 @@ function CSVToArray(strData, strDelimiter) {
     return (arrData);
 }
 
-
+var standardCheeseCost = {
+    "Cheddar" : 10,
+    "Marble" : 50,
+    "Swiss" : 100,
+    "Brie" : 200,
+    "Gouda" : 600,
+    "Marble String" : 300,
+    "Swiss String" : 800,
+    "Brie String" : 1600,
+};
 //Function for determining size of multi-level array
 Object.size = function (obj) {
     var size = 0;

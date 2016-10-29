@@ -1161,42 +1161,9 @@ function cheeseChanged() {
 
     //Basic cheese costs
     var costElement = document.getElementById("cheeseCost");
-    if (cheeseName == "Cheddar") {
-        costElement.value = 10;
-        cheeseCost = 10;
-    }
-    else if (cheeseName == "Marble") {
-        costElement.value = 50;
-        cheeseCost = 50;
-    }
-    else if (cheeseName == "Swiss") {
-        costElement.value = 100;
-        cheeseCost = 100;
-    }
-    else if (cheeseName == "Brie") {
-        costElement.value = 200;
-        cheeseCost = 200;
-    }
-    else if (cheeseName == "Gouda") {
-        costElement.value = 600;
-        cheeseCost = 600;
-    }
-    else if (cheeseName == "Marble String") {
-        costElement.value = 300;
-        cheeseCost = 300;
-    }
-    else if (cheeseName == "Swiss String") {
-        costElement.value = 800;
-        cheeseCost = 800;
-    }
-    else if (cheeseName == "Brie String") {
-        costElement.value = 1600;
-        cheeseCost = 1600;
-    }
-    else {
-        costElement.value = 0;
-        cheeseCost = 0;
-    }
+
+    cheeseCost = standardCheeseCost[cheeseName] || 0;
+    costElement.value = cheeseCost;
 
     //Toxic checks
     if (document.getElementById("toggleCustom").checked == false) {
