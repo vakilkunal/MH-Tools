@@ -744,7 +744,7 @@ function findEff(mouseName) {
 	var eff;
 	if (trapType == '') eff = 0;
 	else {
-	var eff = parseInt(powersArray[mouseName][typeEff[trapType]])/100;	
+	var eff = (powersArray[mouseName][typeEff[trapType]])/100;
 	//console.log(trapType);
 	}
 	return eff;
@@ -1216,7 +1216,7 @@ function printCombinations(micePopulation, tableHTML) {
 	
 	var power = [];
 	for (var mouse in micePopulation) {
-		power[mouse] = parseInt(powersArray[mouse][0].replace(/,/g, ''));
+		power[mouse] = powersArray[mouse][0]
 	}
 	
 	var nWeapons = Object.size(weaponsArray);
@@ -1351,7 +1351,7 @@ function printCharmCombinations(micePopulation, tableHTML) {
 	
 	var power = [];
 	for (var mouse in micePopulation) {
-		power[mouse] = parseInt(powersArray[mouse][0].replace(/,/g, ''));
+		power[mouse] = powersArray[mouse][0];
 	}
 	
 	var nCharms = Object.size(charmsArray);
