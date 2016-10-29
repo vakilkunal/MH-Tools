@@ -968,29 +968,29 @@ function resetCharms() {
     charmChanged();
 }
 
-function highlightSpecialCharms(charmList) {
+function highlightSpecialCharms (charmList) {
     var select = document.getElementById("charm");
     var charmsDropdownHTML = '';
 
     var charmNames = Object.keys(charmsArray || []);
-    var nCharms = charmsArray.length;
-    for (var c = 0; c < nCharms; c++) {
-        charmsDropdownHTML += "<option>" + charmNames[c] + "</option>\n";
+    var nCharms = charmNames.length;
+    for (var c=0; c<nCharms; c++) {
+        charmsDropdownHTML += "<option>"+charmNames[c]+"</option>\n";
     }
-    select.innerHTML = "<option>No Charm</option>" + charmsDropdownHTML;
+    select.innerHTML = "<option>No Charm</option>"+charmsDropdownHTML;
 
-    for (var i = 0; i < charmList.length; i++) {
+    for (var i=0; i<charmList.length; i++) {
 
-        for (var j = 0; j < select.children.length; j++) {
+        for (var j=0; j<select.children.length; j++) {
             var child = select.children[j];
-            if (child.value == charmList[i] + " Charm") {
+            if (child.value == charmList[i]+" Charm") {
 
-                child.innerHTML = child.innerHTML + "*";
+                child.innerHTML = child.innerHTML+"*";
                 if (child.selected == true) {
                     charmName = child.innerHTML;
                     showPop(2);
                 }
-                select.innerHTML = select.innerHTML.slice(0, 25) + "<option>" + child.innerHTML + "</option>" + select.innerHTML.slice(25);
+                select.innerHTML = select.innerHTML.slice(0,25) + "<option>"+child.innerHTML+"</option>" + select.innerHTML.slice(25);
                 break;
             }
         }
