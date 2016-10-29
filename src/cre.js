@@ -3,34 +3,16 @@
 /*
  * Variable Initialization
  */
-var popLoaded = 0, baselineLoaded = 0;
-var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
-var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
-var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0, lanternStatus = '';
-var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
-var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
-var cheeseCost = 0, cheeseBonus = 0;
-var cheeseLoaded = 0, charmLoaded = 0;
-var sampleSize = 0;
+var cheeseCost = 0, sampleSize = 0;
 
 // Special charms
-var specialCharm = {
-"Champion Charm" : 1,
-"Growth Charm" : 1,
-"Spellbook Charm" : 1,
-"Wild Growth Charm" : 1,
-
-"Golden Tournament Base" : 1,
-"Soiled Base" : 1,
-"Spellbook Base" : 1
-};
 
 // Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
 var popCSV = [];
 var popArray = [];
 var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
+
 
 window.onload = function () {
 
@@ -130,19 +112,7 @@ window.onload = function () {
     loadBaseDropdown();
     loadCharmDropdown();
 
-    var gsParameter = getURLParameter("gs");
-    if (gsParameter != "null") {
-        gsParameter = "No";
-        var select = document.getElementById("gs");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == gsParameter) {
-                child.selected = true;
-                gsChanged();
-                break;
-            }
-        }
-    }
+    gsParamCheck();
 
     //Listening for changes in dropdowns or textboxes
     document.getElementById("toggleCustom").onchange = function () {
@@ -243,11 +213,11 @@ window.onload = function () {
     };
 
     document.getElementById("toxic").onchange = function () {
-        toxicChanged();
+        toxicChanged("cre");
     };
 
     document.getElementById("battery").onchange = function () {
-        batteryChanged();
+        batteryChanged(true);
     };
 
     document.getElementById("weapon").onchange = function () {
@@ -440,7 +410,7 @@ function checkLoadState() {
                 var child = select.children[i];
                 if (child.innerHTML == toxicParameter) {
                     child.selected = true;
-                    toxicChanged();
+                    toxicChanged("cre");
                     break;
                 }
             }
@@ -453,7 +423,7 @@ function checkLoadState() {
                 var child = select.children[i];
                 if (child.innerHTML == batteryParameter) {
                     child.selected = true;
-                    batteryChanged();
+                    batteryChanged(true);
                     break;
                 }
             }
@@ -482,15 +452,15 @@ function checkLoadState() {
         }, 3000);
     }
 }
-
+/**
+ * This one is different in CRE/best setup.
+ */
 function processPop() {
     var popText = pop.responseText;
 
     popCSV = CSVToArray(popText);
 
-
     var popCSVLength = Object.size(popCSV);
-
 
     //Creating popArray
     for (var i = 1; i < popCSVLength; i++) {
@@ -516,10 +486,7 @@ function processPop() {
         }
         else {
             if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
-
             if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-
-            //Assign AR to a specific location/phase/cheese/charm/mouse
             popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
 
             //Assign sample size value to a specific location/phase/cheese/charm when available
@@ -529,11 +496,9 @@ function processPop() {
         }
     }
 
-
     popLoaded = 1;
     checkLoadState();
 }
-
 
 var baselineArray = [];
 function processBaseline(baselineText) {
@@ -1178,20 +1143,6 @@ function loadTourneyDropdown() {
 
 }
 
-/**
- * Catch Rate calculation
- * Source: https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/
- * @param E Effectiveness
- * @param P Trap Power
- * @param L Trap Luck
- * @param M Mouse Power
- * @returns {number} Catch Rate Estimate
- */
-function calcCR(E, P, L, M) {
-    return Math.min((E * P + (3 - Math.min(E, 2)) * Math.pow((Math.min(E, 2) * L), 2)) / (E * P + M), 1);
-}
-
-
 function minLuck(E, M) {
     return Math.ceil(Math.sqrt((M / (3 - Math.min(E, 2))) / (Math.min(E, 2) * Math.min(E, 2))));
 }
@@ -1201,80 +1152,11 @@ function findEff(mouseName) {
     var eff;
     if (trapType == '') eff = 0;
     else {
-        // mousename test
-        // if (powersArray[mouseName] == undefined) console.log("mouseName: " + mouseName);
         eff = powersArray[mouseName][typeEff[trapType]] / 100;
-
-
     }
-
-
     return eff;
 }
 
-function findBaseline() {
-    //TODO make common cheese ar be global
-    var baselineAtt = baselineAttArray[cheeseName];
-    if (baselineAtt == undefined) {
-        baselineAtt = baselineArray[locationName + " (" + cheeseName + ")"];
-
-    }
-
-    return baselineAtt + trapAtt / 100 - trapAtt / 100 * baselineAtt;
-}
-
-function calcSpecialCharms(charmName) {
-    var charmsArrayN = charmsArray[charmName];
-
-    /* Basics */
-    charmPower = charmsArrayN[0];
-    charmBonus = charmsArrayN[1];
-    charmAtt = charmsArrayN[2];
-    charmLuck = charmsArrayN[3];
-    charmEff = parseFreshness[charmsArrayN[4].trim()];
-    if (charmName == "Champion Charm") {
-        //Check if GTB used. If so +4 luck
-        if (baseName == "Golden Tournament Base") {
-            charmLuck = charmsArrayN[3] + 4;
-        }
-        else if (baseName == "Silver Tournament Base") {
-            charmLuck = charmsArrayN[3] + 3;
-        }
-        else if (baseName == "Bronze Tournament Base") {
-            charmLuck = charmsArrayN[3] + 2;
-        }
-
-    } else if (charmName == "Growth Charm") {
-        //Check if soiled base used.
-        if (baseName == "Soiled Base") {
-            charmPower = charmsArrayN[0] + 100;
-            charmBonus = charmsArrayN[1] + 3;
-            charmAtt = charmsArrayN[2] + 5;
-            charmLuck = charmsArrayN[3] + 4;
-        }
-    } else if (charmName == "Spellbook Charm") {
-        //Spellbook base
-        if (baseName == "Spellbook Base") {
-            charmPower = (charmsArrayN[0]) + 500;
-            charmBonus = (charmsArrayN[1]) + 8;
-            charmEff = parseFreshness[charmsArrayN[4].trim()];
-
-        }
-
-    } else if (charmName == "Wild Growth Charm") {
-        //Soiled base
-        if (baseName == "Soiled Base") {
-            charmPower = charmsArrayN[0] + 300;
-            charmBonus = charmsArrayN[1] + 8;
-            charmAtt = charmsArrayN[2] + 20;
-            charmLuck = charmsArrayN[3] + 9;
-
-        }
-    }
-
-
-    calculateTrapSetup("cre");
-}
 
 /*
  function loadGangs (type) {
@@ -1289,9 +1171,6 @@ function calcSpecialCharms(charmName) {
  }
  */
 
-function commafy(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 function getURLParameter(name) {
     //Use component here to ensure correct decoding
@@ -1446,15 +1325,15 @@ function hideAllRows() {
 
 function phaseChanged() {
     console.log("Phase changed");
-    var select = document.getElementById("phase");
-    phaseName = select.children[select.selectedIndex].innerHTML;
-
     if (phaseName == "-") {
         $("#phaseRow").hide();
     }
     else {
         $("#phaseRow").show(500);
     }
+
+    var select = document.getElementById("phase");
+    phaseName = select.children[select.selectedIndex].innerHTML;
 
     var autoBase = '';
     if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
@@ -1537,11 +1416,11 @@ function cheeseChanged() {
     if (document.getElementById("toggleCustom").checked == false) {
         if (cheeseName == "Brie" || cheeseName == "SB+") {
             $("#toxicRow").show(500);
-            toxicChanged();
+            toxicChanged("cre");
         }
         else {
             $("#toxicRow").hide();
-            toxicChanged();
+            toxicChanged("cre");
         }
     }
 
@@ -1553,62 +1432,6 @@ function cheeseChanged() {
 function oilChanged() {
     var select = document.getElementById("lanternOil");
     lanternStatus = select.children[select.selectedIndex].innerHTML;
-
-    updateLink();
-    calculateTrapSetup("cre");
-}
-
-function toxicChanged() {
-    var select = document.getElementById("toxic");
-    isToxic = select.children[select.selectedIndex].innerHTML;
-
-    if (isToxic == "Yes" && (cheeseName == "Brie" || cheeseName == "SB+")) {
-        cheeseBonus = 20;
-    }
-    else {
-        cheeseBonus = 0;
-    }
-
-    updateLink();
-    calculateTrapSetup("cre");
-}
-
-function batteryChanged() {
-    var select = document.getElementById("battery");
-    var batteryLevel = select.children[select.selectedIndex].innerHTML;
-    if (batteryLevel == "1") {
-        batteryPower = 1;
-    }
-    else if (batteryLevel == "2") {
-        batteryPower = 2;
-    }
-    else if (batteryLevel == "3") {
-        batteryPower = 3;
-    }
-    else if (batteryLevel == "4") {
-        batteryPower = 4;
-    }
-    else if (batteryLevel == "5") {
-        batteryPower = 5;
-    }
-    else if (batteryLevel == "6") {
-        batteryPower = 6;
-    }
-    else if (batteryLevel == "7") {
-        batteryPower = 7;
-    }
-    else if (batteryLevel == "8") {
-        batteryPower = 8;
-    }
-    else if (batteryLevel == "9") {
-        batteryPower = 9;
-    }
-    else if (batteryLevel == "10") {
-        batteryPower = 10;
-    }
-    else if (batteryLevel == "-") {
-        batteryPower = 0;
-    }
 
     updateLink();
     calculateTrapSetup("cre");
@@ -1670,7 +1493,7 @@ function baseChanged() {
     if (basesArrayN == undefined) basesArrayN = [0];
 
     //Bases with special effects when paired with particular charm
-    if (specialCharm[baseName]) calcSpecialCharms(charmName);
+    if (specialCharm[baseName]) calcSpecialCharms(charmName, "cre");
     else {
         var charmsArrayN = charmsArray[charmName];
 
@@ -1720,7 +1543,7 @@ function charmChanged() {
     }
 
     //Charms with special effects when paired with particular base
-    else if (specialCharm[charmName]) calcSpecialCharms(charmName);
+    else if (specialCharm[charmName]) calcSpecialCharms(charmName, "cre");
 
 
     else {

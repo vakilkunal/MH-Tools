@@ -1,23 +1,7 @@
 "use strict";
 
-var popLoaded = 0, baselineLoaded = 0;
-var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
-var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
-var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0;
-var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
-var baseName = '', charmName = '', locationName = '', cheeseName = '', cheeseBonus = 0, tournamentName = '', weaponName = '', phaseName = '';
-var cheeseLoaded = 0, charmLoaded = 0;
 var d, popArrayLPC, resultsHTML;
 
-var specialCharm = [];
-specialCharm["Champion Charm"] = 1;
-specialCharm["Growth Charm"] = 1;
-specialCharm["Spellbook Charm"] = 1;
-specialCharm["Wild Growth Charm"] = 1;
-specialCharm["Golden Tournament Base"] = 1;
-specialCharm["Soiled Base"] = 1;
-specialCharm["Spellbook Base"] = 1;
 
 //TODO pass arguments to processX() functions instead of using global variables
 //TODO load XMLHttpRequests within a function so reduce global variables
@@ -65,15 +49,19 @@ function checkLoadState() {
 
 var popCSV = [];
 var popArray = [];
+
+/**
+ * This one is different in CRE/best setup.
+ */
 function processPop () {
 	var popText = pop.responseText;
 
 	popCSV = CSVToArray(popText);
-	//console.log(popCSV);	
-	
+	//console.log(popCSV);
+
 	var popCSVLength = Object.size(popCSV);
 	//console.log("popCSVLength", popCSVLength);
-	
+
 	//Creating popArray
 	for(var i=1; i<popCSVLength; i++) {
 		if (popArray[popCSV[i][0]] == undefined) popArray[popCSV[i][0]] = [];
@@ -89,21 +77,6 @@ function processPop () {
 	checkLoadState();
 }
 
-var baselineArray = [];
-function processBaseline(baselineText) {
-	baselineArray = baselineText.split("\n");
-	var baselineArrayLength = baselineArray.length;
-	
-	for (var i=0; i<baselineArrayLength; i++) {
-		baselineArray[i] = baselineArray[i].split("\t");
-		//console.log(baselineArray[i][0]);
-		baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
-	}
-
-	baselineLoaded = 1;
-	checkLoadState();
-	//console.log(baselineArray);
-}
 
 function getDataFromURL(parameters) {
     if (parameters) {
@@ -146,6 +119,7 @@ function loadCharmSelection() {
 
 var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
+
 window.onload = function () {
 
 	// if (location.href.indexOf("https") < 0) {
@@ -299,19 +273,7 @@ window.onload = function () {
 		processRawData(rawCharms, "charms");
 	}
 
-	var gsParameter = getURLParameter("gs");
-	if(gsParameter != "null") {
-		gsParameter = "No";
-		var select = document.getElementById("gs");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == gsParameter) {
-				child.selected = true;
-		    	gsChanged();
-				break;
-			}
-		}
-	}
+	gsParamCheck();
 	
 	var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
 	if (bonusLuckParameter >= 0) {
@@ -729,129 +691,6 @@ function loadCharmDropdown() {
 	}
 }
 
-function calcCR(E, P, L, M) {
-//	console.log(E);
-//	console.log(P);
-//	console.log(L);
-//	console.log(M);
-
-	var CR = Math.min((E*P + (3-Math.min(E,2))*Math.pow((Math.min(E,2)*L),2))/(E*P + M), 1);
-	
-	return CR;
-}
-
-function findEff(mouseName) {
-	var eff;
-	if (trapType == '') eff = 0;
-	else {
-	var eff = (powersArray[mouseName][typeEff[trapType]])/100;
-	//console.log(trapType);
-	}
-	return eff;
-}
-
-function findBaseline() {
-	//TODO make common cheese ar be global
-	var baselineAtt = baselineAttArray[cheeseName];
-	if (baselineAtt == undefined) {
-		baselineAtt = baselineArray[locationName + " (" + cheeseName + ")"];
-	}
-			
-	return baselineAtt;
-}
-
-function calcSpecialCharms(charmName) {
-	var charmsArrayN = charmsArray[charmName]
-
-	if (charmName == "Champion Charm") {
-		//Check if GTB used. If so +4 luck
-		if (baseName == "Golden Tournament Base") {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3])+4;
-			//console.log(charmLuck);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		} else {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		}
-
-	} else if (charmName == "Growth Charm") {
-		//Check if soiled base used.
-		if (baseName == "Soiled Base") {
-			charmPower = parseInt(charmsArrayN[0])+100;
-			charmBonus = parseInt(charmsArrayN[1])+3;
-			charmAtt = parseInt(charmsArrayN[2])+5;
-			charmLuck = parseInt(charmsArrayN[3])+4;
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		} else {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		}
-
-	} else if (charmName == "Spellbook Charm") {
-		//Spellbook base
-		if (baseName == "Spellbook Base") {
-			charmPower = parseInt(charmsArrayN[0])+500;
-			charmBonus = parseInt(charmsArrayN[1])+8;
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		} else {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		}
-
-	} else if (charmName == "Wild Growth Charm") {
-		//Soiled base
-		if (baseName == "Soiled Base") {
-			charmPower = parseInt(charmsArrayN[0])+300;
-			charmBonus = parseInt(charmsArrayN[1])+8;
-			charmAtt = parseInt(charmsArrayN[2])+20;
-			charmLuck = parseInt(charmsArrayN[3])+9;
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		} else {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		
-		}
-	}	
-	
-	//console.log(charmLuck);
-	calculateTrapSetup();
-	//showPop(); console.log("SpecialCharm");
-}
-
-function commafy(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function getURLParameter(name) {
-    return decodeURI(
-        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-    );
-}
-
 function updateLink() {
 	var URLString = 'setup.html?';
 	var select = document.getElementById("charm");
@@ -898,7 +737,6 @@ function weaponChanged() {
 function locationChanged () {
     var select = document.getElementById("location");
 	locationName = select.children[select.selectedIndex].innerHTML;
-	ga('send', 'event', 'location', 'changed', locationName);
 	updateLink();
 
 	hideAllRows();
@@ -939,77 +777,22 @@ function hideAllRows() {
 	$("#sliderRow").hide();
 }
 
-function toxicChanged() {
-	var select = document.getElementById("toxic");
-	isToxic = select.children[select.selectedIndex].innerHTML;
-
-	if (isToxic == "Yes" && (cheeseName == "Brie" || cheeseName == "SB+")) {
-		cheeseBonus = 20;
-	}
-	else {
-		cheeseBonus = 0;
-	}
-
-	updateLink();
-	calculateTrapSetup();
-}
-
-function batteryChanged() {
-	var select = document.getElementById("battery");
-	var batteryLevel = select.children[select.selectedIndex].innerHTML;
-	if (batteryLevel == "1") {
-		batteryPower = 1;
-	}
-	else if (batteryLevel == "2") {
-		batteryPower = 2;
-	}
-	else if (batteryLevel == "3") {
-		batteryPower = 3;
-	}
-	else if (batteryLevel == "4") {
-		batteryPower = 4;
-	}
-	else if (batteryLevel == "5") {
-		batteryPower = 5;
-	}
-	else if (batteryLevel == "6") {
-		batteryPower = 6;
-	}
-	else if (batteryLevel == "7") {
-		batteryPower = 7;
-	}
-	else if (batteryLevel == "8") {
-		batteryPower = 8;
-	}
-	else if (batteryLevel == "9") {
-		batteryPower = 9;
-	}
-	else if (batteryLevel == "10") {
-		batteryPower = 10;
-	}
-	else if (batteryLevel == "-") {
-		batteryPower = 0;
-	}
-
-	updateLink();
-}
-
 function phaseChanged () {
 	console.log("Phase changed");
+
     var select = document.getElementById("phase");
 	phaseName = select.children[select.selectedIndex].innerHTML;
-	ga('send', 'event', 'phase', 'changed', phaseName);
-	
-	var autoBase = ''
+
+	var autoBase = '';
 	if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
 	else if ((phaseName == "Bombing Run" || phaseName == "The Mad Depths" || phaseName == "Treacherous Tunnels") && baseName == "Magnet Base") autoBase = " ";
 	else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
 	else if (phaseName == "The Mad Depths" && baseName == "Hearthstone Base") autoBase = " ";
 	
 	if (autoBase != "") {
-		var select = document.getElementById("base");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
+		var selectBase = document.getElementById("base");
+		for (var i=0; i<selectBase.children.length; i++) {
+			var child = selectBase.children[i];
 			if (child.innerHTML == autoBase) {
 				child.selected = true;
 	    		baseChanged();
@@ -1027,11 +810,10 @@ function phaseChanged () {
 		pourLuck = 0;
 		calculateTrapSetup();
 	}
-	
-	//calculateTrapSetup("cre");
-	
+
 	loadCheeseDropdown();
 	updateLink();
+	//ga('send', 'event', 'phase', 'changed', phaseName);
 }
 
 function cheeseChanged() {
@@ -1070,12 +852,7 @@ function baseChanged() {
 
 		//If No charm selected
 		if (charmsArrayN == undefined) {
-			charmsArrayN= [];
-			charmsArrayN[0] = 0;
-			charmsArrayN[1] = 0;
-			charmsArrayN[2] = 0;
-			charmsArrayN[3] = 0;
-			charmsArrayN[4] = 0;			
+			charmsArrayN= [0,0,0,0,0];
 		}
 	
 		else {
@@ -1104,16 +881,12 @@ function charmChanged() {
 
 	//If No charm selected
 	if (charmsArrayN == undefined) {
-		charmsArrayN= [];
-		charmsArrayN[0] = 0;
-		charmsArrayN[1] = 0;
-		charmsArrayN[2] = 0;
-		charmsArrayN[3] = 0;
+		charmsArrayN= [0,0,0,0,0];
 
-		charmPower = parseInt(charmsArrayN[0]);
-		charmBonus = parseInt(charmsArrayN[1]);
-		charmAtt = parseInt(charmsArrayN[2]);
-		charmLuck = parseInt(charmsArrayN[3]);
+		charmPower = (charmsArrayN[0]);
+		charmBonus = (charmsArrayN[1]);
+		charmAtt = (charmsArrayN[2]);
+		charmLuck = (charmsArrayN[3]);
 		charmEff = 0;
 
 		calculateTrapSetup();
@@ -1127,10 +900,10 @@ function charmChanged() {
 	//console.log(specialCharm[charmName]);
 
 	else {
-		charmPower = parseInt(charmsArrayN[0]);
-		charmBonus = parseInt(charmsArrayN[1]);
-		charmAtt = parseInt(charmsArrayN[2]);
-		charmLuck = parseInt(charmsArrayN[3]);
+		charmPower = (charmsArrayN[0]);
+		charmBonus = (charmsArrayN[1]);
+		charmAtt = (charmsArrayN[2]);
+		charmLuck = (charmsArrayN[3]);
 		charmEff = parseFreshness[charmsArrayN[4]];
 
 		calculateTrapSetup();
