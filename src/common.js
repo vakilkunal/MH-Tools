@@ -2,6 +2,8 @@
  * Created by renet on 2016/10/29.
  * Functions that are used for both the CRE and the Best setup tool
  */
+var user;
+var CRE_USER = "cre";
 
 var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
@@ -24,11 +26,19 @@ var specialCharm = {
     "Spellbook Base" : 1
 };
 
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
 function commafy(x) {
     return x.toLocaleString();
 }
 
-function calcSpecialCharms(charmName, trapsetupuser) {
+function calcSpecialCharms(charmName) {
     var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
 
     /* Basics */
@@ -77,8 +87,8 @@ function calcSpecialCharms(charmName, trapsetupuser) {
         }
     }
 
-    if (trapsetupuser)
-        calculateTrapSetup(trapsetupuser);
+    if (user == CRE_USER)
+        calculateTrapSetup();
 }
 
 function getURLParameter(name) {
@@ -87,7 +97,7 @@ function getURLParameter(name) {
     );
 }
 
-function calculateTrapSetup(user) {
+function calculateTrapSetup() {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
     //console.log(weaponPower + " " + basePower + " " + charmPower);
 
@@ -278,7 +288,7 @@ function calculateTrapSetup(user) {
         if (trapEff > 6) trapEff = 6;
         else if (trapEff < -6) trapEff = -6;
 
-        if (user == "cre") {
+        if (user == CRE_USER) {
             showPop(2);
             showTrapSetup();
         }
@@ -298,10 +308,10 @@ function calcCR(E, P, L, M) {
     return Math.min((E * P + (3 - Math.min(E, 2)) * Math.pow((Math.min(E, 2) * L), 2)) / (E * P + M), 1);
 }
 
-function batteryChanged(cre) {
+function batteryChanged() {
     var select = document.getElementById("battery");
     var batteryLevel = select.children[select.selectedIndex].innerHTML;
-    batteryPower = parseint(batteryLevel) || 0;
+    batteryPower = parseInt(batteryLevel) || 0;
 
     if (batteryPower < 0)
         batteryPower = 0;
@@ -309,11 +319,10 @@ function batteryChanged(cre) {
         batteryPower = 10;
 
     updateLink();
-    if (cre)
-        calculateTrapSetup("cre");
+
+    if (user == CRE_USER)
+        calculateTrapSetup();
 }
-
-
 
 var baselineArray = [];
 function processBaseline(baselineText) {
@@ -367,7 +376,7 @@ function gsParamCheck() {
     }
 }
 
-function toxicChanged(trapSetupUser) {
+function toxicChanged() {
     var select = document.getElementById("toxic");
     isToxic = select.children[select.selectedIndex].innerHTML;
 
@@ -379,7 +388,7 @@ function toxicChanged(trapSetupUser) {
     }
 
     updateLink();
-    calculateTrapSetup(trapSetupUser);
+    calculateTrapSetup();
 }
 
 function populateSublocationDropdown(locationName) {
@@ -414,7 +423,7 @@ function populateSublocationDropdown(locationName) {
 function charmChangeCommon() {
     updateLink();
     var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
-    if (specialCharm[charmName]) calcSpecialCharms(charmName, "cre");
+    if (specialCharm[charmName]) calcSpecialCharms(charmName);
     else {
         charmPower = (charmsArrayN[0]);
         charmBonus = (charmsArrayN[1]);
@@ -458,5 +467,83 @@ function showTrapSetup(type) {
     if (type == 0) trapSetup.innerHTML = "<tr><td></td></tr>";
     else {
         trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr><tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr><tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
+    }
+}
+
+function gsChanged() {
+    var select = document.getElementById("gs");
+
+    if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
+    else gsLuck = 0;
+
+    updateLink();
+    calculateTrapSetup();
+    //showPop();
+}
+
+function phaseChanged() {
+    console.log("Phase changed");
+    if (phaseName == "-") {
+        $("#phaseRow").hide();
+    }
+    else {
+        $("#phaseRow").show(500);
+    }
+
+    var select = document.getElementById("phase");
+    phaseName = select.children[select.selectedIndex].innerHTML;
+
+    var autoBase = '';
+    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
+    else if ((phaseName == "Bombing Run"
+        || phaseName == "The Mad Depths"
+        || phaseName == "Treacherous Tunnels")
+        && baseName == "Magnet Base") autoBase = "";
+    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
+    else if (phaseName == "The Mad Depths"
+        && baseName == "Hearthstone Base") autoBase = "";
+
+    if (autoBase != "") {
+        var selectBase = document.getElementById("base");
+        selectBase.value = autoBase;
+        baseChanged();
+    }
+
+    if (locationName == "Twisted Garden"
+        && phaseName == "Poured" ) {
+        pourBonus = 5;
+        pourLuck = 5;
+        calculateTrapSetup();
+    } else {
+        pourBonus = 0;
+        pourLuck = 0;
+        calculateTrapSetup();
+    }
+
+    loadCheeseDropdown();
+    updateLink();
+}
+
+function bonusLuckChanged() {
+    var luckInput = document.getElementById("bonusLuck").value;
+
+    if (luckInput >= 0) {
+        bonusLuck = luckInput;
+    }
+    else if (luckInput < 0) {
+        document.getElementById("bonusLuck").value = 0;
+        bonusLuck = 0;
+    }
+
+    updateLink();
+    calculateTrapSetup();
+}
+
+function checkToxicParam() {
+    var toxicParameter = getURLParameter("toxic");
+    if (toxicParameter != "null") {
+        var select = document.getElementById("toxic");
+        select.value = toxicParameter;
+        toxicChanged();
     }
 }

@@ -16,18 +16,7 @@ function checkLoadState() {
         //loadTourneyDropdown();
         //updateLink();
 
-        var toxicParameter = getURLParameter("toxic");
-        if (toxicParameter != "null") {
-            var select = document.getElementById("toxic");
-            for (var i = 0; i < select.children.length; i++) {
-                var child = select.children[i];
-                if (child.innerHTML == toxicParameter) {
-                    child.selected = true;
-                    toxicChanged();
-                    break;
-                }
-            }
-        }
+        checkToxicParam();
 
         var batteryParameter = getURLParameter("battery");
         if (batteryParameter != "null") {
@@ -121,6 +110,7 @@ var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 
 window.onload = function () {
+    user = "setup";
 
     // if (location.href.indexOf("https") < 0) {
     // 	var currLoc = location.href;
@@ -152,7 +142,7 @@ window.onload = function () {
     // Hacky, use more precise "SUBMIT_DELAY" replacement
 
     //Initialize tablesorter, bind to table
-    $.tablesorter.defaults.sortInitialOrder = 'desc';
+  /*  $.tablesorter.defaults.sortInitialOrder = 'desc';
     $("#results").tablesorter({
         // sortForce: [[noMice,1]],
         sortReset: true,
@@ -236,7 +226,7 @@ window.onload = function () {
         $('#display')
             .append('<li><span class="str">"' + e.type + msg + '</li>')
             .find('li:first').remove();
-    });
+    });*/
 
     loadWeaponSelection();
     loadBaseSelection();
@@ -376,7 +366,7 @@ window.onload = function () {
             this.checked = false;
         });
     })
-}
+};
 
 function saveSetupCookie() {
     var checkedWeapons = [];
@@ -733,46 +723,6 @@ function hideAllRows() {
     $("#sliderRow").hide();
 }
 
-function phaseChanged() {
-    console.log("Phase changed");
-
-    var select = document.getElementById("phase");
-    phaseName = select.children[select.selectedIndex].innerHTML;
-
-    var autoBase = '';
-    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-    else if (phaseName.indexOf("Hearthstone") >= 0)
-        autoBase = "Hearthstone Base";
-    else if ((phaseName == "Bombing Run"
-        || phaseName == "The Mad Depths"
-        || phaseName == "Treacherous Tunnels")
-        && baseName == "Magnet Base") {
-        autoBase = "";
-    }
-    else if (phaseName == "The Mad Depths"
-        && baseName == "Hearthstone Base") autoBase = "";
-
-    if (autoBase != "") {
-        var selectBase = document.getElementById("base");
-        selectBase.value = autoBase;
-        baseChanged();
-    }
-
-    if (locationName == "Twisted Garden"
-        && phaseName == "Poured") {
-        pourBonus = 5;
-        pourLuck = 5;
-        calculateTrapSetup();
-    } else {
-        pourBonus = 0;
-        pourLuck = 0;
-        calculateTrapSetup();
-    }
-
-    loadCheeseDropdown();
-    updateLink();
-}
-
 function cheeseChanged() {
     console.log("Cheese changed");
     var select = document.getElementById("cheese");
@@ -828,32 +778,6 @@ function charmChanged() {
     var select = document.getElementById("charm");
     charmName = select.children[select.selectedIndex].innerHTML;
     charmChangeCommon();
-    calculateTrapSetup();
-}
-
-function gsChanged() {
-    var select = document.getElementById("gs");
-
-    if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
-    else gsLuck = 0;
-
-    updateLink();
-    calculateTrapSetup();
-    //showPop();
-}
-
-function bonusLuckChanged() {
-    var select = document.getElementById("bonusLuck").value;
-
-    if (select >= 0) {
-        bonusLuck = select;
-    }
-    else if (select < 0) {
-        document.getElementById("bonusLuck").value = 0;
-        bonusLuck = 0;
-    }
-
-    updateLink();
     calculateTrapSetup();
 }
 

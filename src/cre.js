@@ -15,7 +15,7 @@ var baseline = new XMLHttpRequest();
 
 
 window.onload = function () {
-    user = "cre";
+    user = CRE_USER;
 
     // if (location.href.indexOf("https") < 0) {
     // 	var currLoc = location.href;
