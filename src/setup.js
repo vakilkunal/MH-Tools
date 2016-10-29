@@ -90,14 +90,7 @@ function getDataFromURL(parameters) {
     }
 }
 
-function showTrapSetup(type) {
-	var trapSetup = document.getElementById("trapSetup");
 
-	if (type == 0) trapSetup.innerHTML = "<tr><td></td></tr>";
-	else {
-		trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr><tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr><tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
-	}
-}
 
 function loadWeaponSelection() {
 	var len = Object.size(weaponsArray);
@@ -552,34 +545,6 @@ function checkCookies() {
 	}
 }
 
-function loadLocationDropdown() {
-	var locationDropdown = document.getElementById("location");
-	var locationDropdownHTML = '<option></option>';
-
-	var locations = Object.keys(popArray || []);
-	/* Safety, JS does not define iteration order */
-	locations.sort();
-
-	for (var key in locations) {
-		locationDropdownHTML += "<option>" + locations[key] + "</option>\n";
-	}
-	
-	locationDropdown.innerHTML = locationDropdownHTML;
-	
-	var locationParameter = getURLParameter("location");
-	if(locationParameter != "null") {
-		var select = document.getElementById("location");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == locationParameter) {
-				child.selected = true;
-		    	locationChanged();
-				break;
-			}
-		}
-	}
-}
-
 function loadCheeseDropdown() {
 	var cheeseDropdown = document.getElementById("cheese");
 	var cheeseDropdownHTML = '';
@@ -651,14 +616,8 @@ function loadCharmDropdown() {
 	var charmParameter = getURLParameter("charm");
 	if(charmParameter != "null") {
 		var select = document.getElementById("charm");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == charmParameter) {
-				child.selected = true;
-		    	charmChanged();
-				break;
-			}
-		}
+		select.value = charmParameter;
+		charmChanged();
 	}
 }
 
@@ -756,27 +715,29 @@ function phaseChanged () {
 
 	var autoBase = '';
 	if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-	else if ((phaseName == "Bombing Run" || phaseName == "The Mad Depths" || phaseName == "Treacherous Tunnels") && baseName == "Magnet Base") autoBase = " ";
-	else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
-	else if (phaseName == "The Mad Depths" && baseName == "Hearthstone Base") autoBase = " ";
+	else if (phaseName.indexOf("Hearthstone") >= 0)
+		autoBase = "Hearthstone Base";
+	else if ((phaseName == "Bombing Run"
+		|| phaseName == "The Mad Depths"
+		|| phaseName == "Treacherous Tunnels")
+		&& baseName == "Magnet Base") {
+		autoBase = "";
+	}
+	else if (phaseName == "The Mad Depths"
+		&& baseName == "Hearthstone Base") autoBase = "";
 	
 	if (autoBase != "") {
 		var selectBase = document.getElementById("base");
-		for (var i=0; i<selectBase.children.length; i++) {
-			var child = selectBase.children[i];
-			if (child.innerHTML == autoBase) {
-				child.selected = true;
-	    		baseChanged();
-				break;
-			}
-		}
-	}	
-	
-	if (locationName=="Twisted Garden" && phaseName=="Poured" && pourBonus == 0) {
+		selectBase.value = autoBase;
+		baseChanged();
+	}
+
+	if (locationName == "Twisted Garden"
+		&& phaseName == "Poured" ) {
 		pourBonus = 5;
 		pourLuck = 5;
 		calculateTrapSetup();
-	} else if (!(locationName=="Twisted Garden" && phaseName=="Poured") && pourBonus == 5) {
+	} else {
 		pourBonus = 0;
 		pourLuck = 0;
 		calculateTrapSetup();
@@ -784,7 +745,6 @@ function phaseChanged () {
 
 	loadCheeseDropdown();
 	updateLink();
-	//ga('send', 'event', 'phase', 'changed', phaseName);
 }
 
 function cheeseChanged() {
@@ -819,20 +779,14 @@ function baseChanged() {
 	//Bases with special effects when paired with particular charm
 	if (specialCharm[baseName]) calcSpecialCharms(charmName);
 	else {
-		var charmsArrayN = charmsArray[charmName];
+		var charmsArrayN = charmsArray[charmName] || [0,0,0,0, "No Effect"];
 
-		//If No charm selected
-		if (charmsArrayN == undefined) {
-			charmsArrayN= [0,0,0,0,0];
-		}
-	
-		else {
-			charmPower = parseInt(charmsArrayN[0]);
-			charmBonus = parseInt(charmsArrayN[1]);
-			charmAtt = parseInt(charmsArrayN[2]);
-			charmLuck = parseInt(charmsArrayN[3]);
-			charmEff = parseFreshness[charmsArrayN[4]];
-		}
+		charmPower = parseInt(charmsArrayN[0]);
+		charmBonus = parseInt(charmsArrayN[1]);
+		charmAtt = parseInt(charmsArrayN[2]);
+		charmLuck = parseInt(charmsArrayN[3]);
+		charmEff = parseFreshness[charmsArrayN[4]];
+
 	}
 
 	basePower = parseInt(basesArrayN[0]);
@@ -845,42 +799,10 @@ function baseChanged() {
 }
 
 function charmChanged() {
-	ga('send', 'event', 'charm', 'changed', charmName);
-	updateLink();
-
-	var charmsArrayN = charmsArray[charmName];
-
-	//If No charm selected
-	if (charmsArrayN == undefined) {
-		charmsArrayN= [0,0,0,0,0];
-
-		charmPower = (charmsArrayN[0]);
-		charmBonus = (charmsArrayN[1]);
-		charmAtt = (charmsArrayN[2]);
-		charmLuck = (charmsArrayN[3]);
-		charmEff = 0;
-
-		calculateTrapSetup();
-		//showPop();
-	}
-
-	//Charms with special effects when paired with particular base
-	else if (specialCharm[charmName]) {
-		calcSpecialCharms(charmName);
-	}
-	//console.log(specialCharm[charmName]);
-
-	else {
-		charmPower = (charmsArrayN[0]);
-		charmBonus = (charmsArrayN[1]);
-		charmAtt = (charmsArrayN[2]);
-		charmLuck = (charmsArrayN[3]);
-		charmEff = parseFreshness[charmsArrayN[4]];
-
-		calculateTrapSetup();
-		//showPop();
-	}
-	//console.log(charmsArrayN);
+	var select = document.getElementById("charm");
+	charmName = select.children[select.selectedIndex].innerHTML;
+	charmChangeCommon();
+	calculateTrapSetup();
 }
 
 function gsChanged() {

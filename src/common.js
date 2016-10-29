@@ -367,22 +367,6 @@ function gsParamCheck() {
     }
 }
 
-function gsParamCheck() {
-    var gsParameter = getURLParameter("gs");
-    if (gsParameter != "null") {
-        gsParameter = "No";
-        var select = document.getElementById("gs");
-        for (var i=0; i<select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == gsParameter) {
-                child.selected = true;
-                gsChanged();
-                break;
-            }
-        }
-    }
-}
-
 function toxicChanged(trapSetupUser) {
     var select = document.getElementById("toxic");
     isToxic = select.children[select.selectedIndex].innerHTML;
@@ -425,4 +409,54 @@ function populateSublocationDropdown(locationName) {
     loadCheeseDropdown();
     phaseChanged();
     //Load cheese dropdown
+}
+
+function charmChangeCommon() {
+    updateLink();
+    var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
+    if (specialCharm[charmName]) calcSpecialCharms(charmName, "cre");
+    else {
+        charmPower = (charmsArrayN[0]);
+        charmBonus = (charmsArrayN[1]);
+        charmAtt = (charmsArrayN[2]);
+        charmLuck = (charmsArrayN[3]);
+        charmEff = parseFreshness[charmsArrayN[4].trim()];
+    }
+}
+
+function loadLocationDropdown() {
+    var locationDropdown = document.getElementById("location");
+    var locationDropdownHTML = '<option></option>';
+
+    var locations = Object.keys(popArray || []);
+    /* Safety, JS does not define iteration order */
+    locations.sort();
+
+    for (var key in locations) {
+        locationDropdownHTML += "<option>" + locations[key] + "</option>\n";
+    }
+
+    locationDropdown.innerHTML = locationDropdownHTML;
+
+    var locationParameter = getURLParameter("location");
+    if (locationParameter != "null") {
+        var select = document.getElementById("location");
+        for (var i = 0; i < select.children.length; i++) {
+            var child = select.children[i];
+            if (child.innerHTML == locationParameter) {
+                child.selected = true;
+                locationChanged();
+                break;
+            }
+        }
+    }
+}
+
+function showTrapSetup(type) {
+    var trapSetup = document.getElementById("trapSetup");
+
+    if (type == 0) trapSetup.innerHTML = "<tr><td></td></tr>";
+    else {
+        trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr><tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr><tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
+    }
 }
