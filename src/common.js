@@ -29,7 +29,7 @@ function commafy(x) {
 }
 
 function calcSpecialCharms(charmName, trapsetupuser) {
-    var charmsArrayN = charmsArray[charmName];
+    var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
 
     /* Basics */
     charmPower = charmsArrayN[0];
@@ -398,3 +398,31 @@ function toxicChanged(trapSetupUser) {
     calculateTrapSetup(trapSetupUser);
 }
 
+function populateSublocationDropdown(locationName) {
+    var sublDropdown = document.getElementById("phase");
+    var sublDropdownHTML = '';
+
+    var sublocations = Object.keys(popArray[locationName] || []);
+    for (var key in sublocations) {
+        sublDropdownHTML += "<option>" + sublocations[key] + "</option>\n";
+    }
+
+    sublDropdown.innerHTML = sublDropdownHTML;
+    phaseName = sublocations[0];
+
+    var phaseParameter = getURLParameter("phase");
+    if (phaseParameter != "null") {
+        var select = document.getElementById("phase");
+        for (var i = 0; i < select.children.length; i++) {
+            var child = select.children[i];
+            if (child.innerHTML == phaseParameter) {
+                child.selected = true;
+                break;
+            }
+        }
+    }
+
+    loadCheeseDropdown();
+    phaseChanged();
+    //Load cheese dropdown
+}

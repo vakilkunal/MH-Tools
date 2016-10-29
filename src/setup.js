@@ -556,10 +556,12 @@ function loadLocationDropdown() {
 	var locationDropdown = document.getElementById("location");
 	var locationDropdownHTML = '<option></option>';
 
-	var popArrayLength = Object.size(popArray);
+	var locations = Object.keys(popArray || []);
+	/* Safety, JS does not define iteration order */
+	locations.sort();
 
-	for (var i=0; i<popArrayLength; i++) {
-		locationDropdownHTML += "<option>"+Object.keys(popArray)[i]+"</option>\n";
+	for (var key in locations) {
+		locationDropdownHTML += "<option>" + locations[key] + "</option>\n";
 	}
 	
 	locationDropdown.innerHTML = locationDropdownHTML;
@@ -576,37 +578,6 @@ function loadLocationDropdown() {
 			}
 		}
 	}
-}
-
-function populateSublocationDropdown (locationName) {
-	var sublDropdown = document.getElementById("phase");
-	var sublDropdownHTML = '';
-	
-	var nSublocations = Object.size(popArray[locationName]);
-	
-	for (var i=0; i<nSublocations; i++) {
-		var option = Object.keys(popArray[locationName])[i];
-		sublDropdownHTML += "<option>"+option+"</option>\n";
-	}
-	
-	sublDropdown.innerHTML = sublDropdownHTML;
-	phaseName = Object.keys(popArray[locationName])[0];
-	
-	var phaseParameter = getURLParameter("phase");
-	if(phaseParameter != "null") {
-		var select = document.getElementById("phase");
-		for (var i=0; i<select.children.length; i++) {
-			var child = select.children[i];
-			if (child.innerHTML == phaseParameter) {
-				child.selected = true;
-				break;
-			}
-		}
-	}
-	
-	loadCheeseDropdown();
-   	phaseChanged();
-	//Load cheese dropdown
 }
 
 function loadCheeseDropdown() {

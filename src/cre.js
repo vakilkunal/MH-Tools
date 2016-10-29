@@ -1004,8 +1004,8 @@ function loadLocationDropdown() {
     var locationDropdownHTML = '<option></option>';
 
     var locations = Object.keys(popArray || []);
-    locations.sort();
     /* Safety, JS does not define iteration order */
+    locations.sort();
 
     for (var key in locations) {
         locationDropdownHTML += "<option>" + locations[key] + "</option>\n";
@@ -1027,36 +1027,7 @@ function loadLocationDropdown() {
     }
 }
 
-function populateSublocationDropdown(locationName) {
-    var sublDropdown = document.getElementById("phase");
-    var sublDropdownHTML = '';
 
-    var sublocations = Object.keys(popArray[locationName] || []);
-    for (var key in sublocations) {
-        sublDropdownHTML += "<option>" + sublocations[key] + "</option>\n";
-    }
-
-    sublDropdown.innerHTML = sublDropdownHTML;
-    // location test
-    // if (popArray[locationName] == undefined) console.log("locationName: " + locationName);
-    phaseName = sublocations[0];
-
-    var phaseParameter = getURLParameter("phase");
-    if (phaseParameter != "null") {
-        var select = document.getElementById("phase");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == phaseParameter) {
-                child.selected = true;
-                break;
-            }
-        }
-    }
-
-    loadCheeseDropdown();
-    phaseChanged();
-    //Load cheese dropdown
-}
 
 function loadCheeseDropdown() {
     console.log("Reloading cheese list");
@@ -1146,17 +1117,6 @@ function loadTourneyDropdown() {
 function minLuck(E, M) {
     return Math.ceil(Math.sqrt((M / (3 - Math.min(E, 2))) / (Math.min(E, 2) * Math.min(E, 2))));
 }
-
-
-function findEff(mouseName) {
-    var eff;
-    if (trapType == '') eff = 0;
-    else {
-        eff = powersArray[mouseName][typeEff[trapType]] / 100;
-    }
-    return eff;
-}
-
 
 /*
  function loadGangs (type) {
@@ -1495,20 +1455,13 @@ function baseChanged() {
     //Bases with special effects when paired with particular charm
     if (specialCharm[baseName]) calcSpecialCharms(charmName, "cre");
     else {
-        var charmsArrayN = charmsArray[charmName];
-
-        //If No charm selected
-        if (charmsArrayN == undefined) {
-            charmsArrayN = [0,0,0,0,0];
-        }
-
-        else {
-            charmPower = (charmsArrayN[0]);
-            charmBonus = (charmsArrayN[1]);
-            charmAtt = (charmsArrayN[2]);
-            charmLuck = (charmsArrayN[3]);
-            charmEff = parseFreshness[charmsArrayN[4].trim()];
-        }
+        var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
+        /** Necessary 'cause we might have changed from special to non-specila base */
+        charmPower = (charmsArrayN[0]);
+        charmBonus = (charmsArrayN[1]);
+        charmAtt = (charmsArrayN[2]);
+        charmLuck = (charmsArrayN[3]);
+        charmEff = parseFreshness[charmsArrayN[4].trim()];
     }
 
     basePower = (basesArrayN[0]);
@@ -1527,25 +1480,8 @@ function charmChanged() {
     charmName = select.children[select.selectedIndex].innerHTML;
     updateLink();
 
-    var charmsArrayN = charmsArray[charmName.replace('*', '')];
-
-    //If No charm selected
-    if (charmsArrayN == undefined) {
-        charmsArrayN = [0,0,0,0,0];
-
-        charmPower = (charmsArrayN[0]);
-        charmBonus = (charmsArrayN[1]);
-        charmAtt = (charmsArrayN[2]);
-        charmLuck = (charmsArrayN[3]);
-        charmEff = 0;
-
-        calculateTrapSetup("cre");
-    }
-
-    //Charms with special effects when paired with particular base
-    else if (specialCharm[charmName]) calcSpecialCharms(charmName, "cre");
-
-
+    var charmsArrayN = charmsArray[charmName.replace('*', '')] || [0,0,0,0,"No Effect"];
+    if (specialCharm[charmName]) calcSpecialCharms(charmName, "cre")
     else {
         charmPower = (charmsArrayN[0]);
         charmBonus = (charmsArrayN[1]);
