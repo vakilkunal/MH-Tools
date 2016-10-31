@@ -142,7 +142,7 @@ window.onload = function () {
     // Hacky, use more precise "SUBMIT_DELAY" replacement
 
     //Initialize tablesorter, bind to table
-  /*  $.tablesorter.defaults.sortInitialOrder = 'desc';
+    $.tablesorter.defaults.sortInitialOrder = 'desc';
     $("#results").tablesorter({
         // sortForce: [[noMice,1]],
         sortReset: true,
@@ -226,7 +226,7 @@ window.onload = function () {
         $('#display')
             .append('<li><span class="str">"' + e.type + msg + '</li>')
             .find('li:first').remove();
-    });*/
+    });
 
     loadWeaponSelection();
     loadBaseSelection();
