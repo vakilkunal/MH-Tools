@@ -1,5 +1,6 @@
 "use strict";
-
+var POPULATIONS_URL = "data/populations.csv";
+var BASELINES_URL = "data/baselines.txt";
 // This will parse a delimited string into an array of
 // arrays. The default delimiter is the comma, but this
 // can be overriden in the second argument.

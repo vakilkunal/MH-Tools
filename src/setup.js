@@ -238,21 +238,20 @@ window.onload = function () {
     var rawCharms = getDataFromURL(window.location.search.match(/charms=([^&]*)/));
     if (rawBases.length == 0 && rawWeapons.length == 0 && rawCharms.length == 0) {
         checkCookies();
-        pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
+        pop.open("get", POPULATIONS_URL, true);
         pop.onreadystatechange = function () {
             if (pop.readyState == 4) {
-                //console.log(pop.responseText);
                 processPop();
             }
-        }
+        };
         pop.send();
-        baseline.open("get", "https://tsitu.github.io/MH-Tools/data/baselines.txt", true);
+        baseline.open("get", BASELINES_URL, true);
         baseline.onreadystatechange = function () {
             if (baseline.readyState == 4) {
                 //console.log(baseline.responseText);
                 processBaseline(baseline.responseText);
             }
-        }
+        };
         baseline.send();
 
         $("#main").show(500);

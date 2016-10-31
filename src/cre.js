@@ -85,7 +85,8 @@ window.onload = function () {
         }
     });
 
-    pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
+
+    pop.open("get", POPULATIONS_URL, true);
     // Local testing
     // http-server -p 8888 --cors
     // (installed using "npm install http-server -g")
@@ -99,7 +100,7 @@ window.onload = function () {
     pop.send();
 
 
-    baseline.open("get", "https://tsitu.github.io/MH-Tools/data/baselines.txt", true);
+    baseline.open("get", BASELINES_URL, true);
     baseline.onreadystatechange = function () {
         if (baseline.readyState == 4) {
             processBaseline(baseline.responseText);
