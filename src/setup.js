@@ -437,15 +437,6 @@ function processRawData(rawDataArray, type) {
     }
 }
 
-//Object size helper function
-Object.size = function (obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
 function checkCookies() {
     var storedData = {};
     var bases = [];
@@ -680,11 +671,11 @@ function weaponChanged() {
     var weaponsArrayN = weaponsArray[weaponName];
     if (weaponsArrayN == undefined) weaponsArrayN = [0];
 
-    weaponPower = parseInt(weaponsArrayN[1]);
-    trapType = weaponsArrayN[0].trim();
-    weaponBonus = parseInt(weaponsArrayN[2]);
-    weaponAtt = parseInt(weaponsArrayN[3]);
-    weaponLuck = parseInt(weaponsArrayN[4]);
+    weaponPower = weaponsArrayN[1];
+    trapType = weaponsArrayN[0];
+    weaponBonus = weaponsArrayN[2];
+    weaponAtt = weaponsArrayN[3];
+    weaponLuck = weaponsArrayN[4];
     weaponEff = parseFreshness[weaponsArrayN[5]];
 
     calculateTrapSetup();
