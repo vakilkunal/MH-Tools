@@ -309,8 +309,8 @@ function calcCR(E, P, L, M) {
 }
 
 function batteryChanged() {
-    var select = document.getElementById("battery");
-    var batteryLevel = select.children[select.selectedIndex].innerHTML;
+    var input = document.getElementById("battery");
+    var batteryLevel = input.value;
     batteryPower = parseInt(batteryLevel) || 0;
 
     if (batteryPower < 0)
