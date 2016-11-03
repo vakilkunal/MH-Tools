@@ -83,24 +83,35 @@ function getDataFromURL(parameters) {
 
 
 function loadWeaponSelection() {
-    var len = Object.size(weaponsArray);
-    for (var i = 0; i < len; i++) $("#weapons_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='weapon_checkbox' checked>&nbsp" + Object.keys(weaponsArray)[i] + "</td></tr>");
+    var keys = Object.keys(weaponsArray).sort();
+    var len = keys.length;
+    for (var i = 0; i < len; i++) {
+        $("#weapons_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='weapon_checkbox' checked>&nbsp" + keys[i] + "</td></tr>");
+    }
+
     $(".weapon_checkbox").change(function () {
         $("#all_weapons_checkbox").prop('checked', false);
     });
 }
 
 function loadBaseSelection() {
-    var len = Object.size(basesArray);
-    for (var i = 0; i < len; i++) $("#bases_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='base_checkbox' checked>&nbsp" + Object.keys(basesArray)[i] + "</td></tr>");
+    var bases = Object.keys(basesArray).sort();
+    var len = bases.length;
+    for (var i = 0; i < len; i++) {
+        $("#bases_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='base_checkbox' checked>&nbsp" + bases[i] + "</td></tr>");
+    }
     $(".base_checkbox").change(function () {
         $("#all_bases_checkbox").prop('checked', false);
     });
 }
 
 function loadCharmSelection() {
-    var len = Object.size(charmsArray);
-    for (var i = 0; i < len; i++) $("#charms_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='charm_checkbox' checked>&nbsp" + Object.keys(charmsArray)[i] + "</td></tr>");
+    var charms = Object.keys(charmsArray);
+    var len =charms.length;
+    for (var i = 0; i < len; i++) {
+
+        $("#charms_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='charm_checkbox' checked>&nbsp" + charms[i] + "</td></tr>");
+    }
     $(".charm_checkbox").change(function () {
         $("#all_charms_checkbox").prop('checked', false);
     });
