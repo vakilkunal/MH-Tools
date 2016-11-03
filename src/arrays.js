@@ -1808,6 +1808,8 @@ var basesArray = {
 
 ///Power Type, Power, Power Bonus, Attraction, Luck
 var weaponsArray = {
+    "Droid Archmagus Trap" : ["Arcane", 5000, 15, 10, 20, "Stale"],
+    "Interdimensional Crossbow Trap":["Shadow", 4500, 15, 15, 18, "Fresh"],
     "2010 Blastoff Trap": ["Tactical", 2600, 15, 0, 25, "Very Stale"],
     "2012 Big Boom Trap": ["Tactical", 2500, 15, 20, 25, "Extremely Stale"],
     "500 Pound Spiked Crusher": ["Physical", 250, 10, 0, 1, "No Effect"],
