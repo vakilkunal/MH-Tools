@@ -21,14 +21,7 @@ function checkLoadState() {
         var batteryParameter = getURLParameter("battery");
         if (batteryParameter != "null") {
             var select = document.getElementById("battery");
-            for (var i = 0; i < select.children.length; i++) {
-                var child = select.children[i];
-                if (child.innerHTML == batteryParameter) {
-                    child.selected = true;
-                    batteryChanged();
-                    break;
-                }
-            }
+            select.value = parseInt(batteryParameter);
         }
 
         status.innerHTML = "<td>All set!</td>";
@@ -591,15 +584,7 @@ function loadCheeseDropdown() {
     var cheeseParameter = getURLParameter("cheese");
     if (cheeseParameter != "null" && cheeseLoaded < 3) {
         var select = document.getElementById("cheese");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == cheeseParameter) {
-                child.selected = true;
-                cheeseLoaded++;
-                //selectCharm();
-                break;
-            }
-        }
+        select.value = cheeseParameter;
     }
 
     cheeseChanged();
