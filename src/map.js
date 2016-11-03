@@ -276,7 +276,7 @@ Object.size = function(obj) {
 };
 
 var pop = new XMLHttpRequest();
-pop.open("get", "https://tsitu.github.io/MH-Tools/data/populations.csv", true);
+pop.open("get", POPULATIONS_URL, true);
 pop.onreadystatechange = function() {
 	if (pop.readyState == 4) {
 		processPop();
@@ -285,7 +285,8 @@ pop.onreadystatechange = function() {
 pop.send();
 
 var baseline = new XMLHttpRequest();
-baseline.open("get", "https://tsitu.github.io/MH-Tools/data/baselines.txt", true);
+
+baseline.open("get", BASELINES_URL, true);
 baseline.onreadystatechange = function() {
 	if (baseline.readyState == 4) {
 		//console.log(baseline.responseText);
