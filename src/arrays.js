@@ -1,5 +1,6 @@
 "use strict";
-
+var POPULATIONS_URL = "data/populations.csv";
+var BASELINES_URL = "data/baselines.txt";
 // This will parse a delimited string into an array of
 // arrays. The default delimiter is the comma, but this
 // can be overriden in the second argument.
@@ -83,7 +84,16 @@ function CSVToArray(strData, strDelimiter) {
     return (arrData);
 }
 
-
+var standardCheeseCost = {
+    "Cheddar" : 10,
+    "Marble" : 50,
+    "Swiss" : 100,
+    "Brie" : 200,
+    "Gouda" : 600,
+    "Marble String" : 300,
+    "Swiss String" : 800,
+    "Brie String" : 1600,
+};
 //Function for determining size of multi-level array
 Object.size = function (obj) {
     var size = 0;
@@ -1798,6 +1808,8 @@ var basesArray = {
 
 ///Power Type, Power, Power Bonus, Attraction, Luck
 var weaponsArray = {
+    "Droid Archmagus Trap" : ["Arcane", 5000, 15, 10, 20, "Stale"],
+    "Interdimensional Crossbow Trap":["Shadow", 4500, 15, 15, 18, "Fresh"],
     "2010 Blastoff Trap": ["Tactical", 2600, 15, 0, 25, "Very Stale"],
     "2012 Big Boom Trap": ["Tactical", 2500, 15, 20, 25, "Extremely Stale"],
     "500 Pound Spiked Crusher": ["Physical", 250, 10, 0, 1, "No Effect"],

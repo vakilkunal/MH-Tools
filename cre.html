@@ -7,6 +7,7 @@
     <meta content="utf-8" http-equiv="encoding">
 
     <script type="text/javascript" src="src/arrays.js"></script>
+    <script type="text/javascript" src="src/common.js"></script>
     <script type="text/javascript" src="src/cre.js"></script>
     <script type="text/javascript" src="src/crebookmarklet.min.js"></script>
     <script type="text/javascript" src="src/parse.js"></script>
@@ -243,19 +244,8 @@
             <tr id="batteryRow" style="display:none">
                 <td>Battery Level:</td>
                 <td>
-                    <select id="battery">
-                        <option>-</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </select>
+                    <input type="number" id="battery" min="0" max="10">
+                    </input>
                 </td>
             </tr>
             
