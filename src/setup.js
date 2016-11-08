@@ -37,6 +37,12 @@ var popArray = [];
 /**
  * This one is different in CRE/best setup.
  */
+function getURLParameter(name) {
+    return decodeURI(
+        (new RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+    );
+}
+
 function processPop() {
     var popText = pop.responseText;
 
@@ -761,8 +767,6 @@ function baseChanged() {
 }
 
 function charmChanged() {
-    var select = document.getElementById("charm");
-    charmName = select.children[select.selectedIndex].innerHTML;
     charmChangeCommon();
     calculateTrapSetup();
 }
@@ -811,8 +815,7 @@ function showPop(type) {
 
 function printCombinations(micePopulation, tableHTML) {
     var results = document.getElementById("results");
-
-    var baseAR = findBaseline();
+    
     var noMice = Object.size(micePopulation) + 1;
     //console.log(noMice);
 
@@ -842,22 +845,23 @@ function printCombinations(micePopulation, tableHTML) {
             baseChanged();
             //console.log(weapon + base);
 
-            var overallAR = baseAR + trapAtt / 100 - trapAtt / 100 * baseAR;
+            var overallAR = getCheeseAttraction();
             var overallCR = 0;
             var select = document.getElementById("charm");
             var selectedCharm = select.children[select.selectedIndex].innerHTML;
-
-            var URLString = 'cre.html?';
-            URLString += "location=" + locationName;
-            if (phaseName != "-") URLString += "&phase=" + phaseName;
-            URLString += "&cheese=" + cheeseName;
-            if (selectedCharm != "-") URLString += "&charm=" + selectedCharm + " Charm";
-            if (gsLuck == 0) URLString += "&gs=" + gsLuck;
-            if (bonusLuck >= 0) URLString += "&bonusLuck=" + bonusLuck;
-            URLString += "&weapon=" + weapon;
-            URLString += "&base=" + base;
-            URLString += "&toxic=" + isToxic;
-            URLString += "&battery=" + batteryPower;
+            var urlParams = {
+                "location" : locationName,
+                "phase" : phaseName,
+                "cheese" : cheeseName,
+                "charm" : selectedCharm,
+                "gs" : !gsLuck,
+                "bonusLuck" : bonusLuck,
+                "weapon" : weapon,
+                "base" : base,
+                "toxic" : isToxic,
+                "battery" : batteryPower,
+            };
+            var URLString = buildURL('cre.html',urlParams);
             URLString = URLString.replace(/'/g, "%27");
 
             //console.log(URLString);
@@ -947,7 +951,6 @@ function printCombinations(micePopulation, tableHTML) {
 function printCharmCombinations(micePopulation, tableHTML) {
     var results = document.getElementById("results");
 
-    var baseAR = findBaseline();
     var noMice = Object.size(micePopulation) + 1;
     //console.log(noMice);
 
@@ -968,18 +971,22 @@ function printCharmCombinations(micePopulation, tableHTML) {
             eff[mouse] = findEff(mouse)
         }
 
-        var overallAR = baseAR + trapAtt / 100 - trapAtt / 100 * baseAR;
+        var overallAR = getCheeseAttraction();
         var overallCR = 0;
 
-        var URLString = 'cre.html?';
-        URLString += "location=" + locationName;
-        if (phaseName != "-") URLString += "&phase=" + phaseName;
-        URLString += "&cheese=" + cheeseName;
-        if (charmName != "") URLString += "&charm=" + charmName;
-        if (gsLuck == 0) URLString += "&gs=" + gsLuck;
-        if (bonusLuck >= 0) URLString += "&bonusLuck=" + bonusLuck;
-        URLString += "&weapon=" + weaponName;
-        URLString += "&base=" + baseName;
+        var urlParams = {
+            "location" : locationName,
+            "phase" : phaseName,
+            "cheese" : cheeseName,
+            "charm" : charmName,
+            "gs" : !gsLuck,
+            "bonusLuck" : bonusLuck,
+            "weapon" : weaponName,
+            "base" : weaponName,
+            "toxic" : isToxic,
+            "battery" : batteryPower,
+        };
+        var URLString = buildURL('cre.html',urlParams);
         URLString = URLString.replace(/'/g, "%27");
 
         //console.log(URLString);

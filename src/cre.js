@@ -344,14 +344,8 @@ function checkLoadState() {
         var batteryParameter = getURLParameter("battery");
         if (batteryParameter != "null") {
             var select = document.getElementById("battery");
-            for (var i = 0; i < select.children.length; i++) {
-                var child = select.children[i];
-                if (child.innerHTML == batteryParameter) {
-                    child.selected = true;
-                    batteryChanged(true);
-                    break;
-                }
-            }
+            select.value = parseInt(batteryParameter);
+            batteryChanged();
         }
 
         var amplifierParameter = parseInt(getURLParameter("amplifier"));
@@ -365,7 +359,11 @@ function checkLoadState() {
             calculateTrapSetup();
         }
 
-        var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(getURLParameter("totalluck")) - trapLuck);
+
+        var totalLuck = getURLParameter("totalluck");
+        if (totalLuck)
+            calculateTrapSetup();
+        var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(totalLuck) - trapLuck);
         if (bonusLuckParameter >= 0) {
             document.getElementById("bonusLuck").value = bonusLuckParameter;
             bonusLuckChanged();
@@ -546,7 +544,7 @@ function showPop(type) { //type = 2 means don't reset charms
         }
         resultsHTML += "</tr></thead><tbody>";
         var overallCR = 0;
-        var overallAR = findBaseline();
+        var overallAR = getCheeseAttraction();
 
         var overallGold = 0;
         var overallPoints = 0;
@@ -999,31 +997,24 @@ function minLuck(E, M) {
  }
  }
  */
-
-
-function getURLParameter(name) {
-    //Use component here to ensure correct decoding
-    return decodeURIComponent(
-        (new RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
-    );
-}
-
+var urlParams
 function updateLink() {
-    var URLString = 'cre.html?';
 
-    if (locationName != "") URLString += "&location=" + locationName;
-    if (phaseName != "" && phaseName != "-") URLString += "&phase=" + phaseName;
-    if (cheeseName != "") URLString += "&cheese=" + cheeseName;
-    if (lanternStatus != "") URLString += "&oil=" + lanternStatus;
-    if (isToxic != "" && isToxic != "-") URLString += "&toxic=" + isToxic;
-    if (batteryPower != 0) URLString += "&battery=" + batteryPower;
-    if (weaponName != "") URLString += "&weapon=" + weaponName;
-    if (baseName != "") URLString += "&base=" + baseName;
-    if (charmName != "") URLString += "&charm=" + charmName;
-    if (gsLuck == 0) URLString += "&gs=" + gsLuck;
-    if (bonusLuck >= 0) URLString += "&bonusLuck=" + bonusLuck;
-    if (tournamentName != "") URLString += "&tourney=" + tournamentName;
-
+    urlParams = {
+        "location" : locationName,
+        "phase" : phaseName,
+        "gs" : !gsLuck,
+        "cheese" : cheeseName,
+        "oil" : lanternStatus,
+        "toxic" : isToxic,
+        "battery" : batteryPower,
+        "weapon" : weaponName,
+        "base" : baseName,
+        "charm" : charmName,
+        "bonusLuck" : bonusLuck,
+        "tourney" : tournamentName,
+    };
+    var URLString = buildURL('cre.html',urlParams);
     document.getElementById("link").href = URLString;
     /*
      //Horntracker link creation. Unused.
@@ -1260,7 +1251,7 @@ function baseChanged() {
 function charmChanged() {
     console.log("Charm changed");
     var select = document.getElementById("charm");
-    charmName = select.children[select.selectedIndex].innerHTML;
+    charmName = select.children[select.selectedIndex].innerHTML.trim().replace(/\*$/, "");
     charmChangeCommon();
     calculateTrapSetup();
     showPop(2);
