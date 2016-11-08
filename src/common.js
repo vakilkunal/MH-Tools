@@ -363,14 +363,15 @@ function findEff(mouseName) {
     return eff;
 }
 
-function findBaseline() {
+function getCheeseAttraction() {
     //TODO make common cheese ar be global
     var baselineAtt = baselineAttArray[cheeseName];
     if (baselineAtt == undefined) {
         baselineAtt = baselineArray[locationName + " (" + cheeseName + ")"];
     }
 
-    return baselineAtt;
+    return baselineAtt + trapAtt / 100 - trapAtt / 100 * baselineAtt;
+
 }
 
 function gsParamCheck() {

@@ -817,8 +817,7 @@ function showPop(type) {
 
 function printCombinations(micePopulation, tableHTML) {
     var results = document.getElementById("results");
-
-    var baseAR = findBaseline();
+    
     var noMice = Object.size(micePopulation) + 1;
     //console.log(noMice);
 
@@ -848,7 +847,7 @@ function printCombinations(micePopulation, tableHTML) {
             baseChanged();
             //console.log(weapon + base);
 
-            var overallAR = baseAR + trapAtt / 100 - trapAtt / 100 * baseAR;
+            var overallAR = getCheeseAttraction();
             var overallCR = 0;
             var select = document.getElementById("charm");
             var selectedCharm = select.children[select.selectedIndex].innerHTML;
@@ -953,7 +952,6 @@ function printCombinations(micePopulation, tableHTML) {
 function printCharmCombinations(micePopulation, tableHTML) {
     var results = document.getElementById("results");
 
-    var baseAR = findBaseline();
     var noMice = Object.size(micePopulation) + 1;
     //console.log(noMice);
 
@@ -974,7 +972,7 @@ function printCharmCombinations(micePopulation, tableHTML) {
             eff[mouse] = findEff(mouse)
         }
 
-        var overallAR = baseAR + trapAtt / 100 - trapAtt / 100 * baseAR;
+        var overallAR = getCheeseAttraction();
         var overallCR = 0;
 
         var URLString = 'cre.html?';

@@ -546,7 +546,7 @@ function showPop(type) { //type = 2 means don't reset charms
         }
         resultsHTML += "</tr></thead><tbody>";
         var overallCR = 0;
-        var overallAR = findBaseline();
+        var overallAR = getCheeseAttraction();
 
         var overallGold = 0;
         var overallPoints = 0;
