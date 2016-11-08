@@ -767,8 +767,6 @@ function baseChanged() {
 }
 
 function charmChanged() {
-    var select = document.getElementById("charm");
-    charmName = select.children[select.selectedIndex].innerHTML;
     charmChangeCommon();
     calculateTrapSetup();
 }
