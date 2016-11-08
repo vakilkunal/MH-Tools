@@ -1251,7 +1251,7 @@ function baseChanged() {
 function charmChanged() {
     console.log("Charm changed");
     var select = document.getElementById("charm");
-    charmName = select.children[select.selectedIndex].innerHTML;
+    charmName = select.children[select.selectedIndex].innerHTML.trim().replace(/\*$/, "");
     charmChangeCommon();
     calculateTrapSetup();
     showPop(2);
