@@ -98,6 +98,14 @@ function getURLParameter(name) {
     );
 }
 
+/**
+ * Build URL from key/value pairs.
+ * Keys are only added to the URL if their value is !false, >0, != "-"
+ * NB: Always test with Toxic Spill sublocations
+ * @param location
+ * @param urlParams
+ * @returns {string}
+ */
 function buildURL(location, urlParams) {
     var url = location + "?";
     for (var key in urlParams) {
