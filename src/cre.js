@@ -344,14 +344,8 @@ function checkLoadState() {
         var batteryParameter = getURLParameter("battery");
         if (batteryParameter != "null") {
             var select = document.getElementById("battery");
-            for (var i = 0; i < select.children.length; i++) {
-                var child = select.children[i];
-                if (child.innerHTML == batteryParameter) {
-                    child.selected = true;
-                    batteryChanged(true);
-                    break;
-                }
-            }
+            select.value = parseInt(batteryParameter);
+            batteryChanged();
         }
 
         var amplifierParameter = parseInt(getURLParameter("amplifier"));
@@ -365,7 +359,11 @@ function checkLoadState() {
             calculateTrapSetup();
         }
 
-        var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(getURLParameter("totalluck")) - trapLuck);
+
+        var totalLuck = getURLParameter("totalluck");
+        if (totalLuck)
+            calculateTrapSetup();
+        var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(totalLuck) - trapLuck);
         if (bonusLuckParameter >= 0) {
             document.getElementById("bonusLuck").value = bonusLuckParameter;
             bonusLuckChanged();
