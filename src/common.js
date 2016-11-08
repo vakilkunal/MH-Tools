@@ -16,17 +16,17 @@ var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 
 var specialCharm = {
-    "Champion Charm" : 1,
-    "Growth Charm" : 1,
-    "Spellbook Charm" : 1,
-    "Wild Growth Charm" : 1,
+    "Champion Charm": 1,
+    "Growth Charm": 1,
+    "Spellbook Charm": 1,
+    "Wild Growth Charm": 1,
 
-    "Golden Tournament Base" : 1,
-    "Soiled Base" : 1,
-    "Spellbook Base" : 1
+    "Golden Tournament Base": 1,
+    "Soiled Base": 1,
+    "Spellbook Base": 1
 };
 
-Object.size = function(obj) {
+Object.size = function (obj) {
     var size = 0, key;
     for (key in obj) {
         if (obj.hasOwnProperty(key)) size++;
@@ -39,7 +39,7 @@ function commafy(x) {
 }
 
 function calcSpecialCharms(charmName) {
-    var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
+    var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
 
     /* Basics */
     charmPower = charmsArrayN[0];
@@ -92,9 +92,22 @@ function calcSpecialCharms(charmName) {
 }
 
 function getURLParameter(name) {
-    return decodeURI(
+    //Use component here to ensure correct decoding
+    return decodeURIComponent(
         (new RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
     );
+}
+
+function buildURL(location, urlParams) {
+    var url = location + "?";
+    for (var key in urlParams) {
+        var urlParam = urlParams[key];
+        if (urlParam && urlParam != "-") {
+            var value = encodeURIComponent(urlParam);
+            url += key + "=" + value + "&"
+        }
+    }
+    return url;
 }
 
 function calculateTrapSetup() {
@@ -344,7 +357,7 @@ function findEff(mouseName) {
     var eff;
     if (trapType == '') eff = 0;
     else {
-        eff = (powersArray[mouseName][typeEff[trapType]])/100;
+        eff = (powersArray[mouseName][typeEff[trapType]]) / 100;
         //console.log(trapType);
     }
     return eff;
@@ -422,7 +435,7 @@ function populateSublocationDropdown(locationName) {
 
 function charmChangeCommon() {
     updateLink();
-    var charmsArrayN = charmsArray[charmName] || [0,0,0,0,"No Effect"];
+    var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
     if (specialCharm[charmName]) calcSpecialCharms(charmName);
     else {
         charmPower = (charmsArrayN[0]);
@@ -473,7 +486,7 @@ function showTrapSetup(type) {
 function gsChanged() {
     var select = document.getElementById("gs");
 
-    if (select.children[select.selectedIndex].innerHTML == "Yes") gsLuck = 7;
+    if (select.value == 'Y') gsLuck = 7;
     else gsLuck = 0;
 
     updateLink();
@@ -510,7 +523,7 @@ function phaseChanged() {
     }
 
     if (locationName == "Twisted Garden"
-        && phaseName == "Poured" ) {
+        && phaseName == "Poured") {
         pourBonus = 5;
         pourLuck = 5;
         calculateTrapSetup();
@@ -547,3 +560,4 @@ function checkToxicParam() {
         toxicChanged();
     }
 }
+

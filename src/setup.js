@@ -37,6 +37,12 @@ var popArray = [];
 /**
  * This one is different in CRE/best setup.
  */
+function getURLParameter(name) {
+    return decodeURI(
+        (new RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+    );
+}
+
 function processPop() {
     var popText = pop.responseText;
 
