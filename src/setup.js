@@ -82,10 +82,9 @@ function getDataFromURL(parameters) {
 
 
 function loadWeaponSelection() {
-    var keys = Object.keys(weaponsArray).sort();
-    var len = keys.length;
+    var len = weaponKeys.length;
     for (var i = 0; i < len; i++) {
-        $("#weapons_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='weapon_checkbox' checked>&nbsp" + keys[i] + "</td></tr>");
+        $("#weapons_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='weapon_checkbox' checked>&nbsp" + weaponKeys[i] + "</td></tr>");
     }
 
     $(".weapon_checkbox").change(function () {
@@ -94,10 +93,9 @@ function loadWeaponSelection() {
 }
 
 function loadBaseSelection() {
-    var bases = Object.keys(basesArray).sort();
-    var len = bases.length;
+    var len = baseKeys.length;
     for (var i = 0; i < len; i++) {
-        $("#bases_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='base_checkbox' checked>&nbsp" + bases[i] + "</td></tr>");
+        $("#bases_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='base_checkbox' checked>&nbsp" + baseKeys[i] + "</td></tr>");
     }
     $(".base_checkbox").change(function () {
         $("#all_bases_checkbox").prop('checked', false);
@@ -105,11 +103,10 @@ function loadBaseSelection() {
 }
 
 function loadCharmSelection() {
-    var charms = Object.keys(charmsArray);
-    var len =charms.length;
+    var len = charmKeys.length;
     for (var i = 0; i < len; i++) {
 
-        $("#charms_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='charm_checkbox' checked>&nbsp" + charms[i] + "</td></tr>");
+        $("#charms_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='charm_checkbox' checked>&nbsp" + charmKeys[i] + "</td></tr>");
     }
     $(".charm_checkbox").change(function () {
         $("#all_charms_checkbox").prop('checked', false);
@@ -611,7 +608,7 @@ function loadCharmDropdown() {
     }
 
     var charms = Object.keys(popArrayLPC);
-    charms.sort()
+    charms.sort();
     var nSpecialCharms = charms.length;
     for (var i = 0; i < nSpecialCharms; i++) {
         if (charms[i] != "-") {
@@ -824,12 +821,14 @@ function printCombinations(micePopulation, tableHTML) {
         power[mouse] = powersArray[mouse][0]
     }
 
-    var nWeapons = Object.size(weaponsArray);
-    var nBases = Object.size(basesArray);
+
+    var nWeapons = weaponKeys.length;
+    var nBases = baseKeys.length;
 
     for (var i = 0; i < nWeapons; i++) {
         if (!$(".weapon_checkbox").get(i).checked) continue;
-        var weapon = Object.keys(weaponsArray)[i];
+
+        var weapon = weaponKeys[i];
         weaponName = weapon;
         weaponChanged();
 
@@ -838,9 +837,10 @@ function printCombinations(micePopulation, tableHTML) {
             eff[mouse] = findEff(mouse)
         }
 
+
         for (var j = 0; j < nBases; j++) {
             if (!$(".base_checkbox").get(j).checked) continue;
-            var base = Object.keys(basesArray)[j];
+            var base = baseKeys[j];
             baseName = base;
             baseChanged();
             //console.log(weapon + base);
@@ -959,11 +959,12 @@ function printCharmCombinations(micePopulation, tableHTML) {
         power[mouse] = powersArray[mouse][0];
     }
 
-    var nCharms = Object.size(charmsArray);
+
+    var nCharms = charmKeys.length;
     for (var i = 0; i < nCharms; i++) {
         if (!$(".charm_checkbox").get(i).checked) continue;
-        var charm = Object.keys(charmsArray)[i];
-        charmName = charm;
+
+        charmName = charmKeys[i];
         charmChanged();
 
         var eff = [];
