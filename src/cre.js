@@ -243,10 +243,8 @@ function loadWeaponDropdown() {
     var weaponDropdown = document.getElementById("weapon");
     var weaponDropdownHTML = '<option></option>';
 
-    var weapons = Object.keys(weaponsArray || []);
-    weapons.sort(); //JS standard - unspecified iteration order
-    for (var key in weapons) {
-        weaponDropdownHTML += "<option>" + weapons[key] + "</option>\n";
+    for (var key in weaponKeys) {
+        weaponDropdownHTML += "<option>" + weaponKeys[key] + "</option>\n";
     }
 
     weaponDropdown.innerHTML = weaponDropdownHTML;
@@ -269,12 +267,8 @@ function loadBaseDropdown() {
     var baseDropdown = document.getElementById("base");
     var baseDropdownHTML = '<option></option>';
 
-    var bases = Object.keys(basesArray || []);
-    bases.sort();
-    /* Safety, JS does not define iteration order */
-
-    for (var key in bases) {
-        baseDropdownHTML += "<option>" + bases[key] + "</option>\n";
+    for (var key in baseKeys) {
+        baseDropdownHTML += "<option>" + baseKeys[key] + "</option>\n";
     }
 
     baseDropdown.innerHTML = baseDropdownHTML;
@@ -297,12 +291,8 @@ function loadCharmDropdown() {
     var charmDropdown = document.getElementById("charm");
     var charmDropdownHTML = '<option>No Charm</option>';
 
-    var charms = Object.keys(charmsArray || []);
-    charms.sort();
-    /* Safety, JS does not define iteration order */
-
-    for (var key in charms) {
-        charmDropdownHTML += "<option>" + charms[key] + "</option>\n";
+    for (var key in charmKeys) {
+        charmDropdownHTML += "<option>" + charmKeys[key] + "</option>\n";
     }
 
     charmDropdown.innerHTML = charmDropdownHTML;
@@ -857,10 +847,9 @@ function resetCharms() {
     var select = document.getElementById("charm");
     var charmsDropdownHTML = '';
 
-    var charms = Object.keys(charmsArray || []);
-    var nCharms = charms.length;
+    var nCharms = charmKeys.length;
     for (var i = 0; i < nCharms; i++) {
-        charmsDropdownHTML += "<option>" + charms[i] + "</option>\n";
+        charmsDropdownHTML += "<option>" + charmKeys[i] + "</option>\n";
     }
     select.innerHTML = "<option>No Charm</option>" + charmsDropdownHTML;
     charmChanged();

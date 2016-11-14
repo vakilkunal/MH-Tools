@@ -1805,6 +1805,8 @@ var basesArray = {
     "Wooden Base": [35, 0, 0, 0, "Very Fresh"],
     "Wooden Base with Target": [75, 0, 20, 0, "No Effect"]
 };
+var baseKeys = Object.keys(basesArray);
+baseKeys.sort();
 
 ///Power Type, Power, Power Bonus, Attraction, Luck
 var weaponsArray = {
@@ -1955,7 +1957,8 @@ var weaponsArray = {
     "Zugzwang's Ultimate Move": ["Tactical", 4500, 20, 10, 20, "Very Fresh"],
     "Zurreal's Folly": ["Tactical", 2930, 20, 15, 12, "Ultimately Stale"]
 };
-
+var weaponKeys = Object.keys(weaponsArray);
+weaponKeys.sort();
 
 //Power, Power Bonus (%), Attraction Bonus (%), Luck, Cheese Effect
 var charmsArray = {
@@ -2142,6 +2145,8 @@ var charmsArray = {
     "Yellow Double Sponge Charm": [0, 0, 0, 0, "No Effect"],
     "Yellow Sponge Charm": [0, 0, 0, 0, "No Effect"]
 };
+var charmKeys = Object.keys(charmsArray);
+charmKeys.sort();
 
 /*
 Mouse power
