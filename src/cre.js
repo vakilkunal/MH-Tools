@@ -507,9 +507,10 @@ function showPop(type) { //type = 2 means don't reset charms
             }
         }
 
-        if (charmName.indexOf("*") >= 0) {
+        var popCharmName = /^(.*?)(?:\s+Charm)?$/i.exec(charmName)[1];
+        if (popArrayLPC && popArrayLPC[popCharmName]) {
             console.log("It's a special charm!");
-            var popArrayLC = popArrayLPC[charmName.slice(0, -7)];
+            var popArrayLC = popArrayLPC[popCharmName];
         }
         else {
             if (popArrayLPC != undefined) {
