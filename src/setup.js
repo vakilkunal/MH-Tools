@@ -281,37 +281,21 @@ window.onload = function () {
         bonusLuckChanged();
     }
 
-    document.getElementById("location").onchange = function () {
-        locationChanged();
-    };
+    document.getElementById("location").onchange = locationChanged;
 
-    document.getElementById("phase").onchange = function () {
-        phaseChanged();
-    };
+    document.getElementById("phase").onchange = phaseChanged;
 
-    document.getElementById("cheese").onchange = function () {
-        cheeseChanged();
-    };
+    document.getElementById("cheese").onchange = cheeseChanged;
 
-    document.getElementById("charm").onchange = function () {
-        charmChanged();
-    };
+    document.getElementById("charm").onchange = charmChanged;
 
-    document.getElementById("toxic").onchange = function () {
-        toxicChanged();
-    };
+    document.getElementById("toxic").onchange = toxicChanged;
 
-    document.getElementById("battery").onchange = function () {
-        batteryChanged();
-    };
+    document.getElementById("battery").onchange = batteryChanged;
 
-    document.getElementById("gs").onchange = function () {
-        gsChanged();
-    }
+    document.getElementById("gs").onchange =  gsChanged;
 
-    document.getElementById("bonusLuck").onchange = function () {
-        bonusLuckChanged();
-    }
+    document.getElementById("bonusLuck").onchange = bonusLuckChanged;
 
     $("#save_setup_button").click(function () {
         saveSetupCookie();
@@ -328,19 +312,19 @@ window.onload = function () {
         $("#weapons_selector_table").toggle();
         $("#bases_selector_table").hide();
         $("#charms_selector_table").hide();
-    })
+    });
 
     $("#show_bases_button").click(function () {
         $("#bases_selector_table").toggle();
         $("#weapons_selector_table").hide();
         $("#charms_selector_table").hide();
-    })
+    });
 
     $("#show_charms_button").click(function () {
         $("#charms_selector_table").toggle();
         $("#weapons_selector_table").hide();
         $("#bases_selector_table").hide();
-    })
+    });
 
     $("#results").bind("sortStart", function () {
         $("#pleaseWaitMessage").show();
@@ -355,7 +339,7 @@ window.onload = function () {
         else $(".weapon_checkbox").each(function () {
             this.checked = false;
         });
-    })
+    });
     $("#all_bases_checkbox").change(function () {
         if (this.checked) $(".base_checkbox").each(function () {
             this.checked = true;
@@ -363,7 +347,7 @@ window.onload = function () {
         else $(".base_checkbox").each(function () {
             this.checked = false;
         });
-    })
+    });
     $("#all_charms_checkbox").change(function () {
         if (this.checked) $(".charm_checkbox").each(function () {
             this.checked = true;
