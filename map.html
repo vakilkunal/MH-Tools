@@ -22,7 +22,7 @@
     <script src="lib/bootstrap.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -54,6 +54,10 @@
         .invalid {
 			color: red;
 		}
+        #mouseCounter {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
         #interpretedAs {
             font-size: 14px;
         }
@@ -162,12 +166,18 @@
 <body>
 
 <div class="container">
+    <small><a href="index.html">Back to all tools</a></small>
+
     <h1>Map Solver and Mouse Finder</h1>
     
     <div class="header">
         <p>based on Chad Moore's and <a href="http://olf.github.io/mhmapsolver/" target="_blank">Olaf's</a><br>
 
-        <a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost" target="_blank">Report bugs and suggest features</a></p><br>
+        <a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost" target="_blank">Report bugs and suggest features</a></p>
+    </div>
+    
+    <div id="mouseCounter">
+        <em>Unique Mice Remaining</em>: <span id="remainValue">0</span><br>
     </div>
 
     <div id="mapTabs">
@@ -188,10 +198,8 @@
 
                         <p>Bookmark <a id="bookmarklet" href="#">this link</a> and click it while on "Active Map" (mousehuntgame.com only) to open a new window and copy the list of uncaught mice here.</p><br>
                     </div>
-
-                    <em>Unique Mice Remaining</em>: <span id="remainValue">0</span>
                         
-                    <div id="amplifier" style="padding-top: 10px">
+                    <div id="amplifier">
                         <div id="ampText">Attraction Bonus: 0%</div>       
                         <div id="ampSlider"></div><br>
                     </div>
