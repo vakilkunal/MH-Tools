@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>Map Solver and Mouse Finder</title>
+    <meta content="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="utf-8" http-equiv="encoding">
+    <title>Map Solver and Mouse Finder</title>
 
     <script type="text/javascript" src="src/arrays.js"></script>
     <script type="text/javascript" src="src/map.js"></script>
@@ -17,9 +17,16 @@
     <script type="text/javascript" src="lib/jquery.tablesorter.combined.min.js"></script>
     <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
     <script type="text/javascript" src="lib/jquery-ui.touch-punch.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="lib/bootstrap.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
 
     <style type="text/css">
         * {
@@ -42,35 +49,34 @@
         }
         .header {
         	font-size: 11px;
-            width: 250px;
+            max-width: 250px;
         }
         .invalid {
 			color: red;
 		}
         #interpretedAs {
-            width: 150px;
-            max-height: 382px;
             font-size: 14px;
-            word-wrap: break-word;
-            overflow: auto;
         }
         #map {
             resize: none;
+            max-width: 100%;
+            margin-bottom: 10px;
         }
         #ampSlider {
-            width: 300px;
+            margin-top: 10px;
+            max-width: 300px;
+        }
+        #intro {
+            max-width: 500px;
         }
         #main {
-            float: left;
-            width: 500px;
+            /*max-width: 500px;*/
         }
         #location {
-            float: left;
-            width: 500px;
+            max-width: 500px;
         }
         #mouselistcontainer {
             clear: both;
-            padding-top: 2ex;
         }
     </style>
 
@@ -150,109 +156,112 @@
         }
     </script>
     <!--###################################################################################-->
+
 </head>
 
 <body>
+
 <div class="container">
     <h1>Map Solver and Mouse Finder</h1>
+    
+    <div class="header">
+        <p>based on Chad Moore's and <a href="http://olf.github.io/mhmapsolver/" target="_blank">Olaf's</a><br>
 
-    <div id="main">
-        <table>
-        <tr>
-        <td>
-
-        <div class="header">
-            <p>based on Chad Moore's and <a href="http://olf.github.io/mhmapsolver/" target="_blank">Olaf's</a><br>
-            <a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost" target="_blank">Report bugs and suggest features</a></p><br>
-        	<p>Copy and paste mice from maps, or type names leaving a line break between each. Press <b>Enter</b> to autocomplete and <b>Tab</b> to cycle through suggestions.</p><br>
-            <p><ins>Note</ins>: Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results.
-            The first cheese listed is used to calculate a fuse's combined baseline attraction.</p><br>
-            <p>Bookmark <a id="bookmarklet" href="#">this link</a> and click it while on "Active Map" (mousehuntgame.com only) to open a new window and copy the list of uncaught mice here.</p><br>
-        </div>
-
-        </td>
-        <td>
-
-        <div>
-            <br><br>
-            Limit best location rows: <br>
-            <form action="">
-                <table>
-                <tr>
-                <td>
-                  <input id="row0" type="radio" name="rowLimit" value="0" checked> &infin;<br>
-                  <input id="row5" type="radio" name="rowLimit" value="5"> 5<br>
-                  <input id="row10" type="radio" name="rowLimit" value="10"> 10<br>
-                </td>
-                <td>
-                  <input id="row25" type="radio" name="rowLimit" value="25"> 25<br>
-                  <input id="row50" type="radio" name="rowLimit" value="50"> 50<br>
-                  <input id="row100" type="radio" name="rowLimit" value="100"> 100<br>
-                </td>
-                </tr>
-                </table>
-            </form>
-            <br>
-
-            Limit mouse list columns: <br>
-            <form action="">
-                <table>
-                <tr>
-                <td>
-                  <input id="col0" type="radio" name="colLimit" value="0" checked> &infin;<br>
-                  <input id="col5" type="radio" name="colLimit" value="5"> 5<br>
-                  <input id="col10" type="radio" name="colLimit" value="10"> 10<br>
-                </td>
-                <td>
-                  <input id="col25" type="radio" name="colLimit" value="25"> 25<br>
-                  <input id="col50" type="radio" name="colLimit" value="50"> 50<br>
-                  <input id="col100" type="radio" name="colLimit" value="100"> 100<br>
-                </td>
-                </tr>
-                </table>
-            </form>
-        </div>
-
-        </td>
-        </tr>
-        </table>
-
-        <div>
-            <em>Unique Mice Remaining</em>:
-            <span id="remainValue">0</span>
-        </div><br>
-
-        <div id="ampText">
-            Attraction Bonus: 0%
-        </div>
-
-        <div id="ampSlider"></div><br>
-
-        <table>
-        <tr>
-        <td>
-        <textarea id="map" rows="25" cols="40"></textarea>
-        </td>
-
-        <td style="vertical-align: top">
-        <div id="interpretedAs" style="display: none"><b>Invalid:</b></div>
-        </td>
-        </tr>
-        </table>
+        <a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost" target="_blank">Report bugs and suggest features</a></p><br>
     </div>
 
-    <div id="location">
-        <h2>Best Locations</h2><br>
-        <p><a href="#mouselistcontainer">Mouse List</a></p>
-		<table id='bestLocation' class='tablesorter'><thead></thead><tbody></tbody></table>
-    </div>
+    <div id="mapTabs">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#main" data-toggle="tab">Map</a></li>
+            <li><a href="#location" data-toggle="tab">Locations</a></li>
+            <li><a href="#mouselistcontainer" data-toggle="tab">Mouse List</a></li>
+        </ul>
 
-    <div id="mouselistcontainer">
-        <h2>Mouse List</h2><br>
-        <p><a href="#location">Best Locations</a></p>
-        <table id='mouseList' cellpadding='5' class='tablesorter'><thead></thead><tbody></tbody></table>
+        <div class="tab-content ">
+            <div class="tab-pane active" id="main">
+                <div class="container-fluid">
+                    <div id="intro">
+                        <p style="padding-top: 10px;">Copy and paste mice from maps, or type names leaving a line break between each. Press <b>Enter</b> to autocomplete and <b>Tab</b> to cycle through suggestions.</p><br>
+
+                        <p><ins>Note</ins>: Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results.
+                        The first cheese listed is used to calculate a fuse's combined baseline attraction.</p><br>
+
+                        <p>Bookmark <a id="bookmarklet" href="#">this link</a> and click it while on "Active Map" (mousehuntgame.com only) to open a new window and copy the list of uncaught mice here.</p><br>
+                    </div>
+
+                    <em>Unique Mice Remaining</em>: <span id="remainValue">0</span>
+                        
+                    <div id="amplifier" style="padding-top: 10px">
+                        <div id="ampText">Attraction Bonus: 0%</div>       
+                        <div id="ampSlider"></div><br>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 col-sm-6 col-lg-4">
+                            <textarea id="map" class="form-control" rows="20"></textarea>
+                        </div>
+                        <div class="col-md-5 col-sm-6 col-lg-4">
+                            <p id="interpretedAs" style="display: none"><b>Invalid:</b></p>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="location">
+                <h3>Best Locations</h3>
+
+                Limit best location rows: <br>
+                <form action="">
+                    <table class="table" style="width: 30%; margin-top: 10px;">
+                    <tr>
+                    <td>
+                      <input id="row0" type="radio" name="rowLimit" value="0" checked> &infin;<br>
+                      <input id="row5" type="radio" name="rowLimit" value="5"> 5<br>
+                      <input id="row10" type="radio" name="rowLimit" value="10"> 10<br>
+                    </td>
+                    <td>
+                      <input id="row25" type="radio" name="rowLimit" value="25"> 25<br>
+                      <input id="row50" type="radio" name="rowLimit" value="50"> 50<br>
+                      <input id="row100" type="radio" name="rowLimit" value="100"> 100<br>
+                    </td>
+                    </tr>
+                    </table>
+                </form>
+
+                <div id="location">
+                    <table id='bestLocation' class='tablesorter'><thead></thead><tbody></tbody></table>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="mouselistcontainer">
+                <h3>Mouse List</h3>
+
+                Limit mouse list columns: <br>
+                <form action="">
+                    <table class="table" style="width: 30%; margin-top: 10px;">
+                    <tr>
+                    <td>
+                      <input id="col0" type="radio" name="colLimit" value="0" checked> &infin;<br>
+                      <input id="col5" type="radio" name="colLimit" value="5"> 5<br>
+                      <input id="col10" type="radio" name="colLimit" value="10"> 10<br>
+                    </td>
+                    <td>
+                      <input id="col25" type="radio" name="colLimit" value="25"> 25<br>
+                      <input id="col50" type="radio" name="colLimit" value="50"> 50<br>
+                      <input id="col100" type="radio" name="colLimit" value="100"> 100<br>
+                    </td>
+                    </tr>
+                    </table>
+                </form>
+
+                <div id="mouselistcontainer">
+                    <table id='mouseList' cellpadding='5' class='tablesorter'><thead></thead><tbody></tbody></table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!-- <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script> -->
 </body>
 
 </html>
