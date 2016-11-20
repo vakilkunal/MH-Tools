@@ -118,7 +118,7 @@ function buildURL(location, urlParams) {
     return url;
 }
 
-function calculateTrapSetup() {
+function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
     //console.log(weaponPower + " " + basePower + " " + charmPower);
 
@@ -309,7 +309,7 @@ function calculateTrapSetup() {
         if (trapEff > 6) trapEff = 6;
         else if (trapEff < -6) trapEff = -6;
 
-        if (user == CRE_USER) {
+        if (user == CRE_USER && !skipDisp) {
             showPop(2);
             showTrapSetup();
         }

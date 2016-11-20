@@ -571,78 +571,78 @@ function showPop(type) { //type = 2 means don't reset charms
                 if (locationName == "Zugzwang's Tower") {
                     if (mouseName.indexOf("Rook") >= 0 && charmName == "Rook Crumble Charm") {
                         charmBonus += 300;
-                        calculateTrapSetup(); // not "cre" or else infinite loop
+                        calculateTrapSetup(true); // not "cre" or else infinite loop
                         catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                         charmBonus -= 300;
-                        calculateTrapSetup();
+                        calculateTrapSetup(true);
                     }
                     else if (mouseName == "Mystic Pawn") {
                         if (weaponName == "Mystic Pawn Pincher") {
                             weaponPower += 10920;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower -= 10920;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                         else if (weaponName == "Technic Pawn Pincher") {
                             weaponPower -= 59.99;
                             weaponBonus -= 5;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower += 59.99;
                             weaponBonus += 5;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                     }
                     else if (mouseName == "Technic Pawn") {
                         if (weaponName == "Mystic Pawn Pincher") {
                             weaponPower -= 59.99;
                             weaponBonus -= 5;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower += 59.99;
                             weaponBonus += 5;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                         else if (weaponName == "Technic Pawn Pincher") {
                             weaponPower += 10920;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower -= 10920;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                     }
 
                     if (mouseName.indexOf("Mystic") >= 0) {
                         if (weaponName == "Obvious Ambush Trap") {
                             weaponPower -= 2400;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower += 2400;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                         else if (weaponName == "Blackstone Pass Trap") {
                             weaponPower += 1800;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower -= 1800;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                     }
                     else if (mouseName.indexOf("Technic") >= 0) {
                         if (weaponName == "Obvious Ambush Trap") {
                             weaponPower += 1800;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower -= 1800;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                         else if (weaponName == "Blackstone Pass Trap") {
                             weaponPower -= 2400;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower += 2400;
-                            calculateTrapSetup();
+                            calculateTrapSetup(true);
                         }
                     }
                 }
