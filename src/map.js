@@ -503,11 +503,12 @@ function processMap(mapText) {
 					sortedMLCLength = columnLimit;
 				}
 			}
-			
+			mouseListText += "<td><table class=\'subtable\'>"
 			for (var l=0; l<sortedMLCLength; l++) {
 				var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
-				mouseListText += "<td style=\'font-size: 11px; padding: 10px\'>" + "<p style='font-size: 16px'>" + sortedMLC[l][1] + "%</p><br>" + sliceMLC + "</td>";
+				mouseListText += "<tr><td class=\'subtable-attraction\'>" + sortedMLC[l][1] + "</td><td class=\'subtable-location\'>" + sliceMLC + "</td></tr>";
 			}
+			mouseListText += "</table></td>"
 		}
 	}
 
