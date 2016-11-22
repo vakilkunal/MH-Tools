@@ -1979,7 +1979,7 @@ var charmsArray = {
     "Bravery Charm": [0, 0, 0, 0, "No Effect"],
     "Cackle Charm": [250, 1, 0, 0, "Stale"],
     "Cactus Charm": [250, 1, 4, 2, "Stale"],
-    "Candy Charm": [0, 0, 0, 0, "No Effect"],
+    "Candy Charm": [500, 5, 10, 5, "No Effect"],
     "Champion Charm": [400, 5, 0, 3, "No Effect"],
     "Cherry Charm": [250, 0, 5, 2, "No Effect"],
     "Chrome Charm": [0, 3, 0, 5, "Fresh"],
