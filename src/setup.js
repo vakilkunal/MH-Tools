@@ -827,7 +827,7 @@ function printCombinations(micePopulation, tableHTML) {
                 "location" : locationName,
                 "phase" : phaseName,
                 "cheese" : cheeseName,
-                "charm" : selectedCharm,
+                "charm" : selectedCharm + " Charm",
                 "gs" : !gsLuck,
                 "bonusLuck" : bonusLuck,
                 "weapon" : weapon,
@@ -957,7 +957,7 @@ function printCharmCombinations(micePopulation, tableHTML) {
             "gs" : !gsLuck,
             "bonusLuck" : bonusLuck,
             "weapon" : weaponName,
-            "base" : weaponName,
+            "base" : baseName,
             "toxic" : isToxic,
             "battery" : batteryPower,
         };
