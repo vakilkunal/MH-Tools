@@ -823,11 +823,14 @@ function printCombinations(micePopulation, tableHTML) {
             var overallCR = 0;
             var select = document.getElementById("charm");
             var selectedCharm = select.children[select.selectedIndex].innerHTML;
+            if (selectedCharm != "-") {
+                charmName = selectedCharm + " Charm";
+            }
             var urlParams = {
                 "location" : locationName,
                 "phase" : phaseName,
                 "cheese" : cheeseName,
-                "charm" : selectedCharm + " Charm",
+                "charm" : charmName,
                 "gs" : !gsLuck,
                 "bonusLuck" : bonusLuck,
                 "weapon" : weapon,
@@ -845,7 +848,6 @@ function printCombinations(micePopulation, tableHTML) {
             }
             else {
                 tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weapon + " / " + base + "</td>";
-                charmName = selectedCharm + " Charm";
             }
 
             for (var mouse in micePopulation) {
