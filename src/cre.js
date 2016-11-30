@@ -562,12 +562,6 @@ function showPop(type) { //type = 2 means don't reset charms
                 var catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
 
 
-                if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
-                    if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
-                        catchRate += ((1 - catchRate) / 2);
-                    }
-                }
-
                 if (locationName == "Zugzwang's Tower") {
                     if (mouseName.indexOf("Rook") >= 0 && charmName == "Rook Crumble Charm") {
                         charmBonus += 300;
@@ -646,9 +640,13 @@ function showPop(type) { //type = 2 means don't reset charms
                         }
                     }
                 }
-
+                if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
+                    if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
+                        catchRate += ((1 - catchRate) / 2);
+                    }
+                }
                 var minLuckValue = minLuck(eff, mousePower);
-                var minLuckOverall = Math.max(minLuckValue, minLuckOverall);
+                minLuckOverall = Math.max(minLuckValue, minLuckOverall);
 
 
                 //Exceptions, modifications to catch rates
