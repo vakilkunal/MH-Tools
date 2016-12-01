@@ -163,22 +163,44 @@ javascript:void(function () {
             state = state.replace(/boss/g, "High");
             sublocation = state;
         }
-		else if (userLocation == "Zokor") {
-			var district = user["quests"]["QuestAncientCity"]["district_name"];
-			if (district == "The Tech Manaforge") {
-				sublocation = "Manaforge Smith"; //remove "Smith"
-			}
-			else if (district == "The Farming Garden") {
-				sublocation = "Farming Garden";
-			}
-			else if (district == "The Overgrown Farmhouse") {
-				sublocation = "Overgrown Farmhouse";
-			}
-			else if (district == "The Treasure Vault") {
-				sublocation = "Treasure Vault";
-			}
-			// More else ifs
-		}
+        else if (userLocation == "Zokor") {
+            /**
+             var district = user["quests"]["QuestAncientCity"]["district_name"];
+             if (district == "The Tech Manaforge") {
+                sublocation = "Manaforge Smith"; //remove "Smith"
+            }
+             else if (district == "The Farming Garden") {
+                sublocation = "Farming Garden";
+            }
+             else if (district == "The Overgrown Farmhouse") {
+                sublocation = "Overgrown Farmhouse";
+            }
+             else if (district == "The Treasure Vault") {
+                sublocation = "Treasure Vault";
+            }
+             // More else ifs
+             */
+            var quest = user["quests"]["QuestAncientCity"];
+
+            var districtname = quest.district_name;
+            var district_type = quest.clue_name;
+            var district_tier = quest.district_tier;
+
+            //TODO: Check cluename/cluetype of Lair to improve this
+            if (districtname.indexOf("Minotaur") >= 0) {
+                sublocation = "Lair of the Minotaur"
+            } else {
+                var districts = {
+                    "Tech": ["Tech Foundry Outskirts", "Research Center", "Manaforge Smith"],
+                    "Scholar": ["Neophyte Scholar Study", "Master Scholar Auditorium", "Dark Libary"],
+                    "Fealty": ["Outer Fealty Shrine", "Inner Fealty Temple", "Templar's Sanctum"],
+                    "Treasury": ["Treasure Room", "Treasure Vault"],
+                    "Farming": ["Farming Garden", "Overgrown Farmhouse"]
+                };
+
+                sublocation = districts[district_type][district_tier - 1]
+            }
+        }
         else if (userLocation == "Zugzwang's Tower") {
             var mystic = user["viewing_atts"]["zzt_mage_progress"];
             var tech = user["viewing_atts"]["zzt_tech_progress"];
