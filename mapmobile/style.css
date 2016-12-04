@@ -20,7 +20,7 @@ table.tablesorter thead tr .tablesorter-header {
 }
 table.tablesorter tbody td {
 	color: #3D3D3D;
-	padding: 4px;
+	/*padding: 4px;*/
 	background-color: #FFF;
 	vertical-align: top;
 	border: 2px solid #e7e7e7;
@@ -131,6 +131,33 @@ td.tablesorter-pager {
 }
 
 .tablesorter thead .disabled {display: none}
+
+/* mouse list inner table */
+.subtable {
+	width: 100%;
+}
+.subtable tbody tr td{
+	padding: 5px;
+	border-left: none;	
+	border-top: none;
+	border-right: none;
+}
+.subtable-attraction {
+	font-size: 16px; 
+	width: 20%;
+	text-align: center;
+	vertical-align: middle!important;
+}
+.subtable-location {
+	font-size: 11px; 
+	width: 80%;
+}
+.subtable tr:last-child .subtable-attraction {
+	border-bottom: none;
+}
+.subtable tr:last-child .subtable-location {
+	border-bottom: none;
+}
 
 /* tabs */
 body
