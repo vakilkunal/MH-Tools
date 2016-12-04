@@ -1,7 +1,10 @@
 "use strict";
 /**
- * Oveerridden function from original map solver
+ * Contains only oveerridden functions/variables from original map solver
  */
+POPULATIONS_URL = "../data/populations.csv";
+BASELINES_URL = "../data/baselines.txt";
+
 buildMouselist = function (mouseListText, sortedMLCLength, sortedMLC) {
 	mouseListText += "<td><table class=\'subtable\'>";
 	for (var l = 0; l < sortedMLCLength; l++) {
