@@ -351,6 +351,13 @@ function loadMouseDropdown() {
 
 }
 
+var buildMouselist = function (mouseListText, sortedMLCLength, sortedMLC) {
+	for (var l = 0; l < sortedMLCLength; l++) {
+            var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
+            mouseListText += "<td style=\'font-size: 11px; padding: 10px\'>" + "<p style='font-size: 16px'>" + sortedMLC[l][1] + "%</p><br>" + sliceMLC + "</td>";
+        }
+	return mouseListText;
+};
 function processMap(mapText) {
 	//Save a cookie
 	Cookies.set('savedMice', mapText, {
@@ -502,11 +509,8 @@ function processMap(mapText) {
 					sortedMLCLength = columnLimit;
 				}
 			}
-			
-			for (var l=0; l<sortedMLCLength; l++) {
-				var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
-				mouseListText += "<td style=\'font-size: 11px; padding: 10px\'>" + "<p style='font-size: 16px'>" + sortedMLC[l][1] + "%</p><br>" + sliceMLC + "</td>";
-			}
+			mouseListText = buildMouselist(mouseListText, sortedMLCLength, sortedMLC);
+
 		}
 	}
 
