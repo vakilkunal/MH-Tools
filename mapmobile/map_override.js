@@ -1,7 +1,8 @@
 "use strict";
 /**
- * Contains only oveerridden functions/variables from original map solver
+ * This file contains only overridden functions/variables from original map solver. 
  */
+
 POPULATIONS_URL = "../data/populations.csv";
 BASELINES_URL = "../data/baselines.txt";
 
