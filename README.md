@@ -1,9 +1,6 @@
 # [MH Tools by tsitu](https://github.com/tsitu/MH-Tools)
 
-## To-do
-* Update attraction rates for Labyrinth using SB+/Gouda/Brie + Glowing Gourd Charm
-
-## Changelog (minor details omitted - check commit history)
+## Changelog (check commit history for recent updates)
 
 #### July 3 2016
 * Renamed items to match in-game names \[*General*\]
