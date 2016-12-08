@@ -1102,6 +1102,9 @@ function locationChanged() {
             $("#labyComment").show(500);
             $("#oilRow").show(500);
         }
+        else if (locationName == "Fort Rox") {
+            $("#roxComment").show(500);
+        }
     }
 
     batteryPower = 0;
@@ -1129,6 +1132,7 @@ function hideAllRows() {
     $("#frComment").hide();
     $("#labyComment").hide();
     $("#ztComment").hide();
+    $("#roxComment").hide();
 }
 
 
