@@ -9,6 +9,25 @@ window.onload = function () {
 	// 	currLoc = currLoc.replace("http", "https");
 	// 	location.href = currLoc;
 	// }
+	var pop = new XMLHttpRequest();
+	pop.open("get", POPULATIONS_URL, true);
+	pop.onreadystatechange = function() {
+		if (pop.readyState == 4) {
+			processPop(pop.responseText);
+		}
+	};
+	pop.send();
+
+	var baseline = new XMLHttpRequest();
+	baseline.open("get", BASELINES_URL, true);
+	baseline.onreadystatechange = function() {
+		if (baseline.readyState == 4) {
+			//console.log(baseline.responseText);
+
+			processBaseline(baseline.responseText);
+		}
+	};
+	baseline.send();
 
 	//Bookmarklet storage logic
 	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {
@@ -275,25 +294,7 @@ Object.size = function(obj) {
     return size;
 };
 
-var pop = new XMLHttpRequest();
-pop.open("get", POPULATIONS_URL, true);
-pop.onreadystatechange = function() {
-	if (pop.readyState == 4) {
-		processPop();
-	}
-}
-pop.send();
 
-var baseline = new XMLHttpRequest();
-baseline.open("get", BASELINES_URL, true);
-baseline.onreadystatechange = function() {
-	if (baseline.readyState == 4) {
-		//console.log(baseline.responseText);
-
-		processBaseline(baseline.responseText);
-	}
-}
-baseline.send();
 
 var baselineArray = [];
 function processBaseline(baselineText) {
@@ -309,9 +310,7 @@ function processBaseline(baselineText) {
 
 var popCSV = new Array();
 var popArray = new Array();
-function processPop() {
-	var popText = pop.responseText;
-
+function processPop(popText) {
 	popCSV = CSVToArray(popText);
 	//console.log(popCSV);
 	var popCSVLength = Object.size(popCSV);
@@ -351,6 +350,13 @@ function loadMouseDropdown() {
 
 }
 
+var buildMouselist = function (mouseListText, sortedMLCLength, sortedMLC) {
+	for (var l = 0; l < sortedMLCLength; l++) {
+            var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
+            mouseListText += "<td style=\'font-size: 11px; padding: 10px\'>" + "<p style='font-size: 16px'>" + sortedMLC[l][1] + "%</p><br>" + sliceMLC + "</td>";
+        }
+	return mouseListText;
+};
 function processMap(mapText) {
 	//Save a cookie
 	Cookies.set('savedMice', mapText, {
@@ -502,11 +508,8 @@ function processMap(mapText) {
 					sortedMLCLength = columnLimit;
 				}
 			}
-			
-			for (var l=0; l<sortedMLCLength; l++) {
-				var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
-				mouseListText += "<td style=\'font-size: 11px; padding: 10px\'>" + "<p style='font-size: 16px'>" + sortedMLC[l][1] + "%</p><br>" + sliceMLC + "</td>";
-			}
+			mouseListText = buildMouselist(mouseListText, sortedMLCLength, sortedMLC);
+
 		}
 	}
 
