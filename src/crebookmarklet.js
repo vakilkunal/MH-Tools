@@ -47,6 +47,13 @@ javascript:void(function () {
             var wave = user["viewing_atts"]["desert_warpath"]["wave"];
             sublocation = "Wave " + wave;
         }
+        else if (userLocation == "Fort Rox") {
+            //Phases
+            //Twilight = is_dawn: null, is_night: true, current_phase: night, current_stage: stage_one
+            //phases object (stage_one through five)
+
+            //upgrades object = ballista, cannon, moat, tower, wall (level_num: complete/current/next/cannotUpgrade nightTime)
+        }
         else if (userLocation == "Gnawnian Express Station") {
             var onTrain = user["quests"]["QuestTrainStation"]["on_train"];
             if (onTrain == true) {
@@ -191,7 +198,7 @@ javascript:void(function () {
                 sublocation = "Lair of the Minotaur"
             } else {
                 var districts = {
-                    "Tech": ["Tech Foundry Outskirts", "Research Center", "Manaforge Smith"],
+                    "Tech": ["Tech Foundry Outskirts", "Tech Research Center", "Manaforge"],
                     "Scholar": ["Neophyte Scholar Study", "Master Scholar Auditorium", "Dark Libary"],
                     "Fealty": ["Outer Fealty Shrine", "Inner Fealty Temple", "Templar's Sanctum"],
                     "Treasury": ["Treasure Room", "Treasure Vault"],
@@ -303,6 +310,7 @@ javascript:void(function () {
                 "charge_level_ten": 10
             };
             urlParams["battery"] = levels[chargeLevel];
+            userSublocation = "Pagoda";
         }
     }
 
