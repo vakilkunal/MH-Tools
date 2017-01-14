@@ -1745,6 +1745,7 @@ var tourneysArray = {
 
 //Power, power bonus (%), attraction bonus (%), luck, cheese effect
 var basesArray = {
+    "2017 Base" : [200, 7, 0, 10, "Fresh"],
     "Aqua Base": [230, 0, 0, 8, "No Effect"],
     "Attuned Enerchi Induction Base": [500, 10, 10, 10, "Stale"],
     "Bacon Base": [200, 0, 15, 0, "Extremely Fresh"],
@@ -1816,6 +1817,8 @@ baseKeys.sort();
 
 ///Power Type, Power, Power Bonus, Attraction, Luck
 var weaponsArray = {
+    "New Year's Fireworks Trap" : ["Physical", 6000, 12, 10, 23, "Stale"],
+    "New Horizon Trap" : ["Arcane", 6217, 15, 10, 26, "Fresh"],
     "Droid Archmagus Trap" : ["Arcane", 5000, 15, 10, 20, "Stale"],
     "Interdimensional Crossbow Trap":["Shadow", 4500, 15, 15, 18, "Fresh"],
     "2010 Blastoff Trap": ["Tactical", 2600, 15, 0, 25, "Very Stale"],
