@@ -1976,6 +1976,7 @@ var charmsArray = {
     "2014 Charm": [2014, 0, 0, 0, "No Effect"],
     "2015 Charm": [2015, 0, 0, 0, "No Effect"],
     "2016 Charm": [2016, 0, 0, 0, "No Effect"],
+    "2017 Charm": [2017, 0, 0, 0, "No Effect"],
     "Airship Charm": [800, 0, 0, 5, "No Effect"],
     "Amplifier Charm": [0, 0, 0, 0, "No Effect"],
     "Ancient Charm": [600, 5, 5, 5, "Extremely Fresh"],
