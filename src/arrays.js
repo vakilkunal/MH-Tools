@@ -1745,7 +1745,7 @@ var tourneysArray = {
 
 //Power, power bonus (%), attraction bonus (%), luck, cheese effect
 var basesArray = {
-    "2017 Base" : [200, 7, 0, 10, "Fresh"],
+    "2017 New Year's Base" : [200, 7, 0, 10, "Fresh"],
     "Aqua Base": [230, 0, 0, 8, "No Effect"],
     "Attuned Enerchi Induction Base": [500, 10, 10, 10, "Stale"],
     "Bacon Base": [200, 0, 15, 0, "Extremely Fresh"],
