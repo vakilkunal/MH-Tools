@@ -1887,7 +1887,7 @@ var weaponsArray = {
     "HitGrab Horsey": ["Physical", 550, 2, 0, 20, "Very Fresh"],
     "HitGrab Rainbow Rockin' Horse": ["Physical", 1250, 2, 10, 25, "Uber Fresh"],
     "HitGrab Rockin' Horse": ["Physical", 1250, 2, 10, 25, "No Effect"],
-    "Holiday Hydro Hailstorm Trap" : ["Hydro", 3500, 20, 5, 20, "Fresh"],
+    "Holiday Hydro Hailstone Trap" : ["Hydro", 3500, 20, 5, 20, "Fresh"],
     "Horrific Venus Mouse Trap": ["Tactical", 3400, 12, 1, 16, "No Effect"],
     "Ice Blaster": ["Hydro", 3800, 5, 5, 12, "Fresh"],
     "Ice Maiden": ["Draconic", 5200, 12, 0, 8, "No Effect"],
