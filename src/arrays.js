@@ -1794,6 +1794,7 @@ var basesArray = {
     "Refined Pollutinum Base": [500, 12, 5, 10, "No Effect"],
     "Remote Detonator Base": [300, 10, 10, 4, "Stale"],
     "Rift Base": [250, 12, 0, 11, "Fresh"],
+    "Rooster Jade Base": [350, 12, 10, 10, "Stale"],
     "Runic Base": [200, 12, 10, 5, "No Effect"],
     "Seasonal Base": [300, 0, 8, 6, "No Effect"],
     "Sheep Jade Base": [325, 12, 10, 10, "Stale"],
