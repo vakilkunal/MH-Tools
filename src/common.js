@@ -62,30 +62,34 @@ function calcSpecialCharms(charmName) {
     } else if (charmName == "Growth Charm") {
         //Check if soiled base used.
         if (baseName == "Soiled Base") {
-            charmPower = charmsArrayN[0] + 100;
-            charmBonus = charmsArrayN[1] + 3;
-            charmAtt = charmsArrayN[2] + 5;
-            charmLuck = charmsArrayN[3] + 4;
+            charmPower += 100;
+            charmBonus +=  3;
+            charmAtt +=  5;
+            charmLuck +=  4;
         }
     } else if (charmName == "Spellbook Charm") {
         //Spellbook base
         if (baseName == "Spellbook Base") {
-            charmPower = (charmsArrayN[0]) + 500;
-            charmBonus = (charmsArrayN[1]) + 8;
-            charmEff = parseFreshness[charmsArrayN[4].trim()];
+            charmPower +=  500;
+            charmBonus +=  8;
 
         }
 
     } else if (charmName == "Wild Growth Charm") {
         //Soiled base
         if (baseName == "Soiled Base") {
-            charmPower = charmsArrayN[0] + 300;
-            charmBonus = charmsArrayN[1] + 8;
-            charmAtt = charmsArrayN[2] + 20;
-            charmLuck = charmsArrayN[3] + 9;
+            charmPower += 300;
+            charmBonus += 8;
+            charmAtt += 20;
+            charmLuck += 9;
 
         }
+    } else if (charmName == "Snowball Charm") {
+        if (festiveTraps.indexOf(weaponName) > -1) {
+            charmBonus += 20;
+        }
     }
+
 
     if (user == CRE_USER)
         calculateTrapSetup();

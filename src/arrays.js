@@ -4215,3 +4215,17 @@ var trinkets = {
     "Black Powder Charm": 138,
     "Magmatic Crystal Charm": 139
 };
+
+var festiveTraps = ["Christmas Cracker Trap",
+    "Double Diamond Adventure",
+    "Explosive Toboggan Ride",
+    "Festive Forgotten Fir Trap",
+    "Festive Gauntlet Crusher",
+    "Gingerbread House Surprise",
+    "Glacier Gatler",
+    "Holiday Hydro Hailstone Trap",
+    "Ice Blaster",
+    "Nutcracker Nuisance Trap",
+    "Snow Barrage",
+    "Snowglobe Trap",
+    "Wrapped Gift Trap"];
