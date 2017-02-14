@@ -2049,6 +2049,7 @@ var charmsArray = {
     "Luck Charm": [0, 0, 0, 1, "No Effect"],
     "Lucky Power Charm": [120, 1, 0, 1, "No Effect"],
     "Lucky Rabbit Charm": [0, 0, 0, 6, "No Effect"],
+    "Lucky Valentine Charm": [0, 0, 25, 5, "Fresh"],
     "Magmatic Crystal Charm": [0, 3, 0, 5, "Fresh"],
     "Mining Charm": [250, 1, 0, 0, "No Effect"],
     "Mobile Charm": [0, 5, 0, 5, "Extremely Stale"],
