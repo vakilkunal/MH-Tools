@@ -499,17 +499,25 @@ function gsChanged() {
 
 function getIcebergBase() {
     var autoBase = '';
+    var autoPhase = '';
     if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
+    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
+
     else if ((phaseName == "Bombing Run"
         || phaseName == "The Mad Depths"
         || phaseName == "Treacherous Tunnels")
         && baseName == "Magnet Base") {
         autoBase = "";
     }
-    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
+
     else if (phaseName == "The Mad Depths"
         && baseName == "Hearthstone Base") autoBase = "";
-    return autoBase;
+
+    if (autoBase != "") {
+        var selectBase = document.getElementById("base");
+        selectBase.value = autoBase;
+        baseChanged();
+    }
 }
 function phaseChanged() {
     console.log("Phase changed");
@@ -523,13 +531,7 @@ function phaseChanged() {
     var select = document.getElementById("phase");
     phaseName = select.children[select.selectedIndex].innerHTML;
 
-    var autoBase = getIcebergBase();
-
-    if (autoBase != "") {
-        var selectBase = document.getElementById("base");
-        selectBase.value = autoBase;
-        baseChanged();
-    }
+    getIcebergBase();
 
     if (locationName == "Twisted Garden"
         && phaseName == "Poured") {

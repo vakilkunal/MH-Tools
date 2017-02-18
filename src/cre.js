@@ -1193,15 +1193,8 @@ function weaponChanged() {
     calculateTrapSetup();
 }
 
-function baseChanged() {
-    console.log("Base changed");
-    var baseSelet = document.getElementById("base");
-
-    baseName = baseSelet.children[baseSelet.selectedIndex].innerHTML;
-    updateLink();
-
-    var autoPhase = '';
-
+function icebergPhase() {
+    var autoPhase = "";
     if (phaseName == "Bombing Run" && baseName == "Magnet Base") autoPhase = "Bombing Run (Magnet)";
     else if (phaseName == "Bombing Run (Magnet)" && baseName != "Magnet Base") autoPhase = "Bombing Run";
 
@@ -1224,6 +1217,15 @@ function baseChanged() {
             }
         }
     }
+}
+function baseChanged() {
+    console.log("Base changed");
+    var baseSelet = document.getElementById("base");
+
+    baseName = baseSelet.children[baseSelet.selectedIndex].innerHTML;
+    updateLink();
+
+    icebergPhase();
 
 
     var basesArrayN = basesArray[baseName] || [0,0,0,0, "No Effect"];
