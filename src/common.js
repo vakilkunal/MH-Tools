@@ -368,20 +368,13 @@ function findEff(mouseName) {
     if (trapType == '') eff = 0;
     else {
         eff = (powersArray[mouseName][typeEff[trapType]]) / 100;
-        //console.log(trapType);
     }
     return eff;
 }
 
 function getCheeseAttraction() {
-    //TODO make common cheese ar be global
-    var baselineAtt = baselineAttArray[cheeseName];
-    if (baselineAtt == undefined) {
-        baselineAtt = baselineArray[locationName + " (" + cheeseName + ")"];
-    }
-
+    var baselineAtt = baselineAttArray[cheeseName] || baselineArray[locationName + " (" + cheeseName + ")"];
     return baselineAtt + trapAtt / 100 - trapAtt / 100 * baselineAtt;
-
 }
 
 function gsParamCheck() {
@@ -441,7 +434,6 @@ function populateSublocationDropdown(locationName) {
 
     loadCheeseDropdown();
     phaseChanged();
-    //Load cheese dropdown
 }
 
 function charmChangeCommon() {
@@ -449,10 +441,10 @@ function charmChangeCommon() {
     var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
     if (specialCharm[charmName]) calcSpecialCharms(charmName);
     else {
-        charmPower = (charmsArrayN[0]);
-        charmBonus = (charmsArrayN[1]);
-        charmAtt = (charmsArrayN[2]);
-        charmLuck = (charmsArrayN[3]);
+        charmPower = charmsArrayN[0];
+        charmBonus = charmsArrayN[1];
+        charmAtt = charmsArrayN[2];
+        charmLuck = charmsArrayN[3];
         charmEff = parseFreshness[charmsArrayN[4].trim()];
     }
 }
@@ -505,6 +497,20 @@ function gsChanged() {
     //showPop();
 }
 
+function getIcebergBase() {
+    var autoBase = '';
+    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
+    else if ((phaseName == "Bombing Run"
+        || phaseName == "The Mad Depths"
+        || phaseName == "Treacherous Tunnels")
+        && baseName == "Magnet Base") {
+        autoBase = "";
+    }
+    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
+    else if (phaseName == "The Mad Depths"
+        && baseName == "Hearthstone Base") autoBase = "";
+    return autoBase;
+}
 function phaseChanged() {
     console.log("Phase changed");
     if (phaseName == "-") {
@@ -517,15 +523,7 @@ function phaseChanged() {
     var select = document.getElementById("phase");
     phaseName = select.children[select.selectedIndex].innerHTML;
 
-    var autoBase = '';
-    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-    else if ((phaseName == "Bombing Run"
-        || phaseName == "The Mad Depths"
-        || phaseName == "Treacherous Tunnels")
-        && baseName == "Magnet Base") autoBase = "";
-    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
-    else if (phaseName == "The Mad Depths"
-        && baseName == "Hearthstone Base") autoBase = "";
+    var autoBase = getIcebergBase();
 
     if (autoBase != "") {
         var selectBase = document.getElementById("base");
