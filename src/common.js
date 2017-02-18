@@ -20,6 +20,7 @@ var specialCharm = {
     "Growth Charm": 1,
     "Spellbook Charm": 1,
     "Wild Growth Charm": 1,
+    "Snowball Charm": 1,
 
     "Golden Tournament Base": 1,
     "Soiled Base": 1,
@@ -63,15 +64,15 @@ function calcSpecialCharms(charmName) {
         //Check if soiled base used.
         if (baseName == "Soiled Base") {
             charmPower += 100;
-            charmBonus +=  3;
-            charmAtt +=  5;
-            charmLuck +=  4;
+            charmBonus += 3;
+            charmAtt += 5;
+            charmLuck += 4;
         }
     } else if (charmName == "Spellbook Charm") {
         //Spellbook base
         if (baseName == "Spellbook Base") {
-            charmPower +=  500;
-            charmBonus +=  8;
+            charmPower += 500;
+            charmBonus += 8;
 
         }
 
@@ -89,7 +90,6 @@ function calcSpecialCharms(charmName) {
             charmBonus += 20;
         }
     }
-
 
     if (user == CRE_USER)
         calculateTrapSetup();
@@ -120,6 +120,14 @@ function buildURL(location, urlParams) {
         }
     }
     return url;
+}
+
+function getRiftCount() {
+    var riftCount = 0;
+    if (weaponName in riftWeapons) riftCount++;
+    if (baseName in riftBases) riftCount++;
+    if (charmName in riftCharms) riftCount++;
+    return riftCount;
 }
 
 function calculateTrapSetup(skipDisp) {
@@ -204,11 +212,7 @@ function calculateTrapSetup(skipDisp) {
             specialPower += 25000;
         }
 
-        if (weaponName == "Ice Blaster" && charmName == "Snowball Charm") {
-            specialBonus += 10;
-        } else if (weaponName == "Glacier Gatler" && charmName == "Snowball Charm") {
-            specialBonus += 20;
-        } else if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
+        if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
             braceBonus += .25;
         } else if ((baseName == "Polluted Base" || baseName == "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
             if (charmName == "Polluted Charm") {
@@ -221,14 +225,8 @@ function calculateTrapSetup(skipDisp) {
                 specialLuck += 15;
             }
         }
+        var riftCount = getRiftCount();
 
-        var riftCount = 0;
-        if (weaponName in riftWeapons) riftCount++;
-        if (baseName in riftBases) riftCount++;
-        if (charmName in riftCharms) riftCount++;
-        else if (charmName.indexOf("Gnarled Charm") >= 0 || charmName.indexOf("Cherry Charm") >= 0 || charmName.indexOf("Stagnant Charm") >= 0) {
-            riftCount++;
-        }
         if (riftCount == 2) {
             specialBonus += 10;
         } else if (riftCount == 3) {
