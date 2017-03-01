@@ -1804,6 +1804,7 @@ var basesArray = {
     "Soiled Base": [400, 12, 5, 6, "Very Fresh"],
     "Spellbook Base": [500, 14, 5, 7, "Fresh"],
     "Spiked Base": [300, 12, 0, 3, "Very Stale"],
+    "Sprinkly Sweet Cupcake Birthday Base" :[300, 9, 9, 9, "Extremely Fresh"],
     "Stone Base": [150, 10, 0, 0, "Fresh"],
     "Tidal Base": [800, 8, 10, 10, "Fresh"],
     "Tiki Base": [200, 18, 5, 0, "Very Fresh"],
