@@ -1944,6 +1944,7 @@ var weaponsArray = {
     "Soul Catcher": ["Shadow", 1500, 5, 5, 5, "No Effect"],
     "Soul Harvester": ["Shadow", 2200, 5, 5, 12, "No Effect"],
     "Sphynx Wrath": ["Tactical", 6100, 10, 10, 25, "Very Fresh"],
+    "Sprinkly Cupcake Surprise Trap" :["Arcane", 3500, 9, 9, 9, "Very Fresh"],
     "Stale Cupcake Golem Trap": ["Forgotten", 6700, 7, 0, 0, "No Effect"],
     "Steam Laser Mk. I": ["Hydro", 4200, 8, 0, 14, "No Effect"],
     "Steam Laser Mk. II": ["Hydro", 4800, 12, 10, 18, "Fresh"],
