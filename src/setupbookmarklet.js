@@ -31,6 +31,7 @@ javascript:void(function() {
 		url += "/";
 		newWindow.location.href = url;
 	}
+
 	function checkDOM() {
 		baseButton.click();
 		var timeout = setTimeout(function() {
@@ -47,42 +48,45 @@ javascript:void(function() {
 			}
 		}, 100);
 	}
-	function parse() {
-		function toArray(nodeList) {
-                    var tmp = [];
-                    for (var i=0; i<nodeList.length; i++) {
-                        tmp.push(nodeList[i].textContent);
-                    }
 
-                    return tmp;
-                }
+    function parse() {
+
+        function getItemList() {
+            var selector = ".campPage-trap-itemBrowser-items .campPage-trap-itemBrowser-item-name";
+            var nodeList = document.querySelectorAll(selector);
+            var all = Array.prototype.map.call(nodeList, function (node) {
+                return node.textContent;
+            });
+            var unique = all.filter(function (elem, index, self) {
+                return index == self.indexOf(elem);
+            });
+            return unique;
+        }
+
 		baseButton.click();
-		var baseText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.base.clear-block .campPage-trap-itemBrowser-item-name");
+        bases = getItemList();
+        console.log("Number of bases: " + bases.length);
 
-		bases = toArray(baseText);
-		console.log("Number of bases: " + bases.length);
+        weaponButton.click();
+        weapons = getItemList();
+        console.log("Number of weapons: " + weapons.length);
 
-	    weaponButton.click();
-	    var weaponText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.weapon.clear-block .campPage-trap-itemBrowser-item-name");
-		weapons = toArray(weaponText);
-		console.log("Number of weapons: " + weapons.length);
+        charmButton.click();
+        charms = getItemList();
+        console.log("Number of charms: " + charms.length);
 
-	    charmButton.click();
-	    var charmText = document.querySelectorAll("div.passedFilters .campPage-trap-itemBrowser-item.trinket.clear-block .campPage-trap-itemBrowser-item-name");
-		charms = toArray(charmText);
-		console.log("Number of charms: " + charms.length);
+        var closeButton = document.querySelector("a.campPage-trap-blueprint-closeButton");
+        if (closeButton) {
+            closeButton.click();
+        }
 
-		var closeButton = document.querySelector("a.campPage-trap-blueprint-closeButton");
-	    if (closeButton) {
-	    	closeButton.click();
-	    }
-
-		baseIter = 0;
-		weaponIter = 0;
-		charmIter = 0;
-		//Do not call bases, weapons, charms separately
-		setTimeout(sendBases, SUBMIT_DELAY);
-	}
+        baseIter = 0;
+        weaponIter = 0;
+        charmIter = 0;
+        //Do not call bases, weapons, charms separately
+		//Bases calls weapons when complete, weapons calls charms when complete
+        setTimeout(sendBases, SUBMIT_DELAY);
+    }
 
 
 	function sendBases() {
