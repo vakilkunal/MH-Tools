@@ -2100,6 +2100,7 @@ var charmsArray = {
     "Sponge Charm": [0, 0, 0, 0, "No Effect"],
     "Spooky Charm": [300, 1, 0, 0, "No Effect"],
     "Spore Charm": [400, 3, 2, 3, "Stale"],
+    "Sprinkly Sweet Cupcake Charm": [0, 0, 9, 9, "Fresh"],
     "Stagnant Charm": [250, 0, 5, 2, "No Effect"],
     "Sticky Charm": [150, 0, 0, 0, "No Effect"],
     "Striker Charm": [0, 0, 0, 1, "No Effect"],
