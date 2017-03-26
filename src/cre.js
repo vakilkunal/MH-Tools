@@ -1195,8 +1195,8 @@ function weaponChanged() {
 
 function icebergPhase() {
     var autoPhase = "";
-    if (phaseName == "Bombing Run" && baseName == "Magnet Base") autoPhase = "Bombing Run (Magnet)";
-    else if (phaseName == "Bombing Run (Magnet)" && baseName != "Magnet Base") autoPhase = "Bombing Run";
+    if (phaseName == "Bombing Run" && baseName == "Remote Detonator Base") autoPhase = "Bombing Run (Remote Detonator)";
+    else if (phaseName == "Bombing Run (Remote Detonator)" && baseName != "Remote Detonator Base") autoPhase = "Bombing Run";
 
     else if (phaseName == "Treacherous Tunnels" && baseName == "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
     else if (phaseName == "Treacherous Tunnels (Magnet)" && baseName != "Magnet Base") autoPhase = "Treacherous Tunnels";
