@@ -97,12 +97,15 @@ javascript:void(function () {
             if (sublocation == "General") {
                 sublocation = "Generals";
             }
-            if ((sublocation == "Treacherous Tunnels" || sublocation == "Bombing Run" || sublocation == "The Mad Depths")
+            if ((sublocation == "Treacherous Tunnels" || sublocation == "The Mad Depths")
                 && userBase == "Magnet Base") {
                 sublocation += " (Magnet)";
             }
             else if (sublocation == "The Mad Depths" && userBase == "Hearthstone Base") {
                 sublocation += " (Hearthstone)";
+            }
+            else if (sublocation == "Bombing Run" && userBase == "Remote Detonator Base") {
+                sublocation += " (Remote Detonator)";
             }
         }
         else if (userLocation == "Labyrinth") {
