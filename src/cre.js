@@ -1069,11 +1069,13 @@ function locationChanged() {
     console.log("Location changed");
     var select = document.getElementById("location");
     locationName = select.children[select.selectedIndex].innerHTML;
+
     updateLink();
 
     hideAllRows();
-    showHideWidgets();
-    if (document.getElementById("toggleCustom").checked == false) {
+    var checked = document.getElementById("toggleCustom").checked;
+    showHideWidgets(checked);
+    if (!checked) {
 
         if (locationName == "Furoma Rift") {
             $("#batteryRow").show(500);

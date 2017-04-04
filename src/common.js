@@ -572,10 +572,17 @@ function checkToxicParam() {
     }
 }
 
-function showHideWidgets() {
+function showHideWidgets(custom) {
     $(".display-location").hide();
     $("#toxic").val('No');
     $("#battery").val('-');
-    var locationNameClass = ".display-" + locationName.replace(" ", "-");
-    $(locationNameClass).show(500);
+    var locationNameClass = ".display-" + locationName.replace(/ /g, "-").toLowerCase();
+    if (custom) {
+        $(".comments " + locationNameClass).show(500);
+        $(".display-custom" + locationNameClass).show(500);
+    }
+    else
+    {
+        $(locationNameClass).show(500);
+    }
 }
