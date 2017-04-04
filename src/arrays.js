@@ -1901,6 +1901,7 @@ var weaponsArray = {
     "Kraken Chaos": ["Hydro", 3400, 0, 0, 18, "Very Stale"],
     "Law Laser Trap": ["Law", 1750, 20, 10, 3, "Fresh"],
     "Maniacal Brain Extractor": ["Shadow", 2600, 10, 0, 13, "Very Fresh"],
+    "Meteor Prison Core Trap" : ["Law", 3000, 20, 10, 8, "No Effect"],
     "Mouse DeathBot": ["Physical", 2400, 15, 10, 2, "Stale"],
     "Mouse Hot Tub": ["Physical", 70, 3, 35, 2, "No Effect"],
     "Mouse Mary O'Nette": ["Physical", 250, 0, 6, 5, "Fresh"],
