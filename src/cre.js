@@ -113,26 +113,21 @@ window.onload = function () {
     loadCharmDropdown();
 
     gsParamCheck();
+    showHideWidgets();
 
     //Listening for changes in dropdowns or textboxes
     document.getElementById("toggleCustom").onchange = function () {
         var toggle = document.getElementById("toggleCustom");
         if (toggle.checked) {
-            $("#link").hide();
-            $("#weaponRow").hide();
-            $("#baseRow").hide();
-            $("#charmRow").hide();
-            $("#gsRow").hide();
-            $("#bonusLuckRow").hide();
-            $("#trapSetup").hide();
+            $(".input-standard").hide();
+            $(".input-custom").show(500);
 
-            $("#customType").show(500).find('select').val(trapType);
-            $("#customPower").show(500).find('input').val(trapPower);
-            $("#customLuck").show(500).find('input').val(trapLuck);
-            $("#customAttraction").show(500).find('input').val(trapAtt);
-            $("#customEffect").show(500).find('select').val(trapEff);
+            $("#trapPowerType").val(trapType);
+            $("#trapPowerValue").val(trapPower);
+            $("#trapLuckValue").val(trapLuck);
+            $("#trapAttractionValue").val(trapAtt);
+            $("#trapEffect").val(trapEff);
 
-            $("#toxicRow").hide();
             $("#toxic").val('No');
             $("#batteryRow").hide();
             $("#battery").val('-');
@@ -147,18 +142,9 @@ window.onload = function () {
             updateCustomSetup();
         }
         else {
-            $("#customType").hide();
-            $("#customPower").hide();
-            $("#customLuck").hide();
-            $("#customAttraction").hide();
-            $("#customEffect").hide();
-            $("#link").show(500);
-            $("#weaponRow").show(500);
-            $("#baseRow").show(500);
-            $("#charmRow").show(500);
-            $("#gsRow").show(500);
-            $("#bonusLuckRow").show(500);
-            $("#trapSetup").show(500);
+
+            $(".input-custom").hide();
+            $(".input-standard").show(500);
 
             if (cheeseName == "Brie" || cheeseName == "SB+") {
                 $("#toxicRow").show(500);
@@ -174,6 +160,7 @@ window.onload = function () {
 
             calculateTrapSetup();
         }
+        showHideWidgets();
     };
 
     document.getElementById("trapPowerType").onchange = updateCustomSetup;
@@ -446,7 +433,7 @@ function formatSampleSize() {
         sizeDescriptor = sampleSize + " (" + colored + ")";
     }
     var ss = document.getElementById("sampleSize");
-    ss.innerHTML = "<tr><td id=\"ssid\">Sample Size</td><td>" + sizeDescriptor + "</td></tr>";
+    ss.innerHTML = "<strong>Sample Size:</strong> " + sizeDescriptor;
 }
 
 function showPop(type) { //type = 2 means don't reset charms
@@ -1077,6 +1064,7 @@ function updateLink() {
     ga('send', 'event', 'tournament', 'selected', tournamentName);
 }
 
+
 function locationChanged() {
     console.log("Location changed");
     var select = document.getElementById("location");
@@ -1084,7 +1072,9 @@ function locationChanged() {
     updateLink();
 
     hideAllRows();
+    showHideWidgets();
     if (document.getElementById("toggleCustom").checked == false) {
+
         if (locationName == "Furoma Rift") {
             $("#batteryRow").show(500);
             $("#frComment").show(500);
@@ -1120,12 +1110,9 @@ function locationChanged() {
 }
 
 function hideAllRows() {
-    $("#phaseRow").hide();
     $("#oilRow").hide();
     $("#toxicRow").hide();
-    $("#toxic").val('No');
     $("#batteryRow").hide();
-    $("#battery").val('-');
     $("#ampRow").hide();
     $("#sliderRow").hide();
     $("#wwrComment").hide();

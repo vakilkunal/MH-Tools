@@ -572,3 +572,10 @@ function checkToxicParam() {
     }
 }
 
+function showHideWidgets() {
+    $(".display-location").hide();
+    $("#toxic").val('No');
+    $("#battery").val('-');
+    var locationNameClass = ".display-" + locationName.replace(" ", "-");
+    $(locationNameClass).show(500);
+}
