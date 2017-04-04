@@ -4234,3 +4234,22 @@ var festiveTraps = ["Christmas Cracker Trap",
     "Snow Barrage",
     "Snowglobe Trap",
     "Wrapped Gift Trap"];
+
+var wereMice = [
+    "Alpha Weremouse",
+    "Mischievous Wereminer",
+    "Night Shift Materials Manager",
+    "Reveling Lycanthrope",
+    "Wealthy Werewarrior",
+    "Werehauler",
+    "Wereminer"
+];
+
+var cosmicCritters = [
+    "Arcane Summoner",
+    "Cursed Taskmaster",
+    "Hypnotized Gunslinger",
+    "Meteorite Golem",
+    "Meteorite Mystic",
+    "Night Watcher"
+];
