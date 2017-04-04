@@ -576,7 +576,7 @@ function showHideWidgets(custom) {
     $(".display-location").hide();
     $("#toxic").val('No');
     $("#battery").val('-');
-    var locationNameClass = ".display-" + locationName.replace(/ /g, "-").toLowerCase();
+    var locationNameClass = ".display-" + locationName.replace(/ /g, "-").replace(/'/g,"").toLowerCase();
     if (custom) {
         $(".comments " + locationNameClass).show(500);
         $(".display-custom" + locationNameClass).show(500);

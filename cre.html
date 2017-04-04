@@ -20,10 +20,6 @@
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-        }
 
         body {
             font-family: Arial;
@@ -82,7 +78,7 @@
             font-weight: bold;
         }
 
-        .hidden {
+        .hidden, .display-location {
             display: none;
         }
 
@@ -195,31 +191,30 @@
     </div>
     <!--###################################################################################-->
     <table>
-        <!-- Location Comments -->
         <tbody class="comments">
 
-        <tr style="display:none" class="display-location display-whisker-woods-rift">
+        <tr class="display-location display-whisker-woods-rift">
             <td>Comments:</td>
             <td class="locationComment">Rage states: Low = 1-24, Medium = 25-49, High = 50<br>Still missing some rage
                 states and charm populations.
             </td>
         </tr>
 
-        <tr class="display-location display-fort-rox" style="display:none">
+        <tr class="display-location display-furoma-rift">
             <td>Comments:</td>
             <td class="locationComment">Training Grounds and Pagoda separated for Brie String - Magical String coming
                 soon.
             </td>
         </tr>
 
-        <tr id="labyComment" style="display:none">
+        <tr class="display-location display-labyrinth">
             <td>Comments:</td>
             <td class="locationComment">Labyrinth and Minotaur bases are assumed to have 50% Dead End clue negation.<br>Compass
                 Magnet Charm dead-end clue removal rate is still unknown.
             </td>
         </tr>
 
-        <tr id="ztComment" style="display:none">
+        <tr class="display-location display-zugzwangs-tower">
             <td>Comments:</td>
             <td class="locationComment">Assumptions that were made when narrowing down populations can be found <a
                     href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&p=1328110&viewfull=1#post1328110"
@@ -227,7 +222,7 @@
             </td>
         </tr>
 
-        <tr id="roxComment" style="display:none">
+        <tr class="display-location display-fort-rox">
             <td>Comments:</td>
             <td class="locationComment">Contribute to population data collection <a
                     href="https://www.mousehuntgame.com/forum/showthread.php?128603-Fort-Rox-Population-Data"
@@ -235,7 +230,7 @@
             </td>
         </tr>
         </tbody>
-        <!--  -->
+
         <tbody class="input-all">
         <tr>
             <td>Custom values:</td>
@@ -270,6 +265,54 @@
             </td>
         </tr>
         </tbody>
+
+        <tbody class="input-special">
+        <tr id="oilRow" style="display:none">
+            <td>Lantern Oil:</td>
+            <td>
+                <select id="lanternOil">
+                    <option>Off</option>
+                    <option>On</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr id="batteryRow" style="display:none">
+            <td>Battery Level:</td>
+            <td>
+                <input type="number" id="battery" min="0" max="10">
+                </input>
+            </td>
+        </tr>
+
+        <tr class="display-location display-fort-rox">
+            <td>Balista Level</td>
+            <td>
+                <input name=balista id="balistaLevel" type="number" min="0" max="3">
+            </td>
+        </tr>
+        <tr class="display-location display-fort-rox">
+            <td>Canon Level</td>
+            <td>
+                <input name=cannon type="number" id="canonLevel" min="0" max="3">
+            </td>
+        </tr>
+
+        <tr id="ampRow" style="display:none">
+            <td>Amp:</td>
+            <td>
+                <input id="ampValue" type="text" size="3" value="0" readonly>%
+            </td>
+        </tr>
+
+        <tr id="sliderRow" class="hidden">
+            <td></td>
+            <td>
+                <div id="ampSlider"></div>
+            </td>
+        </tr>
+        </tbody>
+
         <tbody class="input-standard">
         <tr id="toxicRow" style="display:none">
             <td>Toxic:</td>
@@ -322,54 +365,6 @@
             </td>
         </tr>
         </tbody>
-
-        <tbody class="input-special">
-        <tr id="oilRow" style="display:none">
-            <td>Lantern Oil:</td>
-            <td>
-                <select id="lanternOil">
-                    <option>Off</option>
-                    <option>On</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr id="batteryRow" style="display:none">
-            <td>Battery Level:</td>
-            <td>
-                <input type="number" id="battery" min="0" max="10">
-                </input>
-            </td>
-        </tr>
-
-        <tr class="display-location display-fort-rox">
-            <td>Balista Level</td>
-            <td>
-                <input name=balista id="balistaLevel" type="number" min="0" max="3">
-            </td>
-        </tr>
-        <tr class="display-location display-fort-rox">
-            <td>Canon Level</td>
-            <td>
-                <input name=cannon type="number" id="canonLevel" min="0" max="3">
-            </td>
-        </tr>
-
-        <tr id="ampRow" style="display:none">
-            <td>Amp:</td>
-            <td>
-                <input id="ampValue" type="text" size="3" value="0" readonly>%
-            </td>
-        </tr>
-
-        <tr id="sliderRow" class="hidden">
-            <td></td>
-            <td>
-                <div id="ampSlider"></div>
-            </td>
-        </tr>
-        </tbody>
-
 
         <tbody class="input-custom hidden">
         <tr>
