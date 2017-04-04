@@ -84,6 +84,11 @@
 
         table {
             margin-bottom: 1em;
+            border-collapse: collapse;
+        }
+
+        table tbody {
+            border-top: 15px solid transparent;
         }
     </style>
     <!--###################################################################################-->
@@ -264,6 +269,61 @@
                 </select>
             </td>
         </tr>
+
+        <tr id="toxicRow" class="hidden input-standard">
+            <td>Toxic:</td>
+            <td>
+                <select id="toxic">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody class="input-standard">
+
+
+        <tr id="weaponRow">
+            <td>Weapon:</td>
+            <td>
+                <select id="weapon">
+                </select>
+            </td>
+        </tr>
+
+        <tr id="baseRow">
+            <td>Base:</td>
+            <td>
+                <select id="base">
+                </select>
+            </td>
+        </tr>
+
+        <tr id="charmRow">
+            <td>Charm:</td>
+            <td>
+                <select id="charm">
+                </select>
+            </td>
+        </tr>
+
+        <tr id="gsRow">
+            <td>Golden Shield:</td>
+            <td>
+                <select id="gs">
+                    <option value='Y'>Yes</option>
+                    <option value='N'>No</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr id="bonusLuckRow">
+            <td>Bonus Luck:</td>
+            <td>
+                <input id="bonusLuck" type="number" value="0" min="0">
+            </td>
+        </tr>
         </tbody>
 
         <tbody class="input-special">
@@ -309,59 +369,6 @@
             <td></td>
             <td>
                 <div id="ampSlider"></div>
-            </td>
-        </tr>
-        </tbody>
-
-        <tbody class="input-standard">
-        <tr id="toxicRow" style="display:none">
-            <td>Toxic:</td>
-            <td>
-                <select id="toxic">
-                    <option>No</option>
-                    <option>Yes</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr id="weaponRow">
-            <td>Weapon:</td>
-            <td>
-                <select id="weapon">
-                </select>
-            </td>
-        </tr>
-
-        <tr id="baseRow">
-            <td>Base:</td>
-            <td>
-                <select id="base">
-                </select>
-            </td>
-        </tr>
-
-        <tr id="charmRow">
-            <td>Charm:</td>
-            <td>
-                <select id="charm">
-                </select>
-            </td>
-        </tr>
-
-        <tr id="gsRow">
-            <td>Golden Shield:</td>
-            <td>
-                <select id="gs">
-                    <option value='Y'>Yes</option>
-                    <option value='N'>No</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr id="bonusLuckRow">
-            <td>Bonus Luck:</td>
-            <td>
-                <input id="bonusLuck" type="number" value="0" min="0">
             </td>
         </tr>
         </tbody>

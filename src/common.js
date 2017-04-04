@@ -14,6 +14,7 @@ var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
 var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
+var balistaLevel = 0, canonLevel = 0;
 
 var specialCharm = {
     "Champion Charm": 1,

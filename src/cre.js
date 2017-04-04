@@ -160,7 +160,7 @@ window.onload = function () {
 
             calculateTrapSetup();
         }
-        showHideWidgets();
+        showHideWidgets(toggle.checked);
     };
 
     document.getElementById("trapPowerType").onchange = updateCustomSetup;
