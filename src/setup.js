@@ -284,20 +284,15 @@ window.onload = function () {
         bonusLuckChanged();
     }
 
+    showHideWidgets();
+
     document.getElementById("location").onchange = locationChanged;
-
     document.getElementById("phase").onchange = phaseChanged;
-
     document.getElementById("cheese").onchange = cheeseChanged;
-
     document.getElementById("charm").onchange = charmChanged;
-
     document.getElementById("toxic").onchange = toxicChanged;
-
     document.getElementById("battery").onchange = batteryChanged;
-
     document.getElementById("gs").onchange =  gsChanged;
-
     document.getElementById("bonusLuck").onchange = bonusLuckChanged;
 
     $("#save_setup_button").click(function () {
@@ -306,9 +301,7 @@ window.onload = function () {
 
     $("#show_pop_button").click(function () {
         $("#pleaseWaitMessage").show();
-        setTimeout(function () {
-            showPop();
-        }, 1);
+        setTimeout(showPop, 1);
     });
 
     $("#show_weapons_button").click(function () {
@@ -648,23 +641,7 @@ function locationChanged() {
     locationName = select.children[select.selectedIndex].innerHTML;
     updateLink();
 
-    hideAllRows();
-    if (locationName == "Furoma Rift") {
-        $("#batteryRow").show(500);
-        $("#frComment").show(500);
-    }
-    else if (locationName == "Whisker Woods Rift") {
-        $("#wwrComment").show(500);
-    }
-    else if (locationName == "Zugzwang's Tower") {
-        $("#ampSlider").slider('option', 'value', 100);
-        $("#ampRow").show(500);
-        $("#sliderRow").show(500);
-        $("#ztComment").show(500);
-    }
-    else if (locationName == "Labyrinth") {
-        $("#labyComment").show(500);
-    }
+    showHideWidgets();
 
     batteryPower = 0;
     ztAmp = 100;
@@ -675,19 +652,10 @@ function locationChanged() {
     if (locationName != "") {
         populateSublocationDropdown(locationName);
     }
-}
 
-function hideAllRows() {
-    $("#toxicRow").hide();
-    $("#toxic").val('No');
-    $("#batteryRow").hide();
-    $("#battery").val('-');
-    $("#ampRow").hide();
-    $("#sliderRow").hide();
 }
 
 function cheeseChanged() {
-    console.log("Cheese changed");
     var select = document.getElementById("cheese");
     cheeseName = select.children[select.selectedIndex].innerHTML;
     ga('send', 'event', 'cheese', 'changed', cheeseName);
@@ -695,14 +663,7 @@ function cheeseChanged() {
     updateLink();
 
     //Toxic checks
-    if (cheeseName == "Brie" || cheeseName == "SB+") {
-        $("#toxicRow").show(500);
-        toxicChanged();
-    }
-    else {
-        $("#toxicRow").hide();
-        toxicChanged();
-    }
+    checkToxicWidget();
 
     //showPop();
     //selectCharm();

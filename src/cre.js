@@ -113,7 +113,7 @@ window.onload = function () {
     loadCharmDropdown();
 
     gsParamCheck();
-    showHideWidgets();
+    showHideWidgets(document.getElementById("toggleCustom").checked);
 
     //Listening for changes in dropdowns or textboxes
     document.getElementById("toggleCustom").onchange = function () {
@@ -128,11 +128,6 @@ window.onload = function () {
             $("#trapAttractionValue").val(trapAtt);
             $("#trapEffect").val(trapEff);
 
-            $("#toxic").val('No');
-            $("#batteryRow").hide();
-            $("#battery").val('-');
-            $("#ampRow").hide();
-            $("#sliderRow").hide();
 
             $("#bonusLuck").val('0');
             bonusLuck = 0;
@@ -145,18 +140,6 @@ window.onload = function () {
 
             $(".input-custom").hide();
             $(".input-standard").show(500);
-
-            if (cheeseName == "Brie" || cheeseName == "SB+") {
-                $("#toxicRow").show(500);
-            }
-            if (locationName == "Furoma Rift") {
-                $("#batteryRow").show(500);
-            }
-            else if (locationName == "Zugzwang's Tower") {
-                $("#ampSlider").slider('option', 'value', 100);
-                $("#ampRow").show(500);
-                $("#sliderRow").show(500);
-            }
 
             calculateTrapSetup();
         }
@@ -1002,10 +985,8 @@ function updateLink() {
 
 
 function locationChanged() {
-    console.log("Location changed");
     var select = document.getElementById("location");
     locationName = select.children[select.selectedIndex].innerHTML;
-
     updateLink();
 
     var checked = document.getElementById("toggleCustom").checked;
@@ -1024,21 +1005,9 @@ function locationChanged() {
 }
 
 
-function checkToxicWidget(custom) {
-    if (!custom) {
-        if (cheeseName == "Brie" || cheeseName == "SB+") {
-            $("#toxicRow").show(500);
-            toxicChanged();
-        }
-        else {
-            $("#toxicRow").hide();
-            toxicChanged();
-        }
-    }
-}
+
 
 function cheeseChanged() {
-    console.log("Cheese changed");
     var select = document.getElementById("cheese");
     cheeseName = select.children[select.selectedIndex].innerHTML;
     updateLink();

@@ -393,6 +393,19 @@ function gsParamCheck() {
     }
 }
 
+function checkToxicWidget(custom) {
+    if (!custom) {
+        if (cheeseName == "Brie" || cheeseName == "SB+") {
+            $("#toxicRow").show(500);
+            toxicChanged();
+        }
+        else {
+            $("#toxicRow").hide();
+            toxicChanged();
+        }
+    }
+}
+
 function toxicChanged() {
     var select = document.getElementById("toxic");
     isToxic = select.children[select.selectedIndex].innerHTML;
@@ -520,7 +533,6 @@ function getIcebergBase() {
     }
 }
 function phaseChanged() {
-    console.log("Phase changed");
     if (phaseName == "-") {
         $("#phaseRow").hide();
     }
@@ -577,6 +589,7 @@ function showHideWidgets(custom) {
     $(".display-location").hide();
     $("#toxic").val('No');
     $("#battery").val('-');
+    $("#ampSlider").slider('option', 'value', 100);
     var locationNameClass = ".display-" + locationName.replace(/ /g, "-").replace(/'/g,"").toLowerCase();
     if (custom) {
         $(".comments " + locationNameClass).show(500);
@@ -586,4 +599,5 @@ function showHideWidgets(custom) {
     {
         $(locationNameClass).show(500);
     }
+    checkToxicWidget(custom)
 }

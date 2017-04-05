@@ -10,100 +10,85 @@
     <script type="text/javascript" src="src/common.js"></script>
     <script type="text/javascript" src="src/setup.js"></script>
     <script type="text/javascript" src="src/setupbookmarklet.min.js"></script>
-	<script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="lib/jquery.tablesorter.combined.min.js"></script>
     <script type="text/javascript" src="lib/widget-pager.min.js"></script>
     <script type="text/javascript" src="lib/js-cookie.js"></script>
     <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
     <script type="text/javascript" src="lib/jquery-ui.touch-punch.min.js"></script>
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen" />
-    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen"/>
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen"/>
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <style type="text/css">
-        body {
-            font-family:Arial,sans-serif;
-            font-size: 12px;
-            line-height:20px;
-        }
-        small {
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            margin-bottom: 0;
-        }
-        .container {
-            /*width: 800px;*/
-            margin: 0 auto;
-            padding: 20px;
-        }
+
         td {
             margin: 4px;
-            padding:4px 6px;
+            padding: 4px 6px;
         }
+
         th {
             margin: 4px;
-            padding:4px 6px;
+            padding: 4px 6px;
         }
+
         select {
-            padding:4px;
+            padding: 4px;
         }
-        a {
-            text-decoration: underline;
-        }
-        .center button {
-            padding:4px 8px;
-            font-family:Arial,sans-serif;
-            font-size: 15px;
-            line-height:20px;
-        }
+
+
+
         #status {
             font-weight: 700;
             font-size: 16px;
-            text-align:left;
+            text-align: left;
         }
+
         #pleaseWaitMessage {
             font-weight: 700;
             font-size: 16px;
-            text-align:center;
+            text-align: center;
             display: none;
         }
-        .header h1 {
-            font-weight: 700;
-            font-size: 24px;
-            padding-bottom: 10px;
-        }
+
+
 
 
     </style>
     <!--###################################################################################-->
 
 
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-      //Google Analytics for haoala
-      ga('create', 'UA-31924811-5', 'dropboxusercontent.com');
-      ga('send', 'pageview');
+        //Google Analytics for haoala
+        ga('create', 'UA-31924811-5', 'dropboxusercontent.com');
+        ga('send', 'pageview');
 
-      //Google Analytics for me
-      ga('create', 'UA-61581935-1', {'name':'auto'});
-      ga('auto.send', 'pageview');
-	</script>
-    
+        //Google Analytics for me
+        ga('create', 'UA-61581935-1', {'name': 'auto'});
+        ga('auto.send', 'pageview');
+    </script>
+
     <!-- Amplifier slider -->
     <script>
-        $(function() {
+        $(function () {
             $("#ampSlider").slider({
                 range: "min",
                 min: 0,
                 max: 175,
                 step: 1,
-                slide: function(event, ui) {
+                slide: function (event, ui) {
                     if (event.originalEvent) {
                         refreshSlider(ui);
                     }
@@ -114,7 +99,7 @@
                         $("#ampValue").val(100);
                     }
                 },
-                change: function(event, ui) {
+                change: function (event, ui) {
                     if (event.originalEvent) {
                         refreshSlider(ui);
                     }
@@ -132,14 +117,14 @@
             var theColor = "";
             if (colorVal < 88) {
                 myRed = 255;
-                myGreen = parseInt( ( ( colorVal * 1.136 ) * 255 ) / 100 );
+                myGreen = parseInt(( ( colorVal * 1.136 ) * 255 ) / 100);
             }
-            else  {
-                myRed = parseInt( ( ( 175 - colorVal ) * 1.136 ) * 255 / 100 );
+            else {
+                myRed = parseInt(( ( 175 - colorVal ) * 1.136 ) * 255 / 100);
                 myGreen = 255;
             }
             theColor = "rgb(" + myRed + "," + myGreen + ",0)";
-            return(theColor);
+            return (theColor);
         }
 
         function refreshSlider(ui) {
@@ -154,172 +139,245 @@
     </script>
 </head>
 <body>
-    <div id="top" style="margin-top: 20px; margin-left: 20px">
+<div id="top" style="margin-top: 20px; margin-left: 20px">
+    <table>
+        <tr>
+            <td>
+                <div class="header">
+                    <small><a href="index.html">Back to all tools</a></small>
+                    <br><br>
+
+                    <h1>Best Setup Tool</h1>
+                    <small>Thanks to the work of Adriel, Chad, Nick, Ben, Paul, Yikai and Kat</small>
+                    <br><br>
+                    <p>Bookmarklet Usage (optional):</p>
+                    <ol>
+                        <li>Save this <a id="bookmarklet" href="#">Best Setup</a> link (<a id="instructions" href="#">Detailed
+                            Instructions</a>)
+                        </li>
+                        <li>Navigate to the Camp on <a href="https://www.mousehuntgame.com/"
+                                                       target="_blank">MouseHunt</a> (<i>not</i> compatible with
+                            Facebook's app, FreshCoat Layout <i>required</i>)
+                        </li>
+                        <li>Click the bookmarklet to load in all of your weapons, bases, and charms!</li>
+                        <li>Items not all loaded in? Try the <a id="slowBookmarklet" href="#">slower</a> or <a
+                                id="evenslowerBookmarklet" href="#">even slower</a> versions</a></li>
+                    </ol>
+                    <small><a
+                            href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost"
+                            target="_blank">Report bugs and suggest features</a></small>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="main" class="container" style="display: none">
+    <table class="form">
+        <tbody class="comments">
+
+        <tr class="display-location display-whisker-woods-rift">
+            <td>Comments:</td>
+            <td class="locationComment">Rage states: Low = 1-24, Medium = 25-49, High = 50<br>Still missing some rage
+                states and charm populations.
+            </td>
+        </tr>
+
+        <tr class="display-location display-furoma-rift">
+            <td>Comments:</td>
+            <td class="locationComment">Training Grounds and Pagoda separated for Brie String - Magical String coming
+                soon.
+            </td>
+        </tr>
+
+        <tr class="display-location display-labyrinth">
+            <td>Comments:</td>
+            <td class="locationComment">Labyrinth and Minotaur bases are assumed to have 50% Dead End clue negation.<br>Compass
+                Magnet Charm dead-end clue removal rate is still unknown.
+            </td>
+        </tr>
+
+        <tr class="display-location display-zugzwangs-tower">
+            <td>Comments:</td>
+            <td class="locationComment">Assumptions that were made when narrowing down populations can be found <a
+                    href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&p=1328110&viewfull=1#post1328110"
+                    target="_blank">here</a>.
+            </td>
+        </tr>
+
+        <tr class="display-location display-fort-rox">
+            <td>Comments:</td>
+            <td class="locationComment">Contribute to population data collection <a
+                    href="https://www.mousehuntgame.com/forum/showthread.php?128603-Fort-Rox-Population-Data"
+                    target="_blank">here</a>!<br>Bookmarklet integration and Ballista/Cannon interactions coming soon.
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody class="input-standard">
+        <tr>
+            <td>Location:</td>
+            <td>
+                <select id="location">
+                </select>
+            </td>
+        </tr>
+
+        <tr id="phaseRow" class="hidden">
+            <td>Sublocation:</td>
+            <td>
+                <select id="phase">
+                    <option>-</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Cheese:</td>
+            <td>
+                <select id="cheese">
+                    <option>Select a location</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Special Charm:</td>
+            <td>
+                <select id="charm">
+                    <option>-</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr id="toxicRow" class="hidden">
+            <td>Toxic:</td>
+            <td>
+                <select id="toxic">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+        <tbody class="input-special">
+        <tr class="display-location display-furoma-rift" style="display:none">
+            <td>Battery Level:</td>
+            <td>
+                <input type="number" id="battery" min="0" max="10">
+                </input>
+            </td>
+        </tr>
+
+        <tr class="display-location display-fort-rox">
+            <td>Balista Level</td>
+            <td>
+                <input name="balista" id="balistaLevel" type="number" min="0" max="3" value="0"/>
+            </td>
+        </tr>
+        <tr class="display-location display-fort-rox">
+            <td>Canon Level</td>
+            <td>
+                <input name="cannon" type="number" id="canonLevel" min="0" max="3" value="0"/>
+            </td>
+        </tr>
+
+        <tr class="display-location display-zugzwangs-tower" style="display:none">
+            <td>Amp:</td>
+            <td>
+                <input id="ampValue" type="text" size="3" value="0" readonly>%
+            </td>
+        </tr>
+
+        <tr class="display-location display-zugzwangs-tower" style="display:none">
+            <td></td>
+            <td>
+                <div id="ampSlider"></div>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody class="input-all">
+        <tr>
+            <td>Golden Shield:</td>
+            <td>
+                <select id="gs">
+                    <option value='Y'>Yes</option>
+                    <option value='N'>No</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Bonus Luck:</td>
+            <td>
+                <input id="bonusLuck" type="number" value="0" min="0">
+            </td>
+        </tr>
+        </tbody>
+
+        <tr>
+            <td><a id="link" target="_blank">Link to setup</a></td>
+        </tr>
+    </table>
+
+    <div>
         <table>
             <tr>
                 <td>
-                    <div class="header">
-                        <small><a href="index.html">Back to all tools</a></small><br><br>
-
-                        <h1>Best Setup Tool</h1>
-                        <small>Thanks to the work of Adriel, Chad, Nick, Ben, Paul, Yikai and Kat</small><br><br>
-                        <p>Bookmarklet Usage (optional):</p>
-                        <ol>
-                            <li>Save this <a id="bookmarklet" href="#">Best Setup</a> link (<a id="instructions" href="#">Detailed Instructions</a>)</li>
-                            <li>Navigate to the Camp on <a href="https://www.mousehuntgame.com/" target="_blank">MouseHunt</a> (<i>not</i> compatible with Facebook's app, FreshCoat Layout <i>required</i>)</li>
-                            <li>Click the bookmarklet to load in all of your weapons, bases, and charms!</li>
-                            <li>Items not all loaded in? Try the <a id="slowBookmarklet" href="#">slower</a> or <a id="evenslowerBookmarklet" href="#">even slower</a> versions</a></li>
-                        </ol>
-                        <small><a href="https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost" target="_blank">Report bugs and suggest features</a></small>
-                    </div>
+                    <button id="show_weapons_button">&nbsp;Weapons&nbsp;</button>
                 </td>
+                <td>
+                    <button id="show_bases_button">&nbsp;Bases&nbsp;</button>
+                </td>
+                <td>
+                    <button id="show_charms_button">&nbsp;Charms&nbsp;</button>
+                </td>
+                <td>
+                    <button id="save_setup_button">&nbsp;Save&nbsp;</button>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <button id='show_pop_button' style="font-size: 18px"><b>&nbsp;Calculate&nbsp;</b></button>
+                </td>
+                <td id="pleaseWaitMessage">Please Wait...</td>
+            </tr>
+            <tr>
+                <td id="status">Loading...</td>
             </tr>
         </table>
     </div>
 
-    <div id="main" class="container" style="display: none">
-        <table>
-            <tr><td>Location:</td>
-                <td>
-                    <select id="location">
-                    </select>
-                </td>
-            </tr>
-            
-			<tr>
-				<td>Sublocation:</td>
-				<td>
-                    <select id="phase">
-                    	<option>-</option>
-                    </select>
-				</td>
-			</tr>
-            
-            <tr><td>Cheese:</td>
-                <td>
-                    <select id="cheese">
-                    	<option>Select a location</option>
-                    </select>
-                </td>
-            </tr>
+    <table id="weapons_selector_table" style="display: none">
+        <tr>
+            <td style="padding:0"><input type="checkbox" checked id="all_weapons_checkbox">&nbspAll</td>
+        </tr>
+    </table>
 
-            <tr><td>Special Charm:</td>
-                <td>
-                    <select id="charm">
-                        <option>-</option>
-                    </select>
-                </td>
-            </tr>
+    <table id="bases_selector_table" style="display: none">
+        <tr>
+            <td style="padding:0"><input type="checkbox" checked id="all_bases_checkbox">&nbspAll</td>
+        </tr>
+    </table>
 
-            <tr id="toxicRow" style="display:none">
-                <td>Toxic:</td>
-                <td>
-                    <select id="toxic">
-                        <option>No</option>
-                        <option>Yes</option>
-                    </select>
-                </td>
-            </tr>
+    <table id="charms_selector_table" style="display: none">
+        <tr>
+            <td style="padding:0"><input type="checkbox" checked id="all_charms_checkbox">&nbspAll</td>
+        </tr>
+    </table>
 
-            <tr id="batteryRow" style="display:none">
-                <td>Battery Level:</td>
-                <td>
-                    <input type="number" id="battery" min="0" max="10">
-                    </input>
-                </td>
-            </tr>
-            
-            <tr><td>Golden Shield:</td>
-                <td>
-                    <select id="gs">
-						<option value='Y'>Yes</option>
-						<option value='N'>No</option>
-                    </select>
-                </td>
-            </tr>
-            
-            <tr><td>Bonus Luck:</td>
-                <td>
-                    <input id="bonusLuck" type="number" value="0" min="0">
-                </td>
-            </tr>
-
-            <tr id="ampRow" style="display:none">
-                <td>Amp:</td>
-                <td>
-                    <input id="ampValue" type="text" size="3" value="0" readonly>%
-                </td>
-            </tr>
-
-            <tr id="sliderRow" style="display:none">
-                <td></td>
-                <td>
-                    <div id="ampSlider"></div>
-                </td>
-            </tr>
-            
-            <!--
-            <tr><td>Tourney:</td>
-                <td>
-                    <select id="tourney">
-                    </select>
-                </td>
-            </tr>
-            -->
-            <tr><td><a id="link" target="_blank">Link to setup</a></td></tr>
-        </table>
-
-        <div>
-            <table>
-                <tr>
-                	<td>
-    	            	<button id="show_weapons_button">&nbsp;Weapons&nbsp;</button>
-                	</td>
-                	<td>
-    	            	<button id="show_bases_button">&nbsp;Bases&nbsp;</button>
-                	</td>
-                	<td>
-    	            	<button id="show_charms_button">&nbsp;Charms&nbsp;</button>
-                	</td>
-                    <td>
-                        <button id="save_setup_button">&nbsp;Save&nbsp;</button>
-                    </td>
-                </tr>
-            </table>
-
-            <table>
-                <tr>
-                    <td>
-                        <button id='show_pop_button' style="font-size: 18px"><b>&nbsp;Calculate&nbsp;</b></button>
-                    </td>
-                    <td id="pleaseWaitMessage">Please Wait...</td>
-                </tr>
-                <tr>
-                    <td id="status">Loading...</td>
-                </tr>
-            </table>
-        </div>
-
-        <table id="weapons_selector_table" style="display: none">
-        	<tr><td style="padding:0"><input type="checkbox" checked id="all_weapons_checkbox">&nbspAll</td></tr>
-        </table>
-
-        <table id="bases_selector_table" style="display: none">
-        	<tr><td style="padding:0"><input type="checkbox" checked id="all_bases_checkbox">&nbspAll</td></tr>
-        </table>
-
-        <table id="charms_selector_table" style="display: none">
-        	<tr><td style="padding:0"><input type="checkbox" checked id="all_charms_checkbox">&nbspAll</td></tr>
-        </table>
-        
-        <table id='trapSetup'></table>
-        <div id="pager" class="pager">
-            <form>
-            <img src="img/first.png" class="first" />
-            <img src="img/prev.png" class="prev" />
+    <table id='trapSetup'></table>
+    <div id="pager" class="pager">
+        <form>
+            <img src="img/first.png" class="first"/>
+            <img src="img/prev.png" class="prev"/>
             <span class="pagedisplay"></span>
-            <img src="img/next.png" class="next" />
-            <img src="img/last.png" class="last" />
+            <img src="img/next.png" class="next"/>
+            <img src="img/last.png" class="last"/>
             &nbsp;&nbsp; Page size:
             <select class="pagesize">
                 <option value="5">5</option>
@@ -333,10 +391,13 @@
             </select>
             &nbsp;&nbsp; Jump to:
             <select class="gotoPage"></select>
-            </form>
-        </div>
-        <table id='results' class='tablesorter'><thead></thead><tbody></tbody></table>
+        </form>
     </div>
+    <table id='results' class='tablesorter'>
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+</div>
 </body>
 
 </html>
