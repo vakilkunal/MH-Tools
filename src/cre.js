@@ -216,14 +216,13 @@ function updateCustomSetup() {
         attraction = 0;
         document.getElementById("trapAttractionValue").value = 0;
     }
-    if (power >= 0) {
-        trapType = type;
-        trapPower = power;
-        trapLuck = luck;
-        trapAtt = attraction;
-        trapEff = effect;
-        showPop(2);
-    }
+
+    trapType = type;
+    trapPower = power;
+    trapLuck = luck;
+    trapAtt = attraction;
+    trapEff = effect;
+    showPop(2);
 }
 
 function loadWeaponDropdown() {
@@ -991,69 +990,6 @@ function updateLink() {
     };
     var URLString = buildURL('cre.html',urlParams);
     document.getElementById("link").href = URLString;
-    /*
-     //Horntracker link creation. Unused.
-     var ht_URLString = 'http://horntracker.com/index.php?';
-     if (locationName.indexOf("Balack's Cove") >= 0) {
-     if (locationName == "Balack's Cove - Low Tide") ht_URLString+= "&location=38&tide=1";
-     else if (locationName == "Balack's Cove - Mid Tide") ht_URLString+= "&location=38&tide=2";
-     else if (locationName == "Balack's Cove - High Tide") ht_URLString+= "&location=38&tide=3";
-     } else if (locationName.indexOf("Claw Shot City") >= 0) {
-     if (locationName == "Claw Shot City (Hunting Bounty Hunter)") ht_URLString+= "&location=320&wantedphase=7";
-     else if (locationName == "Claw Shot City (Crew)") ht_URLString+= "&location=320&wantedphase=6";
-     else if (locationName == "Claw Shot City (Ringleaders)") ht_URLString+= "&location=320&wantedphase=8";
-     } else if (locationName.indexOf("Cursed City") >= 0) {
-     if (locationName.indexOf("Cursed City (Curse Lifted)") >= 0) ht_URLString+= "&location=311&cc_curse=0";
-     else if (locationName == "Cursed City (Cursed)") ht_URLString+= "&location=311&cc_curse=1";
-     } else if (locationName.indexOf("Fiery Warpath") >= 0) {
-     if (locationName == "Fiery Warpath (Wave 1)") ht_URLString+= "&location=75&wave=1";
-     else if (locationName == "Fiery Warpath (Wave 2)") ht_URLString+= "&location=75&wave=2";
-     else if (locationName == "Fiery Warpath (Wave 3)") ht_URLString+= "&location=75&wave=3";
-     else if (locationName == "Fiery Warpath (Wave 4)") ht_URLString+= "&location=75&wave=4";
-     } else if (locationName.indexOf("Gnawnian Express Station") >= 0) {
-     if (locationName == "Gnawnian Express Station (Waiting)") ht_URLString+= "&location=321&trainphase=4";
-     else if (locationName == "Gnawnian Express Station (Supply Depot)") ht_URLString+= "&location=321&trainphase=1";
-     else if (locationName == "Gnawnian Express Station (Raider River)") ht_URLString+= "&location=321&trainphase=2";
-     else if (locationName == "Gnawnian Express Station (Daredevil Canyon)") ht_URLString+= "&location=321&trainphase=3";
-     } else if(locationName.indexOf("Iceberg") >= 0) {
-     if (locationName.indexOf("Iceberg: Bombing Run") >= 0) ht_URLString+= "&location=297&phase=4";
-     else if (locationName == "Iceberg: Brutal Bulwark") ht_URLString+= "&location=297&phase=2";
-     else if (locationName == "Iceberg: General Stage") ht_URLString+= "&location=297&phase=7";
-     else if (locationName == "Iceberg: Hidden Depths") ht_URLString+= "&location=297&phase=12";
-     else if (locationName == "Iceberg: Icewing's Lair") ht_URLString+= "&location=297&phase=6";
-     else if (locationName == "Iceberg: The Deep Lair") ht_URLString+= "&location=297&phase=13";
-     else if (locationName.indexOf("Iceberg: The Mad Depths") >= 0) ht_URLString+= "&location=297&phase=5";
-     else if (locationName.indexOf("Iceberg: Treacherous Tunnels") >= 0) ht_URLString+= "&location=297&phase=1";
-     } else if(locationName.indexOf("Living Garden") >= 0) {
-     if (locationName == "Living Garden (Poured)") ht_URLString+= "&location=301&bucket=2";
-     else ht_URLString+= "&location=301&bucket=1";
-     } else if(locationName.indexOf("Lost City") >= 0) {
-     if (locationName == "Lost City (Cursed)") ht_URLString+= "&location=304&lc_curse=1";
-     else ht_URLString+= "&location=304&lc_curse=0";
-     } else if(locationName.indexOf("Sand Dunes") >= 0) {
-     if (locationName == "Sand Dunes (No Stampede)") ht_URLString+= "&location=302&stampede=0";
-     else if (locationName.indexOf("Sand Dunes (Stampede)") >= 0) ht_URLString+= "&location=302&stampede=1";
-     } else if(locationName.indexOf("Seasonal Garden") >= 0) {
-     if (locationName.indexOf("Fall") >= 0) ht_URLString+= "&location=1&season=1";
-     else if (locationName.indexOf("Spring") >= 0) ht_URLString+= "&location=1&season=3";
-     else if (locationName.indexOf("Summer") >= 0) ht_URLString+= "&location=1&season=4";
-     else if (locationName.indexOf("Winter") >= 0) ht_URLString+= "&location=1&season=2";
-     } else if(locationName.indexOf("Twisted Garden") >= 0) {
-     if (locationName == "Twisted Garden (Poured)") ht_URLString+= "&location=309&vials=2";
-     else ht_URLString+= "&location=309&vials=1";
-     }
-
-     else if(locationName != "") ht_URLString+= "&location="+locations[locationName];
-     if(cheeseName != "") ht_URLString+= "&cheese="+baits[cheeseName];
-     if(weaponName != "") ht_URLString+= "&trap="+weapons[weaponName];
-     if(baseName != "") ht_URLString+= "&base="+bases[baseName];
-     if(charmName != "") ht_URLString+= "&charm="+trinkets[charmName];
-     if(gsLuck == 0) ht_URLString+= "&shield="+"0";
-     else ht_URLString+= "&shield="+"1";
-     if(bonusLuck >= 0) ht_URLString+= "&bonusLuck="+bonusLuck;
-     if(tournamentName != "") ht_URLString+= "&tourney="+tournamentName;
-     //document.getElementById("ht_link").href = ht_URLString;
-     */
     ga('send', 'event', 'link', 'updated', URLString);
     ga('send', 'event', 'weapon', 'selected', weaponName);
     ga('send', 'event', 'location', 'selected', locationName);
@@ -1072,38 +1008,14 @@ function locationChanged() {
 
     updateLink();
 
-    hideAllRows();
     var checked = document.getElementById("toggleCustom").checked;
     showHideWidgets(checked);
-    if (!checked) {
-
-        if (locationName == "Furoma Rift") {
-            $("#batteryRow").show(500);
-            $("#frComment").show(500);
-        }
-        else if (locationName == "Whisker Woods Rift") {
-            $("#wwrComment").show(500);
-        }
-        else if (locationName == "Zugzwang's Tower") {
-            $("#ampSlider").slider('option', 'value', 100);
-            $("#ampRow").show(500);
-            $("#sliderRow").show(500);
-            $("#ztComment").show(500);
-        }
-        else if (locationName == "Labyrinth") {
-            $("#labyComment").show(500);
-            $("#oilRow").show(500);
-        }
-        else if (locationName == "Fort Rox") {
-            $("#roxComment").show(500);
-        }
-    }
 
     batteryPower = 0;
     ztAmp = 100;
     sampleSize = 0;
     showPop(0);
-    //showPop(2);
+
 
     //Populate sublocation dropdown and select first option
     if (locationName != "") {
@@ -1111,35 +1023,9 @@ function locationChanged() {
     }
 }
 
-function hideAllRows() {
-    $("#oilRow").hide();
-    $("#toxicRow").hide();
-    $("#batteryRow").hide();
-    $("#ampRow").hide();
-    $("#sliderRow").hide();
-    $("#wwrComment").hide();
-    $("#frComment").hide();
-    $("#labyComment").hide();
-    $("#ztComment").hide();
-    $("#roxComment").hide();
-}
 
-
-
-function cheeseChanged() {
-    console.log("Cheese changed");
-    var select = document.getElementById("cheese");
-    cheeseName = select.children[select.selectedIndex].innerHTML;
-    updateLink();
-
-    //Basic cheese costs
-    var costElement = document.getElementById("cheeseCost");
-
-    cheeseCost = standardCheeseCost[cheeseName] || 0;
-    costElement.value = cheeseCost;
-
-    //Toxic checks
-    if (document.getElementById("toggleCustom").checked == false) {
+function checkToxicWidget(custom) {
+    if (!custom) {
         if (cheeseName == "Brie" || cheeseName == "SB+") {
             $("#toxicRow").show(500);
             toxicChanged();
@@ -1149,9 +1035,23 @@ function cheeseChanged() {
             toxicChanged();
         }
     }
+}
+
+function cheeseChanged() {
+    console.log("Cheese changed");
+    var select = document.getElementById("cheese");
+    cheeseName = select.children[select.selectedIndex].innerHTML;
+    updateLink();
+
+    //Basic cheese costs
+    var costElement = document.getElementById("cheeseCost");
+    cheeseCost = standardCheeseCost[cheeseName] || 0;
+    costElement.value = cheeseCost;
+
+    //Toxic checks
+    checkToxicWidget(document.getElementById("toggleCustom").checked);
 
     showPop();
-    //showPop(2);
     selectCharm();
 }
 

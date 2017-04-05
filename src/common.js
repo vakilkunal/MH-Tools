@@ -69,6 +69,14 @@ function calcSpecialCharms(charmName) {
             charmAtt += 5;
             charmLuck += 4;
         }
+    } else if (charmName == "Wild Growth Charm") {
+        //Soiled base
+        if (baseName == "Soiled Base") {
+            charmPower += 300;
+            charmBonus += 8;
+            charmAtt += 20;
+            charmLuck += 9;
+        }
     } else if (charmName == "Spellbook Charm") {
         //Spellbook base
         if (baseName == "Spellbook Base") {
@@ -77,16 +85,7 @@ function calcSpecialCharms(charmName) {
 
         }
 
-    } else if (charmName == "Wild Growth Charm") {
-        //Soiled base
-        if (baseName == "Soiled Base") {
-            charmPower += 300;
-            charmBonus += 8;
-            charmAtt += 20;
-            charmLuck += 9;
-
-        }
-    } else if (charmName == "Snowball Charm") {
+    }  else if (charmName == "Snowball Charm") {
         if (festiveTraps.indexOf(weaponName) > -1) {
             charmBonus += 20;
         }
@@ -574,6 +573,7 @@ function checkToxicParam() {
 }
 
 function showHideWidgets(custom) {
+    $("#toxicRow").hide();
     $(".display-location").hide();
     $("#toxic").val('No');
     $("#battery").val('-');

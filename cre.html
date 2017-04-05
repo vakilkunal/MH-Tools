@@ -22,7 +22,7 @@
     <style type="text/css">
 
         body {
-            font-family: Arial;
+            font-family: Arial,sans-serif;
             font-size: 12px;
             line-height: 20px;
         }
@@ -87,7 +87,7 @@
             border-collapse: collapse;
         }
 
-        table tbody {
+        table.form tbody {
             border-top: 15px solid transparent;
         }
     </style>
@@ -191,11 +191,12 @@
         <p>Bookmarklet Usage (optional):<br>1) Save this <a id="bookmarklet" href="#">CRE</a> bookmarklet
             (<a id="instructions" href="#">Detailed Instructions</a>)<br>2) Navigate to the Camp on <a
                     href="https://www.mousehuntgame.com/" target="_blank">MouseHunt</a> (<i>not</i>
-            compatible with Facebook's app)<br>3) Click the bookmarklet to load in your current setup! (<i>Disclaimer:</i>
+            compatible with Facebook's app)<br>3) Click the bookmarklet to load in your current setup!
+            (<i>Disclaimer:</i>
             Zokor and Claw Shot City still in-progress)
     </div>
     <!--###################################################################################-->
-    <table>
+    <table class="form">
         <tbody class="comments">
 
         <tr class="display-location display-whisker-woods-rift">
@@ -281,53 +282,8 @@
         </tr>
         </tbody>
 
-        <tbody class="input-standard">
-
-
-        <tr id="weaponRow">
-            <td>Weapon:</td>
-            <td>
-                <select id="weapon">
-                </select>
-            </td>
-        </tr>
-
-        <tr id="baseRow">
-            <td>Base:</td>
-            <td>
-                <select id="base">
-                </select>
-            </td>
-        </tr>
-
-        <tr id="charmRow">
-            <td>Charm:</td>
-            <td>
-                <select id="charm">
-                </select>
-            </td>
-        </tr>
-
-        <tr id="gsRow">
-            <td>Golden Shield:</td>
-            <td>
-                <select id="gs">
-                    <option value='Y'>Yes</option>
-                    <option value='N'>No</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr id="bonusLuckRow">
-            <td>Bonus Luck:</td>
-            <td>
-                <input id="bonusLuck" type="number" value="0" min="0">
-            </td>
-        </tr>
-        </tbody>
-
         <tbody class="input-special">
-        <tr id="oilRow" style="display:none">
+        <tr class="display-location display-labyrinth" style="display:none">
             <td>Lantern Oil:</td>
             <td>
                 <select id="lanternOil">
@@ -337,38 +293,80 @@
             </td>
         </tr>
 
-        <tr id="batteryRow" style="display:none">
+        <tr class="display-location display-furoma-rift" style="display:none">
             <td>Battery Level:</td>
             <td>
-                <input type="number" id="battery" min="0" max="10">
-                </input>
+                <input type="number" id="battery" min="0" max="10"/>
             </td>
         </tr>
 
         <tr class="display-location display-fort-rox">
             <td>Balista Level</td>
             <td>
-                <input name=balista id="balistaLevel" type="number" min="0" max="3">
+                <input name="balista" id="balistaLevel" type="number" min="0" max="3" value="0"/>
             </td>
         </tr>
         <tr class="display-location display-fort-rox">
             <td>Canon Level</td>
             <td>
-                <input name=cannon type="number" id="canonLevel" min="0" max="3">
+                <input name="cannon" type="number" id="canonLevel" min="0" max="3" value="0"/>
             </td>
         </tr>
 
-        <tr id="ampRow" style="display:none">
+        <tr class="display-location display-zugzwangs-tower" style="display:none">
             <td>Amp:</td>
             <td>
                 <input id="ampValue" type="text" size="3" value="0" readonly>%
             </td>
         </tr>
 
-        <tr id="sliderRow" class="hidden">
+        <tr class="display-location display-zugzwangs-tower">
             <td></td>
             <td>
                 <div id="ampSlider"></div>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody class="input-standard">
+        <tr>
+            <td>Weapon:</td>
+            <td>
+                <select id="weapon">
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Base:</td>
+            <td>
+                <select id="base">
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Charm:</td>
+            <td>
+                <select id="charm">
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Golden Shield:</td>
+            <td>
+                <select id="gs">
+                    <option value='Y'>Yes</option>
+                    <option value='N'>No</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Bonus Luck:</td>
+            <td>
+                <input id="bonusLuck" type="number" value="0" min="0">
             </td>
         </tr>
         </tbody>
