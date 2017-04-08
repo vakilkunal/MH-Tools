@@ -309,28 +309,23 @@ window.onload = function () {
     });
 };
 
+function getCookieArray(selector, size) {
+    var checkedList = [];
+    for (var i = 0; i < size; i++) {
+        var checked = $(selector).get(i).checked;
+        checkedList.push(Number(checked));
+    }
+    return checkedList;
+}
 function saveSetupCookie() {
     var checkedWeapons = [];
     var checkedBases = [];
     var checkedCharms = [];
 
-    for (var i = 0; i < weaponKeys.length; i++) {
-        if ($(".weapon_checkbox").get(i).checked) {
-            checkedWeapons.push(1);
-        } else checkedWeapons.push(0);
-    }
-    for (var i = 0; i < baseKeys.length; i++) {
-        if ($(".base_checkbox").get(i).checked) {
-            checkedBases.push(1);
-        } else checkedBases.push(0);
-    }
-    for (var i = 0; i < charmKeys.length; i++) {
-        if ($(".charm_checkbox").get(i).checked) {
-            checkedCharms.push(1);
-        } else checkedCharms.push(0);
-    }
+    checkedWeapons = getCookieArray(".weapon_checkbox", weaponKeys.length);
+    checkedBases = getCookieArray(".base_checkbox", baseKeys.length);
+    checkedCharms = getCookieArray(".charm_checkbox", charmKeys.length);
 
-    //cvalue is an object of 3 arrays, where each is of int strings (either 1 for checked or 0 for not)
     var cvalue = {};
     cvalue['weapons'] = checkedWeapons;
     cvalue['bases'] = checkedBases;
