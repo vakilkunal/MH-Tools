@@ -172,7 +172,7 @@
     </table>
 </div>
 
-<div id="main" class="container" style="display: none">
+<div id="main" class="container" class="hidden">
     <table class="form">
         <tbody class="comments">
 
@@ -260,6 +260,7 @@
             </td>
         </tr>
         </tbody>
+        
         <tbody class="input-special">
         <tr class="display-location display-furoma-rift" style="display:none">
             <td>Battery Level:</td>
@@ -316,59 +317,47 @@
         </tr>
         </tbody>
 
-        <tr>
+        <tr class="input-standard">
             <td><a id="link" target="_blank">Link to setup</a></td>
         </tr>
     </table>
 
     <div>
-        <table>
-            <tr>
-                <td>
-                    <button id="show_weapons_button">&nbsp;Weapons&nbsp;</button>
-                </td>
-                <td>
-                    <button id="show_bases_button">&nbsp;Bases&nbsp;</button>
-                </td>
-                <td>
-                    <button id="show_charms_button">&nbsp;Charms&nbsp;</button>
-                </td>
-                <td>
-                    <button id="save_setup_button">&nbsp;Save&nbsp;</button>
-                </td>
-            </tr>
-        </table>
+        <ul class="inline">
+            <li>
+                <button id="show_weapons_button">&nbsp;Weapons&nbsp;</button>
+            </li>
+            <li>
+                <button id="show_bases_button">&nbsp;Bases&nbsp;</button>
+            </li>
+            <li>
+                <button id="show_charms_button">&nbsp;Charms&nbsp;</button>
+            </li>
+            <li>
+                <button id="save_setup_button">&nbsp;Save&nbsp;</button>
+            </li>
+        </ul>
 
-        <table>
-            <tr>
-                <td>
-                    <button id='show_pop_button' style="font-size: 18px"><b>&nbsp;Calculate&nbsp;</b></button>
-                </td>
-                <td id="pleaseWaitMessage">Please Wait...</td>
-            </tr>
-            <tr>
-                <td id="status">Loading...</td>
-            </tr>
-        </table>
+        <ul class="inline">
+            <li>
+                <button id='show_pop_button' style="font-size: 18px"><b>&nbsp;Calculate&nbsp;</b></button>
+            </li>
+            <li id="pleaseWaitMessage">Please Wait...</li>
+            <li id="status">Loading...</li>
+        </ul>
     </div>
 
-    <table id="weapons_selector_table" style="display: none">
-        <tr>
-            <td style="padding:0"><input type="checkbox" checked id="all_weapons_checkbox">&nbspAll</td>
-        </tr>
-    </table>
+    <ul id="weapons_selector_table" class="hidden item-selection">
+            <li><label><input type="checkbox" checked id="all_weapons_checkbox">&nbsp;All</label></li>
+    </ul>
 
-    <table id="bases_selector_table" style="display: none">
-        <tr>
-            <td style="padding:0"><input type="checkbox" checked id="all_bases_checkbox">&nbspAll</td>
-        </tr>
-    </table>
+    <ul id="bases_selector_table" class="hidden">
+            <li><label><input type="checkbox" checked id="all_bases_checkbox">&nbsp;All</label></li>
+    </ul>
 
-    <table id="charms_selector_table" style="display: none">
-        <tr>
-            <td style="padding:0"><input type="checkbox" checked id="all_charms_checkbox">&nbspAll</td>
-        </tr>
-    </table>
+    <ul id="charms_selector_table" class="hidden">
+        <li><label><input type="checkbox" checked id="all_charms_checkbox">&nbsp;All</label></li>
+    </ul>
 
     <table id='trapSetup'></table>
     <div id="pager" class="pager">

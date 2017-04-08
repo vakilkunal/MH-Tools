@@ -80,35 +80,22 @@ function getDataFromURL(parameters) {
 }
 
 
-function loadWeaponSelection() {
-    var len = weaponKeys.length;
-    for (var i = 0; i < len; i++) {
-        $("#weapons_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='weapon_checkbox' checked>&nbsp" + weaponKeys[i] + "</td></tr>");
-    }
+function loadItemSelection(itemKeys, type) {
+    var checkboxClass = type + "_checkbox";
+    var checkboxSelector = "." + checkboxClass;
+    var containerSelector = "#" + type + "s_selector_table";
+    var allCheckbox = "#all_" + type + "s_checkbox";
 
-    $(".weapon_checkbox").change(function () {
-        $("#all_weapons_checkbox").prop('checked', false);
+    for (var i = 0; i < itemKeys.length; i++) {
+        $(containerSelector).append("<li><label><input type='checkbox' class='" + checkboxClass + "' checked>&nbsp" + itemKeys[i] + "</label></li>");
+    }
+    $(checkboxSelector).change(function () {
+        $(allCheckbox).prop('checked', false);
     });
-}
 
-function loadBaseSelection() {
-    var len = baseKeys.length;
-    for (var i = 0; i < len; i++) {
-        $("#bases_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='base_checkbox' checked>&nbsp" + baseKeys[i] + "</td></tr>");
-    }
-    $(".base_checkbox").change(function () {
-        $("#all_bases_checkbox").prop('checked', false);
-    });
-}
-
-function loadCharmSelection() {
-    var len = charmKeys.length;
-    for (var i = 0; i < len; i++) {
-
-        $("#charms_selector_table").append("<tr><td style='padding:0'><input type='checkbox' class='charm_checkbox' checked>&nbsp" + charmKeys[i] + "</td></tr>");
-    }
-    $(".charm_checkbox").change(function () {
-        $("#all_charms_checkbox").prop('checked', false);
+    $(allCheckbox).change(function () {
+        var checked = this.checked;
+        $(checkboxSelector).prop('checked', checked);
     });
 }
 
@@ -117,12 +104,6 @@ var baseline = new XMLHttpRequest();
 
 window.onload = function () {
     user = "setup";
-
-    // if (location.href.indexOf("https") < 0) {
-    // 	var currLoc = location.href;
-    // 	currLoc = currLoc.replace("http", "https");
-    // 	location.href = currLoc;
-    // }
 
     //Instructions
     $("#instructions").click(function () {
@@ -234,10 +215,9 @@ window.onload = function () {
             .find('li:first').remove();
     });
 
-    loadWeaponSelection();
-    loadBaseSelection();
-    loadCharmSelection();
-
+    loadItemSelection(weaponKeys, "weapon");
+    loadItemSelection(baseKeys, "base");
+    loadItemSelection(charmKeys, "charm");
     //Load in data from URL
     var rawBases = getDataFromURL(window.location.search.match(/bases=([^&]*)/));
     var rawWeapons = getDataFromURL(window.location.search.match(/weapons=([^&]*)/));
@@ -327,31 +307,6 @@ window.onload = function () {
     }).bind("sortEnd", function () {
         $("#pleaseWaitMessage").hide();
     });
-
-    $("#all_weapons_checkbox").change(function () {
-        if (this.checked) $(".weapon_checkbox").each(function () {
-            this.checked = true;
-        });
-        else $(".weapon_checkbox").each(function () {
-            this.checked = false;
-        });
-    });
-    $("#all_bases_checkbox").change(function () {
-        if (this.checked) $(".base_checkbox").each(function () {
-            this.checked = true;
-        });
-        else $(".base_checkbox").each(function () {
-            this.checked = false;
-        });
-    });
-    $("#all_charms_checkbox").change(function () {
-        if (this.checked) $(".charm_checkbox").each(function () {
-            this.checked = true;
-        });
-        else $(".charm_checkbox").each(function () {
-            this.checked = false;
-        });
-    })
 };
 
 function saveSetupCookie() {
