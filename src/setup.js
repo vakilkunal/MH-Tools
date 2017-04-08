@@ -309,22 +309,17 @@ window.onload = function () {
     });
 };
 
-function getCookieArray(selector, size) {
-    var checkedList = [];
-    for (var i = 0; i < size; i++) {
-        var checked = $(selector).get(i).checked;
-        checkedList.push(Number(checked));
-    }
-    return checkedList;
-}
 function saveSetupCookie() {
-    var checkedWeapons = [];
-    var checkedBases = [];
-    var checkedCharms = [];
 
-    checkedWeapons = getCookieArray(".weapon_checkbox", weaponKeys.length);
-    checkedBases = getCookieArray(".base_checkbox", baseKeys.length);
-    checkedCharms = getCookieArray(".charm_checkbox", charmKeys.length);
+    function getCookieArray(selector) {
+        return $(selector).map(function () {
+            return Number($(this).prop('checked'))
+        }).toArray();
+    }
+
+    var checkedWeapons = getCookieArray(".weapon_checkbox");
+    var checkedBases = getCookieArray(".base_checkbox");
+    var checkedCharms = getCookieArray(".charm_checkbox");
 
     var cvalue = {};
     cvalue['weapons'] = checkedWeapons;
