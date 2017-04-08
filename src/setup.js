@@ -2,10 +2,6 @@
 
 var d, popArrayLPC, resultsHTML;
 
-
-//TODO pass arguments to processX() functions instead of using global variables
-//TODO load XMLHttpRequests within a function so reduce global variables
-
 function checkLoadState() {
     var loadPercentage = (popLoaded + baselineLoaded) / 2 * 100;
     var status = document.getElementById("status")
@@ -43,14 +39,12 @@ function getURLParameter(name) {
     );
 }
 
-function processPop() {
-    var popText = pop.responseText;
+function processPop(popText) {
+
 
     popCSV = CSVToArray(popText);
-    //console.log(popCSV);
 
     var popCSVLength = Object.size(popCSV);
-    //console.log("popCSVLength", popCSVLength);
 
     //Creating popArray
     for (var i = 1; i < popCSVLength; i++) {
@@ -61,22 +55,8 @@ function processPop() {
         popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
     }
 
-    //console.log(popArray);
-
     popLoaded = 1;
     checkLoadState();
-}
-
-
-function getDataFromURL(parameters) {
-    if (parameters) {
-        parameters = decodeURI(parameters[1]);
-
-        return parameters
-            .split('/');
-    } else {
-        return [];
-    }
 }
 
 
@@ -99,8 +79,176 @@ function loadItemSelection(itemKeys, type) {
     });
 }
 
-var pop = new XMLHttpRequest();
-var baseline = new XMLHttpRequest();
+function startPopulationLoad() {
+    var pop = new XMLHttpRequest();
+    pop.open("get", POPULATIONS_URL, true);
+    pop.onreadystatechange = function () {
+        if (pop.readyState == 4) {
+            processPop(pop.responseText);
+        }
+    };
+    pop.send();
+
+    var baseline = new XMLHttpRequest();
+    baseline.open("get", BASELINES_URL, true);
+    baseline.onreadystatechange = function () {
+        if (baseline.readyState == 4) {
+            processBaseline(baseline.responseText);
+        }
+    };
+    baseline.send();
+}
+function checkCookies() {
+    function processStorageArray(indexArray, itemsArray, selector) {
+        for (var i = 0; i < indexArray.length; i++) {
+            var currentItem = indexArray[i];
+            if (itemsArray.indexOf(currentItem) >= 0) {
+                $(selector).get(i).checked = true;
+            }
+        }
+    }
+
+    function loadOwnedCookie() {
+        if (Cookies.get('setup')) {
+            var savedSetup = JSON.parse(Cookies.get('setup'));
+            var savedWeapons = savedSetup['weapons'] || [];
+            var savedBases = savedSetup['bases'] || [];
+            var savedCharms = savedSetup['charms'] || [];
+
+            if (savedWeapons.length != weaponKeys.length || savedBases.length != baseKeys.length || savedCharms.length != charmKeys.length) {
+                window.alert("New items have been added. Please re-tick what you own, or use the bookmarklet. Sorry for any inconvenience!");
+                Cookies.remove('setup');
+            } else {
+                //Unticks 'All' if there was an unticked box stored in the cookie
+                if (savedWeapons.indexOf(0) >= 0) {
+                    $("#all_weapons_checkbox").prop('checked', false);
+                }
+
+                if (savedBases.indexOf(0) >= 0) {
+                    $("#all_bases_checkbox").prop('checked', false);
+                }
+
+                if (savedCharms.indexOf(0) >= 0) {
+                    $("#all_charms_checkbox").prop('checked', false);
+                }
+
+                //Iterates through arrays saved in cookie and unticks checkboxes accordingly
+                for (var i = 0; i < savedWeapons.length; i++) {
+                    $(".weapon_checkbox").get(i).checked = savedWeapons[i];
+                }
+
+                for (var i = 0; i < savedBases.length; i++) {
+                    $(".base_checkbox").get(i).checked = savedBases[i];
+                }
+
+                for (var i = 0; i < savedCharms.length; i++) {
+                    $(".charm_checkbox").get(i).checked = savedCharms[i];
+                }
+            }
+        }
+    }
+
+    function processStoredData(storedData) {
+        var ownedBases = storedData["bases"];
+        var ownedWeapons = storedData["weapons"];
+        var ownedCharms = storedData["charms"];
+
+        console.log("Bases loaded: " + ownedBases.length);
+        console.log("Weapons loaded: " + ownedWeapons.length);
+        console.log("Charms loaded: " + ownedCharms.length);
+
+        if (ownedBases && ownedBases.length > 0) {
+            $("#all_bases_checkbox").prop('checked', false);
+            $(".base_checkbox").prop('checked', false);
+            processStorageArray(baseKeys, ownedBases, ".base_checkbox");
+        }
+        if (ownedWeapons && ownedWeapons.length > 0) {
+
+            if (ownedWeapons.indexOf("Isle Idol Trap") > 0) {
+                ownedWeapons.push("Isle Idol Hydroplane Skin");
+                ownedWeapons.push("Isle Idol Stakeshooter Skin");
+            }
+
+            $("#all_weapons_checkbox").prop('checked', false);
+            $(".weapon_checkbox").prop('checked', false);
+            processStorageArray(weaponKeys, ownedWeapons, ".weapon_checkbox");
+        }
+        if (ownedCharms && ownedCharms.length > 0) {
+            $("#all_charms_checkbox").prop('checked', false);
+            $(".charm_checkbox").prop('checked', false);
+            processStorageArray(charmKeys, ownedCharms, ".charm_checkbox");
+        }
+        localStorage.removeItem("setupData");
+        saveSetupCookie();
+    }
+
+    var storedData = JSON.parse(localStorage.getItem("setupData"));
+    if (storedData) {
+        processStoredData(storedData);
+    } else {
+        loadOwnedCookie();
+    }
+}
+
+function loadURLData() {
+
+    function getDataFromURL(parameters) {
+        if (parameters) {
+            parameters = decodeURI(parameters[1]);
+            return parameters.split('/');
+        } else {
+            return [];
+        }
+    }
+
+    function processUrlData(urlItemArray, type) {
+        var dataObject = {};
+        var storedData = localStorage.getItem("setupData");
+        if (storedData != null) {
+            dataObject = JSON.parse(storedData);
+        }
+
+        if (type == "bases" || type == "weapons" || type == "charms") {
+            if (dataObject[type] == undefined) {
+                dataObject[type] = [];
+            }
+            var dataLen = urlItemArray.length - 1;
+            var ownedItemArray = dataObject[type];
+            for (var i = 0; i < dataLen; i++) {
+                var itemName = urlItemArray[i];
+                if (ownedItemArray.indexOf(itemName) < 0) {
+                    ownedItemArray.push(itemName);
+                }
+            }
+        }
+
+        if (Object.size(dataObject) > 0) {
+            localStorage.setItem("setupData", JSON.stringify(dataObject));
+            window.location.replace("setupwaiting.html");
+        }
+    }
+
+    var urlBases = getDataFromURL(window.location.search.match(/bases=([^&]*)/));
+    var urlWeapons = getDataFromURL(window.location.search.match(/weapons=([^&]*)/));
+    var urlCharms = getDataFromURL(window.location.search.match(/charms=([^&]*)/));
+
+    /**
+     * Only process pop if no more weapons/charms/bases need to be loaded.
+     */
+    if (urlBases.length == 0 && urlWeapons.length == 0 && urlCharms.length == 0) {
+        return true;
+    }
+    else if (urlBases.length > 0) {
+        processUrlData(urlBases, "bases");
+    }
+    else if (urlWeapons.length > 0) {
+        processUrlData(urlWeapons, "weapons");
+    }
+    else if (urlCharms.length > 0) {
+        processUrlData(urlCharms, "charms");
+    }
+    return false;
+}
 
 window.onload = function () {
     user = "setup";
@@ -218,44 +366,13 @@ window.onload = function () {
     loadItemSelection(weaponKeys, "weapon");
     loadItemSelection(baseKeys, "base");
     loadItemSelection(charmKeys, "charm");
-    //Load in data from URL
-    var rawBases = getDataFromURL(window.location.search.match(/bases=([^&]*)/));
-    var rawWeapons = getDataFromURL(window.location.search.match(/weapons=([^&]*)/));
-    var rawCharms = getDataFromURL(window.location.search.match(/charms=([^&]*)/));
 
-    /**
-     * Only process pop if no more weapons/charms/bases need to be loaded.
-     */
-    if (rawBases.length == 0 && rawWeapons.length == 0 && rawCharms.length == 0) {
+    var done = loadURLData();
+    if (done) {
         checkCookies();
-        pop.open("get", POPULATIONS_URL, true);
-        pop.onreadystatechange = function () {
-            if (pop.readyState == 4) {
-                processPop();
-            }
-        };
-        pop.send();
-        baseline.open("get", BASELINES_URL, true);
-        baseline.onreadystatechange = function () {
-            if (baseline.readyState == 4) {
-                //console.log(baseline.responseText);
-                processBaseline(baseline.responseText);
-            }
-        };
-        baseline.send();
-
+        startPopulationLoad();
         $("#main").show(500);
     }
-    else if (rawBases.length > 0) {
-        processRawData(rawBases, "bases");
-    }
-    else if (rawWeapons.length > 0) {
-        processRawData(rawWeapons, "weapons");
-    }
-    else if (rawCharms.length > 0) {
-        processRawData(rawCharms, "charms");
-    }
-
     gsParamCheck();
 
     var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
@@ -272,12 +389,10 @@ window.onload = function () {
     document.getElementById("charm").onchange = charmChanged;
     document.getElementById("toxic").onchange = toxicChanged;
     document.getElementById("battery").onchange = batteryChanged;
-    document.getElementById("gs").onchange =  gsChanged;
+    document.getElementById("gs").onchange = gsChanged;
     document.getElementById("bonusLuck").onchange = bonusLuckChanged;
 
-    $("#save_setup_button").click(function () {
-        saveSetupCookie();
-    });
+    $("#save_setup_button").click = saveSetupCookie;
 
     $("#show_pop_button").click(function () {
         $("#pleaseWaitMessage").show();
@@ -327,145 +442,11 @@ function saveSetupCookie() {
     cvalue['charms'] = checkedCharms;
 
     Cookies.set('setup', cvalue, {
-        expires: 365,
-        path: '/'
+        expires: 365
     }); //expires in a year
 }
 
-function processRawData(rawDataArray, type) {
-    var dataObject = {};
-    var storedData = localStorage.getItem("setupData");
-    if (storedData != null) {
-        dataObject = JSON.parse(storedData);
-    }
 
-    if (type == "bases" || type == "weapons" || type == "charms") {
-        if (dataObject[type] == undefined) {
-            dataObject[type] = [];
-        }
-        var dataLen = rawDataArray.length - 1;
-        var dataSplit = rawDataArray;
-        for (var i = 0; i < dataLen; i++) {
-            if (dataObject[type].indexOf(dataSplit[i]) < 0) {
-                dataObject[type].push(dataSplit[i]);
-            }
-        }
-    }
-
-    if (Object.size(dataObject) > 0) {
-        localStorage.setItem("setupData", JSON.stringify(dataObject));
-        window.location.replace("setupwaiting.html");
-        // window.location.replace("https://localhost:8888/setupwaiting.html"); //debug
-    }
-}
-
-function checkCookies() {
-    var storedData = {};
-    var bases = [];
-    var weapons = [];
-    var charms = [];
-    if (localStorage.getItem("setupData") != null) {
-        storedData = JSON.parse(localStorage.getItem("setupData"));
-        if (storedData["bases"] != undefined) {
-            bases = storedData["bases"];
-        }
-        if (storedData["weapons"] != undefined) {
-            weapons = storedData["weapons"];
-        }
-        if (storedData["charms"] != undefined) {
-            charms = storedData["charms"];
-        }
-        console.log("Bases loaded: " + bases.length);
-        console.log("Weapons loaded: " + weapons.length);
-        console.log("Charms loaded: " + charms.length);
-    }
-    if (Object.size(storedData) > 0) {
-
-        $("#all_weapons_checkbox").prop('checked', false);
-        $("#all_bases_checkbox").prop('checked', false);
-        $("#all_charms_checkbox").prop('checked', false);
-        $(".base_checkbox").prop('checked', false);
-        $(".weapon_checkbox").prop('checked', false);
-        $(".charm_checkbox").prop('checked', false);
-
-        if (bases != undefined) {
-            var indexedBases = baseKeys;
-            for (var i = 0; i < indexedBases.length; i++) {
-                var currentB = indexedBases[i];
-                if (bases.indexOf(currentB) >= 0) {
-                    $(".base_checkbox").get(i).checked = true;
-                }
-            }
-        }
-        if (weapons != undefined) {
-            var indexedWeapons = weaponKeys;
-            for (var i = 0; i < indexedWeapons.length; i++) {
-                var currentW = indexedWeapons[i];
-                if (weapons.indexOf(currentW) >= 0) {
-                    $(".weapon_checkbox").get(i).checked = true;
-                    if (currentW == "Isle Idol Trap") {
-                        $(".weapon_checkbox").get(indexedWeapons.indexOf("Isle Idol Hydroplane Skin")).checked = true;
-                        $(".weapon_checkbox").get(indexedWeapons.indexOf("Isle Idol Stakeshooter Skin")).checked = true;
-                    }
-                }
-            }
-        }
-        if (charms != undefined) {
-            var indexedCharms = charmKeys;
-            for (var i = 0; i < indexedCharms.length; i++) {
-                if (charms.indexOf(indexedCharms[i]) >= 0) {
-                    $(".charm_checkbox").get(i).checked = true;
-                }
-            }
-        }
-        localStorage.removeItem("setupData");
-        saveSetupCookie();
-    }
-
-    if (typeof Cookies.get('setup') != 'undefined') {
-        var savedSetup = JSON.parse(Cookies.get('setup'));
-        var savedWeapons = savedSetup['weapons'];
-        var savedBases = savedSetup['bases'];
-        var savedCharms = savedSetup['charms'];
-
-        if (savedWeapons.length != weaponKeys.length || savedBases.length != baseKeys.length || savedCharms.length != charmKeys.length) {
-            window.alert("New items have been added. Please re-tick what you own, or use the bookmarklet. Sorry for any inconvenience!")
-            //Delete cookie
-            Cookies.remove('setup', {
-                path: '/'
-            });
-            Cookies.remove('setup', {
-                path: '/MH-Tools'
-            });
-        } else {
-            //Unticks 'All' if there was an unticked box stored in the cookie
-            if (savedWeapons.indexOf(0) >= 0) {
-                $("#all_weapons_checkbox").prop('checked', false);
-            }
-
-            if (savedBases.indexOf(0) >= 0) {
-                $("#all_bases_checkbox").prop('checked', false);
-            }
-
-            if (savedCharms.indexOf(0) >= 0) {
-                $("#all_charms_checkbox").prop('checked', false);
-            }
-
-            //Iterates through arrays saved in cookie and unticks checkboxes accordingly
-            for (var i = 0; i < savedWeapons.length; i++) {
-                $(".weapon_checkbox").get(i).checked = savedWeapons[i];
-            }
-
-            for (var i = 0; i < savedBases.length; i++) {
-                $(".base_checkbox").get(i).checked = savedBases[i];
-            }
-
-            for (var i = 0; i < savedCharms.length; i++) {
-                $(".charm_checkbox").get(i).checked = savedCharms[i];
-            }
-        }
-    }
-}
 
 function loadCheeseDropdown() {
     var cheeseDropdown = document.getElementById("cheese");
@@ -656,10 +637,9 @@ function showPop(type) {
     if (locationName == '' || cheeseName == '' || type == 0) {
         results.innerHTML = ''
     } else {
-//	    $("#pleaseWaitMessage").show(); 
-        //console.log(popArray[locationName][cheeseName]);
-        popArrayLPC = popArray[locationName][phaseName][cheeseName];
+	    $("#pleaseWaitMessage").show();
 
+        popArrayLPC = popArray[locationName][phaseName][cheeseName];
         //For common cheeses e.g. gouda, brie etc.
         if (popArrayLPC == undefined && cheeseName != "Cheese") {
             var popArrayL = popArray[locationName][phaseName];
@@ -692,7 +672,7 @@ function showPop(type) {
 
 function printCombinations(micePopulation, tableHTML) {
     var results = document.getElementById("results");
-    
+
     var noMice = Object.size(micePopulation) + 1;
     //console.log(noMice);
 
@@ -733,18 +713,18 @@ function printCombinations(micePopulation, tableHTML) {
                 charmName = selectedCharm + " Charm";
             }
             var urlParams = {
-                "location" : locationName,
-                "phase" : phaseName,
-                "cheese" : cheeseName,
-                "charm" : charmName,
-                "gs" : !gsLuck,
-                "bonusLuck" : bonusLuck,
-                "weapon" : weapon,
-                "base" : base,
-                "toxic" : isToxic,
-                "battery" : batteryPower,
+                "location": locationName,
+                "phase": phaseName,
+                "cheese": cheeseName,
+                "charm": charmName,
+                "gs": !gsLuck,
+                "bonusLuck": bonusLuck,
+                "weapon": weapon,
+                "base": base,
+                "toxic": isToxic,
+                "battery": batteryPower,
             };
-            var URLString = buildURL('cre.html',urlParams);
+            var URLString = buildURL('cre.html', urlParams);
             URLString = URLString.replace(/'/g, "%27");
 
             //console.log(URLString);
@@ -797,7 +777,6 @@ function printCombinations(micePopulation, tableHTML) {
             tableHTML += "<td>" + overallCR + "</td></tr>";
         }
     }
-    //tableHTML.innerHTML += "<tr><td>" + "Maniacal" + "</td></tr>";
 
     tableHTML += "</tbody>";
     results.innerHTML = tableHTML;
@@ -814,7 +793,8 @@ function printCombinations(micePopulation, tableHTML) {
         printCharmCombinations(popArrayLPC["-"], resultsHTML);
     });
 
-    var resort = true, callback = function () {
+    var resort = true;
+    var callback = function () {
         var header = $("#overallHeader");
         if (header.hasClass("tablesorter-headerAsc")) {
             header.click();
@@ -857,22 +837,20 @@ function printCharmCombinations(micePopulation, tableHTML) {
         var overallCR = 0;
 
         var urlParams = {
-            "location" : locationName,
-            "phase" : phaseName,
-            "cheese" : cheeseName,
-            "charm" : charmName,
-            "gs" : !gsLuck,
-            "bonusLuck" : bonusLuck,
-            "weapon" : weaponName,
-            "base" : baseName,
-            "toxic" : isToxic,
-            "battery" : batteryPower,
+            "location": locationName,
+            "phase": phaseName,
+            "cheese": cheeseName,
+            "charm": charmName,
+            "gs": !gsLuck,
+            "bonusLuck": bonusLuck,
+            "weapon": weaponName,
+            "base": baseName,
+            "toxic": isToxic,
+            "battery": batteryPower,
         };
-        var URLString = buildURL('cre.html',urlParams);
+        var URLString = buildURL('cre.html', urlParams);
         URLString = URLString.replace(/'/g, "%27");
-
-        //console.log(URLString);
-
+        
         tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weaponName + " / " + baseName + " / " + charmName + "</a><span style='float: right'></span></td>";
 
         for (var mouse in micePopulation) {
