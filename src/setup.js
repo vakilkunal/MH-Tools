@@ -59,23 +59,47 @@ function processPop(popText) {
     checkLoadState();
 }
 
-
-function loadItemSelection(itemKeys, type) {
-    var checkboxClass = type + "_checkbox";
-    var checkboxSelector = "." + checkboxClass;
+/**
+ * Get Jquery selectors for a specific type
+ * @param type {string} 'weapon', 'base' or 'charm'
+ * @returns {{checkbox: string, container: string, allCheckbox: string}}
+ */
+function getSelectors(type) {
+    var checkboxSelector = "." + type + "_checkbox";
     var containerSelector = "#" + type + "s_selector_table";
     var allCheckbox = "#all_" + type + "s_checkbox";
+    return {
+        checkbox: checkboxSelector,
+        container: containerSelector,
+        allCheckbox: allCheckbox
+    };
+}
+
+/**
+ * Populates item checkboxes
+ * @param itemKeys {string[]}
+ * @param type {string} @see {@link getSelectors}
+ */
+function loadItemSelection(itemKeys, type) {
+    var select = getSelectors(type);
+    var checkboxClass = select.checkbox.substring(1);
 
     for (var i = 0; i < itemKeys.length; i++) {
-        $(containerSelector).append("<li><label><input type='checkbox' class='" + checkboxClass + "' checked>&nbsp" + itemKeys[i] + "</label></li>");
+        var itemName = itemKeys[i];
+        var inputElement = "<input type='checkbox' checked" +
+            " class='" + checkboxClass + "'" +
+            " value='" + itemName + "'" +
+            " name='" + type + "-owned'>";
+        $(select.container).append("<li><label>" +
+            inputElement + "&nbsp;" + itemName + "</label></li>");
     }
-    $(checkboxSelector).change(function () {
-        $(allCheckbox).prop('checked', false);
+    $(select.checkbox).change(function () {
+        $(select.allCheckbox).prop('checked', false);
     });
 
-    $(allCheckbox).change(function () {
+    $(select.allCheckbox).change(function () {
         var checked = this.checked;
-        $(checkboxSelector).prop('checked', checked);
+        $(select.checkbox).prop('checked', checked);
     });
 }
 
@@ -99,51 +123,49 @@ function startPopulationLoad() {
     baseline.send();
 }
 function checkCookies() {
-    function processStorageArray(indexArray, itemsArray, selector) {
-        for (var i = 0; i < indexArray.length; i++) {
-            var currentItem = indexArray[i];
-            if (itemsArray.indexOf(currentItem) >= 0) {
-                $(selector).get(i).checked = true;
+    function loadOwnedCookie(setupCookie) {
+        var savedSetup = JSON.parse(setupCookie);
+        var savedWeapons = savedSetup['weapons'] || [];
+        var savedBases = savedSetup['bases'] || [];
+        var savedCharms = savedSetup['charms'] || [];
+
+        if (savedWeapons.length != weaponKeys.length || savedBases.length != baseKeys.length || savedCharms.length != charmKeys.length) {
+            window.alert("New items have been added. Please re-tick what you own, or use the bookmarklet. Sorry for any inconvenience!");
+            Cookies.remove('setup');
+        } else {
+            //Unticks 'All' if there was an unticked box stored in the cookie
+            if (savedWeapons.indexOf(0) >= 0) {
+                $("#all_weapons_checkbox").prop('checked', false);
+                for (var i = 0; i < savedWeapons.length; i++) {
+                    $(".weapon_checkbox").get(i).checked = savedWeapons[i];
+                }
+            }
+
+            if (savedBases.indexOf(0) >= 0) {
+                $("#all_bases_checkbox").prop('checked', false);
+                for (var i = 0; i < savedBases.length; i++) {
+                    $(".base_checkbox").get(i).checked = savedBases[i];
+                }
+            }
+
+            if (savedCharms.indexOf(0) >= 0) {
+                $("#all_charms_checkbox").prop('checked', false);
+                for (var i = 0; i < savedCharms.length; i++) {
+                    $(".charm_checkbox").get(i).checked = savedCharms[i];
+                }
             }
         }
     }
 
-    function loadOwnedCookie() {
-        if (Cookies.get('setup')) {
-            var savedSetup = JSON.parse(Cookies.get('setup'));
-            var savedWeapons = savedSetup['weapons'] || [];
-            var savedBases = savedSetup['bases'] || [];
-            var savedCharms = savedSetup['charms'] || [];
+    function processStorageArray(indexArray, ownedItems, type) {
+        var selectors = getSelectors(type);
 
-            if (savedWeapons.length != weaponKeys.length || savedBases.length != baseKeys.length || savedCharms.length != charmKeys.length) {
-                window.alert("New items have been added. Please re-tick what you own, or use the bookmarklet. Sorry for any inconvenience!");
-                Cookies.remove('setup');
-            } else {
-                //Unticks 'All' if there was an unticked box stored in the cookie
-                if (savedWeapons.indexOf(0) >= 0) {
-                    $("#all_weapons_checkbox").prop('checked', false);
-                }
-
-                if (savedBases.indexOf(0) >= 0) {
-                    $("#all_bases_checkbox").prop('checked', false);
-                }
-
-                if (savedCharms.indexOf(0) >= 0) {
-                    $("#all_charms_checkbox").prop('checked', false);
-                }
-
-                //Iterates through arrays saved in cookie and unticks checkboxes accordingly
-                for (var i = 0; i < savedWeapons.length; i++) {
-                    $(".weapon_checkbox").get(i).checked = savedWeapons[i];
-                }
-
-                for (var i = 0; i < savedBases.length; i++) {
-                    $(".base_checkbox").get(i).checked = savedBases[i];
-                }
-
-                for (var i = 0; i < savedCharms.length; i++) {
-                    $(".charm_checkbox").get(i).checked = savedCharms[i];
-                }
+        $(selectors.checkbox).prop("checked", false);
+        $(selectors.allCheckbox).prop('checked', false);
+        for (var i = 0; i < indexArray.length; i++) {
+            var currentItem = indexArray[i];
+            if (ownedItems.indexOf(currentItem) >= 0) {
+                $(selectors.checkbox).get(i).checked = true;
             }
         }
     }
@@ -158,25 +180,18 @@ function checkCookies() {
         console.log("Charms loaded: " + ownedCharms.length);
 
         if (ownedBases && ownedBases.length > 0) {
-            $("#all_bases_checkbox").prop('checked', false);
-            $(".base_checkbox").prop('checked', false);
-            processStorageArray(baseKeys, ownedBases, ".base_checkbox");
+            processStorageArray(baseKeys, ownedBases, "base");
         }
         if (ownedWeapons && ownedWeapons.length > 0) {
-
             if (ownedWeapons.indexOf("Isle Idol Trap") > 0) {
                 ownedWeapons.push("Isle Idol Hydroplane Skin");
                 ownedWeapons.push("Isle Idol Stakeshooter Skin");
             }
 
-            $("#all_weapons_checkbox").prop('checked', false);
-            $(".weapon_checkbox").prop('checked', false);
-            processStorageArray(weaponKeys, ownedWeapons, ".weapon_checkbox");
+            processStorageArray(weaponKeys, ownedWeapons, "weapon");
         }
         if (ownedCharms && ownedCharms.length > 0) {
-            $("#all_charms_checkbox").prop('checked', false);
-            $(".charm_checkbox").prop('checked', false);
-            processStorageArray(charmKeys, ownedCharms, ".charm_checkbox");
+            processStorageArray(charmKeys, ownedCharms, "charm");
         }
         localStorage.removeItem("setupData");
         saveSetupCookie();
@@ -185,8 +200,8 @@ function checkCookies() {
     var storedData = JSON.parse(localStorage.getItem("setupData"));
     if (storedData) {
         processStoredData(storedData);
-    } else {
-        loadOwnedCookie();
+    } else if(Cookies.get('setup')) {
+        loadOwnedCookie(Cookies.get('setup'))
     }
 }
 
@@ -250,33 +265,8 @@ function loadURLData() {
     return false;
 }
 
-window.onload = function () {
-    user = "setup";
-
-    //Instructions
-    $("#instructions").click(function () {
-        var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";
-        instructionString += "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
-        instructionString += "\n- Copy the bookmarklet code by right-clicking the 'Best Setup' link and selecting 'Copy link address...'"
-        instructionString += "\n- Right click the newly created bookmark and select 'Edit...'"
-        instructionString += "\n- Paste into the 'URL' field\n\n";
-        instructionString += "Firefox:\n- Right click the 'Best Setup' link and select 'Bookmark This Link'\n\n";
-        instructionString += "Internet Explorer:\n- Right click the 'Best Setup' link and select 'Add to favorites...'\n\n";
-        instructionString += "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
-        alert(instructionString);
-    });
-
-    //Bookmarklet storage logic
-    if (setupBookmarkletString != localStorage.getItem('setupBookmarklet')) {
-        alert("Bookmarklet has changed! Please update accordingly.");
-        localStorage.setItem('setupBookmarklet', setupBookmarkletString);
-    }
-    $("#bookmarklet").attr("href", setupBookmarkletString);
-    $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=2500"));
-    $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=6000"));
-    // Hacky, use more precise "SUBMIT_DELAY" replacement
-
-    //Initialize tablesorter, bind to table
+function initTableSorter() {
+//Initialize tablesorter, bind to table
     $.tablesorter.defaults.sortInitialOrder = 'desc';
     $("#results").tablesorter({
         // sortForce: [[noMice,1]],
@@ -362,6 +352,35 @@ window.onload = function () {
             .append('<li><span class="str">"' + e.type + msg + '</li>')
             .find('li:first').remove();
     });
+}
+
+window.onload = function () {
+    user = "setup";
+
+    //Instructions
+    $("#instructions").click(function () {
+        var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";
+        instructionString += "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
+        instructionString += "\n- Copy the bookmarklet code by right-clicking the 'Best Setup' link and selecting 'Copy link address...'"
+        instructionString += "\n- Right click the newly created bookmark and select 'Edit...'"
+        instructionString += "\n- Paste into the 'URL' field\n\n";
+        instructionString += "Firefox:\n- Right click the 'Best Setup' link and select 'Bookmark This Link'\n\n";
+        instructionString += "Internet Explorer:\n- Right click the 'Best Setup' link and select 'Add to favorites...'\n\n";
+        instructionString += "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
+        alert(instructionString);
+    });
+
+    //Bookmarklet storage logic
+    if (setupBookmarkletString != localStorage.getItem('setupBookmarklet')) {
+        alert("Bookmarklet has changed! Please update accordingly.");
+        localStorage.setItem('setupBookmarklet', setupBookmarkletString);
+    }
+    $("#bookmarklet").attr("href", setupBookmarkletString);
+    $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=2500"));
+    $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=6000"));
+
+
+    initTableSorter();
 
     loadItemSelection(weaponKeys, "weapon");
     loadItemSelection(baseKeys, "base");
@@ -426,20 +445,26 @@ window.onload = function () {
 
 function saveSetupCookie() {
 
+    /**
+     * Builds array of 1's and 0's from selected checkboxes
+     * @param selector {string}
+     * @returns Number[]
+     */
     function getCookieArray(selector) {
         return $(selector).map(function () {
             return Number($(this).prop('checked'))
         }).toArray();
     }
 
-    var checkedWeapons = getCookieArray(".weapon_checkbox");
-    var checkedBases = getCookieArray(".base_checkbox");
-    var checkedCharms = getCookieArray(".charm_checkbox");
+    var checkedWeapons = getCookieArray(getSelectors('weapon').checkbox);
+    var checkedBases = getCookieArray(getSelectors('base').checkbox);
+    var checkedCharms = getCookieArray(getSelectors('charm').checkbox);
 
-    var cvalue = {};
-    cvalue['weapons'] = checkedWeapons;
-    cvalue['bases'] = checkedBases;
-    cvalue['charms'] = checkedCharms;
+    var cvalue = {
+        weapons : checkedWeapons,
+        bases : checkedBases,
+        charms :  checkedCharms
+    };
 
     Cookies.set('setup', cvalue, {
         expires: 365
@@ -467,9 +492,10 @@ function loadCheeseDropdown() {
             var optionArray = option.split("/");
             var optionArrayLength = Object.size(optionArray);
             for (var j = 0; j < optionArrayLength; j++) {
-                if (insertedCheeses.indexOf(optionArray[j]) < 0) {
-                    cheeseDropdownHTML += "<option>" + optionArray[j] + "</option>\n";
-                    insertedCheeses.push(optionArray[j]);
+                var item = optionArray[j];
+                if (insertedCheeses.indexOf(item) < 0) {
+                    cheeseDropdownHTML += "<option>" + item + "</option>\n";
+                    insertedCheeses.push(item);
                 }
             }
         }
@@ -487,12 +513,15 @@ function loadCheeseDropdown() {
 }
 
 function loadCharmDropdown() {
-    var charmDropdown = document.getElementById("charm");
-    var charmDropdownHTML = '<option>-</option>';
 
+    /**
+     * Population array for Location-Phase-Cheese
+     */
     var popArrayLPC = popArray[locationName][phaseName][cheeseName];
-    if (popArrayLPC == undefined) {
+    if (!popArrayLPC) {
         var popArrayLP = popArray[locationName][phaseName];
+        // Search through popArrayLP for cheese matching currently armed cheese
+        // TODO: Improve
         for (var cheese in popArrayLP) {
             if (cheese.indexOf(cheeseName) >= 0) {
                 popArrayLPC = popArray[locationName][phaseName][cheese];
@@ -500,6 +529,8 @@ function loadCharmDropdown() {
         }
     }
 
+    var charmDropdown = document.getElementById("charm");
+    var charmDropdownHTML = '<option>-</option>';
     var charms = Object.keys(popArrayLPC);
     charms.sort();
     var nSpecialCharms = charms.length;
@@ -519,41 +550,36 @@ function loadCharmDropdown() {
     }
 }
 
+//TODO: Improve Link Builder. See CRE.
 function updateLink() {
-    var URLString = 'setup.html?';
+
     var select = document.getElementById("charm");
     var selectedCharm = select.children[select.selectedIndex].innerHTML;
 
-    if (locationName != "") URLString += "&location=" + locationName;
-    if (phaseName != "" && phaseName != "-") URLString += "&phase=" + phaseName;
-    if (cheeseName != "") URLString += "&cheese=" + cheeseName;
-    if (selectedCharm != "-") URLString += "&charm=" + selectedCharm;
-    if (isToxic != "" && isToxic != "-" && $("#toxic").is(":visible")) URLString += "&toxic=" + isToxic;
-    if (batteryPower != 0) URLString += "&battery=" + batteryPower;
-    if (gsLuck == 0) URLString += "&gs=" + gsLuck;
-    if (bonusLuck >= 0) URLString += "&bonusLuck=" + bonusLuck;
-    if (tournamentName != "") URLString += "&tourney=" + tournamentName;
+    urlParams = {
+        "location" : locationName,
+        "phase" : phaseName,
+        "cheese" : cheeseName,
+        "charm" : selectedCharm,
+        "toxic" : isToxic,
+        "battery" : batteryPower,
+        "gs" : !gsLuck,
+        "bonusLuck" : bonusLuck,
+        "tourney" : tournamentName,
+    };
 
+    var URLString = buildURL('setup.html',urlParams);
     document.getElementById("link").href = URLString;
 
     ga('send', 'event', 'link', 'updated', URLString);
-    /*
-     ga('send', 'event', 'weapon', 'selected', weaponName);
-     ga('send', 'event', 'location', 'selected', locationName);
-     ga('send', 'event', 'cheese', 'selected', cheeseName);
-     ga('send', 'event', 'base', 'selected', baseName);
-     ga('send', 'event', 'charm', 'selected', charmName);
-     ga('send', 'event', 'tournament', 'selected', tournamentName);*/
 }
 
 function weaponChanged() {
-    //updateLink();
-
     var weaponsArrayN = weaponsArray[weaponName];
     if (weaponsArrayN == undefined) weaponsArrayN = [0];
 
-    weaponPower = weaponsArrayN[1];
     trapType = weaponsArrayN[0];
+    weaponPower = weaponsArrayN[1];
     weaponBonus = weaponsArrayN[2];
     weaponAtt = weaponsArrayN[3];
     weaponLuck = weaponsArrayN[4];
@@ -850,7 +876,7 @@ function printCharmCombinations(micePopulation, tableHTML) {
         };
         var URLString = buildURL('cre.html', urlParams);
         URLString = URLString.replace(/'/g, "%27");
-        
+
         tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weaponName + " / " + baseName + " / " + charmName + "</a><span style='float: right'></span></td>";
 
         for (var mouse in micePopulation) {
