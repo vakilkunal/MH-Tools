@@ -541,6 +541,9 @@ var parseFreshness = {
     "Uber Fresh": 6
 };
 
+/**
+ * Maps types to integers for lookup in the powers array
+ */
 var typeEff = {
     "Arcane": 1,
     "Draconic": 2,

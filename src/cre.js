@@ -9,7 +9,6 @@ var cheeseCost = 0, sampleSize = 0;
 
 // Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
 var popCSV = [];
-var popArray = [];
 var pop = new XMLHttpRequest();
 var baseline = new XMLHttpRequest();
 
@@ -17,13 +16,6 @@ var baseline = new XMLHttpRequest();
 window.onload = function () {
     user = CRE_USER;
 
-    // if (location.href.indexOf("https") < 0) {
-    // 	var currLoc = location.href;
-    // 	currLoc = currLoc.replace("http", "https");
-    // 	location.href = currLoc;
-    // }
-
-    //Instructions
     $("#instructions").click(function () {
         var instructionString = "Drag the blue 'CRE' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";
         instructionString += "Google Chrome:\n- Bookmark a random page and name it 'CRE'";
@@ -36,7 +28,6 @@ window.onload = function () {
         alert(instructionString);
     });
 
-    //Bookmarklet storage logic
     if (creBookmarkletString != localStorage.getItem('creBookmarklet')) {
         alert("Bookmarklet has changed! Please update accordingly.");
         localStorage.setItem('creBookmarklet', creBookmarkletString);
@@ -854,9 +845,9 @@ function highlightSpecialCharms (charmList) {
 }
 
 function loadCheeseDropdown() {
-    console.log("Reloading cheese list");
     var cheeseDropdown = document.getElementById("cheese");
     var cheeseDropdownHTML = '';
+    console.log("Reloading cheese list");
 
     var cheeses = Object.keys(popArray[locationName][phaseName] || []);
 

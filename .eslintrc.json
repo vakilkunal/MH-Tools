@@ -1,0 +1,43 @@
+{
+    "env": {
+        "browser": true,
+        "jquery": true
+    },
+    "globals": {
+
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console" : [
+            "off"
+        ],
+        "no-undef" : [
+            "warn"
+        ],
+        "no-sparse-arrays": [
+            "off"
+        ],
+        "no-unused-vars" : [
+            "off"
+        ],
+        "no-magic-numbers" : [
+            "off"
+        ]
+    }
+}

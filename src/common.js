@@ -4,17 +4,21 @@
  */
 var user;
 var CRE_USER = "cre";
+var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
 
 var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0, lanternStatus = '';
-var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
-var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
+var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = "", batteryPower = 0, lanternStatus = '';
+var trapPower = 0, trapLuck = 0, trapType = "", trapAtt = 0, trapEff = 0;
+var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = '', weaponName = '', phaseName = '';
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var balistaLevel = 0, canonLevel = 0;
+
+
+var popArray = [];
 
 var specialCharm = {
     "Champion Charm": 1,
@@ -29,11 +33,7 @@ var specialCharm = {
 };
 
 Object.size = function (obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
+    return obj.length || Object.keys(obj).length;
 };
 
 function commafy(x) {
@@ -41,7 +41,7 @@ function commafy(x) {
 }
 
 function calcSpecialCharms(charmName) {
-    var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
+    var charmsArrayN = charmsArray[charmName] || DEFAULT_STATS;
 
     /* Basics */
     charmPower = charmsArrayN[0];
@@ -363,13 +363,18 @@ function processBaseline(baselineText) {
 
 }
 
+/**
+ * Returns effectivity of current power type against a mouse.
+ * @param mouseName
+ * @returns {number}
+ */
 function findEff(mouseName) {
-    var eff;
-    if (trapType == '') eff = 0;
-    else {
-        eff = (powersArray[mouseName][typeEff[trapType]]) / 100;
+    if (trapType == '') {
+        return 0;
+    } else {
+        var typeIndex = typeEff[trapType];
+        return (powersArray[mouseName][typeIndex]) / 100;
     }
-    return eff;
 }
 
 function getCheeseAttraction() {
@@ -445,13 +450,12 @@ function populateSublocationDropdown(locationName) {
         }
     }
 
-    loadCheeseDropdown();
     phaseChanged();
 }
 
 function charmChangeCommon() {
+    var charmsArrayN = charmsArray[charmName] || DEFAULT_STATS;
     updateLink();
-    var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
     if (specialCharm[charmName]) calcSpecialCharms(charmName);
     else {
         charmPower = charmsArrayN[0];
@@ -464,7 +468,7 @@ function charmChangeCommon() {
 
 function loadLocationDropdown() {
     var locationDropdown = document.getElementById("location");
-    var locationDropdownHTML = '<option></option>';
+    var locationDropdownHTML = "<option></option>";
 
     var locations = Object.keys(popArray || []);
     /* Safety, JS does not define iteration order */
@@ -502,7 +506,7 @@ function showTrapSetup(type) {
 function gsChanged() {
     var select = document.getElementById("gs");
 
-    if (select.value == 'Y') gsLuck = 7;
+    if (select.value == "Y") gsLuck = 7;
     else gsLuck = 0;
 
     updateLink();
@@ -511,20 +515,23 @@ function gsChanged() {
 }
 
 function getIcebergBase() {
-    var autoBase = '';
-    var autoPhase = '';
-    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
-
+    var autoBase = "";
+    if (phaseName.indexOf("Magnet") >= 0) {
+        autoBase = "Magnet Base";
+    }
+    else if (phaseName.indexOf("Hearthstone") >= 0) {
+        autoBase = "Hearthstone Base";
+    }
     else if ((phaseName == "Bombing Run"
         || phaseName == "The Mad Depths"
         || phaseName == "Treacherous Tunnels")
         && baseName == "Magnet Base") {
         autoBase = "";
     }
-
     else if (phaseName == "The Mad Depths"
-        && baseName == "Hearthstone Base") autoBase = "";
+        && baseName == "Hearthstone Base") {
+        autoBase = "";
+    }
 
     if (autoBase != "") {
         var selectBase = document.getElementById("base");
