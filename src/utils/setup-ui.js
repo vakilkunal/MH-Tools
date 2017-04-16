@@ -6,7 +6,6 @@
  */
 (function() {
     "use strict";
-
     var tablesorterOptions = {
         // sortForce: [[noMice,1]],
         sortReset: true,
@@ -85,36 +84,10 @@
         }
     };
 
-    var sliderOptions = {
-        range: "min",
-        min: 0,
-        max: 175,
-        step: 1,
-        slide: function (event, ui) {
-            var myColor;
-            if (event.originalEvent) {
-                refreshSlider(ui);
-            }
-            else {
-                myColor = getColor(100);
-                $("#ampSlider .ui-slider-range").css("background-color", myColor);
-                $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-                $("#ampValue").val(100);
-            }
-        },
-        change: function (event, ui) {
-            var myColor;
-            if (event.originalEvent) {
-                refreshSlider(ui);
-            }
-            else {
-                myColor = getColor(100);
-                $("#ampSlider .ui-slider-range").css("background-color", myColor);
-                $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-                $("#ampValue").val(100);
-            }
-        }
-    };
+    $(window).load(function () {
+        initTableSorter();
+        setupGA();
+    });
 
     function setupGA() {
         (function (i, s, o, g, r, a, m) {
@@ -138,12 +111,6 @@
         ga("auto.send", "pageview");
     }
 
-    $(window).load(function () {
-        initTableSorter();
-        $("#ampSlider").slider(sliderOptions);
-        setupGA();
-    });
-
     /*
      * Best setup tablesroter
      * Initialize the tablesorter and bind it to the results table
@@ -160,35 +127,4 @@
         });
     }
 
-    /**
-     * Gets color for Zugzwang's tower slider
-     * @param colorVal
-     * @returns {string}
-     */
-    function getColor(colorVal) {
-        var myGreen, myRed;
-        if (colorVal < 88) {
-            myRed = 255;
-            myGreen = parseInt(( ( colorVal * 1.136 ) * 255 ) / 100);
-        }
-        else {
-            myRed = parseInt(( ( 175 - colorVal ) * 1.136 ) * 255 / 100);
-            myGreen = 255;
-        }
-        return ( "rgb(" + myRed + "," + myGreen + ",0)");
-    }
-
-    /**
-     * Refre
-     * @param ui
-     */
-    function refreshSlider(ui) {
-        var ampSlider = ui.value;
-        var myColor = getColor(ampSlider);
-        $("#ampSlider .ui-slider-range").css("background-color", myColor);
-        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-        $("#ampValue").val(ampSlider);
-        ztAmp = parseInt(ampSlider);
-        calculateTrapSetup();
-    }
 })();

@@ -187,6 +187,7 @@ function getSelectors(type) {
     var checkboxClass = type + "_checkbox";
     return {
         checkboxClass: checkboxClass,
+        labelClass: checkboxClass + "-label",
         checkbox: "." + checkboxClass,
         container: "#" + type + "s_selector_table",
         allCheckbox: "#all_" + type + "s_checkbox",
@@ -194,25 +195,20 @@ function getSelectors(type) {
     };
 }
 
+
 /**
  * Populates item checkboxes
  * @param itemKeys {string[]}
  * @param type {string} @see {@link getSelectors}
  */
 function loadItemSelection(itemKeys, type) {
-    var i, itemName, inputElement;
+    var i;
     var select = getSelectors(type);
-    var checkboxClass = select.checkboxClass;
-
     for (i = 0; i < itemKeys.length; i++) {
-        itemName = itemKeys[i];
-        inputElement = "<input type='checkbox' checked" +
-            " class='" + checkboxClass + "'" +
-            " value='" + itemName + "'" +
-            " name='" + select.name + "'>";
-        $(select.container).append("<li><label>" +
-            inputElement + "&nbsp;" + itemName + "</label></li>");
+        var checkboxItem = buildCheckboxItem(select, itemKeys[i]);
+        $(checkboxItem).appendTo(select.container).wrap("<li>");
     }
+
     $(select.checkbox).change(function () {
         $(select.allCheckbox).prop("checked", false);
     });
@@ -221,6 +217,28 @@ function loadItemSelection(itemKeys, type) {
         var checked = this.checked;
         $(select.checkbox).prop("checked", checked);
     });
+
+    /**
+     * Builds jquery object with checkbox to insert
+     * @param select
+     * @param itemName
+     * @returns {jQuery}
+     */
+    function buildCheckboxItem(select, itemName) {
+        var row = $("<label></label>");
+        $("<input />", {
+            "type": "checkbox",
+            "checked": "checked",
+            "value": itemName,
+            "class": select.checkboxClass,
+            "name": select.name
+        }).appendTo(row);
+        $("<span />", {
+            "class": select.labelClass,
+            "text": itemName}
+            ).appendTo(row);
+        return row;
+    }
 }
 
 /**
@@ -707,11 +725,9 @@ function buildMiceCRHtml(micePopulation) {
     return html;
 }
 
-
 function printCombinations(micePopulation, headerHtml) {
     var tableHTML = headerHtml + "<tbody>";
     var results =document.querySelector("#results");
-
 
     var weaponSelectors = getSelectors("weapon");
     var baseSelectors = getSelectors("base");
@@ -751,18 +767,22 @@ function printCombinations(micePopulation, headerHtml) {
         printCharmCombinations(popArrayLPC[NO_CHARM], headerHtml);
     });
 
-    var resort = true;
-    var callback = function () {
-        var header = $("#overallHeader");
-        if (header.hasClass("tablesorter-headerAsc")) {
-            header.click();
-            header.click();
-        }
-        else if (header.hasClass("tablesorter-headerUnSorted")) {
-            header.click();
-        }
-    };
-    $("#results").trigger("updateAll", [resort, callback]);
+    handleSort();
+
+    function handleSort() {
+        var resort = true;
+        var callback = function () {
+            var header = $("#overallHeader");
+            if (header.hasClass("tablesorter-headerAsc")) {
+                header.click();
+                header.click();
+            }
+            else if (header.hasClass("tablesorter-headerUnSorted")) {
+                header.click();
+            }
+        };
+        $("#results").trigger("updateAll", [resort, callback]);
+    }
 
 }
 
@@ -830,9 +850,11 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
     return attractions * catchRate;
 }
 
-function printCharmCombinations(micePopulation, tableHTML) {
+function printCharmCombinations(micePopulation, headerHTML) {
     var results = document.querySelector("#results");
     var charmSelectors = getSelectors("charm");
+
+    var tableHTML = "";
 
 
     $(charmSelectors.checkbox + ":checked").each(function(index, element){
@@ -842,12 +864,18 @@ function printCharmCombinations(micePopulation, tableHTML) {
 
     tableHTML += "</tbody>";
     results.innerHTML = tableHTML;
+    handleSort();
 
-    var resort = true, callback = function () {
+    function handleSort() {
+        var resort = true;
+
+        function callback () {
             var header = $("#overallHeader");
             if (header.hasClass("tablesorter-headerAsc") || header.hasClass("tablesorter-headerUnSorted")) {
                 $("#overallHeader").click();
             }
-    };
-    $("#results").trigger("updateAll", [resort, callback]);
+        }
+
+        $("#results").trigger("updateAll", [resort, callback]);
+    }
 }

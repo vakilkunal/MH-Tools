@@ -6,15 +6,17 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
-    <script type="text/javascript" src="src/arrays.js"></script>
-    <script type="text/javascript" src="src/common.js"></script>
-    <script type="text/javascript" src="src/cre.js"></script>
-    <script type="text/javascript" src="src/crebookmarklet.min.js"></script>
-    <script type="text/javascript" src="src/parse.js"></script>
     <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
     <script type="text/javascript" src="lib/jquery-ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="lib/jquery.tablesorter.combined.min.js"></script>
+
+    <script type="text/javascript" src="src/crebookmarklet.min.js"></script>
+    <script type="text/javascript" src="src/arrays.js"></script>
+    <script type="text/javascript" src="src/common.js"></script>
+    <script type="text/javascript" src="src/cre.js"></script>
+    <script type="text/javascript" src="src/utils/ampslider.js"></script>
+
     <link rel="stylesheet" href="css/style.css" type="text/css" media="print, projection, screen"/>
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="print, projection, screen"/>
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -50,60 +52,7 @@
 
     <!-- Amplifier slider -->
     <script>
-        $(function () {
-            $("#ampSlider").slider({
-                range: "min",
-                min: 0,
-                max: 175,
-                step: 1,
-                slide: function (event, ui) {
-                    if (event.originalEvent) {
-                        refreshSlider(ui);
-                    }
-                    else {
-                        var myColor = getColor(100);
-                        $("#ampSlider .ui-slider-range").css("background-color", myColor);
-                        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-                        $("#ampValue").val(100);
-                    }
-                },
-                change: function (event, ui) {
-                    if (event.originalEvent) {
-                        refreshSlider(ui);
-                    }
-                    else {
-                        var myColor = getColor(100);
-                        $("#ampSlider .ui-slider-range").css("background-color", myColor);
-                        $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-                        $("#ampValue").val(100);
-                    }
-                }
-            });
-        });
 
-        function getColor(colorVal) {
-            var theColor = "";
-            if (colorVal < 88) {
-                myRed = 255;
-                myGreen = parseInt(( ( colorVal * 1.136 ) * 255 ) / 100);
-            }
-            else {
-                myRed = parseInt(( ( 175 - colorVal ) * 1.136 ) * 255 / 100);
-                myGreen = 255;
-            }
-            theColor = "rgb(" + myRed + "," + myGreen + ",0)";
-            return (theColor);
-        }
-
-        function refreshSlider(ui) {
-            var ampSlider = ui.value;
-            var myColor = getColor(ampSlider);
-            $("#ampSlider .ui-slider-range").css("background-color", myColor);
-            $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css("background-color", myColor);
-            $("#ampValue").val(ampSlider);
-            ztAmp = parseInt(ampSlider);
-            calculateTrapSetup("cre");
-        }
     </script>
 
 </head>
