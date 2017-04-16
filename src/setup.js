@@ -3,21 +3,22 @@
 
 var popArrayLPC, resultsHTML;
 
-window.onload = function () {
+var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n"
+    + "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
+    + "\n- Copy the bookmarklet code by right-clicking the 'Best Setup' link and selecting 'Copy link address...'"
+    + "\n- Right click the newly created bookmark and select 'Edit...'"
+    + "\n- Paste into the 'URL' field\n\n"
+    + "Firefox:\n- Right click the 'Best Setup' link and select 'Bookmark This Link'\n\n"
+    + "Internet Explorer:\n- Right click the 'Best Setup' link and select 'Add to favorites...'\n\n"
+    + "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
+
+$(window).load(function () {
     var bonusLuckParameter, loaded;
 
     user = "setup";
 
     //Instructions
     $("#instructions").click(function () {
-        var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n"
-        + "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
-        + "\n- Copy the bookmarklet code by right-clicking the 'Best Setup' link and selecting 'Copy link address...'"
-        + "\n- Right click the newly created bookmark and select 'Edit...'"
-        + "\n- Paste into the 'URL' field\n\n"
-        + "Firefox:\n- Right click the 'Best Setup' link and select 'Bookmark This Link'\n\n"
-        + "Internet Explorer:\n- Right click the 'Best Setup' link and select 'Add to favorites...'\n\n"
-        + "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
         alert(instructionString);
     });
 
@@ -30,8 +31,6 @@ window.onload = function () {
     $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=2500"));
     $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=6000"));
 
-
-    initTableSorter();
     loadItemSelection(weaponKeys, "weapon");
     loadItemSelection(baseKeys, "base");
     loadItemSelection(charmKeys, "charm");
@@ -101,7 +100,7 @@ window.onload = function () {
             $(baseTable).hide();
         });
     }
-};
+});
 
 
 function checkLoadState() {
@@ -398,97 +397,6 @@ function loadURLData() {
 }
 
 /**
- * Initialize the tablesorter and bind it to the results table
- */
-function initTableSorter() {
-    $.tablesorter.defaults.sortInitialOrder = "desc";
-    $("#results").tablesorter({
-        // sortForce: [[noMice,1]],
-        sortReset: true,
-        widthFixed: true,
-        ignoreCase: false,
-        widgets: ["filter", "pager"],
-        widgetOptions: {
-            filter_childRows: false,
-            filter_childByColumn: false,
-            filter_childWithSibs: true,
-            filter_columnFilters: true,
-            filter_columnAnyMatch: true,
-            filter_cellFilter: "",
-            filter_cssFilter: "", // or []
-            filter_defaultFilter: {},
-            filter_excludeFilter: {},
-            filter_external: "",
-            filter_filteredRow: "filtered",
-            filter_formatter: null,
-            filter_functions: null,
-            filter_hideEmpty: true,
-            filter_hideFilters: true,
-            filter_ignoreCase: true,
-            filter_liveSearch: true,
-            filter_matchType: {"input": "exact", "select": "exact"},
-            filter_onlyAvail: "filter-onlyAvail",
-            filter_placeholder: {search: "Filter results...", select: ""},
-            filter_reset: "button.reset",
-            filter_resetOnEsc: true,
-            filter_saveFilters: false,
-            filter_searchDelay: 420,
-            filter_searchFiltered: true,
-            filter_selectSource: null,
-            filter_serversideFiltering: false,
-            filter_startsWith: false,
-            filter_useParsedData: false,
-            filter_defaultAttrib: "data-value",
-            filter_selectSourceSeparator: "|",
-            pager_output: "{startRow:input} to {endRow} of {totalRows} rows", // '{page}/{totalPages}'
-            pager_updateArrows: true,
-            pager_startPage: 0,
-            pager_size: 10,
-            pager_savePages: false,
-            pager_fixedHeight: false,
-            pager_removeRows: false, // removing rows in larger tables speeds up the sort
-            pager_ajaxUrl: null,
-            pager_customAjaxUrl: function (table, url) {
-                return url;
-            },
-            pager_ajaxError: null,
-            pager_ajaxObject: {
-                dataType: "json"
-            },
-            pager_ajaxProcessing: function (ajax) {
-                return [0, [], null];
-            },
-
-            // css class names that are added
-            pager_css: {
-                container: "tablesorter-pager",    // class added to make included pager.css file work
-                errorRow: "tablesorter-errorRow", // error information row (don't include period at beginning); styled in theme file
-                disabled: "disabled"              // class added to arrows @ extremes (i.e. prev/first arrows "disabled" on first page)
-            },
-
-            // jQuery selectors
-            pager_selectors: {
-                container: ".pager",       // target the pager markup (wrapper)
-                first: ".first",       // go to first page arrow
-                prev: ".prev",        // previous page arrow
-                next: ".next",        // next page arrow
-                last: ".last",        // go to last page arrow
-                gotoPage: ".gotoPage",    // go to page selector - select dropdown that sets the current page
-                pageDisplay: ".pagedisplay", // location of where the "output" is displayed
-                pageSize: ".pagesize"     // page size selector - select dropdown that sets the "size" option
-            }
-        }
-    }).bind("pagerChange pagerComplete pagerInitialized pageMoved", function (e, c) {
-        var p = c.pager, // NEW with the widget... it returns config, instead of config.pager
-            msg = "'</span> event triggered, " + (e.type === "pagerChange" ? "going to" : "now on") +
-                " page <span class='typ'>" + (p.page + 1) + "/" + p.totalPages + "</span>";
-        $("#display")
-            .append("<li><span class='str'>'" + e.type + msg + "</li>")
-            .find("li:first").remove();
-    });
-}
-
-/**
  * Saves selected weapons, bases and charms to a cookie
  */
 function saveSetupCookie() {
@@ -773,40 +681,22 @@ function buildMiceCRHtml(micePopulation) {
     var catches;
     var overallCR = 0;
     var overallAR = getCheeseAttraction();
-    var eff = buildEffectivenessArray(micePopulation);
-    var power = buildPowersArray(micePopulation);
+    var effectivenessArray = buildEffectivenessArray(micePopulation);
+    var powersArray = buildPowersArray(micePopulation);
     var html = "";
-
     var mouse;
+
     for (mouse in micePopulation) {
-        catches = calcMouseCR(micePopulation, mouse, overallAR, eff, power);
+        catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
         overallCR += catches;
         html += "<td align='right'>" + catches.toFixed(2) + "</td>";
 
     }
+
     html += "<td>" + overallCR.toFixed(2) + "</td>";
     return html;
 }
 
-function calcMouseCR(micePopulation, mouse, overallAR, eff, power) {
-    var mouseACDetails = getMouseACR(micePopulation, mouse, overallAR, eff, power);
-    var attractions = mouseACDetails.attractions;
-    var catchRate = mouseACDetails.catchRate;
-
-    if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
-        if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
-            catchRate += ((1 - catchRate) / 2);
-        }
-    }
-    //Exceptions, modifications to catch rates
-    if (charmName == "Ultimate Charm") catchRate = 1;
-    else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
-    else if (mouse == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
-    else if (mouse == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
-    else if (mouse == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
-
-    return attractions * catchRate;
-}
 
 function printCombinations(micePopulation, headerHtml) {
     var tableHTML = headerHtml + "<tbody>";
@@ -921,12 +811,28 @@ function buildCRELink() {
     return urlString;
 }
 
+function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray) {
+    var mouseACDetails = getMouseACR(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
+    var attractions = mouseACDetails.attractions;
+    var catchRate = mouseACDetails.catchRate;
+
+    if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
+        if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
+            catchRate += ((1 - catchRate) / 2);
+        }
+    }
+    //Exceptions, modifications to catch rates
+    if (charmName == "Ultimate Charm") catchRate = 1;
+    else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
+    else if (mouse == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
+    else if (mouse == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
+    else if (mouse == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
+
+    return attractions * catchRate;
+}
+
 function printCharmCombinations(micePopulation, tableHTML) {
     var results =document.querySelector("#results");
-
-    //console.log(noMice);
-    var power = buildPowersArray(micePopulation);
-
     var charmSelectors = getSelectors("charm");
     var nCharms = charmKeys.length;
     for (var i = 0; i < nCharms; i++) {
@@ -935,26 +841,16 @@ function printCharmCombinations(micePopulation, tableHTML) {
         charmName = charmKeys[i];
         charmChanged();
 
-        var eff = buildEffectivenessArray(micePopulation);
-
         var overallAR = getCheeseAttraction();
         var overallCR = 0;
         var URLString = buildCRELink();
+        var effectivenessArray = buildEffectivenessArray(micePopulation);
+        var powersArray = buildPowersArray(micePopulation);
 
         tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weaponName + " / " + baseName + " / " + charmName + "</a><span style='float: right'></span></td>";
 
         for (var mouse in micePopulation) {
-
-            var mouseACDetails = getMouseACR(micePopulation, mouse, overallAR, eff, power);
-            var attractions = mouseACDetails.attractions;
-            var catchRate = mouseACDetails.catchRate;
-
-            //Exceptions, modifications to catch rates
-            if (charmName == "Ultimate Charm") catchRate = 1;
-            else if (mouse == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
-            else if (mouse == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
-
-            var catches = attractions * catchRate;
+            var catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
             overallCR += catches;
             catches = catches.toFixed(2);
 
@@ -968,10 +864,10 @@ function printCharmCombinations(micePopulation, tableHTML) {
     results.innerHTML = tableHTML;
 
     var resort = true, callback = function () {
-        var header = $("#overallHeader");
-        if (header.hasClass("tablesorter-headerAsc") || header.hasClass("tablesorter-headerUnSorted")) {
-            $("#overallHeader").click();
-        }
+            var header = $("#overallHeader");
+            if (header.hasClass("tablesorter-headerAsc") || header.hasClass("tablesorter-headerUnSorted")) {
+                $("#overallHeader").click();
+            }
     };
     $("#results").trigger("updateAll", [resort, callback]);
 }
