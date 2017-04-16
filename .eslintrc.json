@@ -28,7 +28,7 @@
             "off"
         ],
         "no-undef" : [
-            "warn"
+            "off"
         ],
         "no-sparse-arrays": [
             "off"

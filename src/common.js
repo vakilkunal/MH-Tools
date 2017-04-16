@@ -62,7 +62,6 @@ function calcSpecialCharms(charmName) {
         }
 
     } else if (charmName == "Growth Charm") {
-        //Check if soiled base used.
         if (baseName == "Soiled Base") {
             charmPower += 100;
             charmBonus += 3;
@@ -70,7 +69,6 @@ function calcSpecialCharms(charmName) {
             charmLuck += 4;
         }
     } else if (charmName == "Wild Growth Charm") {
-        //Soiled base
         if (baseName == "Soiled Base") {
             charmPower += 300;
             charmBonus += 8;
@@ -78,7 +76,6 @@ function calcSpecialCharms(charmName) {
             charmLuck += 9;
         }
     } else if (charmName == "Spellbook Charm") {
-        //Spellbook base
         if (baseName == "Spellbook Base") {
             charmPower += 500;
             charmBonus += 8;
@@ -98,7 +95,7 @@ function calcSpecialCharms(charmName) {
 function getURLParameter(name) {
     //Use component here to ensure correct decoding
     return decodeURIComponent(
-        (new RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+        (new RegExp(name + "=(.+?)(&|$)").exec(location.search) || [, null])[1]
     );
 }
 
@@ -116,7 +113,7 @@ function buildURL(location, urlParams) {
         var urlParam = urlParams[key];
         if (urlParam && urlParam != "-") {
             var value = encodeURIComponent(urlParam);
-            url += key + "=" + value + "&"
+            url += key + "=" + value + "&";
         }
     }
     return url;
@@ -132,12 +129,9 @@ function getRiftCount() {
 
 function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
-    //console.log(weaponPower + " " + basePower + " " + charmPower);
 
-    if (weaponPower && basePower) { //Only calculate if both weapon and base selected
-
-        //Exceptions
-
+    //Only calculate if both weapon and base selected
+    if (weaponPower && basePower) {
         if (locationName.indexOf("Claw Shot City") >= 0 && (weaponName == "S.L.A.C." || weaponName == "S.L.A.C. II") && baseName == "Claw Shot Base") {
             if (charmName.indexOf("Cactus Charm") >= 0) specialPower += 2500;
             else specialPower += 1000;
@@ -437,9 +431,10 @@ function populateSublocationDropdown(locationName) {
 
     sublDropdown.innerHTML = sublDropdownHTML;
     phaseName = sublocations[0];
+    sublDropdown.selectedIndex = 0;
 
     var phaseParameter = getURLParameter("phase");
-    if (phaseParameter != "null") {
+    if (phaseParameter && phaseParameter != "null") {
         var select = document.getElementById("phase");
         for (var i = 0; i < select.children.length; i++) {
             var child = select.children[i];
@@ -449,11 +444,12 @@ function populateSublocationDropdown(locationName) {
             }
         }
     }
-
-    phaseChanged();
 }
 
-function charmChangeCommon() {
+function charmChangeCommon(newCharmName) {
+    if (newCharmName) {
+        charmName = newCharmName;
+    }
     var charmsArrayN = charmsArray[charmName] || DEFAULT_STATS;
     updateLink();
     if (specialCharm[charmName]) calcSpecialCharms(charmName);

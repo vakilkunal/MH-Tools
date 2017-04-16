@@ -988,11 +988,11 @@ function locationChanged() {
     sampleSize = 0;
     showPop(0);
 
-
     //Populate sublocation dropdown and select first option
     if (locationName != "") {
         populateSublocationDropdown(locationName);
     }
+    phaseChanged();
 }
 
 

@@ -2,6 +2,7 @@
 
 
 var popArrayLPC, resultsHTML;
+var NO_CHARM = "-";
 
 var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n"
     + "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
@@ -428,7 +429,7 @@ function saveSetupCookie() {
 
 function loadCheeseDropdown() {
     var option, optionArray;
-    var cheeseDropdown =document.querySelector("#cheese");
+    var cheeseDropdown = document.querySelector("#cheese");
     var cheeseDropdownHTML = "";
 
     var insertedCheeses = [];
@@ -443,6 +444,7 @@ function loadCheeseDropdown() {
     }
 
     cheeseDropdown.innerHTML = cheeseDropdownHTML;
+    cheeseDropdown.selectedIndex = 0;
     checkCheeseParam();
     cheeseChanged();
 
@@ -476,7 +478,7 @@ function populateDropdown(items, elementId) {
     var i;
     var dropdownHtml = "<option>-</option>";
     for (i = 0; i < items.length; i++) {
-        if (items[i] != "-") {
+        if (items[i] != NO_CHARM) {
             dropdownHtml += "<option>" + items[i] + "</option>\n";
         }
     }
@@ -503,7 +505,7 @@ function loadCharmDropdown() {
         var select =document.querySelector("#charm");
         if (charmParameter != "null") {
             select.value = charmParameter;
-            charmChanged();
+            charmChanged(charmParameter);
         }
     }
 
@@ -570,14 +572,13 @@ function locationChanged() {
     if (locationName != "") {
         populateSublocationDropdown(locationName);
     }
-
+    phaseChanged();
 }
 
 function cheeseChanged() {
-    var select =document.querySelector("#cheese");
-    cheeseName = select.value;
     ga("send", "event", "cheese", "changed", cheeseName);
 
+    cheeseName = document.querySelector("#cheese").value;
     updateLink();
     checkToxicWidget();
     loadCharmDropdown();
@@ -609,41 +610,33 @@ function baseChanged() {
     calculateTrapSetup();
 }
 
-function charmChanged() {
-    charmChangeCommon();
+function charmChanged(charmValue) {
+    charmValue = charmValue || $("#charm").val();
+    charmChangeCommon(charmValue === NO_CHARM ? charmValue : charmValue + " Charm");
     calculateTrapSetup();
 }
 
 
+
+
 function showPop() {
     var results =document.querySelector("#results");
+    var selectedCharm = $("#charm").val();
+    var population = getPopulation(selectedCharm);
 
-    if (!locationName|| !cheeseName) {
+    if (!locationName || !cheeseName) {
         results.innerHTML = "";
     } else {
+        charmChanged();
         $("#pleaseWaitMessage").show();
 
-        popArrayLPC = popArray[locationName][phaseName][cheeseName];
-        //For common cheeses e.g. gouda, brie etc.
-        if (!popArrayLPC && cheeseName != "Cheese") {
-            checkPopArray();
-        }
 
-        //console.log(popArrayLC);
-
-        var select =document.querySelector("#charm");
-        var selectedCharm = select.value;
-
-        var noMice = Object.size(popArrayLPC[selectedCharm]);
-        var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
-        for (var i = 0; i < noMice; i++) {
-            resultsHeader += "<th data-filter='false'>" + Object.keys(popArrayLPC[selectedCharm])[i] + "</th>";
-        }
-        resultsHeader += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead>";
-
-        printCombinations(popArrayLPC[selectedCharm], resultsHeader);
+        printCombinations(population, getHeader(population));
     }
 
+    /**
+     * Handle cases where cheesenames bundled together
+     */
     function checkPopArray() {
         var i;
         var popArrayL = popArray[locationName][phaseName];
@@ -656,7 +649,25 @@ function showPop() {
                 break;
             }
         }
-        popArrayLPC = popArray[locationName][phaseName][commonCheeseIndex];
+        return popArray[locationName][phaseName][commonCheeseIndex];
+    }
+
+    function getHeader(population) {
+        var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
+        var mouseName;
+        for (mouseName in population) {
+            resultsHeader += "<th data-filter='false'>" + mouseName + "</th>";
+        }
+        resultsHeader += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead>";
+        return resultsHeader;
+    }
+
+    function getPopulation(selectedCharm) {
+        popArrayLPC = popArray[locationName][phaseName][cheeseName];
+        if (!popArrayLPC) {
+            popArrayLPC = checkPopArray();
+        }
+        return popArrayLPC[selectedCharm];
     }
 }
 
@@ -690,7 +701,6 @@ function buildMiceCRHtml(micePopulation) {
         catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
         overallCR += catches;
         html += "<td align='right'>" + catches.toFixed(2) + "</td>";
-
     }
 
     html += "<td>" + overallCR.toFixed(2) + "</td>";
@@ -701,45 +711,31 @@ function buildMiceCRHtml(micePopulation) {
 function printCombinations(micePopulation, headerHtml) {
     var tableHTML = headerHtml + "<tbody>";
     var results =document.querySelector("#results");
-    var nWeapons = weaponKeys.length;
-    var nBases = baseKeys.length;
+
 
     var weaponSelectors = getSelectors("weapon");
     var baseSelectors = getSelectors("base");
+    var selectedCharm = document.querySelector("#charm").value;
+    if (selectedCharm != NO_CHARM) {
+        charmName = selectedCharm + " Charm";
+    }
 
-    var wi;
-
-    for (wi = 0; wi < nWeapons; wi++) {
-        //TODO: Loop only over checked weapons, eliminate this if
-        if (!$(weaponSelectors.checkbox).get(wi).checked) {
-            continue;
-        }
-        weaponName = weaponKeys[wi];
+    $(weaponSelectors.checkbox + ":checked").each(function(index, element) {
+        weaponName = element.value;
         weaponChanged();
 
-        for (var j = 0; j < nBases; j++) {
-            if (!$(baseSelectors.checkbox).get(j).checked) continue;
-            var base = baseKeys[j];
-            baseName = base;
+        $(baseSelectors.checkbox + ":checked").each(function(index, element) {
+            var linkElement;
+            baseName = element.value;
             baseChanged();
-            //console.log(weapon + base);
 
-            var select =document.querySelector("#charm");
-            var selectedCharm = select.value;
-            if (selectedCharm != "-") {
-                charmName = selectedCharm + " Charm";
+            linkElement = getCRELinkElement();
+            if (selectedCharm == NO_CHARM) {
+                linkElement += "<span style='float: right'><button class='find_best_charm_button'>Find best charm</button></span>";
             }
-            var linkElement = getLinkElement();
-            if (selectedCharm == "-") {
-                tableHTML += "<tr><td>" + linkElement + "<span style='float: right'><button class='find_best_charm_button'>Find best charm</button></span></td>";
-            }
-            else {
-                tableHTML += "<tr><td>" + linkElement + "</td>";
-            }
-            tableHTML += buildMiceCRHtml(micePopulation);
-            tableHTML += "</tr>";
-        }
-    }
+            tableHTML += "<tr><td>" + linkElement + "</td>" + buildMiceCRHtml(micePopulation) + "</tr>" ;
+        });
+    });
 
     tableHTML += "</tbody>";
     results.innerHTML = tableHTML;
@@ -752,7 +748,7 @@ function printCombinations(micePopulation, headerHtml) {
         baseName = weaponBase.substr(indexOfSlash + 3);
         weaponChanged();
         baseChanged();
-        printCharmCombinations(popArrayLPC["-"], resultsHTML);
+        printCharmCombinations(popArrayLPC[NO_CHARM], headerHtml);
     });
 
     var resort = true;
@@ -768,12 +764,15 @@ function printCombinations(micePopulation, headerHtml) {
     };
     $("#results").trigger("updateAll", [resort, callback]);
 
+}
 
-
-    function getLinkElement() {
-        var urlString = buildCRELink();
-        return "<a href='" + urlString + "' target='_blank'>" + weaponName + " / " + baseName + "</a>";
+function getCRELinkElement() {
+    var urlString = buildCRELink();
+    var caption = weaponName + " / " + baseName;
+    if (charmName && charmName != NO_CHARM) {
+        caption += " / " + charmName;
     }
+    return "<a href='" + urlString + "' target='_blank'>" + caption + "</a>";
 }
 
 function getMouseACR(micePopulation, mouse, overallAR, eff, power) {
@@ -832,33 +831,14 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
 }
 
 function printCharmCombinations(micePopulation, tableHTML) {
-    var results =document.querySelector("#results");
+    var results = document.querySelector("#results");
     var charmSelectors = getSelectors("charm");
-    var nCharms = charmKeys.length;
-    for (var i = 0; i < nCharms; i++) {
-        if (!$(charmSelectors.checkbox).get(i).checked) continue;
 
-        charmName = charmKeys[i];
-        charmChanged();
 
-        var overallAR = getCheeseAttraction();
-        var overallCR = 0;
-        var URLString = buildCRELink();
-        var effectivenessArray = buildEffectivenessArray(micePopulation);
-        var powersArray = buildPowersArray(micePopulation);
-
-        tableHTML += "<tr><td><a href='" + URLString + "' target='_blank'>" + weaponName + " / " + baseName + " / " + charmName + "</a><span style='float: right'></span></td>";
-
-        for (var mouse in micePopulation) {
-            var catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
-            overallCR += catches;
-            catches = catches.toFixed(2);
-
-            tableHTML += "<td align='right'>" + catches + "</td>";
-
-        }
-        tableHTML += "<td>" + overallCR.toFixed(2); + "</td></tr>";
-    }
+    $(charmSelectors.checkbox + ":checked").each(function(index, element){
+        charmChanged(element.value);
+        tableHTML += "<tr><td>" + getCRELinkElement() + "</td>" + buildMiceCRHtml(micePopulation);
+    });
 
     tableHTML += "</tbody>";
     results.innerHTML = tableHTML;
