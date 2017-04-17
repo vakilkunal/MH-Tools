@@ -1,8 +1,10 @@
 "use strict";
 
-
-var popArrayLPC, resultsHTML;
 var NO_CHARM = "-";
+var loadedParams = {
+    cheese: false,
+    charm: false
+};
 
 var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n"
     + "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
@@ -129,6 +131,7 @@ function checkLoadState() {
 /**
  * This one is different in CRE/best setup.
  * TODO: Fix bookmarklet to use encode/decode component for consistency
+ * @return {string} Paramater value or "null"
  */
 function getURLParameter(name) {
     return decodeURI(
@@ -463,7 +466,12 @@ function loadCheeseDropdown() {
 
     cheeseDropdown.innerHTML = cheeseDropdownHTML;
     cheeseDropdown.selectedIndex = 0;
-    checkCheeseParam();
+
+    if (!loadedParams.cheese) {
+        checkCheeseParam();
+        loadedParams.cheese = true;
+    }
+
     cheeseChanged();
 
     function splitOption(option) {
@@ -476,10 +484,13 @@ function loadCheeseDropdown() {
     }
 
     function checkCheeseParam() {
-        var select =document.querySelector("#cheese");
+        var select = document.querySelector("#cheese");
         var cheeseParameter = getURLParameter("cheese");
-        if (cheeseParameter != "null" && cheeseLoaded < 3) {
+        if (cheeseParameter != "null") {
             select.value = cheeseParameter;
+        }
+        if (select.selectedIndex == -1) {
+            select.selectedIndex = 0;
         }
     }
 
@@ -490,17 +501,6 @@ function loadCheeseDropdown() {
         }
         return cheeseDropdownHTML;
     }
-}
-
-function populateDropdown(items, elementId) {
-    var i;
-    var dropdownHtml = "<option>-</option>";
-    for (i = 0; i < items.length; i++) {
-        if (items[i] != NO_CHARM) {
-            dropdownHtml += "<option>" + items[i] + "</option>\n";
-        }
-    }
-    document.getElementById(elementId).innerHTML = dropdownHtml;
 }
 
 function loadCharmDropdown() {
@@ -515,25 +515,44 @@ function loadCharmDropdown() {
 
     charms = Object.keys(popArrayLPC);
     charms.sort();
-    populateDropdown(charms, "charm");
-    checkCharmParameter();
+    populateDropdown(charms, "#charm");
 
-    function checkCharmParameter() {
-        var charmParameter = getURLParameter("charm");
-        var select =document.querySelector("#charm");
-        if (charmParameter != "null") {
-            select.value = charmParameter;
-            charmChanged(charmParameter);
+    if (!loadedParams.charm) {
+        checkCharmParameter();
+        loadedParams.charm = true;
+    }
+
+    function populateDropdown(items, selector) {
+        var dropdown = $(selector).html("<option>-</option>");
+        for (var i = 0; i < items.length; i++) {
+            if (items[i] != NO_CHARM) {
+                $("<option/>", {
+                    text: items[i],
+                    value: items[i]
+                }).appendTo(dropdown);
+            }
         }
     }
 
+    function checkCharmParameter() {
+        var charmParameter = getURLParameter("charm");
+        var select = document.querySelector("#charm");
+        if (charmParameter != "null") {
+            select.value = charmParameter;
+        }
+        if (select.selectedIndex == -1) {
+            select.selectedIndex = 0;
+        }
+        charmChanged();
+    }
+
     function fillPopArray() {
-        var popArrayLP, cheese;
+        var popArrayLP;
         if (!popArrayLPC) {
             popArrayLP = popArray[locationName][phaseName];
             // Search through popArrayLP for cheese matching currently armed cheese
             // TODO: Improve
-            for (cheese in popArrayLP) {
+            for (var cheese in popArrayLP) {
                 if (cheese.indexOf(cheeseName) >= 0) {
                     popArrayLPC = popArray[locationName][phaseName][cheese];
                 }
@@ -565,15 +584,7 @@ function updateLink() {
 }
 
 function weaponChanged() {
-    var weaponsArrayN = weaponsArray[weaponName] || DEFAULT_STATS;
-
-    trapType = weaponsArrayN[0];
-    weaponPower = weaponsArrayN[1];
-    weaponBonus = weaponsArrayN[2];
-    weaponAtt = weaponsArrayN[3];
-    weaponLuck = weaponsArrayN[4];
-    weaponEff = parseFreshness[weaponsArrayN[5]];
-
+    populateWeaponData();
     calculateTrapSetup();
 }
 
@@ -603,42 +614,60 @@ function cheeseChanged() {
 }
 
 function baseChanged() {
-    var charmsArrayN;
-    var basesArrayN = basesArray[baseName] || DEFAULT_STATS;
 
     //Bases with special effects when paired with particular charm
     if (specialCharm[baseName]) {
         calcSpecialCharms(charmName);
     }
     else {
-        charmsArrayN = charmsArray[charmName] || DEFAULT_STATS;
-        charmPower = parseInt(charmsArrayN[0]);
-        charmBonus = parseInt(charmsArrayN[1]);
-        charmAtt = parseInt(charmsArrayN[2]);
-        charmLuck = parseInt(charmsArrayN[3]);
-        charmEff = parseFreshness[charmsArrayN[4]];
+        populateCharmData();
     }
 
+    populateBaseData();
+    calculateTrapSetup();
+}
+
+function charmChanged(customValue) {
+    var selectedVal = $("#charm").val();
+    if (selectedVal !== NO_CHARM) {
+        selectedVal += " Charm";
+    }
+    charmChangeCommon(customValue || selectedVal);
+    calculateTrapSetup();
+}
+
+function populateCharmData() {
+    var charmsArrayN;
+    charmsArrayN = charmsArray[charmName] || DEFAULT_STATS;
+    charmPower = parseInt(charmsArrayN[0]);
+    charmBonus = parseInt(charmsArrayN[1]);
+    charmAtt = parseInt(charmsArrayN[2]);
+    charmLuck = parseInt(charmsArrayN[3]);
+    charmEff = parseFreshness[charmsArrayN[4]];
+}
+
+function populateBaseData() {
+    var basesArrayN = basesArray[baseName] || DEFAULT_STATS;
     basePower = parseInt(basesArrayN[0]);
     baseBonus = parseInt(basesArrayN[1]);
     baseAtt = parseInt(basesArrayN[2]);
     baseLuck = parseInt(basesArrayN[3]);
     baseEff = parseFreshness[basesArrayN[4]];
-
-    calculateTrapSetup();
 }
 
-function charmChanged(charmValue) {
-    charmValue = charmValue || $("#charm").val();
-    charmChangeCommon(charmValue === NO_CHARM ? charmValue : charmValue + " Charm");
-    calculateTrapSetup();
+function populateWeaponData() {
+    var weaponsArrayN = weaponsArray[weaponName] || DEFAULT_STATS;
+
+    trapType = weaponsArrayN[0];
+    weaponPower = weaponsArrayN[1];
+    weaponBonus = weaponsArrayN[2];
+    weaponAtt = weaponsArrayN[3];
+    weaponLuck = weaponsArrayN[4];
+    weaponEff = parseFreshness[weaponsArrayN[5]];
 }
-
-
-
 
 function showPop() {
-    var results =document.querySelector("#results");
+    var results = document.querySelector("#results");
     var selectedCharm = $("#charm").val();
     var population = getPopulation(selectedCharm);
 
@@ -647,76 +676,97 @@ function showPop() {
     } else {
         charmChanged();
         $("#pleaseWaitMessage").show();
-
-
         printCombinations(population, getHeader(population));
     }
 
     /**
-     * Handle cases where cheesenames bundled together
+     * Build the results table header
+     * @param {CharmMousePopulation} population
+     * @return {string}
      */
-    function checkPopArray() {
-        var i;
-        var popArrayL = popArray[locationName][phaseName];
-        var locationKeys = Object.keys(popArrayL);
-        var popArrayLLength = Object.size(popArray[locationName][phaseName]);
-        var commonCheeseIndex;
-        for (i = 0; i < popArrayLLength; i++) {
-            if (locationKeys[i].indexOf(cheeseName) >= 0 && locationKeys[i].indexOf("/") >= 0) {
-                commonCheeseIndex = locationKeys[i];
-                break;
-            }
-        }
-        return popArray[locationName][phaseName][commonCheeseIndex];
-    }
-
     function getHeader(population) {
         var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
-        var mouseName;
-        for (mouseName in population) {
+        for (var mouseName in population) {
             resultsHeader += "<th data-filter='false'>" + mouseName + "</th>";
         }
         resultsHeader += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead>";
         return resultsHeader;
     }
+}
 
-    function getPopulation(selectedCharm) {
-        popArrayLPC = popArray[locationName][phaseName][cheeseName];
-        if (!popArrayLPC) {
-            popArrayLPC = checkPopArray();
+/**
+ * Get mouse population for current location/phase/cheese and the selected charm
+ * @param selectedCharm {string}
+ * @return {CharmMousePopulation}
+ */
+function getPopulation(selectedCharm) {
+    var popArrayLPC = popArray[locationName][phaseName][cheeseName];
+    if (!popArrayLPC) {
+        popArrayLPC = checkPopArray();
+    }
+    return popArrayLPC[selectedCharm];
+
+    /**
+     * Handle cases where cheese names bundled together with '/' between
+     * @return {CheeseCharmPopulation}
+     */
+    function checkPopArray() {
+        var popArrayL = popArray[locationName][phaseName];
+        var cheeseNameKeys = Object.keys(popArrayL);
+        var popArrayLLength = Object.size(popArray[locationName][phaseName]);
+        var commonCheeseIndex;
+        for (var i = 0; i < popArrayLLength; i++) {
+            if (cheeseNameKeys[i].indexOf(cheeseName) >= 0 && cheeseNameKeys[i].indexOf("/") >= 0) {
+                commonCheeseIndex = cheeseNameKeys[i];
+                break;
+            }
         }
-        return popArrayLPC[selectedCharm];
+        return popArray[locationName][phaseName][commonCheeseIndex];
     }
 }
 
+/**
+ * Builds associative array of chosen power type's effectiveness against the mice population
+ * @param micePopulation {CharmMousePopulation}
+ * @return {{String:Number}}
+ * TODO: Instead of using this mess, use a function that can query it directly?
+ */
 function buildEffectivenessArray(micePopulation) {
-    var mouse;
     var eff = {};
-    for (mouse in micePopulation) {
+    for (var mouse in micePopulation) {
         eff[mouse] = findEff(mouse);
     }
     return eff;
 }
 
+/**
+ * Builds associative array of mouse powers from current micePopulation
+ * @param micePopulation
+ * @return {{string:Number}}
+ * TODO: Instead of using this mess, use a fucntion that can query it directly.
+ */
 function buildPowersArray(micePopulation) {
-    var mouse, power = [];
-    for (mouse in micePopulation) {
+    var power = {};
+    for (var mouse in micePopulation) {
         power[mouse] = powersArray[mouse][0];
     }
     return power;
 }
 
-function buildMiceCRHtml(micePopulation) {
-    var catches;
+/**
+ * Build mouse population <td> elements for a setup row
+ * @param micePopulation
+ * @return {string}
+ */
+function buildMiceCRCells(micePopulation) {
     var overallCR = 0;
     var overallAR = getCheeseAttraction();
     var effectivenessArray = buildEffectivenessArray(micePopulation);
     var powersArray = buildPowersArray(micePopulation);
     var html = "";
-    var mouse;
 
-    for (mouse in micePopulation) {
-        catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
+    for (var mouse in micePopulation) {
+        var catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
         overallCR += catches;
         html += "<td align='right'>" + catches.toFixed(2) + "</td>";
     }
@@ -725,46 +775,40 @@ function buildMiceCRHtml(micePopulation) {
     return html;
 }
 
+/**
+ * Prints weapon/base combinations for user input
+ * @param micePopulation
+ * @param headerHtml
+ */
 function printCombinations(micePopulation, headerHtml) {
-    var tableHTML = headerHtml + "<tbody>";
-    var results =document.querySelector("#results");
-
     var weaponSelectors = getSelectors("weapon");
     var baseSelectors = getSelectors("base");
     var selectedCharm = document.querySelector("#charm").value;
-    if (selectedCharm != NO_CHARM) {
-        charmName = selectedCharm + " Charm";
-    }
 
-    $(weaponSelectors.checkbox + ":checked").each(function(index, element) {
-        weaponName = element.value;
+    var results = $("#results").html(headerHtml);
+    var tableHTML = $("<tbody>").appendTo(results);
+
+    charmName = selectedCharm;
+
+    $(weaponSelectors.checkbox + ":checked").each(function(index, weaponElement) {
+        weaponName = weaponElement.value;
         weaponChanged();
 
-        $(baseSelectors.checkbox + ":checked").each(function(index, element) {
-            var linkElement;
-            baseName = element.value;
+        $(baseSelectors.checkbox + ":checked").each(function(index, baseElement) {
+            var rowData = {
+                weapon: weaponElement.value,
+                base: baseElement.value
+            };
+
+            baseName = baseElement.value;
             baseChanged();
 
-            linkElement = getCRELinkElement();
-            if (selectedCharm == NO_CHARM) {
-                linkElement += "<span style='float: right'><button class='find_best_charm_button'>Find best charm</button></span>";
-            }
-            tableHTML += "<tr><td>" + linkElement + "</td>" + buildMiceCRHtml(micePopulation) + "</tr>" ;
+            $("<tr>")
+                .append(getLinkCell(selectedCharm, rowData))
+                .append(buildMiceCRCells(micePopulation))
+                .appendTo(tableHTML);
         });
-    });
 
-    tableHTML += "</tbody>";
-    results.innerHTML = tableHTML;
-
-    $(".find_best_charm_button").click(function (event) {
-        var weaponBase = event.target.parentNode.previousSibling.innerHTML;
-        var indexOfSlash = weaponBase.indexOf(" / ");
-        console.log("Finding best charm...");
-        weaponName = weaponBase.slice(0, indexOfSlash);
-        baseName = weaponBase.substr(indexOfSlash + 3);
-        weaponChanged();
-        baseChanged();
-        printCharmCombinations(popArrayLPC[NO_CHARM], headerHtml);
     });
 
     handleSort();
@@ -784,8 +828,39 @@ function printCombinations(micePopulation, headerHtml) {
         $("#results").trigger("updateAll", [resort, callback]);
     }
 
+    /**
+     * Get <td> jquery element for the CRE link
+     * @param selectedCharm {string}
+     * @param eventData {{string:}} Data to pass tp the 'Find best charm' event listener
+     * @return {jQuery}
+     */
+    function getLinkCell(selectedCharm, eventData) {
+        var cell = $("<td/>").append(getCRELinkElement());
+
+        if (selectedCharm == NO_CHARM) {
+            $("<span style='float: right'><button class='best-charm'>Find best charm</button></span>")
+                .on("click", eventData, findBestCharm)
+                .appendTo(cell);
+        }
+
+        return cell;
+    }
+
+    function findBestCharm(event) {
+        console.log("Finding best charm...");
+        weaponName = event.data.weapon;
+        baseName = event.data.base;
+        weaponChanged();
+        baseChanged();
+        printCharmCombinations(getPopulation(NO_CHARM), headerHtml);
+    }
+
 }
 
+/**
+ * Creates <a> tag for the CRE link
+ * @return {string}
+ */
 function getCRELinkElement() {
     var urlString = buildCRELink();
     var caption = weaponName + " / " + baseName;
@@ -793,43 +868,66 @@ function getCRELinkElement() {
         caption += " / " + charmName;
     }
     return "<a href='" + urlString + "' target='_blank'>" + caption + "</a>";
+
+    /**
+     * Builds the actual url with parameter to the CRE page
+     * @return {string}
+     */
+    function buildCRELink() {
+        var urlParams = {
+            "location": locationName,
+            "phase": phaseName,
+            "cheese": cheeseName,
+            "charm": charmName,
+            "gs": !gsLuck,
+            "bonusLuck": bonusLuck,
+            "weapon": weaponName,
+            "base": baseName,
+            "toxic": isToxic,
+            "battery": batteryPower,
+        };
+        var urlString = buildURL("cre.html", urlParams);
+        urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
+        return urlString;
+    }
 }
 
-function getMouseACR(micePopulation, mouse, overallAR, eff, power) {
-    var attractions = parseFloat(micePopulation[mouse]) * overallAR;
+/**
+ * Gets mouse attraction and catch rate
+ * @param micePopulation {{String:Number}} Mouse population percentages for the current location
+ * @param mouse {String} Mouse name
+ * @param overallAR {Number} Setup attraction rate
+ * @param effectivenessArray {Number[]} Power type effectiveness array
+ * @param powersArray {Number[]} Mouse powers array
+ * @return {{attractions: number, catchRate: number}}
+ */
+function getMouseACR(micePopulation, mouse, overallAR, effectivenessArray, powersArray) {
+    var attractions = micePopulation[mouse] * overallAR;
 
     if (mouse.indexOf("Rook") >= 0 && charmName == "Rook Crumble Charm") {
         charmBonus += 300;
         calculateTrapSetup();
     }
-    var catchRate = calcCR(eff[mouse], trapPower, trapLuck, power[mouse]);
+
+    var catchRate = calcCR(effectivenessArray[mouse], trapPower, trapLuck, powersArray[mouse]);
 
     if (mouse.indexOf("Rook") >= 0 && charmName == "Rook Crumble Charm") {
         charmBonus -= 300;
         calculateTrapSetup();
     }
+
     return {attractions: attractions, catchRate: catchRate};
 }
 
-function buildCRELink() {
-    var urlString;
-    var urlParams = {
-        "location": locationName,
-        "phase": phaseName,
-        "cheese": cheeseName,
-        "charm": charmName,
-        "gs": !gsLuck,
-        "bonusLuck": bonusLuck,
-        "weapon": weaponName,
-        "base": baseName,
-        "toxic": isToxic,
-        "battery": batteryPower,
-    };
-    urlString = buildURL("cre.html", urlParams);
-    urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
-    return urlString;
-}
-
+/**
+ * Gets the number of catches per 100 hunts
+ * @param micePopulation
+ * @param mouse {string} Mouse name
+ * @param overallAR {Number} Setup attraction rate
+ * @param effectivenessArray {Number[]}
+ * @param powersArray {Number[]}
+ * @return {number} Mouse catches in 100 hunts
+ */
 function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray) {
     var mouseACDetails = getMouseACR(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
     var attractions = mouseACDetails.attractions;
@@ -850,24 +948,28 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
     return attractions * catchRate;
 }
 
+/**
+ * Print result of best charm. (Different charms with specific weapon, base)
+ * @param micePopulation {CharmMousePopulation}
+ * @param headerHTML {String}
+ */
 function printCharmCombinations(micePopulation, headerHTML) {
-    var results = document.querySelector("#results");
+    var tableHTML = $("<tbody>");
+    var results = $("#results")
+        .html([headerHTML, tableHTML]);
     var charmSelectors = getSelectors("charm");
-
-    var tableHTML = "";
-
 
     $(charmSelectors.checkbox + ":checked").each(function(index, element){
         charmChanged(element.value);
-        tableHTML += "<tr><td>" + getCRELinkElement() + "</td>" + buildMiceCRHtml(micePopulation);
+        tableHTML.append("<tr><td>" + getCRELinkElement() + "</td>" + buildMiceCRCells(micePopulation));
     });
 
-    tableHTML += "</tbody>";
-    results.innerHTML = tableHTML;
     handleSort();
 
     function handleSort() {
         var resort = true;
+
+        $("#results").trigger("updateAll", [resort, callback]);
 
         function callback () {
             var header = $("#overallHeader");
@@ -875,7 +977,5 @@ function printCharmCombinations(micePopulation, headerHTML) {
                 $("#overallHeader").click();
             }
         }
-
-        $("#results").trigger("updateAll", [resort, callback]);
     }
 }

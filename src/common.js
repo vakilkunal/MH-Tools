@@ -17,8 +17,29 @@ var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var balistaLevel = 0, canonLevel = 0;
 
+/**
+ * Population for specific Location-Phase-Cheese-Charm combination.
+ * @typedef {{String : Number}} CharmMousePopulation
+ *
+ * Different charm populations for Location-Phase-Cheese.
+ * @typedef {{String: CharmMousePopulation}} CheeseCharmPopulation
+ *
+ * Cheese and charm populations for Location-Phase. Maps cheeseName to populations.
+ * @typedef {{String: CheeseCharmPopulation}} PhaseCheesePopulation
+ *
+ * Populations for different phases. Maps phase name to populations.
+ * @typedef {{String: PhaseCheesePopulation}} LocationPhasePopulation
+ *
+ * Populations for different locations. Maps location to populations.
+ * @typedef {{String: LocationPhasePopulation}} AllLocationsPopulation
+ */
 
-var popArray = [];
+
+/**
+ * Population data parsed from CSV
+ * @type {AllLocationsPopulation}
+ */
+var popArray = {};
 
 var specialCharm = {
     "Champion Charm": 1,
@@ -363,7 +384,7 @@ function processBaseline(baselineText) {
  * @returns {number}
  */
 function findEff(mouseName) {
-    if (trapType == '') {
+    if (trapType === "") {
         return 0;
     } else {
         var typeIndex = typeEff[trapType];

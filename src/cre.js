@@ -945,10 +945,9 @@ function minLuck(E, M) {
  }
  }
  */
-var urlParams
-function updateLink() {
 
-    urlParams = {
+function updateLink() {
+    var urlParams = {
         "location" : locationName,
         "phase" : phaseName,
         "gs" : !gsLuck,
