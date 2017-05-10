@@ -4058,3 +4058,20 @@ var cosmicCritters = [
     "Meteorite Mystic",
     "Night Watcher"
 ];
+
+/**
+ * Maps Furoma Rift battery level to bonus power and luck
+ * Level : {Power, Luck]
+ */
+var batteryEffects = {
+    1 : [90, 0],
+    2 : [500, 1],
+    3 : [3000, 2],
+    4 : [8500, 5],
+    5 : [16000, 10],
+    6 : [30000, 12],
+    7 : [50000, 25],
+    8 : [90000, 35],
+    9 : [190000, 50],
+    10 : [300000, 100]
+};

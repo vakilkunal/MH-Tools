@@ -448,19 +448,21 @@ function saveSetupCookie() {
     }
 }
 
-function loadCheeseDropdown() {
-    var option, optionArray;
+/**
+ * Loads the cheese dropdown menu
+ */
+function loadCheeseDropdown(location, phase) {
     var cheeseDropdown = document.querySelector("#cheese");
     var cheeseDropdownHTML = "";
 
     var insertedCheeses = [];
 
-    for (option in popArray[locationName][phaseName]) {
-        if (option.indexOf("/") < 0 || option.indexOf("Combat") >= 0) { //Todo: Fix this master cheese thingy
-            cheeseDropdownHTML = addCheeseOption(insertedCheeses, option, cheeseDropdownHTML);
+    for (var cheeseOption in popArray[location][phase]) {
+        if (cheeseOption.indexOf("/") < 0 || cheeseOption.indexOf("Combat") >= 0) { //Todo: Fix this master cheese thingy
+            cheeseDropdownHTML = addCheeseOption(insertedCheeses, cheeseOption, cheeseDropdownHTML);
         }
         else {
-            splitOption(option);
+            splitCheeseOption(cheeseOption);
         }
     }
 
@@ -474,12 +476,10 @@ function loadCheeseDropdown() {
 
     cheeseChanged();
 
-    function splitOption(option) {
-        var item, j;
-        optionArray = option.split("/");
-        for (j = 0; j < Object.size(optionArray); j++) {
-            item = optionArray[j];
-            cheeseDropdownHTML = addCheeseOption(insertedCheeses, item, cheeseDropdownHTML);
+    function splitCheeseOption(option) {
+        var optionArray = option.split("/");
+        for (var j = 0; j < Object.size(optionArray); j++) {
+            cheeseDropdownHTML = addCheeseOption(insertedCheeses, optionArray[j], cheeseDropdownHTML);
         }
     }
 
@@ -503,13 +503,13 @@ function loadCheeseDropdown() {
     }
 }
 
-function loadCharmDropdown() {
+function loadCharmDropdown(location, phase, cheese) {
     var charms;
 
     /**
      * Population array for Location-Phase-Cheese
      */
-    var popArrayLPC = popArray[locationName][phaseName][cheeseName];
+    var popArrayLPC = popArray[location][phase][cheese];
 
     fillPopArray();
 
@@ -549,12 +549,12 @@ function loadCharmDropdown() {
     function fillPopArray() {
         var popArrayLP;
         if (!popArrayLPC) {
-            popArrayLP = popArray[locationName][phaseName];
+            popArrayLP = popArray[location][phase];
             // Search through popArrayLP for cheese matching currently armed cheese
             // TODO: Improve
             for (var cheese in popArrayLP) {
-                if (cheese.indexOf(cheeseName) >= 0) {
-                    popArrayLPC = popArray[locationName][phaseName][cheese];
+                if (cheese.indexOf(cheese) >= 0) {
+                    popArrayLPC = popArray[location][phase][cheese];
                 }
             }
         }
@@ -610,7 +610,7 @@ function cheeseChanged() {
     cheeseName = document.querySelector("#cheese").value;
     updateLink();
     checkToxicWidget();
-    loadCharmDropdown();
+    loadCharmDropdown(locationName, phaseName, cheeseName);
 }
 
 function baseChanged() {
@@ -681,7 +681,7 @@ function showPop() {
 
     /**
      * Build the results table header
-     * @param {CharmMousePopulation} population
+     * @param {MousePopulations} population
      * @return {string}
      */
     function getHeader(population) {
@@ -697,7 +697,7 @@ function showPop() {
 /**
  * Get mouse population for current location/phase/cheese and the selected charm
  * @param selectedCharm {string}
- * @return {CharmMousePopulation}
+ * @return {MousePopulations}
  */
 function getPopulation(selectedCharm) {
     var popArrayLPC = popArray[locationName][phaseName][cheeseName];
@@ -708,7 +708,7 @@ function getPopulation(selectedCharm) {
 
     /**
      * Handle cases where cheese names bundled together with '/' between
-     * @return {CheeseCharmPopulation}
+     * @return {CharmPopulations}
      */
     function checkPopArray() {
         var popArrayL = popArray[locationName][phaseName];
@@ -727,7 +727,7 @@ function getPopulation(selectedCharm) {
 
 /**
  * Builds associative array of chosen power type's effectiveness against the mice population
- * @param micePopulation {CharmMousePopulation}
+ * @param micePopulation {MousePopulations}
  * @return {{String:Number}}
  * TODO: Instead of using this mess, use a function that can query it directly?
  */
@@ -950,7 +950,7 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
 
 /**
  * Print result of best charm. (Different charms with specific weapon, base)
- * @param micePopulation {CharmMousePopulation}
+ * @param micePopulation {MousePopulations}
  * @param headerHTML {String}
  */
 function printCharmCombinations(micePopulation, headerHTML) {

@@ -15,29 +15,33 @@ var trapPower = 0, trapLuck = 0, trapType = "", trapAtt = 0, trapEff = 0;
 var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = '', weaponName = '', phaseName = '';
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
-var balistaLevel = 0, canonLevel = 0;
+
+var fortRox = {
+    balistaLevel : 0,
+    canonLevel : 0
+};
 
 /**
- * Population for specific Location-Phase-Cheese-Charm combination.
- * @typedef {{String : Number}} CharmMousePopulation
+ * Mice attraction rates for specific Location-Phase-Cheese-Charm combination.
+ * @typedef {{String : Number}} MousePopulations
  *
- * Different charm populations for Location-Phase-Cheese.
- * @typedef {{String: CharmMousePopulation}} CheeseCharmPopulation
+ * Charm populations for Location-Phase-Cheese.
+ * @typedef {{String: MousePopulations}} CharmPopulations
  *
- * Cheese and charm populations for Location-Phase. Maps cheeseName to populations.
- * @typedef {{String: CheeseCharmPopulation}} PhaseCheesePopulation
+ * Cheese for Location-Phase.
+ * @typedef {{String: CharmPopulations}} CheesePopulations
  *
- * Populations for different phases. Maps phase name to populations.
- * @typedef {{String: PhaseCheesePopulation}} LocationPhasePopulation
+ * Phases for a Location.
+ * @typedef {{String: CheesePopulations}} PhasePopulations
  *
- * Populations for different locations. Maps location to populations.
- * @typedef {{String: LocationPhasePopulation}} AllLocationsPopulation
+ * Populations for different locations.
+ * @typedef {{String: PhasePopulations}} LocationPopulations
  */
 
 
 /**
  * Population data parsed from CSV
- * @type {AllLocationsPopulation}
+ * @type {LocationPopulations}
  */
 var popArray = {};
 
@@ -52,6 +56,8 @@ var specialCharm = {
     "Soiled Base": 1,
     "Spellbook Base": 1
 };
+
+
 
 Object.size = function (obj) {
     return obj.length || Object.keys(obj).length;
@@ -109,10 +115,16 @@ function calcSpecialCharms(charmName) {
         }
     }
 
-    if (user == CRE_USER)
+    if (user == CRE_USER) {
         calculateTrapSetup();
+    }
 }
 
+/**
+ * Get a specific parameter from the URL
+ * @param name
+ * @return {string}
+ */
 function getURLParameter(name) {
     //Use component here to ensure correct decoding
     return decodeURIComponent(
@@ -133,18 +145,24 @@ function buildURL(location, urlParams) {
     for (var key in urlParams) {
         var urlParam = urlParams[key];
         if (urlParam && urlParam != "-") {
-            var value = encodeURIComponent(urlParam);
-            url += key + "=" + value + "&";
+            url += key + "=" + encodeURIComponent(urlParam) + "&";
         }
     }
     return url;
 }
 
-function getRiftCount() {
+/**
+ * Gets the number of rift items
+ * @param weapon {String} Weapon Name
+ * @param base {String} Base Name
+ * @param charm [String} Charm Name
+ * @return {number}
+ */
+function getRiftCount(weapon, base, charm) {
     var riftCount = 0;
-    if (weaponName in riftWeapons) riftCount++;
-    if (baseName in riftBases) riftCount++;
-    if (charmName in riftCharms) riftCount++;
+    if (weapon in riftWeapons) riftCount++;
+    if (base in riftBases) riftCount++;
+    if (charm in riftCharms) riftCount++;
     return riftCount;
 }
 
@@ -240,7 +258,7 @@ function calculateTrapSetup(skipDisp) {
                 specialLuck += 15;
             }
         }
-        var riftCount = getRiftCount();
+        var riftCount = getRiftCount(weaponName, baseName, charmName);
 
         if (riftCount == 2) {
             specialBonus += 10;
@@ -252,46 +270,10 @@ function calculateTrapSetup(skipDisp) {
         /*
          * Battery Levels
          */
-        if (typeof batteryPower == 'undefined') {
-        }
-        else if (batteryPower == 1) {
-            specialPower += 90;
-        }
-        else if (batteryPower == 2) {
-            specialPower += 500;
-            specialLuck += 1;
-        }
-        else if (batteryPower == 3) {
-            specialPower += 3000;
-            specialLuck += 2;
-        }
-        else if (batteryPower == 4) {
-            specialPower += 8500;
-            specialLuck += 5;
-        }
-        else if (batteryPower == 5) {
-            specialPower += 16000;
-            specialLuck += 10;
-        }
-        else if (batteryPower == 6) {
-            specialPower += 30000;
-            specialLuck += 12;
-        }
-        else if (batteryPower == 7) {
-            specialPower += 50000;
-            specialLuck += 25;
-        }
-        else if (batteryPower == 8) {
-            specialPower += 90000;
-            specialLuck += 35;
-        }
-        else if (batteryPower == 9) {
-            specialPower += 190000;
-            specialLuck += 50;
-        }
-        else if (batteryPower == 10) {
-            specialPower += 300000;
-            specialLuck += 100;
+        if (typeof batteryPower != "undefined") {
+            var batteryExtras = batteryEffects[batteryPower];
+            specialPower += batteryExtras[0];
+            specialLuck += batteryExtras[1];
         }
 
         if (charmName == "Forgotten Charm") {
@@ -336,14 +318,14 @@ function calculateTrapSetup(skipDisp) {
 /**
  * Catch Rate calculation
  * Source: https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/
- * @param E Effectiveness
- * @param P Trap Power
- * @param L Trap Luck
- * @param M Mouse Power
+ * @param eff Effectiveness
+ * @param tp Trap Power
+ * @param tl Trap Luck
+ * @param mp Mouse Power
  * @returns {number} Catch Rate Estimate
  */
-function calcCR(E, P, L, M) {
-    return Math.min((E * P + (3 - Math.min(E, 2)) * Math.pow((Math.min(E, 2) * L), 2)) / (E * P + M), 1);
+function calcCR(eff, tp, tl, mp) {
+    return Math.min((eff * tp + (3 - Math.min(eff, 2)) * Math.pow((Math.min(eff, 2) * tl), 2)) / (eff * tp + mp), 1);
 }
 
 function batteryChanged() {
@@ -443,7 +425,7 @@ function toxicChanged() {
 
 function populateSublocationDropdown(locationName) {
     var sublDropdown = document.getElementById("phase");
-    var sublDropdownHTML = '';
+    var sublDropdownHTML = "";
 
     var sublocations = Object.keys(popArray[locationName] || []);
     for (var key in sublocations) {
@@ -580,7 +562,7 @@ function phaseChanged() {
         calculateTrapSetup();
     }
 
-    loadCheeseDropdown();
+    loadCheeseDropdown(locationName, phaseName);
     updateLink();
 }
 
