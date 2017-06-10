@@ -10,9 +10,9 @@ var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = "", batteryPower = 0, lanternStatus = '';
+var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = "", batteryPower = 0, lanternStatus = "";
 var trapPower = 0, trapLuck = 0, trapType = "", trapAtt = 0, trapEff = 0;
-var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = '', weaponName = '', phaseName = '';
+var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = "", weaponName = "", phaseName = "";
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var riftStalkerCodex = false;
@@ -200,13 +200,18 @@ function calculateTrapSetup(skipDisp) {
                 specialPower += 1500;
                 specialLuck += 2;
             }
-        } else if ((phaseName.indexOf("Icewing's Lair") >= 0 || phaseName.indexOf("Hidden Depths") >= 0 || phaseName.indexOf("The Deep Lair") >= 0) && baseName == "Deep Freeze Base") {
+        } else if ((phaseName.indexOf("Icewing's Lair") >= 0 || phaseName.indexOf("Hidden Depths") >= 0 || phaseName.indexOf("The Deep Lair") >= 0)
+            && baseName === "Deep Freeze Base") {
             specialPower += 665;
             specialLuck += 9;
         } else if (locationName === "Gnawnian Express Station") {
-            if (weaponName === "Bandit Deflector" && phaseName.indexOf("Raider River") >= 0) specialPower += 1500;
-            else if (weaponName === "Engine Doubler" && phaseName.indexOf("Daredevil Canyon") >= 0) specialPower += 1500;
-            else if (weaponName === "Supply Grabber" && phaseName.indexOf("Supply Depot") >= 0) specialPower += 1500;
+            if (weaponName === "Bandit Deflector" && phaseName.indexOf("Raider River") >= 0) {
+                specialPower += 1500;
+            } else if (weaponName === "Engine Doubler" && phaseName.indexOf("Daredevil Canyon") >= 0) {
+                specialPower += 1500;
+            } else if (weaponName === "Supply Grabber" && phaseName.indexOf("Supply Depot") >= 0) {
+                specialPower += 1500;
+            }
         } else if (isTribalArea(locationName) || locationName === "Cape Clawed") {
             if (baseName === "Tiki Base") {
                 specialLuck += 6;
@@ -260,7 +265,7 @@ function calculateTrapSetup(skipDisp) {
         var totalPower = weaponPower + basePower + charmPower + specialPower;
         var setupPowerBonus = weaponBonus + baseBonus + charmBonus;
         var totalBonus = 1 + (setupPowerBonus + specialBonus + cheeseBonus + braceBonus) / 100;
-        var totalPourBonus = 1 + (pourBonus / 100 + pourBonus / 100 * setupPowerBonus/100);
+        var totalPourBonus = 1 + pourBonus / 100 * (1 + setupPowerBonus/100);
 
         return Math.round(totalPower * totalBonus * totalPourBonus * getAmpBonus());
     }
@@ -318,6 +323,7 @@ function calculateTrapSetup(skipDisp) {
         locationSpecificEffects();
 
         if (trapType === "Physical" && baseName === "Physical Brace Base") {
+            //noinspection ReuseOfLocalVariableJS
             braceBonus = 25;
         } else if ((baseName === "Polluted Base" || baseName === "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
             if (charmName === "Polluted Charm") {
@@ -340,19 +346,28 @@ function calculateTrapSetup(skipDisp) {
 
         trapPower = getTotalTrapPower();
 
+        //noinspection OverlyComplexArithmeticExpressionJS
         var totalLuck = weaponLuck + baseLuck + gsLuck + charmLuck + bonusLuck + pourLuck + specialLuck;
         trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
         trapAtt = weaponAtt + baseAtt + charmAtt;
-        if (trapAtt > 100) trapAtt = 100;
+        if (trapAtt > 100) {
+            trapAtt = 100;
+        }
         trapEff = weaponEff + baseEff + charmEff;
-        if (trapEff > 6) trapEff = 6;
-        else if (trapEff < -6) trapEff = -6;
+        if (trapEff > 6) {
+            trapEff = 6;
+        }
+        else if (trapEff < -6) {
+            trapEff = -6;
+        }
 
-        if (user == CRE_USER && !skipDisp) {
+        if (user === CRE_USER && !skipDisp) {
             showPop(2);
             showTrapSetup();
         }
-    } else showTrapSetup(0);
+    } else {
+        showTrapSetup(0);
+    }
 }
 
 /**
@@ -365,6 +380,7 @@ function calculateTrapSetup(skipDisp) {
  * @returns {number} Catch Rate Estimate
  */
 function calcCR(eff, tp, tl, mp) {
+    //noinspection OverlyComplexArithmeticExpressionJS
     return Math.min((eff * tp + (3 - Math.min(eff, 2)) * Math.pow((Math.min(eff, 2) * tl), 2)) / (eff * tp + mp), 1);
 }
 
@@ -382,8 +398,9 @@ function batteryChanged() {
 
     updateLink();
 
-    if (user == CRE_USER)
+    if (user === CRE_USER) {
         calculateTrapSetup();
+    }
 }
 
 var baselineArray = [];
@@ -457,25 +474,7 @@ function toxicChanged() {
     calculateTrapSetup();
 }
 
-function populateSublocationDropdown(locationName) {
-    var sublDropdown = document.getElementById("phase");
-    var sublDropdownHTML = "";
 
-    var sublocations = Object.keys(popArray[locationName] || []);
-    for (var key in sublocations) {
-        sublDropdownHTML += "<option>" + sublocations[key] + "</option>\n";
-    }
-
-    sublDropdown.innerHTML = sublDropdownHTML;
-    phaseName = sublocations[0];
-    sublDropdown.selectedIndex = 0;
-
-    var phaseParameter = getURLParameter("phase");
-    if (phaseParameter && phaseParameter !== "null") {
-        var select = document.getElementById("phase");
-        select.value = phaseParameter;
-    }
-}
 
 function charmChangeCommon(newCharmName) {
     if (newCharmName) {
@@ -530,24 +529,44 @@ function populateBaseData(armedBase) {
 }
 
 /**
+ * Loads a dropdown menu for weapons, bases or charms
+ * @param category The items to load. The same as the URL parameter and the item ID
+ * @param array The item names
+ * @param callback The callback function
+ * @param initialHtml Optional. Initial html content in the select
+ */
+function loadDropdown(category, array, callback, initialHtml) {
+
+    var inputElement = document.getElementById(category);
+    var dropdownHtml =  initialHtml;
+    for (var key in array) {
+        dropdownHtml += "<option>" + array[key] + "</option>\n";
+    }
+
+    inputElement.innerHTML = dropdownHtml;
+
+    inputElement.value = getURLParameter(category);
+    if (inputElement.selectedIndex === -1) {
+        inputElement.selectedIndex = 0;
+    }
+    callback();
+
+}
+
+/**
  * Load the location drop down list from the population data and select correct location from URL apramters
  */
 function loadLocationDropdown() {
-    var locationDropdown = document.getElementById("location");
-    var locationDropdownHTML = "<option></option>";
+    var array = Object.keys(popArray || []);
+    array.sort();
 
-    var locations = Object.keys(popArray || []);
-    /* Safety, JS does not define iteration order */
-    locations.sort();
+    loadDropdown("location", array, locationChanged, "<option></option>")
+}
 
-    for (var key in locations) {
-        locationDropdownHTML += "<option>" + locations[key] + "</option>\n";
-    }
-
-    locationDropdown.innerHTML = locationDropdownHTML;
-    var urlParameter = getURLParameter("location");
-    locationDropdown.value = urlParameter;
-    locationChanged();
+function populateSublocationDropdown(locationName) {
+    var category = "phase";
+    var array = Object.keys(popArray[locationName] || []);
+    loadDropdown(category, array, phaseChanged);
 }
 
 function showTrapSetup(type) {
@@ -597,9 +616,11 @@ function getIcebergBase() {
         baseChanged();
     }
 }
+
 function phaseChanged() {
-    if (phaseName === "")
+    if (phaseName === "") {
         phaseName = "-";
+    }
 
     if (phaseName === "-") {
         $("#phaseRow").hide();
@@ -629,7 +650,7 @@ function phaseChanged() {
 }
 
 function bonusLuckChanged() {
-    var luckInput = document.getElementById("bonusLuck").value;
+    var luckInput = parseInt(document.getElementById("bonusLuck").value);
 
     if (luckInput >= 0) {
         bonusLuck = luckInput;
@@ -673,3 +694,93 @@ function showHideWidgets(custom) {
     }
     checkToxicWidget(custom);
 }
+
+/**
+ * Splits a CSV row into an object with labels
+ * @param csvRow []
+ * @param splitCheese Boolean Indicates whether the cheese string should be split
+ * @return {{location: string, phase: string, cheese: [string], charm: *, attraction: *, mouse: *, sampleSize: *}}
+ */
+function parseCsvRow(csvRow, splitCheese) {
+    var cheese = csvRow[2];
+
+    var cheeseArr = [cheese];
+    if (splitCheese) {
+        cheeseArr = cheese.split("/");
+    }
+
+    return {
+        location: csvRow[0],
+        phase: csvRow[1],
+        cheese: cheeseArr,
+        charm: csvRow[3],
+        attraction: csvRow[4],
+        mouse: csvRow[5],
+        sampleSize: csvRow[6]
+    };
+}
+
+/**
+ * Proocess the population data ajax response
+ * @param popText population dta inCSV format
+ */
+function processPop(popText) {
+    var creUser = (user === CRE_USER);
+
+    var popCSV = CSVToArray(popText);
+    var popCSVLength = popCSV.length;
+    popArray = {};
+
+    for (var i = 1; i < popCSVLength; i++) {
+        processPopItem(i, creUser);
+    }
+
+    popLoaded = 1;
+    checkLoadState();
+
+    function processPopItem(index, creUser) {
+        var item = parseCsvRow(popCSV[index], creUser);
+
+        if (popArray[item.location] === undefined) {
+            popArray[item.location] = {};
+        }
+        if (popArray[item.location][item.phase] === undefined) {
+            popArray[item.location][item.phase] = {};
+        }
+        for (var cheeseIndex = 0; cheeseIndex < item.cheese.length; cheeseIndex++) {
+            var cheese = item.cheese[cheeseIndex];
+
+            if (popArray[item.location][item.phase][cheese] === undefined) {
+                popArray[item.location][item.phase][cheese] = {};
+            }
+            if (popArray[item.location][item.phase][cheese][item.charm] === undefined) {
+                popArray[item.location][item.phase][cheese][item.charm] = {};
+            }
+            popArray[item.location][item.phase][cheese][item.charm][item.mouse] = parseFloat(item.attraction);
+
+            if (creUser && item.sampleSize) {
+                popArray[item.location][item.phase][cheese][item.charm]["SampleSize"] = parseInt(item.sampleSize);
+            }
+        }
+    }
+}
+
+/**
+ * Start population and baseline loading
+ */
+function startPopulationLoad() {
+    ajaxLoad(POPULATIONS_URL, processPop);
+    ajaxLoad(BASELINES_URL, processBaseline);
+
+    function ajaxLoad(url, callback) {
+        var req = new XMLHttpRequest();
+        req.open("get", url, true);
+        req.onreadystatechange = function () {
+            if (req.readyState === 4) {
+                callback(req.responseText);
+            }
+        };
+        req.send();
+    }
+}
+

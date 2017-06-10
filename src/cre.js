@@ -5,36 +5,8 @@
  */
 var cheeseCost = 0, sampleSize = 0;
 
-// Special charms
-
-// Turning CSV into usable array with the format location->phase->cheese->charm->mouse->attraction rate
-var popCSV = [];
-var pop = new XMLHttpRequest();
-var baseline = new XMLHttpRequest();
-
-
-window.onload = function () {
-    user = CRE_USER;
-
-    $("#instructions").click(function () {
-        var instructionString = "Drag the blue 'CRE' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";
-        instructionString += "Google Chrome:\n- Bookmark a random page and name it 'CRE'";
-        instructionString += "\n- Copy the bookmarklet code by right-clicking the 'CRE' link and selecting 'Copy link address...'";
-        instructionString += "\n- Right click the newly created bookmark and select 'Edit...'";
-        instructionString += "\n- Paste into the 'URL' field\n\n";
-        instructionString += "Firefox:\n- Right click the 'CRE' link and select 'Bookmark This Link'\n\n";
-        instructionString += "Internet Explorer:\n- Right click the 'CRE' link and select 'Add to favorites...'\n\n";
-        instructionString += "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
-        alert(instructionString);
-    });
-
-    if (creBookmarkletString != localStorage.getItem('creBookmarklet')) {
-        alert("Bookmarklet has changed! Please update accordingly.");
-        localStorage.setItem('creBookmarklet', creBookmarkletString);
-    }
-    $("#bookmarklet").attr("href", creBookmarkletString);
-
-    //Initialize tablesorter, bind to table
+function initTableSorter() {
+//Initialize tablesorter, bind to table
     $("#results").tablesorter({
         // sortForce: [[noMice,1]],
         sortReset: true,
@@ -75,27 +47,39 @@ window.onload = function () {
             filter_selectSourceSeparator: '|',
         }
     });
+}
 
+function loadCharmDropdown() {
+    loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
+}
 
-    pop.open("get", POPULATIONS_URL, true);
-    pop.onreadystatechange = function () {
-        if (pop.readyState === 4) {
-            processPop();
-        }
-    };
-    pop.send();
+window.onload = function () {
+    user = CRE_USER;
 
+    $("#instructions").click(function () {
+        var instructionString = "Drag the blue 'CRE' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n";
+        instructionString += "Google Chrome:\n- Bookmark a random page and name it 'CRE'";
+        instructionString += "\n- Copy the bookmarklet code by right-clicking the 'CRE' link and selecting 'Copy link address...'";
+        instructionString += "\n- Right click the newly created bookmark and select 'Edit...'";
+        instructionString += "\n- Paste into the 'URL' field\n\n";
+        instructionString += "Firefox:\n- Right click the 'CRE' link and select 'Bookmark This Link'\n\n";
+        instructionString += "Internet Explorer:\n- Right click the 'CRE' link and select 'Add to favorites...'\n\n";
+        instructionString += "Mobile/Other Browsers:\n- Same concept as above. Processes may vary";
+        alert(instructionString);
+    });
 
-    baseline.open("get", BASELINES_URL, true);
-    baseline.onreadystatechange = function () {
-        if (baseline.readyState === 4) {
-            processBaseline(baseline.responseText);
-        }
-    };
-    baseline.send();
+    if (creBookmarkletString !== localStorage.getItem('creBookmarklet')) {
+        alert("Bookmarklet has changed! Please update accordingly.");
+        localStorage.setItem('creBookmarklet', creBookmarkletString);
+    }
 
-    loadWeaponDropdown();
-    loadBaseDropdown();
+    $("#bookmarklet").attr("href", creBookmarkletString);
+    initTableSorter();
+
+    startPopulationLoad();
+
+    loadDropdown("weapon", weaponKeys, weaponChanged, "<option></option>");
+    loadDropdown("base", baseKeys, baseChanged, "<option></option>");
     loadCharmDropdown();
 
     gsParamCheck();
@@ -141,7 +125,7 @@ window.onload = function () {
     document.getElementById("location").onchange = locationChanged;
     document.getElementById("phase").onchange = phaseChanged;
     document.getElementById("cheese").onchange = cheeseChanged;
-    document.getElementById("lanternOil").onchange = oilChanged;
+    document.getElementById("oil").onchange = oilChanged;
     document.getElementById("toxic").onchange = toxicChanged;
     document.getElementById("battery").onchange = batteryChanged;
     document.getElementById("weapon").onchange = weaponChanged;
@@ -153,7 +137,6 @@ window.onload = function () {
 
     document.getElementById("cheeseCost").onchange = function () {
         cheeseCost = parseInt(document.getElementById("cheeseCost").value);
-        //showPop();
         showPop(2);
     };
 
@@ -194,73 +177,14 @@ function updateCustomSetup() {
     showPop(2);
 }
 
-function loadWeaponDropdown() {
-    var weaponDropdown = document.getElementById("weapon");
-    var weaponDropdownHTML = '<option></option>';
-
-    for (var key in weaponKeys) {
-        weaponDropdownHTML += "<option>" + weaponKeys[key] + "</option>\n";
-    }
-
-    weaponDropdown.innerHTML = weaponDropdownHTML;
-
-    var weaponParameter = getURLParameter("weapon");
-    if (weaponParameter != "null") {
-        var select = document.getElementById("weapon");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == weaponParameter) {
-                child.selected = true;
-                weaponChanged();
-                break;
-            }
-        }
+function updateInputFromParameter(category, callback) {
+    var oilParameter = getURLParameter(category);
+    var input = document.getElementById(category);
+    if (oilParameter && oilParameter !== "null") {
+        input.value = oilParameter;
+        callback();
     }
 }
-
-function loadBaseDropdown() {
-    var baseDropdown = document.getElementById("base");
-    var baseDropdownHTML = '<option></option>';
-
-    for (var key in baseKeys) {
-        baseDropdownHTML += "<option>" + baseKeys[key] + "</option>\n";
-    }
-
-    baseDropdown.innerHTML = baseDropdownHTML;
-
-    var baseParameter = getURLParameter("base");
-    if (baseParameter != "null") {
-        var select = document.getElementById("base");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == baseParameter) {
-                child.selected = true;
-                baseChanged();
-                break;
-            }
-        }
-    }
-}
-
-function loadCharmDropdown() {
-    var charmDropdown = document.getElementById("charm");
-    var charmDropdownHTML = '<option>No Charm</option>';
-
-    for (var key in charmKeys) {
-        charmDropdownHTML += "<option>" + charmKeys[key] + "</option>\n";
-    }
-
-    charmDropdown.innerHTML = charmDropdownHTML;
-
-    var charmParameter = getURLParameter("charm");
-    if (charmParameter != "null") {
-        var select = document.getElementById("charm");
-        select.value = charmParameter;
-        charmChanged();
-    }
-}
-
-
 function checkLoadState() {
     var loadPercentage = (popLoaded + baselineLoaded) / 2 * 100;
     var status = document.getElementById("status");
@@ -269,30 +193,22 @@ function checkLoadState() {
     if (loadPercentage === 100) {
         loadLocationDropdown();
         loadTourneyDropdown();
-        //updateLink();
 
-        var oilParameter = getURLParameter("oil");
-        if (oilParameter != "null") {
-            var select = document.getElementById("lanternOil");
-            for (var i = 0; i < select.children.length; i++) {
-                var child = select.children[i];
-                if (child.innerHTML == oilParameter) {
-                    child.selected = true;
-                    oilChanged();
-                    break;
-                }
-            }
-        }
-
+        updateInputFromParameter("oil", oilChanged);
         checkToxicParam();
 
-        var batteryParameter = getURLParameter("battery");
-        if (batteryParameter != "null") {
-            var select = document.getElementById("battery");
-            select.value = parseInt(batteryParameter);
-            batteryChanged();
-        }
+        updateInputFromParameter("battery", batteryChanged);
 
+        getSliderValue();
+        calculateBonusLuck();
+
+        status.innerHTML = "<td>All set!</td>";
+        setTimeout(function () {
+            status.innerHTML = '<td><br></td>'
+        }, 3000);
+    }
+
+    function getSliderValue() {
         var amplifierParameter = parseInt(getURLParameter("amplifier"));
         if (amplifierParameter >= 0 && amplifierParameter <= 175) {
             $("#ampSlider").slider('option', 'value', amplifierParameter);
@@ -303,92 +219,46 @@ function checkLoadState() {
             ztAmp = amplifierParameter;
             calculateTrapSetup();
         }
+    }
 
-
+    function calculateBonusLuck() {
         var totalLuck = getURLParameter("totalluck");
-        if (totalLuck)
+        if (totalLuck) {
             calculateTrapSetup();
+        }
         var bonusLuckParameter = parseInt(getURLParameter("bonusLuck")) || (parseInt(totalLuck) - trapLuck);
         if (bonusLuckParameter >= 0) {
             document.getElementById("bonusLuck").value = bonusLuckParameter;
             bonusLuckChanged();
         }
-
-        status.innerHTML = "<td>All set!</td>";
-        setTimeout(function () {
-            status.innerHTML = '<td><br></td>'
-        }, 3000);
     }
 }
+
 /**
- * This one is different in CRE/best setup.
+ * Set sample size and description of it
  */
-function processPop() {
-    var popText = pop.responseText;
+function formatSampleSize(sampleSizeParam) {
+    var str = "";
+    var colored = "";
+    var sizeDescriptor = "";
 
-    popCSV = CSVToArray(popText);
-
-    var popCSVLength = Object.size(popCSV);
-
-    //Creating popArray
-    for (var i = 1; i < popCSVLength; i++) {
-        if (popArray[popCSV[i][0]] == undefined) popArray[popCSV[i][0]] = [];
-        if (popArray[popCSV[i][0]][popCSV[i][1]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]] = [];
-
-        //Check for fuse constituents
-        if (popCSV[i][2].indexOf("/") >= 0) {
-            var sliced = popCSV[i][2].split("/");
-            for (var j = 0; j < sliced.length; j++) {
-                if (popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]] = [];
-
-                if (popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]] = [];
-
-                //Assign AR to a specific location/phase/cheese/charm/mouse
-                popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
-
-                //Assign sample size value to a specific location/phase/cheese/charm when available
-                if (popCSV[i][6].length > 0) {
-                    popArray[popCSV[i][0]][popCSV[i][1]][sliced[j]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
-                }
-            }
-        }
-        else {
-            if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]] = [];
-            if (popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] == undefined) popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]] = [];
-            popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]][popCSV[i][5]] = parseFloat(popCSV[i][4]);
-
-            //Assign sample size value to a specific location/phase/cheese/charm when available
-            if (popCSV[i][6].length > 0) {
-                popArray[popCSV[i][0]][popCSV[i][1]][popCSV[i][2]][popCSV[i][3]]["SampleSize"] = parseInt(popCSV[i][6]);
-            }
-        }
-    }
-
-    popLoaded = 1;
-    checkLoadState();
-}
-
-function formatSampleSize() {
-//Set sample size and description of it
-    var str = '';
-    var colored = '';
-    var sizeDescriptor = '';
-    if (sampleSize == 0 || sampleSize == undefined) {
+    sampleSizeParam = sampleSizeParam || sampleSize;
+    if (!sampleSizeParam) {
         sizeDescriptor = "N/A";
     }
-    else if (sampleSize > 27000) {
+    else if (sampleSizeParam > 27000) {
         str = "excellent";
         colored = str.fontcolor("orange");
     }
-    else if (sampleSize > 10000) {
+    else if (sampleSizeParam > 10000) {
         str = "good";
         colored = str.fontcolor("green");
     }
-    else if (sampleSize > 2400) {
+    else if (sampleSizeParam > 2400) {
         str = "average";
         colored = str.fontcolor("blue");
     }
-    else if (sampleSize > 500) {
+    else if (sampleSizeParam > 500) {
         str = "poor";
         colored = str.fontcolor("red");
     }
@@ -397,26 +267,37 @@ function formatSampleSize() {
         colored = str.fontcolor("purple");
     }
 
-    if (sampleSize != 0 && sampleSize != undefined) {
-        sizeDescriptor = sampleSize + " (" + colored + ")";
+    if (sampleSizeParam) {
+        sizeDescriptor = sampleSizeParam + " (" + colored + ")";
     }
+
     var ss = document.getElementById("sampleSize");
     ss.innerHTML = "<strong>Sample Size:</strong> " + sizeDescriptor;
 }
 
+function checkPhase() {
+    if (!phaseName) {
+        phaseName = "-";
+    }
+}
+
 function showPop(type) { //type = 2 means don't reset charms
+
     var results = document.getElementById("results");
     var commonCheeseIndex;
 
-    if (type != 0 && type != 2) charmName = "No Charm";
+    if (type !== 0 && type !== 2) {
+        charmName = "No Charm";
+    }
 
-    if (locationName === '' || phaseName === '' || type === 0) {
+    if (!locationName || !cheeseName || type === 0) {
         results.innerHTML = '';
     } else {
+        checkPhase();
         var popArrayLPC = popArray[locationName][phaseName][cheeseName];
 
         //For common cheeses e.g. gouda, brie etc.
-        if (popArrayLPC == undefined && cheeseName != "Cheese") {
+        if (popArrayLPC === undefined && cheeseName !== "Cheese") {
             var popArrayL = popArray[locationName][phaseName];
             var locationKeys = Object.keys(popArrayL || []);
             var popArrayLLength = locationKeys.length;
@@ -440,7 +321,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 specialCharmsList.push(specialCharms[key]);
             }
 
-            if (type != 2) highlightSpecialCharms(specialCharmsList);
+            if (type !== 2) highlightSpecialCharms(specialCharmsList);
         }
         /*
          * Allow pop with special charm(s) but without a "no charm" pop
@@ -449,26 +330,24 @@ function showPop(type) { //type = 2 means don't reset charms
             sampleSize = 0;
             specialCharmsList = [];
             for (var key in specialCharms) {
-
                 specialCharmsList.push(specialCharms[key]);
             }
 
-            if (type != 2) highlightSpecialCharms(specialCharmsList);
+            if (type !== 2) highlightSpecialCharms(specialCharmsList);
         }
         else {
-            if (type != 2) {
-                console.log("Resetting charms");
-                resetCharms();
+            if (type !== 2) {
+
+                loadCharmDropdown()
             }
         }
 
         var popCharmName = /^(.*?)(?:\s+Charm)?$/i.exec(charmName)[1];
         if (popArrayLPC && popArrayLPC[popCharmName]) {
-            console.log("It's a special charm!");
             var popArrayLC = popArrayLPC[popCharmName];
         }
         else {
-            if (popArrayLPC != undefined) {
+            if (popArrayLPC !== undefined) {
                 popArrayLC = popArrayLPC['-'];
             }
         }
@@ -511,13 +390,11 @@ function showPop(type) { //type = 2 means don't reset charms
             if (mouseName != "SampleSize") {
                 var eff = findEff(mouseName);
 
-                // mousename test
-                // if (powersArray[mouseName] == undefined) console.log("mouseName: " + mouseName);
-                var mousePower = powersArray[mouseName][0];
+                 var mousePower = powersArray[mouseName][0];
                 var catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
 
 
-                if (locationName == "Zugzwang's Tower") {
+                if (locationName === "Zugzwang's Tower") {
                     if (contains(mouseName,"Rook") && charmName == "Rook Crumble Charm") {
                         charmBonus += 300;
                         calculateTrapSetup(true); // not "cre" or else infinite loop
@@ -525,15 +402,15 @@ function showPop(type) { //type = 2 means don't reset charms
                         charmBonus -= 300;
                         calculateTrapSetup(true);
                     }
-                    else if (mouseName == "Mystic Pawn") {
-                        if (weaponName == "Mystic Pawn Pincher") {
+                    else if (mouseName === "Mystic Pawn") {
+                        if (weaponName === "Mystic Pawn Pincher") {
                             weaponPower += 10920;
                             calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower -= 10920;
                             calculateTrapSetup(true);
                         }
-                        else if (weaponName == "Technic Pawn Pincher") {
+                        else if (weaponName === "Technic Pawn Pincher") {
                             weaponPower -= 59.99;
                             weaponBonus -= 5;
                             calculateTrapSetup(true);
@@ -543,8 +420,8 @@ function showPop(type) { //type = 2 means don't reset charms
                             calculateTrapSetup(true);
                         }
                     }
-                    else if (mouseName == "Technic Pawn") {
-                        if (weaponName == "Mystic Pawn Pincher") {
+                    else if (mouseName === "Technic Pawn") {
+                        if (weaponName === "Mystic Pawn Pincher") {
                             weaponPower -= 59.99;
                             weaponBonus -= 5;
                             calculateTrapSetup(true);
@@ -553,7 +430,7 @@ function showPop(type) { //type = 2 means don't reset charms
                             weaponBonus += 5;
                             calculateTrapSetup(true);
                         }
-                        else if (weaponName == "Technic Pawn Pincher") {
+                        else if (weaponName === "Technic Pawn Pincher") {
                             weaponPower += 10920;
                             calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -563,14 +440,14 @@ function showPop(type) { //type = 2 means don't reset charms
                     }
 
                     if (contains(mouseName,"Mystic")) {
-                        if (weaponName == "Obvious Ambush Trap") {
+                        if (weaponName === "Obvious Ambush Trap") {
                             weaponPower -= 2400;
                             calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower += 2400;
                             calculateTrapSetup(true);
                         }
-                        else if (weaponName == "Blackstone Pass Trap") {
+                        else if (weaponName === "Blackstone Pass Trap") {
                             weaponPower += 1800;
                             calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -579,14 +456,14 @@ function showPop(type) { //type = 2 means don't reset charms
                         }
                     }
                     else if (contains(mouseName,"Technic")) {
-                        if (weaponName == "Obvious Ambush Trap") {
+                        if (weaponName === "Obvious Ambush Trap") {
                             weaponPower += 1800;
                             calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                             weaponPower -= 1800;
                             calculateTrapSetup(true);
                         }
-                        else if (weaponName == "Blackstone Pass Trap") {
+                        else if (weaponName === "Blackstone Pass Trap") {
                             weaponPower -= 2400;
                             calculateTrapSetup(true);
                             catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -595,8 +472,8 @@ function showPop(type) { //type = 2 means don't reset charms
                         }
                     }
                 }
-                if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
-                    if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
+                if (locationName === "Zugzwang's Tower" || locationName === "Seasonal Garden") {
+                    if (ztAmp > 0 && weaponName === "Zugzwang's Ultimate Move") {
                         catchRate += ((1 - catchRate) / 2);
                     }
                 }
@@ -606,18 +483,17 @@ function showPop(type) { //type = 2 means don't reset charms
 
                 //Exceptions, modifications to catch rates
                 //Dragonbane Charm
-                if (charmName == "Ultimate Charm") catchRate = 1;
-                else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
-                else if (mouseName == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
-                else if (mouseName == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
-                else if (mouseName == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
+                if (charmName === "Ultimate Charm") catchRate = 1;
+                else if (locationName === "Sunken City" && charmName === "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
+                else if (mouseName === "Dragon" && charmName === "Dragonbane Charm") catchRate *= 2;
+                else if (mouseName === "Bounty Hunter" && charmName === "Sheriff's Badge Charm") catchRate = 1;
+                else if (mouseName === "Zurreal the Eternal" && weaponName !== "Zurreal's Folly") catchRate = 0;
 
                 var attractions = parseFloat(popArrayLC[mouseName]) * overallAR;
 
                 var catches = attractions * catchRate;
 
-
-                if (miceArray[mouseName] == undefined) {
+                if (miceArray[mouseName] === undefined) {
                     var mouseGold = 0;
                     var mousePoints = 0;
                 } else {
@@ -626,16 +502,16 @@ function showPop(type) { //type = 2 means don't reset charms
                 }
 
 
-                if (charmName == "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
-                else if (charmName == "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
-                else if (charmName == "Extreme Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.20, 15000));
+                if (charmName === "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
+                else if (charmName === "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
+                else if (charmName === "Extreme Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.20, 15000));
 
                 var gold = catches * mouseGold / 100;
                 var points = catches * mousePoints / 100;
 
-                if (tourneysArray[tournamentName] != undefined) {
+                if (tourneysArray[tournamentName] !== undefined) {
                     var tourneyPoints = tourneysArray[tournamentName][mouseName];
-                    if (tourneyPoints == undefined) tourneyPoints = 0;
+                    if (tourneyPoints === undefined) tourneyPoints = 0;
                 } else tourneyPoints = 0;
                 var TP = catches * tourneyPoints / 100;
                 var PX2 = TP * tourneyPoints;
@@ -654,7 +530,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 resultsHTML += "<tr align='right'><td align='left'>" + mouseName + "</td><td>" + attractions.toFixed(2) + "%</td><td>" + catchRate + "%</td><td>" + catches + "</td><td>" + commafy(mouseGold) + "</td><td>" + commafy(mousePoints) + "</td><td>" + tourneyPoints + "</td><td>" + minLuckValue + "</td>";
                 if (locationName.indexOf("Seasonal Garden") >= 0) {
                     var dAmp = deltaAmp[mouseName];
-                    if (charmName == "Amplifier Charm") dAmp *= 2;
+                    if (charmName === "Amplifier Charm") dAmp *= 2;
                     resultsHTML += "<td>" + dAmp + "%</td>";
                     // console.log("Amp bonus", dAmp);
                     deltaAmpOverall += catches / 100 * dAmp;
@@ -662,18 +538,16 @@ function showPop(type) { //type = 2 means don't reset charms
                     var deltaDepthCatch = catchDepth[mouseName];
                     var deltaDepthFTC = ftcDepth[mouseName];
 
-                    if (charmName == "Wax Charm" && contains(berglings,mouseName)) {
+                    if (charmName === "Wax Charm" && contains(berglings,mouseName)) {
                         deltaDepthCatch += 1;
-                    } else if (charmName == "Sticky Charm" && contains(berglings,mouseName)) {
+                    } else if (charmName === "Sticky Charm" && contains(berglings,mouseName)) {
                         deltaDepthFTC = 0;
-                    } else if (baseName == "Spiked Base" && contains(brutes,mouseName)) {
+                    } else if (baseName === "Spiked Base" && contains(brutes,mouseName)) {
                         deltaDepthCatch = deltaDepthFTC = 0;
-                    } else if (baseName == "Remote Detonator Base" && contains(bombSquad,mouseName)) {
+                    } else if (baseName === "Remote Detonator Base" && contains(bombSquad,mouseName)) {
                         deltaDepthCatch = 20;
                     }
 
-                    // console.log("Catch dph:", deltaDepthCatch);
-                    // console.log("FTC dph:", deltaDepthFTC);
                     resultsHTML += "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
 
                     deltaDepthOverall += (catchRate / 100 * deltaDepthCatch + (100 - catchRate) / 100 * deltaDepthFTC) * attractions / 100;
@@ -744,14 +618,12 @@ function showPop(type) { //type = 2 means don't reset charms
 
         percentSD = overallPX2 / overallTP * 100;
 
-        // console.log("overallCR: " + overallCR);
         resultsHTML += "</tbody><tr align='right'><td align='left'><b>Overall</b></td><td>" + overallAR.toFixed(2) + "%</td><td></td><td>" + overallCR.toFixed(2) + "</td><td>" + commafy(Math.round(overallGold)) + "</td><td>" + commafy(Math.round(overallPoints)) + "</td><td>" + overallTP.toFixed(2) + "</td><td>" + minLuckOverall + "</td>";
         if (locationName.indexOf("Seasonal Garden") >= 0) {
             deltaAmpOverall += (100 - overallAR) / 100 * -3; //Accounting for FTAs (-3%)
             resultsHTML += "<td>" + deltaAmpOverall.toFixed(2) + "%</td>";
         } else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
             resultsHTML += "<td colspan='2'>" + deltaDepthOverall.toFixed(2) + " ft/hunt</td>";
-            // console.log("Depth test", depthTest);
         } else if (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked") {
             diveMPH = 30 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
             if (charmName.indexOf("Anchor Charm") >= 0) {
@@ -794,19 +666,6 @@ function showPop(type) { //type = 2 means don't reset charms
     }
 
     formatSampleSize();
-}
-
-function resetCharms() {
-    console.log("Reloading charm list");
-    var select = document.getElementById("charm");
-    var charmsDropdownHTML = '';
-
-    var nCharms = charmKeys.length;
-    for (var i = 0; i < nCharms; i++) {
-        charmsDropdownHTML += "<option>" + charmKeys[i] + "</option>\n";
-    }
-    select.innerHTML = "<option>No Charm</option>" + charmsDropdownHTML;
-    charmChanged();
 }
 
 function highlightSpecialCharms (charmList) {
@@ -862,9 +721,9 @@ function loadCheeseDropdown(locationName, phaseName) {
 
     var cheeseDropdown = document.getElementById("cheese");
 
-    console.log("Reloading cheese list");
-
-    cheeseDropdown.innerHTML = getCheeseDropdownHTML(locationName, phaseName);
+    if (locationName) {
+        cheeseDropdown.innerHTML = getCheeseDropdownHTML(locationName, phaseName);
+    }
 
     var cheeseParameter = getURLParameter("cheese");
     if (cheeseParameter !== "null" && cheeseLoaded < 3) {
@@ -879,10 +738,9 @@ function loadCheeseDropdown(locationName, phaseName) {
 }
 
 function selectCharm() {
-    console.log("Selecting charm");
-    var charmParameter = getURLParameter("charm");//.replace('*','');
+    var charmParameter = getURLParameter("charm");
     var specialCharmParameter = charmParameter + "*";
-    if (charmParameter != "null" && charmLoaded < 5) {
+    if (charmParameter !== "null" && charmLoaded < 5) {
         var select = document.getElementById("charm");
         for (var i = 0; i < select.children.length; i++) {
             var child = select.children[i];
@@ -994,7 +852,7 @@ function cheeseChanged() {
 }
 
 function oilChanged() {
-    var select = document.getElementById("lanternOil");
+    var select = document.getElementById("oil");
     lanternStatus = select.value;
 
     updateLink();
@@ -1031,7 +889,6 @@ function icebergPhase() {
     }
 }
 function baseChanged() {
-    console.log("Base changed");
     var baseSelet = document.getElementById("base");
 
     baseName = baseSelet.value;
@@ -1039,15 +896,7 @@ function baseChanged() {
 
     icebergPhase();
 
-
-    var basesArrayN = basesArray[baseName] || [0,0,0,0, "No Effect"];
-
-    basePower = (basesArrayN[0]);
-    baseBonus = (basesArrayN[1]);
-    baseAtt = (basesArrayN[2]);
-    baseLuck = (basesArrayN[3]);
-    baseEff = parseFreshness[basesArrayN[4].trim()];
-
+    populateBaseData(baseName);
 
     //Bases with special effects when paired with particular charm
     charmChangeCommon();
@@ -1055,7 +904,6 @@ function baseChanged() {
 }
 
 function charmChanged() {
-    console.log("Charm changed");
     var select = document.getElementById("charm");
     charmName = select.value.trim().replace(/\*$/, "");
     charmChangeCommon();
@@ -1063,14 +911,11 @@ function charmChanged() {
     showPop(2);
 }
 
-
-
 function tourneyChanged() {
     var select = document.getElementById("tourney");
     tournamentName = select.value;
     updateLink();
 
-    //showPop();
     showPop(2);
 }
 

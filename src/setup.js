@@ -129,48 +129,6 @@ function checkLoadState() {
 }
 
 /**
- * Create popArray from population csv response text
- * @param popText {string} CSV Text
- */
-function processPop(popText) {
-    var i;
-    var popCSV = CSVToArray(popText);
-    var popCSVLength = popCSV.length;
-    popArray = {};
-
-    //Creating popArray
-    for (i = 1; i < popCSVLength; i++) {
-        processPopItem(i);
-    }
-
-    popLoaded = 1;
-    checkLoadState();
-
-    function processPopItem(index) {
-        var location = popCSV[index][0];
-        var phase = popCSV[index][1];
-        var cheese = popCSV[index][2];
-        var charm = popCSV[index][3];
-        var attraction = popCSV[index][4];
-        var mouse = popCSV[index][5];
-
-        if (popArray[location] === undefined) {
-            popArray[location] = {};
-        }
-        if (popArray[location][phase] === undefined) {
-            popArray[location][phase] = {};
-        }
-        if (popArray[location][phase][cheese] === undefined) {
-            popArray[location][phase][cheese] = {};
-        }
-        if (popArray[location][phase][cheese][charm] === undefined) {
-            popArray[location][phase][cheese][charm] = {};
-        }
-        popArray[location][phase][cheese][charm][mouse] = parseFloat(attraction);
-    }
-}
-
-/**
  * Get Jquery selectors for a specific type
  * @param type {string} 'weapon', 'base' or 'charm'
  * @returns {{checkbox: string, container: string, allCheckbox: string}}
@@ -229,37 +187,6 @@ function loadItemSelection(itemKeys, type) {
             "text": itemName}
             ).appendTo(row);
         return row;
-    }
-}
-
-/**
- * Start population and baseline loading
- */
-function startPopulationLoad() {
-    popLoad();
-    baselineLoad();
-
-    //TODO: Might as well use Jquery for this.
-    function popLoad() {
-        var pop = new XMLHttpRequest();
-        pop.open("get", POPULATIONS_URL, true);
-        pop.onreadystatechange = function () {
-            if (pop.readyState === 4) {
-                processPop(pop.responseText);
-            }
-        };
-        pop.send();
-    }
-
-    function baselineLoad() {
-        var baseline = new XMLHttpRequest();
-        baseline.open("get", BASELINES_URL, true);
-        baseline.onreadystatechange = function () {
-            if (baseline.readyState == 4) {
-                processBaseline(baseline.responseText);
-            }
-        };
-        baseline.send();
     }
 }
 
@@ -579,7 +506,7 @@ function weaponChanged() {
 }
 
 function locationChanged() {
-    var select =document.querySelector("#location");
+    var select = document.querySelector("#location");
     locationName = select.value;
 
     updateLink();
