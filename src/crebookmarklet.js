@@ -111,9 +111,9 @@ javascript:void(function () {
         else if (userLocation == "Labyrinth") {
             var hallwayName = user["quests"]["QuestLabyrinth"]["hallway_name"];
             var length = "";
-            if (hallwayName.indexOf("Short") >= 0) hallwayName = hallwayName.slice(6, hallwayName.length);
-            else if (hallwayName.indexOf("Medium") >= 0) hallwayName = hallwayName.slice(7, hallwayName.length);
-            else if (hallwayName.indexOf("Long") >= 0) hallwayName = hallwayName.slice(5, hallwayName.length);
+            if (contains(hallwayName,"Short")) hallwayName = hallwayName.slice(6, hallwayName.length);
+            else if (contains(hallwayName,"Medium")) hallwayName = hallwayName.slice(7, hallwayName.length);
+            else if (contains(hallwayName,"Long")) hallwayName = hallwayName.slice(5, hallwayName.length);
             hallwayName = hallwayName.slice(0, hallwayName.indexOf(" Hallway"));
             sublocation = hallwayName;
         }
@@ -217,7 +217,7 @@ javascript:void(function () {
             var district_tier = quest.district_tier;
 
             //TODO: Check cluename/cluetype of Lair to improve this
-            if (districtname.indexOf("Minotaur") >= 0) {
+            if (contains(districtname,"Minotaur")) {
                 sublocation = "Lair of the Minotaur"
             } else {
                 var districts = {
@@ -353,7 +353,7 @@ javascript:void(function () {
     }
 
     // Cheese edge cases
-    if (userCheese.indexOf("Toxic") >= 0) {
+    if (contains(userCheese,"Toxic")) {
         userCheese = userCheese.slice(6, userCheese.length);
         urlParams["toxic"] = "Yes";
     }
@@ -361,7 +361,7 @@ javascript:void(function () {
     if (userCheese.indexOf("SUPER|brie+") >= 0) {
         userCheese = "SB+";
     } else if (userCheese.indexOf(" Cheese") >= 0) {
-        if (userCheese.indexOf("Gauntlet") >= 0) {
+        if (contains(userCheese,"Gauntlet")) {
             userCheese = userCheese.slice(16, userCheese.length);
             userSublocation = userCheese;
         }

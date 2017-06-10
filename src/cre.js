@@ -78,13 +78,8 @@ window.onload = function () {
 
 
     pop.open("get", POPULATIONS_URL, true);
-    // Local testing
-    // http-server -p 8888 --cors
-    // (installed using "npm install http-server -g")
-    // pop.open("get", "http://localhost:8888/testing/populationstest.csv", false);
     pop.onreadystatechange = function () {
-        if (pop.readyState == 4) {
-
+        if (pop.readyState === 4) {
             processPop();
         }
     };
@@ -93,7 +88,7 @@ window.onload = function () {
 
     baseline.open("get", BASELINES_URL, true);
     baseline.onreadystatechange = function () {
-        if (baseline.readyState == 4) {
+        if (baseline.readyState === 4) {
             processBaseline(baseline.responseText);
         }
     };
@@ -271,7 +266,7 @@ function checkLoadState() {
     var status = document.getElementById("status");
     status.innerHTML = "<td>Loaded " + loadPercentage + "%...</td>";
 
-    if (loadPercentage == 100) {
+    if (loadPercentage === 100) {
         loadLocationDropdown();
         loadTourneyDropdown();
         //updateLink();
@@ -415,8 +410,8 @@ function showPop(type) { //type = 2 means don't reset charms
 
     if (type != 0 && type != 2) charmName = "No Charm";
 
-    if (locationName == '' || type == 0) {
-        results.innerHTML = ''
+    if (locationName === '' || phaseName === '' || type === 0) {
+        results.innerHTML = '';
     } else {
         var popArrayLPC = popArray[locationName][phaseName][cheeseName];
 
@@ -483,7 +478,7 @@ function showPop(type) { //type = 2 means don't reset charms
         if (locationName.indexOf("Seasonal Garden") >= 0) {
             var deltaAmpOverall = 0;
             resultsHTML += "<th data-filter='false'>Amp %</th>";
-        } else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
+        } else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
             var deltaDepthOverall = 0, depthTest = 0;
             resultsHTML += "<th data-filter='false'>Catch ft</th><th data-filter='false'>FTC ft</th>";
         } else if (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked") {
@@ -523,7 +518,7 @@ function showPop(type) { //type = 2 means don't reset charms
 
 
                 if (locationName == "Zugzwang's Tower") {
-                    if (mouseName.indexOf("Rook") >= 0 && charmName == "Rook Crumble Charm") {
+                    if (contains(mouseName,"Rook") && charmName == "Rook Crumble Charm") {
                         charmBonus += 300;
                         calculateTrapSetup(true); // not "cre" or else infinite loop
                         catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -567,7 +562,7 @@ function showPop(type) { //type = 2 means don't reset charms
                         }
                     }
 
-                    if (mouseName.indexOf("Mystic") >= 0) {
+                    if (contains(mouseName,"Mystic")) {
                         if (weaponName == "Obvious Ambush Trap") {
                             weaponPower -= 2400;
                             calculateTrapSetup(true);
@@ -583,7 +578,7 @@ function showPop(type) { //type = 2 means don't reset charms
                             calculateTrapSetup(true);
                         }
                     }
-                    else if (mouseName.indexOf("Technic") >= 0) {
+                    else if (contains(mouseName,"Technic")) {
                         if (weaponName == "Obvious Ambush Trap") {
                             weaponPower += 1800;
                             calculateTrapSetup(true);
@@ -663,17 +658,17 @@ function showPop(type) { //type = 2 means don't reset charms
                     resultsHTML += "<td>" + dAmp + "%</td>";
                     // console.log("Amp bonus", dAmp);
                     deltaAmpOverall += catches / 100 * dAmp;
-                } else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
+                } else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
                     var deltaDepthCatch = catchDepth[mouseName];
                     var deltaDepthFTC = ftcDepth[mouseName];
 
-                    if (charmName == "Wax Charm" && berglings.indexOf(mouseName) >= 0) {
+                    if (charmName == "Wax Charm" && contains(berglings,mouseName)) {
                         deltaDepthCatch += 1;
-                    } else if (charmName == "Sticky Charm" && berglings.indexOf(mouseName) >= 0) {
+                    } else if (charmName == "Sticky Charm" && contains(berglings,mouseName)) {
                         deltaDepthFTC = 0;
-                    } else if (baseName == "Spiked Base" && brutes.indexOf(mouseName) >= 0) {
+                    } else if (baseName == "Spiked Base" && contains(brutes,mouseName)) {
                         deltaDepthCatch = deltaDepthFTC = 0;
-                    } else if (baseName == "Remote Detonator Base" && bombSquad.indexOf(mouseName) >= 0) {
+                    } else if (baseName == "Remote Detonator Base" && contains(bombSquad,mouseName)) {
                         deltaDepthCatch = 20;
                     }
 
@@ -754,7 +749,7 @@ function showPop(type) { //type = 2 means don't reset charms
         if (locationName.indexOf("Seasonal Garden") >= 0) {
             deltaAmpOverall += (100 - overallAR) / 100 * -3; //Accounting for FTAs (-3%)
             resultsHTML += "<td>" + deltaAmpOverall.toFixed(2) + "%</td>";
-        } else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
+        } else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
             resultsHTML += "<td colspan='2'>" + deltaDepthOverall.toFixed(2) + " ft/hunt</td>";
             // console.log("Depth test", depthTest);
         } else if (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked") {
@@ -781,7 +776,7 @@ function showPop(type) { //type = 2 means don't reset charms
         if (locationName.indexOf("Seasonal Garden") >= 0 || locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked") {
             resultsHTML += "<td></td>";
         }
-        else if (locationName.indexOf("Iceberg") >= 0 && phaseName.indexOf("Lair") < 0) {
+        else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
             resultsHTML += "<td colspan='2'></td>";
         }
         else if (locationName == "Labyrinth" && phaseName != "Intersection") {
@@ -844,43 +839,42 @@ function highlightSpecialCharms (charmList) {
     selectCharm();
 }
 
-function loadCheeseDropdown() {
+
+function loadCheeseDropdown(locationName, phaseName) {
+
+    function getCheeseDropdownHTML(location, phase) {
+        var cheeses = Object.keys(popArray[location][phase] || []);
+        var cheeseDropdownHTML = "";
+        for (var key in cheeses) {
+            var option = cheeses[key];
+            if (option.indexOf("/") < 0 || contains(option, "Combat")) { //Fix this master cheese thingy
+                cheeseDropdownHTML += "<option>" + option + "</option>\n";
+            } else {
+                var optionArray = option.split("/");
+                var optionArrayLength = optionArray.length;
+                for (var j = 0; j < optionArrayLength; j++) {
+                    cheeseDropdownHTML += "<option>" + optionArray[j] + "</option>\n";
+                }
+            }
+        }
+        return cheeseDropdownHTML;
+    }
+
     var cheeseDropdown = document.getElementById("cheese");
-    var cheeseDropdownHTML = '';
+
     console.log("Reloading cheese list");
 
-    var cheeses = Object.keys(popArray[locationName][phaseName] || []);
-
-    for (var key in cheeses) {
-        var option = cheeses[key];
-        if (option.indexOf("/") < 0 || option.indexOf("Combat") >= 0) { //Fix this master cheese thingy
-            cheeseDropdownHTML += "<option>" + option + "</option>\n";
-        } else {
-            var optionArray = option.split("/");
-            var optionArrayLength = optionArray.length;
-            for (var j = 0; j < optionArrayLength; j++) {
-                cheeseDropdownHTML += "<option>" + optionArray[j] + "</option>\n";
-            }
-        }
-    }
-
-    cheeseDropdown.innerHTML = cheeseDropdownHTML;
+    cheeseDropdown.innerHTML = getCheeseDropdownHTML(locationName, phaseName);
 
     var cheeseParameter = getURLParameter("cheese");
-    if (cheeseParameter != "null" && cheeseLoaded < 3) {
+    if (cheeseParameter !== "null" && cheeseLoaded < 3) {
         var select = document.getElementById("cheese");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == cheeseParameter) {
-                child.selected = true;
-                cheeseLoaded++;
-                //Select correct charm from URL
-                selectCharm();
-                break;
-            }
+        select.value = cheeseParameter;
+        if (select.selectedIndex !== -1) {
+            cheeseLoaded++;
         }
     }
-
+    selectCharm();
     cheeseChanged();
 }
 
@@ -933,19 +927,6 @@ function minLuck(E, M) {
     return Math.ceil(Math.sqrt((M / (3 - Math.min(E, 2))) / (Math.min(E, 2) * Math.min(E, 2))));
 }
 
-/*
- function loadGangs (type) {
- if (type == 0) {
- //hide gangs
- document.getElementById("phaseRow").style.display = 'none';
- }
- else {
- //show gangs
- document.getElementById("phaseRow").style.display = 'block';
- }
- }
- */
-
 function updateLink() {
     var urlParams = {
         "location" : locationName,
@@ -976,7 +957,7 @@ function updateLink() {
 
 function locationChanged() {
     var select = document.getElementById("location");
-    locationName = select.children[select.selectedIndex].innerHTML;
+    locationName = select.value;
     updateLink();
 
     var checked = document.getElementById("toggleCustom").checked;
@@ -985,21 +966,19 @@ function locationChanged() {
     batteryPower = 0;
     ztAmp = 100;
     sampleSize = 0;
-    showPop(0);
 
     //Populate sublocation dropdown and select first option
-    if (locationName != "") {
+    if (locationName && locationName !== "") {
         populateSublocationDropdown(locationName);
     }
     phaseChanged();
+
+    showPop(0);
 }
-
-
-
 
 function cheeseChanged() {
     var select = document.getElementById("cheese");
-    cheeseName = select.children[select.selectedIndex].innerHTML;
+    cheeseName = select.value;
     updateLink();
 
     //Basic cheese costs
@@ -1016,61 +995,46 @@ function cheeseChanged() {
 
 function oilChanged() {
     var select = document.getElementById("lanternOil");
-    lanternStatus = select.children[select.selectedIndex].innerHTML;
+    lanternStatus = select.value;
 
     updateLink();
     calculateTrapSetup();
 }
 
+
 function weaponChanged() {
     var select = document.getElementById("weapon");
 
-    weaponName = select.children[select.selectedIndex].innerHTML;
     updateLink();
-
-    var weaponsArrayN = weaponsArray[weaponName];
-    if (weaponsArrayN == undefined) weaponsArrayN = [0];
-
-    weaponPower = weaponsArrayN[1];
-    trapType = weaponsArrayN[0].trim();
-    weaponBonus = weaponsArrayN[2];
-    weaponAtt = weaponsArrayN[3];
-    weaponLuck = weaponsArrayN[4];
-    weaponEff = parseFreshness[weaponsArrayN[5].trim()];
-
+    weaponName = select.value;
+    populateWeaponData(weaponName);
     calculateTrapSetup();
 }
 
 function icebergPhase() {
     var autoPhase = "";
-    if (phaseName == "Bombing Run" && baseName == "Remote Detonator Base") autoPhase = "Bombing Run (Remote Detonator)";
-    else if (phaseName == "Bombing Run (Remote Detonator)" && baseName != "Remote Detonator Base") autoPhase = "Bombing Run";
+    if (phaseName === "Bombing Run" && baseName === "Remote Detonator Base") autoPhase = "Bombing Run (Remote Detonator)";
+    else if (phaseName === "Bombing Run (Remote Detonator)" && baseName !== "Remote Detonator Base") autoPhase = "Bombing Run";
 
-    else if (phaseName == "Treacherous Tunnels" && baseName == "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
-    else if (phaseName == "Treacherous Tunnels (Magnet)" && baseName != "Magnet Base") autoPhase = "Treacherous Tunnels";
+    else if (phaseName === "Treacherous Tunnels" && baseName === "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
+    else if (phaseName === "Treacherous Tunnels (Magnet)" && baseName !== "Magnet Base") autoPhase = "Treacherous Tunnels";
 
-    else if ((phaseName == "The Mad Depths" || phaseName == "The Mad Depths (Magnet)") && baseName == "Hearthstone Base") autoPhase = "The Mad Depths (Hearthstone)";
-    else if ((phaseName == "The Mad Depths" || phaseName == "The Mad Depths (Hearthstone)") && baseName == "Magnet Base") autoPhase = "The Mad Depths (Magnet)";
-    else if (phaseName == "The Mad Depths (Hearthstone)" && baseName != "Hearthstone Base") autoPhase = "The Mad Depths";
-    else if (phaseName == "The Mad Depths (Magnet)" && baseName != "Magnet Base") autoPhase = "The Mad Depths";
+    else if ((phaseName === "The Mad Depths" || phaseName === "The Mad Depths (Magnet)") && baseName === "Hearthstone Base") autoPhase = "The Mad Depths (Hearthstone)";
+    else if ((phaseName === "The Mad Depths" || phaseName === "The Mad Depths (Hearthstone)") && baseName === "Magnet Base") autoPhase = "The Mad Depths (Magnet)";
+    else if (phaseName === "The Mad Depths (Hearthstone)" && baseName !== "Hearthstone Base") autoPhase = "The Mad Depths";
+    else if (phaseName === "The Mad Depths (Magnet)" && baseName !== "Magnet Base") autoPhase = "The Mad Depths";
 
-    if (autoPhase != "") {
+    if (autoPhase !== "") {
         var phaseSelect = document.getElementById("phase");
-        for (var i = 0; i < phaseSelect.children.length; i++) {
-            var child = phaseSelect.children[i];
-            if (child.innerHTML == autoPhase) {
-                child.selected = true;
-                phaseChanged();
-                break;
-            }
-        }
+        phaseSelect.value = autoPhase;
+        phaseChanged();
     }
 }
 function baseChanged() {
     console.log("Base changed");
     var baseSelet = document.getElementById("base");
 
-    baseName = baseSelet.children[baseSelet.selectedIndex].innerHTML;
+    baseName = baseSelet.value;
     updateLink();
 
     icebergPhase();
@@ -1093,7 +1057,7 @@ function baseChanged() {
 function charmChanged() {
     console.log("Charm changed");
     var select = document.getElementById("charm");
-    charmName = select.children[select.selectedIndex].innerHTML.trim().replace(/\*$/, "");
+    charmName = select.value.trim().replace(/\*$/, "");
     charmChangeCommon();
     calculateTrapSetup();
     showPop(2);
@@ -1103,7 +1067,7 @@ function charmChanged() {
 
 function tourneyChanged() {
     var select = document.getElementById("tourney");
-    tournamentName = select.children[select.selectedIndex].innerHTML;
+    tournamentName = select.value;
     updateLink();
 
     //showPop();

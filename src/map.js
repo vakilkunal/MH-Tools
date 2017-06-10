@@ -394,7 +394,7 @@ function processMap(mapText) {
 			notRecognized = true;
 		}
 		else {			
-			if (seenMice.indexOf(mouseName) >= 0) {
+			if (contains(seenMice,mouseName)) {
 				continue;
 			}
 			else {

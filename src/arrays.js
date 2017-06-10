@@ -111,21 +111,34 @@ Object.size = function (obj) {
 };
 
 var ztAmp = 100;
-var riftWeapons = {
-    "Biomolecular Re-atomizer Trap": true, "Crystal Tower": true, "Focused Crystal Laser": true,
-    "Multi-Crystal Laser": true, "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes": true
-};
-var riftBases = {
-    "Fissure Base": true, "Fracture Base": true, "Rift Base": true,
-    "Enerchi Induction Base": true, "Attuned Enerchi Induction Base": true
-};
-var riftCharms = {
-    "Cherry Charm": true, "Gnarled Charm": true, "Stagnant Charm": true,
-    "Rift Power Charm": true, "Rift Ultimate Luck Charm": true,
-    "Rift Ultimate Power Charm": true, "Rift Vacuum Charm": true,
-    "Super Rift Vacuum Charm": true, "Enerchi Charm": true,
-    "Rift Ultimate Lucky Power Charm": true
-};
+var riftWeapons = [
+    "Biomolecular Re-atomizer Trap",
+    "Crystal Tower",
+    "Focused Crystal Laser",
+    "Multi-Crystal Laser",
+    "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes"
+];
+
+var riftBases = [
+    "Fissure Base",
+    "Fracture Base",
+    "Rift Base",
+    "Enerchi Induction Base",
+    "Attuned Enerchi Induction Base"
+];
+
+var riftCharms = [
+    "Cherry Charm",
+    "Enerchi Charm",
+    "Gnarled Charm",
+    "Stagnant Charm",
+    "Rift Power Charm",
+    "Rift Ultimate Luck Charm",
+    "Rift Ultimate Power Charm",
+    "Rift Vacuum Charm",
+    "Super Rift Vacuum Charm",
+    "Rift Ultimate Lucky Power Charm"
+];
 
 var labyrinthMiceClues = {
     "Ash Golem": 1,
@@ -4064,6 +4077,7 @@ var cosmicCritters = [
  * Level : {Power, Luck]
  */
 var batteryEffects = {
+    0 : [0,0],
     1 : [90, 0],
     2 : [500, 1],
     3 : [3000, 2],
