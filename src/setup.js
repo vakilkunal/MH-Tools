@@ -128,16 +128,7 @@ function checkLoadState() {
     }
 }
 
-/**
- * This one is different in CRE/best setup.
- * TODO: Fix bookmarklet to use encode/decode component for consistency
- * @return {string} Paramater value or "null"
- */
-function getURLParameter(name) {
-    return decodeURI(
-        (new RegExp(name + "=(.+?)(&|$)").exec(location.search) || [, null])[1]
-    );
-}
+
 
 /**
  * Create popArray from population csv response text
@@ -391,7 +382,7 @@ function loadURLData() {
 
     function getDataFromURL(parameters) {
         if (parameters) {
-            return decodeURI(parameters[1]).split("/");
+            return decodeURIComponent(parameters[1]).split("/");
         } else {
             return [];
         }

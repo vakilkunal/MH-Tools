@@ -635,7 +635,7 @@ function findBaseline(location, cheese) {
 
 function getMouseListFromURL(parameters) {
     if (parameters) {
-        parameters = decodeURI(parameters[1]);
+        parameters = decodeURIComponent(parameters[1]);
 
         return parameters
             .split('/')

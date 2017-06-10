@@ -126,7 +126,6 @@ function calcSpecialCharms(charmName) {
  * @return {string}
  */
 function getURLParameter(name) {
-    //Use component here to ensure correct decoding
     return decodeURIComponent(
         (new RegExp(name + "=(.+?)(&|$)").exec(location.search) || [, null])[1]
     );
