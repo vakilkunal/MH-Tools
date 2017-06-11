@@ -4,6 +4,7 @@
  */
 var user;
 var CRE_USER = "cre";
+var SETUP_USER = "setup";
 var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
 
 var popLoaded = 0, baselineLoaded = 0;
@@ -21,29 +22,6 @@ var fortRox = {
     balistaLevel : 0,
     canonLevel : 0
 };
-
-/**
- * Mice attraction rates for specific Location-Phase-Cheese-Charm combination.
- * @typedef {{String : Number}} MousePopulations
- *
- * Charm populations for Location-Phase-Cheese.
- * @typedef {{String: MousePopulations}} CharmPopulations
- *
- * Cheese for Location-Phase.
- * @typedef {{String: CharmPopulations}} CheesePopulations
- *
- * Phases for a Location.
- * @typedef {{String: CheesePopulations}} PhasePopulations
- *
- * Populations for different locations.
- * @typedef {{String: PhasePopulations}} LocationPopulations
- */
-
-/**
- * Population data parsed from CSV
- * @type {LocationPopulations}
- */
-var popArray = {};
 
 var specialCharm = {
     "Champion Charm": 1,
@@ -403,21 +381,6 @@ function batteryChanged() {
     }
 }
 
-var baselineArray = [];
-function processBaseline(baselineText) {
-    baselineArray = baselineText.split("\n");
-    var baselineArrayLength = baselineArray.length;
-
-    for (var i = 0; i < baselineArrayLength; i++) {
-        baselineArray[i] = baselineArray[i].split("\t");
-
-        baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
-    }
-
-    baselineLoaded = 1;
-    checkLoadState();
-}
-
 /**
  * Returns effectivity of current power type against a mouse.
  * @param mouseName
@@ -693,82 +656,3 @@ function showHideWidgets(custom) {
     }
     checkToxicWidget(custom);
 }
-
-/**
- * Splits a CSV row into an object with labels
- * @param csvRow []
- * @param splitCheese Boolean Indicates whether the cheese string should be split
- * @return {{location: string, phase: string, cheese: [string], charm: *, attraction: *, mouse: *, sampleSize: *}}
- */
-function parseCsvRow(csvRow, splitCheese) {
-    var cheese = csvRow[2];
-
-    var cheeseArr = [cheese];
-    if (splitCheese) {
-        cheeseArr = cheese.split("/");
-    }
-
-    return {
-        location: csvRow[0],
-        phase: csvRow[1],
-        cheese: cheeseArr,
-        charm: csvRow[3],
-        attraction: csvRow[4],
-        mouse: csvRow[5],
-        sampleSize: csvRow[6]
-    };
-}
-
-/**
- * Proocess the population data ajax response
- * @param popText population dta inCSV format
- */
-function processPop(popText) {
-    var creUser = (user === CRE_USER);
-
-    var popCSV = CSVToArray(popText);
-    var popCSVLength = popCSV.length;
-    popArray = {};
-
-    for (var i = 1; i < popCSVLength; i++) {
-        processPopItem(i, creUser);
-    }
-
-    popLoaded = 1;
-    checkLoadState();
-
-    function processPopItem(index, creUser) {
-        var item = parseCsvRow(popCSV[index], creUser);
-
-        if (popArray[item.location] === undefined) {
-            popArray[item.location] = {};
-        }
-        if (popArray[item.location][item.phase] === undefined) {
-            popArray[item.location][item.phase] = {};
-        }
-        for (var cheeseIndex = 0; cheeseIndex < item.cheese.length; cheeseIndex++) {
-            var cheese = item.cheese[cheeseIndex];
-
-            if (popArray[item.location][item.phase][cheese] === undefined) {
-                popArray[item.location][item.phase][cheese] = {};
-            }
-            if (popArray[item.location][item.phase][cheese][item.charm] === undefined) {
-                popArray[item.location][item.phase][cheese][item.charm] = {};
-            }
-            popArray[item.location][item.phase][cheese][item.charm][item.mouse] = parseFloat(item.attraction);
-
-            if (creUser && item.sampleSize) {
-                popArray[item.location][item.phase][cheese][item.charm]["SampleSize"] = parseInt(item.sampleSize);
-            }
-        }
-    }
-}
-
-/**
- * Start population and baseline loading
- */
-function startPopulationLoad() {
-    $.get(POPULATIONS_URL, processPop);
-    $.get(BASELINES_URL, processBaseline);
-}
-

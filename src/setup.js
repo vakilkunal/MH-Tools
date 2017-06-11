@@ -18,7 +18,7 @@ var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar i
 $(window).load(function () {
     var bonusLuckParameter, loaded;
 
-    user = "setup";
+    user = SETUP_USER;
 
     //Instructions
     $("#instructions").click(function () {
