@@ -112,7 +112,7 @@ function checkLoadState() {
     var status =document.querySelector("#status");
     status.innerHTML = "<td>Loaded " + loadPercentage + "%...</td>";
 
-    if (loadPercentage == 100) {
+    if (loadPercentage === 100) {
         loadLocationDropdown();
         checkToxicParam();
 
@@ -517,8 +517,8 @@ function locationChanged() {
 
     if (locationName !== "") {
         populateSublocationDropdown(locationName);
+        phaseChanged();
     }
-    phaseChanged();
 }
 
 function cheeseChanged() {

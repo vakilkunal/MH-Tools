@@ -644,7 +644,6 @@ function phaseChanged() {
         pourLuck = 0;
         calculateTrapSetup();
     }
-
     loadCheeseDropdown(locationName, phaseName);
     updateLink();
 }
@@ -769,18 +768,7 @@ function processPop(popText) {
  * Start population and baseline loading
  */
 function startPopulationLoad() {
-    ajaxLoad(POPULATIONS_URL, processPop);
-    ajaxLoad(BASELINES_URL, processBaseline);
-
-    function ajaxLoad(url, callback) {
-        var req = new XMLHttpRequest();
-        req.open("get", url, true);
-        req.onreadystatechange = function () {
-            if (req.readyState === 4) {
-                callback(req.responseText);
-            }
-        };
-        req.send();
-    }
+    $.get(POPULATIONS_URL, processPop);
+    $.get(BASELINES_URL, processBaseline);
 }
 

@@ -5,50 +5,6 @@
  */
 var cheeseCost = 0, sampleSize = 0;
 
-function initTableSorter() {
-//Initialize tablesorter, bind to table
-    $("#results").tablesorter({
-        // sortForce: [[noMice,1]],
-        sortReset: true,
-        widthFixed: true,
-        ignoreCase: false,
-        widgets: ["filter"],
-        widgetOptions: {
-            filter_childRows: false,
-            filter_childByColumn: false,
-            filter_childWithSibs: true,
-            filter_columnFilters: true,
-            filter_columnAnyMatch: true,
-            filter_cellFilter: '',
-            filter_cssFilter: '', // or []
-            filter_defaultFilter: {},
-            filter_excludeFilter: {},
-            filter_external: '',
-            filter_filteredRow: 'filtered',
-            filter_formatter: null,
-            filter_functions: null,
-            filter_hideEmpty: true,
-            filter_hideFilters: true,
-            filter_ignoreCase: true,
-            filter_liveSearch: true,
-            filter_matchType: {'input': 'exact', 'select': 'exact'},
-            filter_onlyAvail: 'filter-onlyAvail',
-            filter_placeholder: {search: 'Filter results...', select: ''},
-            filter_reset: 'button.reset',
-            filter_resetOnEsc: true,
-            filter_saveFilters: false,
-            filter_searchDelay: 420,
-            filter_searchFiltered: true,
-            filter_selectSource: null,
-            filter_serversideFiltering: false,
-            filter_startsWith: false,
-            filter_useParsedData: false,
-            filter_defaultAttrib: 'data-value',
-            filter_selectSourceSeparator: '|',
-        }
-    });
-}
-
 function loadCharmDropdown() {
     loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
 }
@@ -74,7 +30,6 @@ window.onload = function () {
     }
 
     $("#bookmarklet").attr("href", creBookmarkletString);
-    initTableSorter();
 
     startPopulationLoad();
 
@@ -91,6 +46,7 @@ window.onload = function () {
         if (toggle.checked) {
             $(".input-standard").hide();
             $(".input-custom").show(500);
+
 
             $("#trapPowerType").val(trapType);
             $("#trapPowerValue").val(trapPower);
@@ -178,13 +134,14 @@ function updateCustomSetup() {
 }
 
 function updateInputFromParameter(category, callback) {
-    var oilParameter = getURLParameter(category);
+    var parameter = getURLParameter(category);
     var input = document.getElementById(category);
-    if (oilParameter && oilParameter !== "null") {
-        input.value = oilParameter;
+    if (parameter && parameter !== "null") {
+        input.value = parameter;
         callback();
     }
 }
+
 function checkLoadState() {
     var loadPercentage = (popLoaded + baselineLoaded) / 2 * 100;
     var status = document.getElementById("status");
@@ -290,25 +247,12 @@ function showPop(type) { //type = 2 means don't reset charms
         charmName = "No Charm";
     }
 
+
     if (!locationName || !cheeseName || type === 0) {
         results.innerHTML = '';
     } else {
         checkPhase();
-        var popArrayLPC = popArray[locationName][phaseName][cheeseName];
-
-        //For common cheeses e.g. gouda, brie etc.
-        if (popArrayLPC === undefined && cheeseName !== "Cheese") {
-            var popArrayL = popArray[locationName][phaseName];
-            var locationKeys = Object.keys(popArrayL || []);
-            var popArrayLLength = locationKeys.length;
-            for (var i = 0; i < popArrayLLength; i++) {
-                if (locationKeys[i].indexOf(cheeseName) >= 0 && locationKeys[i].indexOf("/") >= 0) {
-                    commonCheeseIndex = locationKeys[i];
-                    break;
-                }
-            }
-            popArrayLPC = popArray[locationName][phaseName][commonCheeseIndex];
-        }
+        var popArrayLPC = extractPopArrayLPC(locationName, phaseName, cheeseName);
 
         //Highlight special charms
         var specialCharmsList;
@@ -666,6 +610,25 @@ function showPop(type) { //type = 2 means don't reset charms
     }
 
     formatSampleSize();
+
+    function extractPopArrayLPC(location, phase, cheese) {
+        var popArrayLPC = popArray[location][phase][cheese];
+
+        //For common cheeses e.g. gouda, brie etc.
+        if (popArrayLPC === undefined && cheese !== "Cheese") {
+            var popArrayL = popArray[location][phase];
+            var locationKeys = Object.keys(popArrayL || []);
+            var popArrayLLength = locationKeys.length;
+            for (var i = 0; i < popArrayLLength; i++) {
+                if (locationKeys[i].indexOf(cheese) >= 0 && locationKeys[i].indexOf("/") >= 0) {
+                    commonCheeseIndex = locationKeys[i];
+                    break;
+                }
+            }
+            popArrayLPC = popArray[location][phase][commonCheeseIndex];
+        }
+        return popArrayLPC;
+    }
 }
 
 function highlightSpecialCharms (charmList) {
@@ -683,11 +646,13 @@ function highlightSpecialCharms (charmList) {
 
         for (var j=0; j<select.children.length; j++) {
             var child = select.children[j];
-            if (child.value == charmList[i]+" Charm") {
+            var charm = charmList[i]+" Charm";
+            if (child.value === charm) {
 
-                child.innerHTML = child.innerHTML+"*";
-                if (child.selected == true) {
-                    charmName = child.innerHTML;
+                child.innerHTML += "*";
+                child.value = charm;
+                if (child.selected === true) {
+                    charmName = child.value;
                     showPop(2);
                 }
                 select.innerHTML = select.innerHTML.slice(0,25) + "<option>"+child.innerHTML+"</option>" + select.innerHTML.slice(25);
@@ -697,7 +662,6 @@ function highlightSpecialCharms (charmList) {
     }
     selectCharm();
 }
-
 
 function loadCheeseDropdown(locationName, phaseName) {
 
@@ -742,9 +706,11 @@ function selectCharm() {
     var specialCharmParameter = charmParameter + "*";
     if (charmParameter !== "null" && charmLoaded < 5) {
         var select = document.getElementById("charm");
+        //TODO: Improve
         for (var i = 0; i < select.children.length; i++) {
             var child = select.children[i];
-            if (child.innerHTML == charmParameter || child.innerHTML == specialCharmParameter) {
+            if (child.innerHTML === charmParameter
+                || child.innerHTML === specialCharmParameter) {
                 child.selected = true;
                 charmChanged();
                 charmLoaded++;
@@ -767,11 +733,12 @@ function loadTourneyDropdown() {
     tourneyDropdown.innerHTML = tourneyDropdownHTML;
 
     var tourneyParameter = getURLParameter("tourney");
-    if (tourneyParameter != "null") {
+    if (tourneyParameter !== "null") {
         var select = document.getElementById("tourney");
+        //TODO: Improve
         for (var i = 0; i < select.children.length; i++) {
             var child = select.children[i];
-            if (child.innerHTML == tourneyParameter) {
+            if (child.innerHTML === tourneyParameter) {
                 child.selected = true;
                 tourneyChanged();
                 break;
@@ -781,6 +748,12 @@ function loadTourneyDropdown() {
 
 }
 
+/**
+ * Calculates minimum luck required for 100% CR
+ * @param E Trap effectiveness
+ * @param M Mouse Power
+ * @return {number}
+ */
 function minLuck(E, M) {
     return Math.ceil(Math.sqrt((M / (3 - Math.min(E, 2))) / (Math.min(E, 2) * Math.min(E, 2))));
 }
@@ -888,6 +861,7 @@ function icebergPhase() {
         phaseChanged();
     }
 }
+
 function baseChanged() {
     var baseSelet = document.getElementById("base");
 
