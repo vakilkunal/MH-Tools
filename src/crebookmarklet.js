@@ -4,6 +4,11 @@ javascript:void(function () {
         return;
     }
     var userBase;
+
+    /**
+     * Reads sumblocation from the user object
+     * @returns {string} Subloaction name
+     */
     function findSublocation() {
         var sublocation = "N/A";
 
@@ -51,8 +56,23 @@ javascript:void(function () {
             //Phases
             //Twilight = is_dawn: null, is_night: true, current_phase: night, current_stage: stage_one
             //phases object (stage_one through five)
+            //Balista etc in fort/upgrades object
 
             //upgrades object = ballista, cannon, moat, tower, wall (level_num: complete/current/next/cannotUpgrade nightTime)
+            var tmpPhase = user['quests']['QuestFortRox']['current_phase'];
+            if (tmpPhase == 'night') {
+                var stage = user['quests']['QuestFortRox']['current_stage'];
+                var stages = {
+                    'stage_one' : "Twilight",
+                    'stage_two' : "Midnight",
+                    'stage_three' : "Pitch",
+                    'stage_four' : "Utter Darkness",
+                    'stage_five' : "First Light"
+                };
+                sublocation = stages[stage];
+            } else {
+                sublocation = tmpPhase;
+            }
         }
         else if (userLocation == "Gnawnian Express Station") {
             var onTrain = user["quests"]["QuestTrainStation"]["on_train"];
@@ -77,12 +97,15 @@ javascript:void(function () {
             if (sublocation == "General") {
                 sublocation = "Generals";
             }
-            if ((sublocation == "Treacherous Tunnels" || sublocation == "Bombing Run" || sublocation == "The Mad Depths")
+            if ((sublocation == "Treacherous Tunnels" || sublocation == "The Mad Depths")
                 && userBase == "Magnet Base") {
                 sublocation += " (Magnet)";
             }
             else if (sublocation == "The Mad Depths" && userBase == "Hearthstone Base") {
                 sublocation += " (Hearthstone)";
+            }
+            else if (sublocation == "Bombing Run" && userBase == "Remote Detonator Base") {
+                sublocation += " (Remote Detonator)";
             }
         }
         else if (userLocation == "Labyrinth") {

@@ -1193,17 +1193,10 @@ function weaponChanged() {
     calculateTrapSetup();
 }
 
-function baseChanged() {
-    console.log("Base changed");
-    var baseSelet = document.getElementById("base");
-
-    baseName = baseSelet.children[baseSelet.selectedIndex].innerHTML;
-    updateLink();
-
-    var autoPhase = '';
-
-    if (phaseName == "Bombing Run" && baseName == "Magnet Base") autoPhase = "Bombing Run (Magnet)";
-    else if (phaseName == "Bombing Run (Magnet)" && baseName != "Magnet Base") autoPhase = "Bombing Run";
+function icebergPhase() {
+    var autoPhase = "";
+    if (phaseName == "Bombing Run" && baseName == "Remote Detonator Base") autoPhase = "Bombing Run (Remote Detonator)";
+    else if (phaseName == "Bombing Run (Remote Detonator)" && baseName != "Remote Detonator Base") autoPhase = "Bombing Run";
 
     else if (phaseName == "Treacherous Tunnels" && baseName == "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
     else if (phaseName == "Treacherous Tunnels (Magnet)" && baseName != "Magnet Base") autoPhase = "Treacherous Tunnels";
@@ -1224,6 +1217,15 @@ function baseChanged() {
             }
         }
     }
+}
+function baseChanged() {
+    console.log("Base changed");
+    var baseSelet = document.getElementById("base");
+
+    baseName = baseSelet.children[baseSelet.selectedIndex].innerHTML;
+    updateLink();
+
+    icebergPhase();
 
 
     var basesArrayN = basesArray[baseName] || [0,0,0,0, "No Effect"];

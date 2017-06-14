@@ -1745,6 +1745,7 @@ var tourneysArray = {
 
 //Power, power bonus (%), attraction bonus (%), luck, cheese effect
 var basesArray = {
+    "2017 New Year's Base" : [200, 7, 0, 10, "Fresh"],
     "Aqua Base": [230, 0, 0, 8, "No Effect"],
     "Attuned Enerchi Induction Base": [500, 10, 10, 10, "Stale"],
     "Bacon Base": [200, 0, 15, 0, "Extremely Fresh"],
@@ -1793,6 +1794,7 @@ var basesArray = {
     "Refined Pollutinum Base": [500, 12, 5, 10, "No Effect"],
     "Remote Detonator Base": [300, 10, 10, 4, "Stale"],
     "Rift Base": [250, 12, 0, 11, "Fresh"],
+    "Rooster Jade Base": [350, 12, 10, 10, "Stale"],
     "Runic Base": [200, 12, 10, 5, "No Effect"],
     "Seasonal Base": [300, 0, 8, 6, "No Effect"],
     "Sheep Jade Base": [325, 12, 10, 10, "Stale"],
@@ -1802,6 +1804,7 @@ var basesArray = {
     "Soiled Base": [400, 12, 5, 6, "Very Fresh"],
     "Spellbook Base": [500, 14, 5, 7, "Fresh"],
     "Spiked Base": [300, 12, 0, 3, "Very Stale"],
+    "Sprinkly Sweet Cupcake Birthday Base" :[300, 9, 9, 9, "Extremely Fresh"],
     "Stone Base": [150, 10, 0, 0, "Fresh"],
     "Tidal Base": [800, 8, 10, 10, "Fresh"],
     "Tiki Base": [200, 18, 5, 0, "Very Fresh"],
@@ -1816,6 +1819,8 @@ baseKeys.sort();
 
 ///Power Type, Power, Power Bonus, Attraction, Luck
 var weaponsArray = {
+    "New Year's Fireworks Trap" : ["Physical", 6000, 12, 10, 23, "Stale"],
+    "New Horizon Trap" : ["Arcane", 6217, 15, 10, 26, "Fresh"],
     "Droid Archmagus Trap" : ["Arcane", 5000, 15, 10, 20, "Stale"],
     "Interdimensional Crossbow Trap":["Shadow", 4500, 15, 15, 18, "Fresh"],
     "2010 Blastoff Trap": ["Tactical", 2600, 15, 0, 25, "Very Stale"],
@@ -1884,7 +1889,7 @@ var weaponsArray = {
     "HitGrab Horsey": ["Physical", 550, 2, 0, 20, "Very Fresh"],
     "HitGrab Rainbow Rockin' Horse": ["Physical", 1250, 2, 10, 25, "Uber Fresh"],
     "HitGrab Rockin' Horse": ["Physical", 1250, 2, 10, 25, "No Effect"],
-    "Holiday Hydro Hailstorm Trap" : ["Hydro", 3500, 20, 5, 20, "Fresh"],
+    "Holiday Hydro Hailstone Trap" : ["Hydro", 3500, 20, 5, 20, "Fresh"],
     "Horrific Venus Mouse Trap": ["Tactical", 3400, 12, 1, 16, "No Effect"],
     "Ice Blaster": ["Hydro", 3800, 5, 5, 12, "Fresh"],
     "Ice Maiden": ["Draconic", 5200, 12, 0, 8, "No Effect"],
@@ -1896,6 +1901,7 @@ var weaponsArray = {
     "Kraken Chaos": ["Hydro", 3400, 0, 0, 18, "Very Stale"],
     "Law Laser Trap": ["Law", 1750, 20, 10, 3, "Fresh"],
     "Maniacal Brain Extractor": ["Shadow", 2600, 10, 0, 13, "Very Fresh"],
+    "Meteor Prison Core Trap" : ["Law", 3000, 20, 10, 8, "No Effect"],
     "Mouse DeathBot": ["Physical", 2400, 15, 10, 2, "Stale"],
     "Mouse Hot Tub": ["Physical", 70, 3, 35, 2, "No Effect"],
     "Mouse Mary O'Nette": ["Physical", 250, 0, 6, 5, "Fresh"],
@@ -1939,6 +1945,7 @@ var weaponsArray = {
     "Soul Catcher": ["Shadow", 1500, 5, 5, 5, "No Effect"],
     "Soul Harvester": ["Shadow", 2200, 5, 5, 12, "No Effect"],
     "Sphynx Wrath": ["Tactical", 6100, 10, 10, 25, "Very Fresh"],
+    "Sprinkly Cupcake Surprise Trap": ["Arcane", 3500, 9, 9, 9, "Very Fresh"],
     "Stale Cupcake Golem Trap": ["Forgotten", 6700, 7, 0, 0, "No Effect"],
     "Steam Laser Mk. I": ["Hydro", 4200, 8, 0, 14, "No Effect"],
     "Steam Laser Mk. II": ["Hydro", 4800, 12, 10, 18, "Fresh"],
@@ -1973,6 +1980,7 @@ var charmsArray = {
     "2014 Charm": [2014, 0, 0, 0, "No Effect"],
     "2015 Charm": [2015, 0, 0, 0, "No Effect"],
     "2016 Charm": [2016, 0, 0, 0, "No Effect"],
+    "2017 Charm": [2017, 0, 0, 0, "No Effect"],
     "Airship Charm": [800, 0, 0, 5, "No Effect"],
     "Amplifier Charm": [0, 0, 0, 0, "No Effect"],
     "Ancient Charm": [600, 5, 5, 5, "Extremely Fresh"],
@@ -2044,6 +2052,7 @@ var charmsArray = {
     "Luck Charm": [0, 0, 0, 1, "No Effect"],
     "Lucky Power Charm": [120, 1, 0, 1, "No Effect"],
     "Lucky Rabbit Charm": [0, 0, 0, 6, "No Effect"],
+    "Lucky Valentine Charm": [0, 0, 25, 5, "Fresh"],
     "Magmatic Crystal Charm": [0, 3, 0, 5, "Fresh"],
     "Mining Charm": [250, 1, 0, 0, "No Effect"],
     "Mobile Charm": [0, 5, 0, 5, "Extremely Stale"],
@@ -2092,6 +2101,7 @@ var charmsArray = {
     "Sponge Charm": [0, 0, 0, 0, "No Effect"],
     "Spooky Charm": [300, 1, 0, 0, "No Effect"],
     "Spore Charm": [400, 3, 2, 3, "Stale"],
+    "Sprinkly Sweet Cupcake Charm": [0, 0, 9, 9, "Fresh"],
     "Stagnant Charm": [250, 0, 5, 2, "No Effect"],
     "Sticky Charm": [150, 0, 0, 0, "No Effect"],
     "Striker Charm": [0, 0, 0, 1, "No Effect"],
@@ -4210,3 +4220,17 @@ var trinkets = {
     "Black Powder Charm": 138,
     "Magmatic Crystal Charm": 139
 };
+
+var festiveTraps = ["Christmas Cracker Trap",
+    "Double Diamond Adventure",
+    "Explosive Toboggan Ride",
+    "Festive Forgotten Fir Trap",
+    "Festive Gauntlet Crusher",
+    "Gingerbread House Surprise",
+    "Glacier Gatler",
+    "Holiday Hydro Hailstone Trap",
+    "Ice Blaster",
+    "Nutcracker Nuisance Trap",
+    "Snow Barrage",
+    "Snowglobe Trap",
+    "Wrapped Gift Trap"];

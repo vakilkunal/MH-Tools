@@ -20,6 +20,7 @@ var specialCharm = {
     "Growth Charm": 1,
     "Spellbook Charm": 1,
     "Wild Growth Charm": 1,
+    "Snowball Charm": 1,
 
     "Golden Tournament Base": 1,
     "Soiled Base": 1,
@@ -62,28 +63,31 @@ function calcSpecialCharms(charmName) {
     } else if (charmName == "Growth Charm") {
         //Check if soiled base used.
         if (baseName == "Soiled Base") {
-            charmPower = charmsArrayN[0] + 100;
-            charmBonus = charmsArrayN[1] + 3;
-            charmAtt = charmsArrayN[2] + 5;
-            charmLuck = charmsArrayN[3] + 4;
+            charmPower += 100;
+            charmBonus += 3;
+            charmAtt += 5;
+            charmLuck += 4;
         }
     } else if (charmName == "Spellbook Charm") {
         //Spellbook base
         if (baseName == "Spellbook Base") {
-            charmPower = (charmsArrayN[0]) + 500;
-            charmBonus = (charmsArrayN[1]) + 8;
-            charmEff = parseFreshness[charmsArrayN[4].trim()];
+            charmPower += 500;
+            charmBonus += 8;
 
         }
 
     } else if (charmName == "Wild Growth Charm") {
         //Soiled base
         if (baseName == "Soiled Base") {
-            charmPower = charmsArrayN[0] + 300;
-            charmBonus = charmsArrayN[1] + 8;
-            charmAtt = charmsArrayN[2] + 20;
-            charmLuck = charmsArrayN[3] + 9;
+            charmPower += 300;
+            charmBonus += 8;
+            charmAtt += 20;
+            charmLuck += 9;
 
+        }
+    } else if (charmName == "Snowball Charm") {
+        if (festiveTraps.indexOf(weaponName) > -1) {
+            charmBonus += 20;
         }
     }
 
@@ -116,6 +120,14 @@ function buildURL(location, urlParams) {
         }
     }
     return url;
+}
+
+function getRiftCount() {
+    var riftCount = 0;
+    if (weaponName in riftWeapons) riftCount++;
+    if (baseName in riftBases) riftCount++;
+    if (charmName in riftCharms) riftCount++;
+    return riftCount;
 }
 
 function calculateTrapSetup(skipDisp) {
@@ -200,11 +212,7 @@ function calculateTrapSetup(skipDisp) {
             specialPower += 25000;
         }
 
-        if (weaponName == "Ice Blaster" && charmName == "Snowball Charm") {
-            specialBonus += 10;
-        } else if (weaponName == "Glacier Gatler" && charmName == "Snowball Charm") {
-            specialBonus += 20;
-        } else if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
+        if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
             braceBonus += .25;
         } else if ((baseName == "Polluted Base" || baseName == "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
             if (charmName == "Polluted Charm") {
@@ -217,14 +225,8 @@ function calculateTrapSetup(skipDisp) {
                 specialLuck += 15;
             }
         }
+        var riftCount = getRiftCount();
 
-        var riftCount = 0;
-        if (weaponName in riftWeapons) riftCount++;
-        if (baseName in riftBases) riftCount++;
-        if (charmName in riftCharms) riftCount++;
-        else if (charmName.indexOf("Gnarled Charm") >= 0 || charmName.indexOf("Cherry Charm") >= 0 || charmName.indexOf("Stagnant Charm") >= 0) {
-            riftCount++;
-        }
         if (riftCount == 2) {
             specialBonus += 10;
         } else if (riftCount == 3) {
@@ -366,20 +368,13 @@ function findEff(mouseName) {
     if (trapType == '') eff = 0;
     else {
         eff = (powersArray[mouseName][typeEff[trapType]]) / 100;
-        //console.log(trapType);
     }
     return eff;
 }
 
 function getCheeseAttraction() {
-    //TODO make common cheese ar be global
-    var baselineAtt = baselineAttArray[cheeseName];
-    if (baselineAtt == undefined) {
-        baselineAtt = baselineArray[locationName + " (" + cheeseName + ")"];
-    }
-
+    var baselineAtt = baselineAttArray[cheeseName] || baselineArray[locationName + " (" + cheeseName + ")"];
     return baselineAtt + trapAtt / 100 - trapAtt / 100 * baselineAtt;
-
 }
 
 function gsParamCheck() {
@@ -439,7 +434,6 @@ function populateSublocationDropdown(locationName) {
 
     loadCheeseDropdown();
     phaseChanged();
-    //Load cheese dropdown
 }
 
 function charmChangeCommon() {
@@ -447,10 +441,10 @@ function charmChangeCommon() {
     var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
     if (specialCharm[charmName]) calcSpecialCharms(charmName);
     else {
-        charmPower = (charmsArrayN[0]);
-        charmBonus = (charmsArrayN[1]);
-        charmAtt = (charmsArrayN[2]);
-        charmLuck = (charmsArrayN[3]);
+        charmPower = charmsArrayN[0];
+        charmBonus = charmsArrayN[1];
+        charmAtt = charmsArrayN[2];
+        charmLuck = charmsArrayN[3];
         charmEff = parseFreshness[charmsArrayN[4].trim()];
     }
 }
@@ -503,6 +497,28 @@ function gsChanged() {
     //showPop();
 }
 
+function getIcebergBase() {
+    var autoBase = '';
+    var autoPhase = '';
+    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
+    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
+
+    else if ((phaseName == "Bombing Run"
+        || phaseName == "The Mad Depths"
+        || phaseName == "Treacherous Tunnels")
+        && baseName == "Magnet Base") {
+        autoBase = "";
+    }
+
+    else if (phaseName == "The Mad Depths"
+        && baseName == "Hearthstone Base") autoBase = "";
+
+    if (autoBase != "") {
+        var selectBase = document.getElementById("base");
+        selectBase.value = autoBase;
+        baseChanged();
+    }
+}
 function phaseChanged() {
     console.log("Phase changed");
     if (phaseName == "-") {
@@ -515,21 +531,7 @@ function phaseChanged() {
     var select = document.getElementById("phase");
     phaseName = select.children[select.selectedIndex].innerHTML;
 
-    var autoBase = '';
-    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-    else if ((phaseName == "Bombing Run"
-        || phaseName == "The Mad Depths"
-        || phaseName == "Treacherous Tunnels")
-        && baseName == "Magnet Base") autoBase = "";
-    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
-    else if (phaseName == "The Mad Depths"
-        && baseName == "Hearthstone Base") autoBase = "";
-
-    if (autoBase != "") {
-        var selectBase = document.getElementById("base");
-        selectBase.value = autoBase;
-        baseChanged();
-    }
+    getIcebergBase();
 
     if (locationName == "Twisted Garden"
         && phaseName == "Poured") {
