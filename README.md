@@ -1,6 +1,6 @@
-# [MH Tools](https://github.com/tsitu/MH-Tools)
+# [MH Tools](https://tsitu.github.io/MH-Tools/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/tsitu/MH-Tools/pulls)
 
-Suite of JavaScript-based tools for the browser game [MouseHunt](https://www.mousehuntgame.com/). Ongoing forum discussion [here](https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost). Feel free to submit any issues or pull requests!
+Suite of JavaScript-based tools for the browser game [MouseHunt](https://www.mousehuntgame.com/). Ongoing forum discussion [here](https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost). Feel free to let us know about any issues there (or [here](https://github.com/tsitu/MH-Tools/issues) if it is important).
 
 Jump to:
 
@@ -13,12 +13,12 @@ Jump to:
 
 ### Other useful links
 
- - Marketplace Analyzer tool [discussion](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost)
+ - Marketplace Analyzer [discussion](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost)
  - [Mouse Power Values](https://docs.google.com/spreadsheets/d/1cGu0eG0Fgwf-OWFAfed_tVJC0GQh-j6utxiSDdWRFZE/)
  - [Bookmarklet Maker](http://www.bookmarklets.org/maker/)
 
 ### Thanks to
 
 * Our contributors :grinning:
-* haoala for the [original tools](https://dl.dropboxusercontent.com/u/14589881/index.html)
+* haoala for the [original tools](https://dl.dropboxusercontent.com/u/14589881/index.html) (no longer hosted)
 * [Start Bootstrap](https://github.com/davidtmiller) for the index theme
