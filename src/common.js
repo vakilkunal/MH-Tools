@@ -19,7 +19,7 @@ var cheeseLoaded = 0, charmLoaded = 0;
 var riftStalkerCodex = false;
 
 var fortRox = {
-    balistaLevel : 0,
+    ballistaLevel : 0,
     canonLevel : 0
 };
 
@@ -141,18 +141,68 @@ function getRiftCount(weapon, base, charm) {
 function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
 
+    if (locationName && weaponName && baseName && phaseName) {
+        locationSpecificEffects();
+
+        if (trapType === "Physical" && baseName === "Physical Brace Base") {
+            //noinspection ReuseOfLocalVariableJS
+            braceBonus = 25;
+        } else if ((baseName === "Polluted Base" || baseName === "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
+            if (charmName === "Polluted Charm") {
+                specialLuck += 4;
+            } else if (charmName === "Super Polluted Charm") {
+                specialLuck += 6;
+            } else if (charmName === "Extreme Polluted Charm") {
+                specialLuck += 10;
+            } else if (charmName === "Ultimate Polluted Charm") {
+                specialLuck += 15;
+            }
+        }
+        determineRiftBonus();
+
+        /*
+         * Battery Levels
+         */
+        checkBatteryLevel();
+        trapType = getPowerType(charmName, weaponName);
+
+        trapPower = getTotalTrapPower();
+
+        //noinspection OverlyComplexArithmeticExpressionJS
+        var totalLuck = weaponLuck + baseLuck + gsLuck + charmLuck + bonusLuck + pourLuck + specialLuck;
+        trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
+        trapAtt = weaponAtt + baseAtt + charmAtt;
+        if (trapAtt > 100) {
+            trapAtt = 100;
+        }
+        trapEff = weaponEff + baseEff + charmEff;
+        if (trapEff > 6) {
+            trapEff = 6;
+        }
+        else if (trapEff < -6) {
+            trapEff = -6;
+        }
+
+        if (user === CRE_USER && !skipDisp) {
+            showPop(2);
+            showTrapSetup();
+        }
+    } else {
+        showTrapSetup(0);
+    }
+
     //Only calculate if both weapon and base selected
     //TODO: Cleanup
     function locationSpecificEffects() {
         function isTribalArea(location) {
             return location === "Elub Shore"
-            || location === "Nerg Plains"
-            || location === "Derr Dunes";
+                || location === "Nerg Plains"
+                || location === "Derr Dunes";
         }
 
         if (locationName === "Claw Shot City") {
             if ((weaponName === "S.L.A.C." || weaponName === "S.L.A.C. II")
-            && baseName === "Claw Shot Base") {
+                && baseName === "Claw Shot Base") {
                 if (charmName.indexOf("Cactus Charm") >= 0) specialPower += 2500;
                 else specialPower += 1000;
             }
@@ -232,6 +282,9 @@ function calculateTrapSetup(skipDisp) {
             specialPower += 1000;
         } else if (locationName === "Town of Digby" && cheeseName === "Limelight" && charmName === "Mining Charm") {
             specialBonus += 30;
+        } else if (locationName === "Fort Rox") {
+            fortRox.ballistaLevel = $("#ballistaLevel").val();
+            fortRox.canonLevel = $("#canonLevel").val();
         }
 
         if (cheeseName.indexOf("Fusion Fondue") >= 0 && charmName === "EMP400 Charm") {
@@ -279,72 +332,16 @@ function calculateTrapSetup(skipDisp) {
 
     /**
      * Get power type
-     * TODO: Replace with array lookup
      */
     function getPowerType(charm, weapon) {
-        var powerType = "";
-        if (charm === "Forgotten Charm") {
-            powerType = "Forgotten";
-        } else if (charm === "Nanny Charm") {
-            powerType = "Parental";
-        } else if (charm === "Hydro Charm") {
-            powerType = "Hydro";
-        } else if (charm === "Shadow Charm") {
-            powerType = "Shadow";
-        } else {
-            powerType = weaponsArray[weapon][0];
-        }
-        return powerType;
-    }
+        var charmPowerTypes = {
+            "Forgotten Charm": "Forgotten",
+            "Nanny Charm": "Parental",
+            "Hydro Charm": "Hydro",
+            "Shadow Charm": "Shadow"
+        };
 
-    if (weaponPower && basePower) {
-        locationSpecificEffects();
-
-        if (trapType === "Physical" && baseName === "Physical Brace Base") {
-            //noinspection ReuseOfLocalVariableJS
-            braceBonus = 25;
-        } else if ((baseName === "Polluted Base" || baseName === "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
-            if (charmName === "Polluted Charm") {
-                specialLuck += 4;
-            } else if (charmName === "Super Polluted Charm") {
-                specialLuck += 6;
-            } else if (charmName === "Extreme Polluted Charm") {
-                specialLuck += 10;
-            } else if (charmName === "Ultimate Polluted Charm") {
-                specialLuck += 15;
-            }
-        }
-        determineRiftBonus();
-
-        /*
-         * Battery Levels
-         */
-        checkBatteryLevel();
-        trapType = getPowerType(charmName, weaponName);
-
-        trapPower = getTotalTrapPower();
-
-        //noinspection OverlyComplexArithmeticExpressionJS
-        var totalLuck = weaponLuck + baseLuck + gsLuck + charmLuck + bonusLuck + pourLuck + specialLuck;
-        trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
-        trapAtt = weaponAtt + baseAtt + charmAtt;
-        if (trapAtt > 100) {
-            trapAtt = 100;
-        }
-        trapEff = weaponEff + baseEff + charmEff;
-        if (trapEff > 6) {
-            trapEff = 6;
-        }
-        else if (trapEff < -6) {
-            trapEff = -6;
-        }
-
-        if (user === CRE_USER && !skipDisp) {
-            showPop(2);
-            showTrapSetup();
-        }
-    } else {
-        showTrapSetup(0);
+        return charmPowerTypes[charm] || weaponsArray[weapon][0];
     }
 }
 
@@ -355,10 +352,9 @@ function calculateTrapSetup(skipDisp) {
  * @param tp Trap Power
  * @param tl Trap Luck
  * @param mp Mouse Power
- * @returns {number} Catch Rate Estimate
+ * @returns {number} Catch Rate Estimate: Number between 0 and 1
  */
 function calcCR(eff, tp, tl, mp) {
-    //noinspection OverlyComplexArithmeticExpressionJS
     return Math.min((eff * tp + (3 - Math.min(eff, 2)) * Math.pow((Math.min(eff, 2) * tl), 2)) / (eff * tp + mp), 1);
 }
 
@@ -479,7 +475,7 @@ function populateWeaponData(armedWeapon) {
 
 /**
  * Populates the global variables for the base
- * @param armedBase the name of the base
+ * @param {string} armedBase the name of the base
  */
 function populateBaseData(armedBase) {
     var basesArrayN = basesArray[armedBase] || DEFAULT_STATS;
@@ -493,15 +489,14 @@ function populateBaseData(armedBase) {
 
 /**
  * Loads a dropdown menu for weapons, bases or charms
- * @param category The items to load. The same as the URL parameter and the item ID
- * @param array The item names
- * @param callback The callback function
- * @param initialHtml Optional. Initial html content in the select
+ * @param {string} category The items to load. The same as the URL parameter and the item ID
+ * @param {string[]} array The item names
+ * @param {function} callback A callback fucntion that takes no parameters
+ * @param {string} [initialHtml] Optional. Initial html content in the select
  */
 function loadDropdown(category, array, callback, initialHtml) {
-
     var inputElement = document.getElementById(category);
-    var dropdownHtml =  initialHtml;
+    var dropdownHtml =  initialHtml || "";
     for (var key in array) {
         dropdownHtml += "<option>" + array[key] + "</option>\n";
     }
@@ -526,11 +521,6 @@ function loadLocationDropdown() {
     loadDropdown("location", array, locationChanged, "<option></option>")
 }
 
-function populateSublocationDropdown(locationName) {
-    var category = "phase";
-    var array = Object.keys(popArray[locationName] || []);
-    loadDropdown(category, array, phaseChanged);
-}
 
 function showTrapSetup(type) {
     var trapSetup = document.getElementById("trapSetup");
@@ -655,4 +645,56 @@ function showHideWidgets(custom) {
         $(locationNameClass).show(500);
     }
     checkToxicWidget(custom);
+}
+
+function clearResults() {
+    var results = document.getElementById("results");
+    results.innerHTML = '';
+    formatSampleSize();
+}
+
+/**
+ * Location change handler
+ * - Update location variable
+ * - Show/hide widgets
+ * - Populate phases
+ * - Clear results
+ */
+function locationChanged() {
+    var select = document.getElementById("location");
+    locationName = select.value;
+
+    var checked = user === CRE_USER && document.getElementById("toggleCustom").checked;
+
+    updateLink();
+    showHideWidgets(checked);
+
+    batteryPower = 0;
+    ztAmp = 100;
+    sampleSize = 0;
+
+    //Populate sublocation dropdown and select first option
+    if (locationName && locationName !== "") {
+        populateSublocationDropdown(locationName);
+    } else {
+        $("#phaseRow").hide()
+    }
+
+    clearResults();
+
+    function populateSublocationDropdown(locationName) {
+        var category = "phase";
+        var array = Object.keys(popArray[locationName] || []);
+        loadDropdown(category, array, phaseChanged, "");
+        if (array.length > 1) {
+            $("#phaseRow").show()
+        } else {
+            $("#phaseRow").hide()
+        }
+    }
+}
+
+function genericOnChange() {
+    calculateTrapSetup(false) ;
+    showPop(2);
 }

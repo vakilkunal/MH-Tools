@@ -91,6 +91,9 @@ window.onload = function () {
     document.getElementById("bonusLuck").onchange = bonusLuckChanged;
     document.getElementById("tourney").onchange = tourneyChanged;
 
+    document.getElementById("ballistaLevel").onchange = genericOnChange;
+    document.getElementById("canonLevel").onchange = genericOnChange;
+
     document.getElementById("cheeseCost").onchange = function () {
         cheeseCost = parseInt(document.getElementById("cheeseCost").value);
         showPop(2);
@@ -250,38 +253,25 @@ function showPop(type) { //type = 2 means don't reset charms
 
     if (!locationName || !cheeseName || type === 0) {
         results.innerHTML = '';
-    } else {
+    }
+    else {
         checkPhase();
         var popArrayLPC = extractPopArrayLPC(locationName, phaseName, cheeseName);
 
         //Highlight special charms
         var specialCharmsList;
         var specialCharms = Object.keys(popArrayLPC || []);
-        if (specialCharms.length > 1) {
-
-            specialCharmsList = [];
-            for (var key in specialCharms) {
-
-                specialCharmsList.push(specialCharms[key]);
+        if (type !== 2) {
+            if (specialCharms.length > 1) {
+                highlightSpecialCharms(specialCharms);
             }
-
-            if (type !== 2) highlightSpecialCharms(specialCharmsList);
-        }
-        /*
-         * Allow pop with special charm(s) but without a "no charm" pop
-         */
-        else if (popArrayLPC != null && specialCharms[0] != "-") {
-            sampleSize = 0;
-            specialCharmsList = [];
-            for (var key in specialCharms) {
-                specialCharmsList.push(specialCharms[key]);
+            /*
+             * Allow pop with special charm(s) but without a "no charm" pop
+             */
+            else if (popArrayLPC !== null && specialCharms[0] !== "-") {
+                highlightSpecialCharms(specialCharms);
             }
-
-            if (type !== 2) highlightSpecialCharms(specialCharmsList);
-        }
-        else {
-            if (type !== 2) {
-
+            else {
                 loadCharmDropdown()
             }
         }
@@ -291,7 +281,7 @@ function showPop(type) { //type = 2 means don't reset charms
             var popArrayLC = popArrayLPC[popCharmName];
         }
         else {
-            if (popArrayLPC !== undefined) {
+            if (popArrayLPC) {
                 popArrayLC = popArrayLPC['-'];
             }
         }
@@ -322,7 +312,7 @@ function showPop(type) { //type = 2 means don't reset charms
         var percentSD = 0;
         var minLuckOverall = 0;
 
-        if (specialCharmsList != undefined && specialCharmsList.indexOf(charmName.slice(0, -1)) >= 0) {
+        if (specialCharmsList && specialCharmsList.indexOf(charmName.slice(0, -1)) >= 0) {
             sampleSize = 0;
         }
 
@@ -331,15 +321,20 @@ function showPop(type) { //type = 2 means don't reset charms
         for (var i = 0; i < noMice; i++) {
             var mouseName = miceNames[i];
 
-            if (mouseName != "SampleSize") {
+            if (mouseName !== "SampleSize") {
                 var eff = findEff(mouseName);
 
-                 var mousePower = powersArray[mouseName][0];
+                var mousePower = powersArray[mouseName][0];
+
+                if (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 1
+                    || contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 1) {
+                    mousePower /= 2;
+                }
+
                 var catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
 
-
                 if (locationName === "Zugzwang's Tower") {
-                    if (contains(mouseName,"Rook") && charmName == "Rook Crumble Charm") {
+                    if (contains(mouseName,"Rook") && charmName === "Rook Crumble Charm") {
                         charmBonus += 300;
                         calculateTrapSetup(true); // not "cre" or else infinite loop
                         catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -416,19 +411,36 @@ function showPop(type) { //type = 2 means don't reset charms
                         }
                     }
                 }
+
+                var minLuckValue = minLuck(eff, mousePower);
+
+                /**
+                 * Increase CR by 50% for ZUM in ZT/SG and Ballista/Canon 2 in FR
+                 */
                 if (locationName === "Zugzwang's Tower" || locationName === "Seasonal Garden") {
                     if (ztAmp > 0 && weaponName === "Zugzwang's Ultimate Move") {
                         catchRate += ((1 - catchRate) / 2);
                     }
-                }
-                var minLuckValue = minLuck(eff, mousePower);
-                minLuckOverall = Math.max(minLuckValue, minLuckOverall);
+                } else if (locationName ==="Fort Rox" ) {
+                    if ((contains(wereMice, mouseName) && fortRox.ballistaLevel >= 2)
+                        || (contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 2)) {
+                        catchRate += ((1 - catchRate) / 2);
+                    }
 
+                    if ((fortRox.canonLevel >= 3 && mouseName === "Nightfire")
+                        || (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
+                    ) {
+                        catchRate = 1;
+                        minLuckValue = 0;
+                    }
+                }
+
+                minLuckOverall = Math.max(minLuckValue, minLuckOverall);
 
                 //Exceptions, modifications to catch rates
                 //Dragonbane Charm
                 if (charmName === "Ultimate Charm") catchRate = 1;
-                else if (locationName === "Sunken City" && charmName === "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
+                else if (locationName === "Sunken City" && charmName === "Ultimate Anchor Charm" && phaseName !== "Docked") catchRate = 1;
                 else if (mouseName === "Dragon" && charmName === "Dragonbane Charm") catchRate *= 2;
                 else if (mouseName === "Bounty Hunter" && charmName === "Sheriff's Badge Charm") catchRate = 1;
                 else if (mouseName === "Zurreal the Eternal" && weaponName !== "Zurreal's Folly") catchRate = 0;
@@ -437,14 +449,9 @@ function showPop(type) { //type = 2 means don't reset charms
 
                 var catches = attractions * catchRate;
 
-                if (miceArray[mouseName] === undefined) {
-                    var mouseGold = 0;
-                    var mousePoints = 0;
-                } else {
-                    var mouseGold = miceArray[mouseName][0];
-                    var mousePoints = miceArray[mouseName][1];
-                }
-
+                var mouseRewards = miceArray[mouseName] || [0,0];
+                var mouseGold = mouseRewards[0];
+                var mousePoints = mouseRewards[1];
 
                 if (charmName === "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
                 else if (charmName === "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
@@ -453,10 +460,12 @@ function showPop(type) { //type = 2 means don't reset charms
                 var gold = catches * mouseGold / 100;
                 var points = catches * mousePoints / 100;
 
-                if (tourneysArray[tournamentName] !== undefined) {
-                    var tourneyPoints = tourneysArray[tournamentName][mouseName];
-                    if (tourneyPoints === undefined) tourneyPoints = 0;
-                } else tourneyPoints = 0;
+                var tournamentMice = tourneysArray[tournamentName];
+                if (tournamentMice) {
+                    var tourneyPoints = tournamentMice[mouseName] || 0;
+                } else {
+                    tourneyPoints = 0;
+                }
                 var TP = catches * tourneyPoints / 100;
                 var PX2 = TP * tourneyPoints;
 
@@ -487,7 +496,8 @@ function showPop(type) { //type = 2 means don't reset charms
                     } else if (charmName === "Sticky Charm" && contains(berglings,mouseName)) {
                         deltaDepthFTC = 0;
                     } else if (baseName === "Spiked Base" && contains(brutes,mouseName)) {
-                        deltaDepthCatch = deltaDepthFTC = 0;
+                        deltaDepthCatch = 0;
+                        deltaDepthFTC = 0
                     } else if (baseName === "Remote Detonator Base" && contains(bombSquad,mouseName)) {
                         deltaDepthCatch = 20;
                     }
@@ -509,17 +519,19 @@ function showPop(type) { //type = 2 means don't reset charms
 
                 resultsHTML += "</tr>";
             }
+
+            formatSampleSize();
         }
 
-        if (popArray[locationName][phaseName][commonCheeseIndex] != undefined || popArray[locationName][phaseName][cheeseName] != undefined) {
-            if (charmName == "No Charm") {
-                if (commonCheeseIndex != undefined) {
-                    if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
+        if (popArray[locationName][phaseName][commonCheeseIndex] || popArray[locationName][phaseName][cheeseName]) {
+            if (charmName === "No Charm") {
+                if (commonCheeseIndex) {
+                    if (popArray[locationName][phaseName][commonCheeseIndex]["-"]) {
                         sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
                     }
                 }
                 else {
-                    if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
+                    if (popArray[locationName][phaseName][cheeseName]["-"]) {
                         sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
                     }
                 }
@@ -532,22 +544,22 @@ function showPop(type) { //type = 2 means don't reset charms
                 else {
                     slice = charmName.slice(0, -6);
                 }
-                if (commonCheeseIndex != undefined) {
-                    if (popArray[locationName][phaseName][commonCheeseIndex][slice] != undefined) {
+                if (commonCheeseIndex ) {
+                    if (popArray[locationName][phaseName][commonCheeseIndex][slice]) {
                         sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
                     }
                     else {
-                        if (popArray[locationName][phaseName][commonCheeseIndex]["-"] != undefined) {
+                        if (popArray[locationName][phaseName][commonCheeseIndex]["-"]) {
                             sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
                         }
                     }
                 }
                 else {
-                    if (popArray[locationName][phaseName][cheeseName][slice] != undefined) {
+                    if (popArray[locationName][phaseName][cheeseName][slice]) {
                         sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
                     }
                     else {
-                        if (popArray[locationName][phaseName][cheeseName]["-"] != undefined) {
+                        if (popArray[locationName][phaseName][cheeseName]["-"]) {
                             sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
                         }
                     }
@@ -609,7 +621,6 @@ function showPop(type) { //type = 2 means don't reset charms
         $("#results").trigger("updateAll", [resort, callback]);
     }
 
-    formatSampleSize();
 
     function extractPopArrayLPC(location, phase, cheese) {
         var popArrayLPC = popArray[location][phase][cheese];
@@ -785,28 +796,6 @@ function updateLink() {
     ga('send', 'event', 'tournament', 'selected', tournamentName);
 }
 
-
-function locationChanged() {
-    var select = document.getElementById("location");
-    locationName = select.value;
-    updateLink();
-
-    var checked = document.getElementById("toggleCustom").checked;
-    showHideWidgets(checked);
-
-    batteryPower = 0;
-    ztAmp = 100;
-    sampleSize = 0;
-
-    //Populate sublocation dropdown and select first option
-    if (locationName && locationName !== "") {
-        populateSublocationDropdown(locationName);
-    }
-    phaseChanged();
-
-    showPop(0);
-}
-
 function cheeseChanged() {
     var select = document.getElementById("cheese");
     cheeseName = select.value;
@@ -867,9 +856,7 @@ function baseChanged() {
 
     baseName = baseSelet.value;
     updateLink();
-
     icebergPhase();
-
     populateBaseData(baseName);
 
     //Bases with special effects when paired with particular charm
@@ -882,14 +869,12 @@ function charmChanged() {
     charmName = select.value.trim().replace(/\*$/, "");
     charmChangeCommon();
     calculateTrapSetup();
-    showPop(2);
 }
 
 function tourneyChanged() {
     var select = document.getElementById("tourney");
     tournamentName = select.value;
     updateLink();
-
-    showPop(2);
+    calculateTrapSetup();
 }
 

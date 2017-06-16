@@ -13,12 +13,11 @@ var standardCheeseCost = {
 //Function for determining size of multi-level array
 Object.size = function (obj) {
     var size = 0;
-    //var text = '';
     for (var key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-        //text += obj[key] + "<br>";
+        if (obj.hasOwnProperty(key)) {
+            size++;
+        }
     }
-    //results.innerHTML += text;
     return size;
 };
 

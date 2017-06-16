@@ -62,6 +62,8 @@ $(window).load(function () {
     document.querySelector("#battery").onchange = batteryChanged;
     document.querySelector("#gs").onchange = gsChanged;
     document.querySelector("#bonusLuck").onchange = bonusLuckChanged;
+    document.querySelector("#ballistaLevel").onchange = genericOnChange;
+    document.querySelector("#canonLevel").onchange = genericOnChange;
 
     $("#save_setup_button").click = saveSetupCookie;
 
@@ -505,26 +507,10 @@ function weaponChanged() {
     calculateTrapSetup();
 }
 
-function locationChanged() {
-    var select = document.querySelector("#location");
-    locationName = select.value;
-
-    updateLink();
-    showHideWidgets();
-
-    batteryPower = 0;
-    ztAmp = 100;
-
-    if (locationName !== "") {
-        populateSublocationDropdown(locationName);
-        phaseChanged();
-    }
-}
-
 function cheeseChanged() {
+    cheeseName = document.querySelector("#cheese").value;
     ga("send", "event", "cheese", "changed", cheeseName);
 
-    cheeseName = document.querySelector("#cheese").value;
     updateLink();
     checkToxicWidget();
     loadCharmDropdown(locationName, phaseName, cheeseName);
@@ -734,7 +720,6 @@ function printCombinations(micePopulation, headerHtml) {
     }
 
     function findBestCharm(event) {
-        console.log("Finding best charm...");
         weaponName = event.data.weapon;
         baseName = event.data.base;
         weaponChanged();
@@ -782,26 +767,53 @@ function getCRELinkElement() {
 /**
  * Gets mouse attraction and catch rate
  * @param micePopulation {{String:Number}} Mouse population percentages for the current location
- * @param mouse {String} Mouse name
+ * @param mouseName {String} Mouse name
  * @param overallAR {Number} Setup attraction rate
  * @param effectivenessArray {Number[]} Power type effectiveness array
  * @param powersArray {Number[]} Mouse powers array
  * @return {{attractions: number, catchRate: number}}
  */
-function getMouseACR(micePopulation, mouse, overallAR, effectivenessArray, powersArray) {
-    var attractions = micePopulation[mouse] * overallAR;
+function getMouseACR(micePopulation, mouseName, overallAR, effectivenessArray, powersArray) {
+    var attractions = micePopulation[mouseName] * overallAR;
+    var mousePower = powersArray[mouseName];
+    var trapEffectiveness = effectivenessArray[mouseName];
 
-    if (contains(mouse,"Rook") && charmName === "Rook Crumble Charm") {
+    if (contains(mouseName, "Rook") && charmName === "Rook Crumble Charm") {
         charmBonus += 300;
-        calculateTrapSetup();
+    }
+    if (locationName === "Fort Rox" ) {
+        if (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 1
+            || contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 1) {
+            mousePower /= 2;
+        }
     }
 
-    var catchRate = calcCR(effectivenessArray[mouse], trapPower, trapLuck, powersArray[mouse]);
+    calculateTrapSetup();
 
-    if (contains(mouse, "Rook") && charmName === "Rook Crumble Charm") {
+    var catchRate = calcCR(trapEffectiveness, trapPower, trapLuck, mousePower);
+
+    if (locationName === "Zugzwang's Tower" || locationName === "Seasonal Garden") {
+        if (ztAmp > 0 && weaponName === "Zugzwang's Ultimate Move") {
+            catchRate += ((1 - catchRate) / 2);
+        }
+    } else if (locationName ==="Fort Rox" ) {
+        if ((contains(wereMice, mouseName) && fortRox.ballistaLevel >= 2)
+            || (contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 2)) {
+            catchRate += ((1 - catchRate) / 2);
+        }
+    }
+
+    if ((fortRox.canonLevel >= 3 && mouseName === "Nightfire")
+        || (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
+    ) {
+        catchRate = 1;
+    }
+
+    if (contains(mouseName, "Rook") && charmName === "Rook Crumble Charm") {
         charmBonus -= 300;
-        calculateTrapSetup();
     }
+
+    calculateTrapSetup();
 
     return {attractions: attractions, catchRate: catchRate};
 }
@@ -820,11 +832,7 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
     var attractions = mouseACDetails.attractions;
     var catchRate = mouseACDetails.catchRate;
 
-    if (locationName == "Zugzwang's Tower" || locationName == "Seasonal Garden") {
-        if (ztAmp > 0 && weaponName == "Zugzwang's Ultimate Move") {
-            catchRate += ((1 - catchRate) / 2);
-        }
-    }
+
     //Exceptions, modifications to catch rates
     if (charmName == "Ultimate Charm") catchRate = 1;
     else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;

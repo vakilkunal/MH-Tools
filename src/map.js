@@ -494,7 +494,7 @@ function printBestLocation (sortedLocation, mouseLocationArray) {
 		//Checking mouse location
 		var mouseLocationHTML = '';
 		var lpcc = sortedLocation[i][0];
-		if (mouseLocationArray[lpcc] != undefined) {
+		if (mouseLocationArray[lpcc]) {
 			for (var j=0; j<Object.size(mouseLocationArray[lpcc]); j++) {
 				mouseLocationHTML += mouseLocationArray[lpcc][j][0] + " (" + mouseLocationArray[lpcc][j][1] + "%)<br>";
 			}

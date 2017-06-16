@@ -56,7 +56,7 @@ javascript:void(function () {
             //Phases
             //Twilight = is_dawn: null, is_night: true, current_phase: night, current_stage: stage_one
             //phases object (stage_one through five)
-            //Balista etc in fort/upgrades object
+            //Ballista etc in fort/upgrades object
 
             //upgrades object = ballista, cannon, moat, tower, wall (level_num: complete/current/next/cannotUpgrade nightTime)
             var tmpPhase = user['quests']['QuestFortRox']['current_phase'];
