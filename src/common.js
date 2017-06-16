@@ -571,19 +571,24 @@ function getIcebergBase() {
 }
 
 function phaseChanged() {
-    if (phaseName === "") {
-        phaseName = "-";
+    function setPhase() {
+        var select = document.getElementById("phase");
+        phaseName = select.value;
+
+        if (phaseName === "") {
+            phaseName = "-";
+        }
     }
 
-    if (phaseName === "-") {
-        $("#phaseRow").hide();
-    }
-    else {
-        $("#phaseRow").show(500);
-    }
+    setPhase();
 
-    var select = document.getElementById("phase");
-    phaseName = select.value;
+    if (!popArray[locationName][phaseName]) {
+        var phases = Object.keys(popArray[locationName]);
+        loadDropdown("phase", phases, function () {
+            document.getElementById("#phase").selectedIndex = 0;
+            setPhase();
+        })
+    }
 
     getIcebergBase();
 
@@ -677,14 +682,14 @@ function locationChanged() {
     if (locationName && locationName !== "") {
         populateSublocationDropdown(locationName);
     } else {
-        $("#phaseRow").hide()
+        $("#phaseRow").hide();
     }
 
     clearResults();
 
     function populateSublocationDropdown(locationName) {
         var category = "phase";
-        var array = Object.keys(popArray[locationName] || []);
+        var array = Object.keys(popArray[locationName] || ["-"]);
         loadDropdown(category, array, phaseChanged, "");
         if (array.length > 1) {
             $("#phaseRow").show()
