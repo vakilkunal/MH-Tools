@@ -42,7 +42,7 @@ $(window).load(function () {
     if (!loaded) {
         checkCookies();
         startPopulationLoad();
-        $("#main").show(500);
+        $("#main").show();
     }
     gsParamCheck();
 
@@ -554,7 +554,7 @@ function showPop() {
 
     /**
      * Build the results table header
-     * @param {MousePopulations} population
+     * @param population
      * @return {string}
      */
     function getHeader(population) {
@@ -570,7 +570,7 @@ function showPop() {
 /**
  * Get mouse population for current location/phase/cheese and the selected charm
  * @param selectedCharm {string}
- * @return {MousePopulations}
+ * @return Mouse Populations
  */
 function getPopulation(selectedCharm) {
     var popArrayLPC = popArray[locationName][phaseName][cheeseName];
@@ -581,7 +581,7 @@ function getPopulation(selectedCharm) {
 
     /**
      * Handle cases where cheese names bundled together with '/' between
-     * @return {CharmPopulations}
+     * @return Charm Populations
      */
     function checkPopArray() {
         var popArrayL = popArray[locationName][phaseName];
@@ -600,9 +600,8 @@ function getPopulation(selectedCharm) {
 
 /**
  * Builds associative array of chosen power type's effectiveness against the mice population
- * @param micePopulation {MousePopulations}
- * @return {{String:Number}}
- * TODO: Instead of using this mess, use a function that can query it directly?
+ * @param micePopulation
+ * @return {{String: Number}} Object with Mouse : Effectiveness
  */
 function buildEffectivenessArray(micePopulation) {
     var eff = {};
@@ -615,8 +614,7 @@ function buildEffectivenessArray(micePopulation) {
 /**
  * Builds associative array of mouse powers from current micePopulation
  * @param micePopulation
- * @return {{string:Number}}
- * TODO: Instead of using this mess, use a fucntion that can query it directly.
+ * @return {{String: Number}} -  Object with Mouse : Power
  */
 function buildPowersArray(micePopulation) {
     var power = {};
@@ -845,7 +843,7 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
 
 /**
  * Print result of best charm. (Different charms with specific weapon, base)
- * @param micePopulation {MousePopulations}
+ * @param micePopulation
  * @param headerHTML {String}
  */
 function printCharmCombinations(micePopulation, headerHTML) {

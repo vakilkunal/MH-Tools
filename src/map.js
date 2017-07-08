@@ -137,8 +137,7 @@ window.onload = function () {
     }
 
     if (Cookies.get('savedAttraction') !== undefined) {
-    	var x = parseInt(Cookies.get('savedAttraction'));
-    	attractionBonus = x;
+        attractionBonus = parseInt(Cookies.get('savedAttraction'));
     	$("#ampSlider").slider('option','value',attractionBonus);
     }
 
@@ -164,7 +163,7 @@ window.onload = function () {
 			clearTimeout(timeDelay);
 			var mapText = document.getElementById("map").value;
 			var b = (mapText.match(/\n/g)||[]).length;
-			if (b != numLineBreaks) {
+			if (b !== numLineBreaks) {
 				numLineBreaks = b;
 				processMap(mapText);
 			}
@@ -454,24 +453,27 @@ function sortBestLocation (bestLocationArray, weightedBLA) {
 	var bLALength = Object.size(bestLocationArray);
 	var bLAKeys = Object.keys(bestLocationArray);
 	
-	if (typeof weightedBLA != 'undefined') {
-		for (var i=0; i<bLALength; i++) {
-			var locationCheese = bLAKeys[i];
-			//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
-			sortedLocation.push([locationCheese, bestLocationArray[locationCheese], weightedBLA[locationCheese]]);
-		}
-		
-		sortedLocation.sort(function(a,b) {return b[2]-a[2]});
-	}
-	else {
-		for (var i=0; i<bLALength; i++) {
-			var locationCheese = bLAKeys[i];
-			//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
-			sortedLocation.push([locationCheese, bestLocationArray[locationCheese]]);
-		}
+	if (typeof weightedBLA == 'undefined') {
+        for (var i = 0; i < bLALength; i++) {
+            var locationCheese = bLAKeys[i];
+            //sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
+            sortedLocation.push([locationCheese, bestLocationArray[locationCheese]]);
+        }
 
-		sortedLocation.sort(function(a,b) {return b[1]-a[1]});
-	}
+        sortedLocation.sort(function (a, b) {
+            return b[1] - a[1]
+        });
+    } else {
+        for (var i = 0; i < bLALength; i++) {
+            var locationCheese = bLAKeys[i];
+            //sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
+            sortedLocation.push([locationCheese, bestLocationArray[locationCheese], weightedBLA[locationCheese]]);
+        }
+
+        sortedLocation.sort(function (a, b) {
+            return b[2] - a[2]
+        });
+    }
 	
 	return sortedLocation;
 }

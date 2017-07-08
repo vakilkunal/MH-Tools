@@ -203,28 +203,29 @@ function formatSampleSize(sampleSizeParam) {
     var sizeDescriptor = "";
 
     sampleSizeParam = sampleSizeParam || sampleSize;
-    if (!sampleSizeParam) {
+    if (sampleSizeParam) {
+        if (sampleSizeParam > 27000) {
+            str = "excellent";
+            colored = str.fontcolor("orange");
+        }
+        else if (sampleSizeParam > 10000) {
+            str = "good";
+            colored = str.fontcolor("green");
+        }
+        else if (sampleSizeParam > 2400) {
+            str = "average";
+            colored = str.fontcolor("blue");
+        }
+        else if (sampleSizeParam > 500) {
+            str = "poor";
+            colored = str.fontcolor("red");
+        }
+        else {
+            str = "very bad";
+            colored = str.fontcolor("purple");
+        }
+    } else {
         sizeDescriptor = "N/A";
-    }
-    else if (sampleSizeParam > 27000) {
-        str = "excellent";
-        colored = str.fontcolor("orange");
-    }
-    else if (sampleSizeParam > 10000) {
-        str = "good";
-        colored = str.fontcolor("green");
-    }
-    else if (sampleSizeParam > 2400) {
-        str = "average";
-        colored = str.fontcolor("blue");
-    }
-    else if (sampleSizeParam > 500) {
-        str = "poor";
-        colored = str.fontcolor("red");
-    }
-    else {
-        str = "very bad";
-        colored = str.fontcolor("purple");
     }
 
     if (sampleSizeParam) {
@@ -250,6 +251,21 @@ function showPop(type) { //type = 2 means don't reset charms
         charmName = "No Charm";
     }
 
+
+    function getHeaderRow() {
+        var headerHTML = "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+        if (locationName.indexOf("Seasonal Garden") >= 0) {
+            headerHTML += "<th data-filter='false'>Amp %</th>";
+        } else if (contains(locationName, "Iceberg") && phaseName.indexOf("Lair") < 0) {
+            headerHTML += "<th data-filter='false'>Catch ft</th><th data-filter='false'>FTC ft</th>";
+        } else if (locationName.indexOf("Sunken City") >= 0 && phaseName !== "Docked") {
+            headerHTML += "<th data-filter='false'>Metres<br>per hunt</th>";
+        } else if (locationName === "Labyrinth" && phaseName !== "Intersection") {
+            headerHTML += "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
+        }
+        headerHTML += "</tr>";
+        return headerHTML;
+    }
 
     if (!locationName || !cheeseName || type === 0) {
         results.innerHTML = '';
@@ -287,21 +303,13 @@ function showPop(type) { //type = 2 means don't reset charms
         }
 
 
-        var resultsHTML = "<thead><tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
-        if (locationName.indexOf("Seasonal Garden") >= 0) {
-            var deltaAmpOverall = 0;
-            resultsHTML += "<th data-filter='false'>Amp %</th>";
-        } else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
-            var deltaDepthOverall = 0, depthTest = 0;
-            resultsHTML += "<th data-filter='false'>Catch ft</th><th data-filter='false'>FTC ft</th>";
-        } else if (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked") {
-            var diveMPH = 0;
-            resultsHTML += "<th data-filter='false'>Metres<br>per hunt</th>";
-        } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
-            var avgLanternClues = 0;
-            resultsHTML += "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
-        }
-        resultsHTML += "</tr></thead><tbody>";
+        var deltaAmpOverall = 0;
+        var deltaDepthOverall = 0, depthTest = 0;
+        var diveMPH = 0;
+        var avgLanternClues = 0;
+        var headerHTML = getHeaderRow();
+
+        var resultsHTML = "<thead>" + headerHTML + "</thead><tbody>";
         var overallCR = 0;
         var overallAR = getCheeseAttraction();
 
@@ -480,11 +488,12 @@ function showPop(type) { //type = 2 means don't reset charms
                 catchRate = catchRate.toFixed(2);
                 catches = catches.toFixed(2);
 
-                resultsHTML += "<tr align='right'><td align='left'>" + mouseName + "</td><td>" + attractions.toFixed(2) + "%</td><td>" + catchRate + "%</td><td>" + catches + "</td><td>" + commafy(mouseGold) + "</td><td>" + commafy(mousePoints) + "</td><td>" + tourneyPoints + "</td><td>" + minLuckValue + "</td>";
+                var mouseRow = "<td align='left'>" + mouseName + "</td><td>" + attractions.toFixed(2) + "%</td><td>" + catchRate + "%</td><td>" + catches + "</td><td>" + commafy(mouseGold) + "</td><td>" + commafy(mousePoints) + "</td><td>" + tourneyPoints + "</td><td>" + minLuckValue + "</td>";
+
                 if (locationName.indexOf("Seasonal Garden") >= 0) {
                     var dAmp = deltaAmp[mouseName];
                     if (charmName === "Amplifier Charm") dAmp *= 2;
-                    resultsHTML += "<td>" + dAmp + "%</td>";
+                    mouseRow += "<td>" + dAmp + "%</td>";
                     // console.log("Amp bonus", dAmp);
                     deltaAmpOverall += catches / 100 * dAmp;
                 } else if (contains(locationName,"Iceberg") && phaseName.indexOf("Lair") < 0) {
@@ -502,22 +511,23 @@ function showPop(type) { //type = 2 means don't reset charms
                         deltaDepthCatch = 20;
                     }
 
-                    resultsHTML += "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
+                    mouseRow += "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
 
                     deltaDepthOverall += (catchRate / 100 * deltaDepthCatch + (100 - catchRate) / 100 * deltaDepthFTC) * attractions / 100;
 
                     depthTest += deltaDepthCatch * catches / 100 + deltaDepthFTC * (attractions - catches) / 100;
                 } else if (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked") {
-                    resultsHTML += "<td></td>";
+                    mouseRow += "<td></td>";
                 } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
                     var mouseClues = labyrinthMiceClues[mouseName];
                     if (lanternStatus == "On" && mouseClues != 0) mouseClues++;
                     if (charmName == "Lantern Oil Charm" && mouseClues != 0) mouseClues++;
                     avgLanternClues += mouseClues * catches / 100;
-                    resultsHTML += "<td>" + mouseClues + "</td><td></td>";
+                    mouseRow += "<td>" + mouseClues + "</td><td></td>";
                 }
 
-                resultsHTML += "</tr>";
+
+                resultsHTML += "<tr align='right'>" + mouseRow + "</tr>"
             }
 
             formatSampleSize();

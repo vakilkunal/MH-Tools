@@ -9,28 +9,9 @@ var BASELINES_URL = "data/baselines.txt";
 
 /**
  * Population data parsed from CSV
- * @type {LocationPopulations}
+ * Object with location - phase - cheese - charm - mouse - pop %
  */
 var popArray = {};
-
-/**
- * Population data type definitions:
- *
- * Mice attraction rates for specific Location-Phase-Cheese-Charm combination.
- * @typedef {{String : Number}} MousePopulations
- *
- * Charm populations for Location-Phase-Cheese.
- * @typedef {{String: MousePopulations}} CharmPopulations
- *
- * Cheese for Location-Phase.
- * @typedef {{String: CharmPopulations}} CheesePopulations
- *
- * Phases for a Location.
- * @typedef {{String: CheesePopulations}} PhasePopulations
- *
- * Populations for different locations.
- * @typedef {{String: PhasePopulations}} LocationPopulations
- */
 
 /**
  * Cheese baseline attractions
@@ -114,7 +95,7 @@ function processPop(popText) {
  * Splits a CSV row into an object with labels
  * @param csvRow []
  * @param splitCheese Boolean Indicates whether the cheese string should be split
- * @return {{location: string, phase: string, cheese: [string], charm: *, attraction: *, mouse: *, sampleSize: *}}
+ * @return {{location: string, phase: string, cheese: [string], charm: string, attraction: Number, mouse: String, sampleSize: String}}
  */
 function parseCsvRow(csvRow, splitCheese) {
     var cheese = csvRow[2];
@@ -137,13 +118,11 @@ function parseCsvRow(csvRow, splitCheese) {
 
 /**
  * This will parse a delimited string into an array of arrays.
- * The default delimiter is the comma, but this // can be overriden in the second argument.
+ * The default delimiter is the comma, but this can be overriden in the second argument.
  * @param {string} strData - Delimited String
  * @param {string} [strDelimiter=","] - Delimiter for the string. Default is a comma
  * */
 function csvToArray(strData, strDelimiter) {
-    // Check to see if the delimiter is defined. If not,
-    // then default to comma.
     strDelimiter = strDelimiter || ",";
 
     // Create a regular expression to parse the CSV values.

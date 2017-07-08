@@ -655,7 +655,9 @@ function showHideWidgets(custom) {
 function clearResults() {
     var results = document.getElementById("results");
     results.innerHTML = '';
-    formatSampleSize();
+    if (user === CRE_USER) {
+        formatSampleSize();
+    }
 }
 
 /**
