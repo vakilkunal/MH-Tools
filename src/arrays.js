@@ -341,7 +341,7 @@ var tourneysArray = {
         "Monstrous Abomination": 10,
         "Plutonium Tentacle": 15,
         "Assassin Beast": 15,
-        "The Menace of the Rift": 20
+        "Menace of the Rift": 20
     },
     "Burroughs Rift: Stay in the green": {
         "Amplified White": 1,
@@ -370,7 +370,7 @@ var tourneysArray = {
         "Mecha Tail": 3,
         "Radioactive Ooze": 3,
         "Toxikinetic": 3,
-        "The Menace of the Rift": 5,
+        "Menace of the Rift": 5,
         "Zombot Unipire the Third": 10,
         "Lycanoid": 10,
         "Revenant": 10,
@@ -418,7 +418,7 @@ var tourneysArray = {
         "Portable Generator": 15,
         "Monstrous Abomination": 20,
         "Big Bad Behemoth Burroughs": 20,
-        "The Menace of the Rift": 50
+        "Menace of the Rift": 50
     },
     "Catacombs Competitors": {
         "Bat": 1,
@@ -2569,7 +2569,7 @@ var powersArray = {
     "Toxic Avenger": 	[2100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Rancid Bog Beast": 	[2200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Super Mega Mecha Ultra RoboGold": 	[2300, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
-    "The Menace of the Rift": 	[5000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
+    "Menace of the Rift": 	[5000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Plutonium Tentacle": 	[15000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Assassin Beast": 	[15000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Monstrous Abomination": 	[25000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
@@ -3199,7 +3199,7 @@ var miceArray = {
     "Lycanoid": [6500, 50000],
     "Master Exploder": [12000, 65000],
     "Mecha Tail": [1000, 45000],
-    "The Menace of the Rift": [150000, 350000],
+    "Menace of the Rift": [150000, 350000],
     "Monstrous Abomination": [15000, 150000],
     "Phase Zombie": [4400, 34000],
     "Plutonium Tentacle": [50000, 260000],

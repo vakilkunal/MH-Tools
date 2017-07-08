@@ -251,7 +251,6 @@ function showPop(type) { //type = 2 means don't reset charms
         charmName = "No Charm";
     }
 
-
     function getHeaderRow() {
         var headerHTML = "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
         if (locationName.indexOf("Seasonal Garden") >= 0) {
@@ -267,7 +266,8 @@ function showPop(type) { //type = 2 means don't reset charms
         return headerHTML;
     }
 
-    if (!locationName || !cheeseName || type === 0) {
+    if (!locationName || !cheeseName
+        || !weaponName || !baseName || type === 0) {
         results.innerHTML = '';
     }
     else {
@@ -769,15 +769,6 @@ function loadTourneyDropdown() {
 
 }
 
-/**
- * Calculates minimum luck required for 100% CR
- * @param E Trap effectiveness
- * @param M Mouse Power
- * @return {number}
- */
-function minLuck(E, M) {
-    return Math.ceil(Math.sqrt((M / (3 - Math.min(E, 2))) / (Math.min(E, 2) * Math.min(E, 2))));
-}
 
 function updateLink() {
     var urlParams = {

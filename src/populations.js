@@ -6,6 +6,7 @@ var BASELINES_URL = "data/baselines.txt";
 // var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
 // Uncomment above during local testing to bypass Cross-Origin on Chrome
 
+var popLoaded = 0, baselineLoaded = 0;
 
 /**
  * Population data parsed from CSV
@@ -42,54 +43,10 @@ function processBaseline(baselineText) {
     }
 
     baselineLoaded = 1;
-    checkLoadState();
-}
-
-/**
- * Process the population data ajax response
- * @param popText population dta inCSV format
- */
-function processPop(popText) {
-    var creUser = (user === CRE_USER);
-
-    var popCSV = csvToArray(popText);
-    var popCSVLength = popCSV.length;
-    popArray = {};
-
-    for (var i = 1; i < popCSVLength; i++) {
-        processPopItem(i, creUser);
-    }
-
-    popLoaded = 1;
-    checkLoadState();
-
-    function processPopItem(index, creUser) {
-        var item = parseCsvRow(popCSV[index], creUser);
-
-        if (popArray[item.location] === undefined) {
-            popArray[item.location] = {};
-        }
-        if (popArray[item.location][item.phase] === undefined) {
-            popArray[item.location][item.phase] = {};
-        }
-        for (var cheeseIndex = 0; cheeseIndex < item.cheese.length; cheeseIndex++) {
-            var cheese = item.cheese[cheeseIndex];
-
-            if (popArray[item.location][item.phase][cheese] === undefined) {
-                popArray[item.location][item.phase][cheese] = {};
-            }
-            if (popArray[item.location][item.phase][cheese][item.charm] === undefined) {
-                popArray[item.location][item.phase][cheese][item.charm] = {};
-            }
-            popArray[item.location][item.phase][cheese][item.charm][item.mouse] = parseFloat(item.attraction);
-
-            if (creUser && item.sampleSize) {
-                popArray[item.location][item.phase][cheese][item.charm]["SampleSize"] = parseInt(item.sampleSize);
-            }
-        }
+    if (typeof checkLoadState !== 'undefined' ) {
+        checkLoadState();
     }
 }
-
 
 /**
  * Splits a CSV row into an object with labels

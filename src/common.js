@@ -7,7 +7,6 @@ var CRE_USER = "cre";
 var SETUP_USER = "setup";
 var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
 
-var popLoaded = 0, baselineLoaded = 0;
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
@@ -29,7 +28,6 @@ var specialCharm = {
     "Spellbook Charm": 1,
     "Wild Growth Charm": 1,
     "Snowball Charm": 1,
-
     "Golden Tournament Base": 1,
     "Soiled Base": 1,
     "Spellbook Base": 1
@@ -45,6 +43,54 @@ function commafy(x) {
 
 function contains(arrayOrString, searchElement) {
     return arrayOrString.indexOf(searchElement) > -1;
+}
+
+/**
+ * Process the population data ajax response
+ * @param popText population dta inCSV format
+ */
+function processPop(popText) {
+    var creUser = (user === CRE_USER);
+
+    var popCSV = csvToArray(popText);
+    var popCSVLength = popCSV.length;
+    popArray = {};
+
+    for (var i = 1; i < popCSVLength; i++) {
+        processPopItem(i, popArray, creUser);
+    }
+
+    popLoaded = 1;
+    if (typeof checkLoadState !== 'undefined' ) {
+        checkLoadState();
+    }
+
+    function processPopItem(index, includeSampleSize) {
+        var item = parseCsvRow(popCSV[index], includeSampleSize);
+
+        if (popArray[item.location] === undefined) {
+            popArray[item.location] = {};
+        }
+        if (popArray[item.location][item.phase] === undefined) {
+            popArray[item.location][item.phase] = {};
+        }
+        for (var cheeseIndex = 0; cheeseIndex < item.cheese.length; cheeseIndex++) {
+            var cheese = item.cheese[cheeseIndex];
+            var locationPhase = popArray[item.location][item.phase];
+
+            if (locationPhase[cheese] === undefined) {
+                locationPhase[cheese] = {};
+            }
+            if (locationPhase[cheese][item.charm] === undefined) {
+                locationPhase[cheese][item.charm] = {};
+            }
+            locationPhase[cheese][item.charm][item.mouse] = parseFloat(item.attraction);
+
+            if (includeSampleSize && item.sampleSize) {
+                locationPhase[cheese][item.charm]["SampleSize"] = parseInt(item.sampleSize);
+            }
+        }
+    }
 }
 
 function calcSpecialCharms(charmName) {
@@ -141,7 +187,7 @@ function getRiftCount(weapon, base, charm) {
 function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
 
-    if (locationName && weaponName && baseName && phaseName) {
+    if (locationName && cheeseName && weaponName && baseName && phaseName) {
         locationSpecificEffects();
 
         if (trapType === "Physical" && baseName === "Physical Brace Base") {
@@ -348,14 +394,36 @@ function calculateTrapSetup(skipDisp) {
 /**
  * Catch Rate calculation
  * Source: https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/
- * @param eff Effectiveness
- * @param tp Trap Power
- * @param tl Trap Luck
- * @param mp Mouse Power
+ * @param effectiveness {number} Trap power effectiveness
+ * @param trapPower {number}
+ * @param trapLuck {number}
+ * @param mousePower {number}
  * @returns {number} Catch Rate Estimate: Number between 0 and 1
  */
-function calcCR(eff, tp, tl, mp) {
-    return Math.min((eff * tp + (3 - Math.min(eff, 2)) * Math.pow((Math.min(eff, 2) * tl), 2)) / (eff * tp + mp), 1);
+function calcCR(effectiveness, trapPower, trapLuck, mousePower) {
+    var finalEffectiveness = Math.min(effectiveness, 2);
+    var effectiveTrapPower = finalEffectiveness * trapPower;
+    var effectiveTrapLuck = finalEffectiveness * trapLuck;
+
+    var numerator = effectiveTrapPower + (3 - finalEffectiveness) * Math.pow(effectiveTrapLuck, 2);
+    var denominator = effectiveTrapPower + mousePower;
+
+    var catchRate = numerator / denominator;
+
+    return Math.min(catchRate, 1);
+}
+
+/**
+ * Calculates minimum luck required for 100% CR
+ * @see calcCR
+ * @param effectiveness {number} Trap power effectiveness
+ * @param mousePower {number}
+ * @return {number}
+ */
+function minLuck(effectiveness, mousePower) {
+    var finalEffectiveness = Math.min(effectiveness, 2);
+    var minLuckSquared = (mousePower / (3 - finalEffectiveness)) / Math.pow(finalEffectiveness, 2);
+    return Math.ceil(Math.sqrt(minLuckSquared));
 }
 
 function batteryChanged() {
@@ -378,7 +446,7 @@ function batteryChanged() {
 }
 
 /**
- * Returns effectivity of current power type against a mouse.
+ * Returns effectiveness of current power type against a mouse.
  * @param mouseName
  * @returns {number}
  */
@@ -409,16 +477,15 @@ function checkToxicWidget(custom) {
     if (!custom) {
         if (cheeseName === "Brie" || cheeseName === "SB+") {
             $("#toxicRow").show(500);
-            toxicChanged();
         }
         else {
             $("#toxicRow").hide();
-            toxicChanged();
         }
+        updateToxicValue();
     }
 }
 
-function toxicChanged() {
+function updateToxicValue() {
     var select = document.getElementById("toxic");
     isToxic = select.value;
 
@@ -430,10 +497,12 @@ function toxicChanged() {
     }
 
     updateLink();
-    calculateTrapSetup();
 }
 
-
+function toxicChanged() {
+    updateToxicValue();
+    calculateTrapSetup();
+}
 
 function charmChangeCommon(newCharmName) {
     if (newCharmName) {

@@ -2,32 +2,13 @@
 
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
 
+function contains(collection, searchElement) {
+    return collection.indexOf(searchElement) > -1;
+}
+
 window.onload = function () {
 
-	// if (location.href.indexOf("https") < 0) {
-	// 	var currLoc = location.href;
-	// 	currLoc = currLoc.replace("http", "https");
-	// 	location.href = currLoc;
-	// }
-	var pop = new XMLHttpRequest();
-	pop.open("get", POPULATIONS_URL, true);
-	pop.onreadystatechange = function() {
-		if (pop.readyState == 4) {
-			processPop(pop.responseText);
-		}
-	};
-	pop.send();
-
-	var baseline = new XMLHttpRequest();
-	baseline.open("get", BASELINES_URL, true);
-	baseline.onreadystatechange = function() {
-		if (baseline.readyState == 4) {
-			//console.log(baseline.responseText);
-
-			processBaseline(baseline.responseText);
-		}
-	};
-	baseline.send();
+    startPopulationLoad();
 
 	//Bookmarklet storage logic
 	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {
@@ -199,39 +180,47 @@ window.onload = function () {
 		var mapText = document.getElementById("map").value;
 		processMap(mapText);
 	});
-}
+};
 
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
 
-var popCSV = new Array();
-var popArray = new Array();
-function processPop(popText) {
-	popCSV = csvToArray(popText);
-	//console.log(popCSV);
-	var popCSVLength = Object.size(popCSV);
-	//console.log(popCSVLength);
-		
-	//Creating popArray
-	for(var i=1; i<popCSVLength; i++) {
-		var row = popCSV[i];
-		var location = row[0];
-		var phase = row[1];
-		var cheese = row[2];
-		var charm = row[3];
-		var mouseName = row[5];
-		mouseName = mouseName.capitalise();
-		var population = row[4];
+function processPop (popText) {
+	var popCSV = csvToArray(popText);
+	var popCSVLength =  popCSV.length;
+    popArray = {};
 
-		if (popArray[mouseName] == undefined) popArray[mouseName] = new Array(); //If mouse doesn't exist in array
-		if (popArray[mouseName][location] == undefined) popArray[mouseName][location] = new Array();
-		if (popArray[mouseName][location][phase] == undefined) popArray[mouseName][location][phase] = new Array();
-		if (popArray[mouseName][location][phase][cheese] == undefined) popArray[mouseName][location][phase][cheese] = new Array();
-		popArray[mouseName][location][phase][cheese][charm] = population;
-	}
+    for(var i=1; i<popCSVLength; i++) {
+        processPopItem(i);
+    }
+
+    popLoaded = 1;
 
 	loadMouseDropdown();
+
+    function processPopItem(index) {
+        var item = parseCsvRow(popCSV[index], false);
+
+        var mouseName = item.mouse.capitalise();
+        var cheese = item.cheese[0];
+        var population = parseFloat(item.attraction);
+
+        if (popArray[mouseName] === undefined) {
+            popArray[mouseName] = {};
+        }
+        if (popArray[mouseName][item.location] === undefined) {
+            popArray[mouseName][item.location] = {};
+        }
+        if (popArray[mouseName][item.location][item.phase] === undefined) {
+            popArray[mouseName][item.location][item.phase] = {};
+        }
+
+        if (popArray[mouseName][item.location][item.phase][cheese] === undefined) {
+            popArray[mouseName][item.location][item.phase][cheese] = {};
+        }
+        popArray[mouseName][item.location][item.phase][cheese][item.charm] = population;
+    }
 }
 
 function loadMouseDropdown() {
