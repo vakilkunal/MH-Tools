@@ -6,6 +6,10 @@ var user;
 var CRE_USER = "cre";
 var SETUP_USER = "setup";
 var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
+var SAMPLE_SIZE_LABEL = "SampleSize";
+
+var EMPTY_SELECTION = "-";
+var NULL_URL_PARAM = null;
 
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
@@ -15,7 +19,7 @@ var trapPower = 0, trapLuck = 0, trapType = "", trapAtt = 0, trapEff = 0;
 var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = "", weaponName = "", phaseName = "";
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
-var riftStalkerCodex = false;
+var riftStalkerCodex;
 
 var fortRox = {
     ballistaLevel : 0,
@@ -57,7 +61,7 @@ function processPop(popText) {
     popArray = {};
 
     for (var i = 1; i < popCSVLength; i++) {
-        processPopItem(i, popArray, creUser);
+        processPopItem(i, creUser);
     }
 
     popLoaded = 1;
@@ -87,7 +91,7 @@ function processPop(popText) {
             locationPhase[cheese][item.charm][item.mouse] = parseFloat(item.attraction);
 
             if (includeSampleSize && item.sampleSize) {
-                locationPhase[cheese][item.charm]["SampleSize"] = parseInt(item.sampleSize);
+                locationPhase[cheese][item.charm][SAMPLE_SIZE_LABEL] = parseInt(item.sampleSize);
             }
         }
     }
@@ -142,12 +146,18 @@ function calcSpecialCharms(charmName) {
 /**
  * Get a specific parameter from the URL
  * @param name
- * @return {string}
+ * @return {string|null}
  */
 function getURLParameter(name) {
-    return decodeURIComponent(
-        (new RegExp(name + "=(.+?)(&|$)").exec(location.search) || [, null])[1]
-    );
+    var regexExec = new RegExp("[?&]" + name + "=(.+?)(&|$)").exec(location.search);
+    var value = (regexExec || [, null])[1];
+
+    if (value === null) {
+        return null;
+    }
+    else {
+        return decodeURIComponent(value);
+    }
 }
 
 /**
@@ -162,7 +172,7 @@ function buildURL(location, urlParams) {
     var url = location + "?";
     for (var key in urlParams) {
         var urlParam = urlParams[key];
-        if (urlParam && urlParam !== "-") {
+        if (urlParam && urlParam !== EMPTY_SELECTION) {
             url += key + "=" + encodeURIComponent(urlParam) + "&";
         }
     }
@@ -186,6 +196,7 @@ function getRiftCount(weapon, base, charm) {
 
 function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
+    riftStalkerCodex = $("#riftstalker").prop("checked");
 
     if (locationName && cheeseName && weaponName && baseName && phaseName) {
         locationSpecificEffects();
@@ -204,7 +215,8 @@ function calculateTrapSetup(skipDisp) {
                 specialLuck += 15;
             }
         }
-        determineRiftBonus();
+
+        determineRiftBonus(riftStalkerCodex);
 
         /*
          * Battery Levels
@@ -351,11 +363,11 @@ function calculateTrapSetup(skipDisp) {
         return ztAmp / 100;
     }
 
-    function determineRiftBonus() {
+    function determineRiftBonus(codex) {
         var riftCount = getRiftCount(weaponName, baseName, charmName);
         var multiplier = 1;
 
-        if (riftStalkerCodex) {
+        if (codex) {
             multiplier = 2;
         }
 
@@ -427,8 +439,7 @@ function minLuck(effectiveness, mousePower) {
 }
 
 function batteryChanged() {
-    var input = document.getElementById("battery");
-    var batteryLevel = input.value;
+    var batteryLevel = document.getElementById("battery").value;
     batteryPower = parseInt(batteryLevel) || 0;
 
     if (batteryPower < 0) {
@@ -437,12 +448,7 @@ function batteryChanged() {
     else if (batteryPower > 10) {
         batteryPower = 10;
     }
-
-    updateLink();
-
-    if (user === CRE_USER) {
-        calculateTrapSetup();
-    }
+    genericOnChange();
 }
 
 /**
@@ -466,11 +472,21 @@ function getCheeseAttraction() {
 
 function gsParamCheck() {
     var gsParameter = getURLParameter("gs");
-    if (gsParameter !== "null") {
+    if (gsParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("gs");
         select.value = "No";
         gsChanged();
     }
+}
+
+function riftstalkerParamCheck() {
+    var riftstalkerParam = getURLParameter("riftstalker") !== NULL_URL_PARAM;
+    $("#riftstalker").prop("checked", riftstalkerParam)
+}
+
+function fortRoxParamCheck() {
+    fortRox.ballistaLevel = parseInt(getURLParameter("ballistaLevel"));
+    fortRox.canonLevel = parseInt(getURLParameter("canonLevel"));
 }
 
 function checkToxicWidget(custom) {
@@ -645,7 +661,7 @@ function phaseChanged() {
         phaseName = select.value;
 
         if (phaseName === "") {
-            phaseName = "-";
+            phaseName = EMPTY_SELECTION;
         }
     }
 
@@ -692,7 +708,7 @@ function bonusLuckChanged() {
 
 function checkToxicParam() {
     var toxicParameter = getURLParameter("toxic");
-    if (toxicParameter !== "null") {
+    if (toxicParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("toxic");
         select.value = toxicParameter;
         toxicChanged();
@@ -760,7 +776,7 @@ function locationChanged() {
 
     function populateSublocationDropdown(locationName) {
         var category = "phase";
-        var array = Object.keys(popArray[locationName] || ["-"]);
+        var array = Object.keys(popArray[locationName]) || [EMPTY_SELECTION];
         loadDropdown(category, array, phaseChanged, "");
         if (array.length > 1) {
             $("#phaseRow").show()
@@ -772,5 +788,6 @@ function locationChanged() {
 
 function genericOnChange() {
     calculateTrapSetup(false) ;
-    showPop(2);
+    updateLink();
+    if (user === CRE_USER) showPop(2);
 }

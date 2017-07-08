@@ -322,7 +322,7 @@ function processMap(mapText) {
 							//Replace apostrophes with %27
 							URLString += "location=" + locationName;
 
-							if (phaseName != "-") {
+							if (phaseName != EMPTY_SELECTION) {
 								locationPhaseCheeseCharm += "(" + phaseName + ")" + "<br>";
 								URLString += "&phase=" + phaseName;
 							}
@@ -338,7 +338,7 @@ function processMap(mapText) {
 								locationPhaseCheeseCharm += cheeseName + "<br>";
 							}
 
-							if (charmName != "-") {
+							if (charmName != EMPTY_SELECTION) {
 								locationPhaseCheeseCharm += "[" + charmName + "]" + "<br>";
 								URLString += "&charm=" + charmName;
 							}

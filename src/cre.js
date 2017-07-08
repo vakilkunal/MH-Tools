@@ -38,6 +38,7 @@ window.onload = function () {
     loadCharmDropdown();
 
     gsParamCheck();
+
     showHideWidgets(document.getElementById("toggleCustom").checked);
 
     //Listening for changes in dropdowns or textboxes
@@ -93,6 +94,7 @@ window.onload = function () {
 
     document.getElementById("ballistaLevel").onchange = genericOnChange;
     document.getElementById("canonLevel").onchange = genericOnChange;
+    document.getElementById("riftstalker").onchange = genericOnChange;
 
     document.getElementById("cheeseCost").onchange = function () {
         cheeseCost = parseInt(document.getElementById("cheeseCost").value);
@@ -139,7 +141,7 @@ function updateCustomSetup() {
 function updateInputFromParameter(category, callback) {
     var parameter = getURLParameter(category);
     var input = document.getElementById(category);
-    if (parameter && parameter !== "null") {
+    if (parameter && parameter !== NULL_URL_PARAM) {
         input.value = parameter;
         callback();
     }
@@ -155,6 +157,9 @@ function checkLoadState() {
         loadTourneyDropdown();
 
         updateInputFromParameter("oil", oilChanged);
+        riftstalkerParamCheck();
+        updateInputFromParameter("ballistaLevel", genericOnChange);
+        updateInputFromParameter("canonLevel", genericOnChange);
         checkToxicParam();
 
         updateInputFromParameter("battery", batteryChanged);
@@ -238,7 +243,7 @@ function formatSampleSize(sampleSizeParam) {
 
 function checkPhase() {
     if (!phaseName) {
-        phaseName = "-";
+        phaseName = EMPTY_SELECTION;
     }
 }
 
@@ -284,7 +289,7 @@ function showPop(type) { //type = 2 means don't reset charms
             /*
              * Allow pop with special charm(s) but without a "no charm" pop
              */
-            else if (popArrayLPC !== null && specialCharms[0] !== "-") {
+            else if (popArrayLPC !== null && specialCharms[0] !== EMPTY_SELECTION) {
                 highlightSpecialCharms(specialCharms);
             }
             else {
@@ -298,7 +303,7 @@ function showPop(type) { //type = 2 means don't reset charms
         }
         else {
             if (popArrayLPC) {
-                popArrayLC = popArrayLPC['-'];
+                popArrayLC = popArrayLPC[EMPTY_SELECTION];
             }
         }
 
@@ -329,7 +334,7 @@ function showPop(type) { //type = 2 means don't reset charms
         for (var i = 0; i < noMice; i++) {
             var mouseName = miceNames[i];
 
-            if (mouseName !== "SampleSize") {
+            if (mouseName !== SAMPLE_SIZE_LABEL) {
                 var eff = findEff(mouseName);
 
                 var mousePower = powersArray[mouseName][0];
@@ -536,13 +541,13 @@ function showPop(type) { //type = 2 means don't reset charms
         if (popArray[locationName][phaseName][commonCheeseIndex] || popArray[locationName][phaseName][cheeseName]) {
             if (charmName === "No Charm") {
                 if (commonCheeseIndex) {
-                    if (popArray[locationName][phaseName][commonCheeseIndex]["-"]) {
-                        sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
+                    if (popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION]) {
+                        sampleSize = popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                     }
                 }
                 else {
-                    if (popArray[locationName][phaseName][cheeseName]["-"]) {
-                        sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
+                    if (popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION]) {
+                        sampleSize = popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                     }
                 }
             }
@@ -556,21 +561,21 @@ function showPop(type) { //type = 2 means don't reset charms
                 }
                 if (commonCheeseIndex ) {
                     if (popArray[locationName][phaseName][commonCheeseIndex][slice]) {
-                        sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice]["SampleSize"];
+                        sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice][SAMPLE_SIZE_LABEL];
                     }
                     else {
-                        if (popArray[locationName][phaseName][commonCheeseIndex]["-"]) {
-                            sampleSize = popArray[locationName][phaseName][commonCheeseIndex]["-"]["SampleSize"];
+                        if (popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION]) {
+                            sampleSize = popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                         }
                     }
                 }
                 else {
                     if (popArray[locationName][phaseName][cheeseName][slice]) {
-                        sampleSize = popArray[locationName][phaseName][cheeseName][slice]["SampleSize"];
+                        sampleSize = popArray[locationName][phaseName][cheeseName][slice][SAMPLE_SIZE_LABEL];
                     }
                     else {
-                        if (popArray[locationName][phaseName][cheeseName]["-"]) {
-                            sampleSize = popArray[locationName][phaseName][cheeseName]["-"]["SampleSize"];
+                        if (popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION]) {
+                            sampleSize = popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                         }
                     }
                 }
@@ -711,7 +716,7 @@ function loadCheeseDropdown(locationName, phaseName) {
     }
 
     var cheeseParameter = getURLParameter("cheese");
-    if (cheeseParameter !== "null" && cheeseLoaded < 3) {
+    if (cheeseParameter !== NULL_URL_PARAM && cheeseLoaded < 3) {
         var select = document.getElementById("cheese");
         select.value = cheeseParameter;
         if (select.selectedIndex !== -1) {
@@ -725,7 +730,7 @@ function loadCheeseDropdown(locationName, phaseName) {
 function selectCharm() {
     var charmParameter = getURLParameter("charm");
     var specialCharmParameter = charmParameter + "*";
-    if (charmParameter !== "null" && charmLoaded < 5) {
+    if (charmParameter !== NULL_URL_PARAM && charmLoaded < 5) {
         var select = document.getElementById("charm");
         //TODO: Improve
         for (var i = 0; i < select.children.length; i++) {
@@ -754,7 +759,7 @@ function loadTourneyDropdown() {
     tourneyDropdown.innerHTML = tourneyDropdownHTML;
 
     var tourneyParameter = getURLParameter("tourney");
-    if (tourneyParameter !== "null") {
+    if (tourneyParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("tourney");
         //TODO: Improve
         for (var i = 0; i < select.children.length; i++) {
@@ -784,6 +789,9 @@ function updateLink() {
         "charm" : charmName,
         "bonusLuck" : bonusLuck,
         "tourney" : tournamentName,
+        "riftstalker" : riftStalkerCodex,
+        "ballistaLevel" : fortRox.ballistaLevel,
+        "canonLevel" : fortRox.canonLevel
     };
     var URLString = buildURL('cre.html',urlParams);
     document.getElementById("link").href = URLString;
@@ -815,13 +823,9 @@ function cheeseChanged() {
 }
 
 function oilChanged() {
-    var select = document.getElementById("oil");
-    lanternStatus = select.value;
-
-    updateLink();
-    calculateTrapSetup();
+    lanternStatus = document.getElementById("oil").value;
+    genericOnChange();
 }
-
 
 function weaponChanged() {
     var select = document.getElementById("weapon");

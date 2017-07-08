@@ -1,6 +1,5 @@
 "use strict";
 
-var NO_CHARM = "-";
 var loadedParams = {
     cheese: false,
     charm: false
@@ -45,6 +44,7 @@ $(window).load(function () {
         $("#main").show();
     }
     gsParamCheck();
+    riftstalkerParamCheck();
 
     bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
     if (bonusLuckParameter >= 0) {
@@ -65,7 +65,7 @@ $(window).load(function () {
     document.querySelector("#ballistaLevel").onchange = genericOnChange;
     document.querySelector("#canonLevel").onchange = genericOnChange;
 
-    $("#save_setup_button").click = saveSetupCookie;
+    $("#save_setup_button").click(saveSetupCookie);
 
     $("#show_pop_button").click(function () {
         $("#pleaseWaitMessage").show();
@@ -119,7 +119,7 @@ function checkLoadState() {
         checkToxicParam();
 
         batteryParameter = getURLParameter("battery");
-        if (batteryParameter != "null") {
+        if (batteryParameter != NULL_URL_PARAM) {
            document.querySelector("#battery").value = parseInt(batteryParameter);
         }
 
@@ -405,7 +405,7 @@ function loadCheeseDropdown(location, phase) {
     function checkCheeseParam() {
         var select = document.querySelector("#cheese");
         var cheeseParameter = getURLParameter("cheese");
-        if (cheeseParameter !== "null") {
+        if (cheeseParameter !== NULL_URL_PARAM) {
             select.value = cheeseParameter;
         }
         if (select.selectedIndex === -1) {
@@ -444,7 +444,7 @@ function loadCharmDropdown(location, phase, cheese) {
     function populateDropdown(items, selector) {
         var dropdown = $(selector).html("<option>-</option>");
         for (var i = 0; i < items.length; i++) {
-            if (items[i] != NO_CHARM) {
+            if (items[i] != EMPTY_SELECTION) {
                 $("<option/>", {
                     text: items[i],
                     value: items[i]
@@ -456,7 +456,7 @@ function loadCharmDropdown(location, phase, cheese) {
     function checkCharmParameter() {
         var charmParameter = getURLParameter("charm");
         var select = document.querySelector("#charm");
-        if (charmParameter != "null") {
+        if (charmParameter != NULL_URL_PARAM) {
             select.value = charmParameter;
         }
         if (select.selectedIndex == -1) {
@@ -493,7 +493,10 @@ function updateLink() {
         "battery" : batteryPower,
         "gs" : !gsLuck,
         "bonusLuck" : bonusLuck,
-        "tourney" : tournamentName
+        "tourney" : tournamentName,
+        "riftstalker" : riftStalkerCodex,
+        "ballistaLevel" : fortRox.ballistaLevel,
+        "canonLevel" : fortRox.canonLevel,
     };
 
     var urlString = buildURL("setup.html",urlParams);
@@ -532,7 +535,7 @@ function baseChanged() {
 
 function charmChanged(customValue) {
     var selectedVal = $("#charm").val();
-    if (selectedVal !== NO_CHARM) {
+    if (selectedVal !== EMPTY_SELECTION) {
         selectedVal += " Charm";
     }
     charmChangeCommon(customValue || selectedVal);
@@ -708,7 +711,7 @@ function printCombinations(micePopulation, headerHtml) {
     function getLinkCell(selectedCharm, eventData) {
         var cell = $("<td/>").append(getCRELinkElement());
 
-        if (selectedCharm === NO_CHARM) {
+        if (selectedCharm === EMPTY_SELECTION) {
             $("<span style='float: right'><button class='best-charm'>Find best charm</button></span>")
                 .on("click", eventData, findBestCharm)
                 .appendTo(cell);
@@ -722,7 +725,7 @@ function printCombinations(micePopulation, headerHtml) {
         baseName = event.data.base;
         weaponChanged();
         baseChanged();
-        printCharmCombinations(getPopulation(NO_CHARM), headerHtml);
+        printCharmCombinations(getPopulation(EMPTY_SELECTION), headerHtml);
     }
 
 }
@@ -734,7 +737,7 @@ function printCombinations(micePopulation, headerHtml) {
 function getCRELinkElement() {
     var urlString = buildCRELink();
     var caption = weaponName + " / " + baseName;
-    if (charmName && charmName != NO_CHARM) {
+    if (charmName && charmName != EMPTY_SELECTION) {
         caption += " / " + charmName;
     }
     return "<a href='" + urlString + "' target='_blank'>" + caption + "</a>";
@@ -755,6 +758,9 @@ function getCRELinkElement() {
             "base": baseName,
             "toxic": isToxic,
             "battery": batteryPower,
+            "riftstalker" : riftStalkerCodex,
+            "ballistaLevel" : fortRox.ballistaLevel,
+            "canonLevel" : fortRox.canonLevel
         };
         var urlString = buildURL("cre.html", urlParams);
         urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
@@ -767,8 +773,8 @@ function getCRELinkElement() {
  * @param micePopulation {{String:Number}} Mouse population percentages for the current location
  * @param mouseName {String} Mouse name
  * @param overallAR {Number} Setup attraction rate
- * @param effectivenessArray {Number[]} Power type effectiveness array
- * @param powersArray {Number[]} Mouse powers array
+ * @param effectivenessArray {{String: Number}} Power type effectiveness array
+ * @param powersArray {{String: Number}} Mouse powers array
  * @return {{attractions: number, catchRate: number}}
  */
 function getMouseACR(micePopulation, mouseName, overallAR, effectivenessArray, powersArray) {
@@ -821,8 +827,8 @@ function getMouseACR(micePopulation, mouseName, overallAR, effectivenessArray, p
  * @param micePopulation
  * @param mouse {string} Mouse name
  * @param overallAR {Number} Setup attraction rate
- * @param effectivenessArray {Number[]}
- * @param powersArray {Number[]}
+ * @param effectivenessArray {{String: Number}}
+ * @param powersArray {{String: Number}}
  * @return {number} Mouse catches in 100 hunts
  */
 function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray) {
