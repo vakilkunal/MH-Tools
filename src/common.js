@@ -4,16 +4,27 @@
  */
 var user;
 var CRE_USER = "cre";
+var SETUP_USER = "setup";
+var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
+var SAMPLE_SIZE_LABEL = "SampleSize";
 
-var popLoaded = 0, baselineLoaded = 0;
+var EMPTY_SELECTION = "-";
+var NULL_URL_PARAM = null;
+
 var weaponPower = 0, weaponBonus = 0, weaponLuck = 0, weaponAtt = 0, weaponEff = 0;
 var basePower = 0, baseBonus = 0, baseLuck = 0, baseAtt = 0, baseEff = 0;
 var charmPower = 0, charmBonus = 0, charmAtt = 0, charmLuck = 0, charmEff = 0;
-var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = '', batteryPower = 0, lanternStatus = '';
-var trapPower = 0, trapLuck = 0, trapType = '', trapAtt = 0, trapEff = 0;
-var baseName = '', charmName = '', locationName = '', cheeseName = '', tournamentName = '', weaponName = '', phaseName = '';
+var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = "", batteryPower = 0, lanternStatus = "";
+var trapPower = 0, trapLuck = 0, trapType = "", trapAtt = 0, trapEff = 0;
+var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = "", weaponName = "", phaseName = "";
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
+var riftStalkerCodex;
+
+var fortRox = {
+    ballistaLevel : 0,
+    canonLevel : 0
+};
 
 var specialCharm = {
     "Champion Charm": 1,
@@ -21,91 +32,138 @@ var specialCharm = {
     "Spellbook Charm": 1,
     "Wild Growth Charm": 1,
     "Snowball Charm": 1,
-
     "Golden Tournament Base": 1,
     "Soiled Base": 1,
     "Spellbook Base": 1
 };
 
 Object.size = function (obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
+    return obj.length || Object.keys(obj).length;
 };
 
 function commafy(x) {
     return x.toLocaleString();
 }
 
+function contains(arrayOrString, searchElement) {
+    return arrayOrString.indexOf(searchElement) > -1;
+}
+
+/**
+ * Process the population data ajax response
+ * @param popText population dta inCSV format
+ */
+function processPop(popText) {
+    var creUser = (user === CRE_USER);
+
+    var popCSV = csvToArray(popText);
+    var popCSVLength = popCSV.length;
+    popArray = {};
+
+    for (var i = 1; i < popCSVLength; i++) {
+        processPopItem(i, creUser);
+    }
+
+    popLoaded = 1;
+    if (typeof checkLoadState !== 'undefined' ) {
+        checkLoadState();
+    }
+
+    function processPopItem(index, includeSampleSize) {
+        var item = parseCsvRow(popCSV[index], includeSampleSize);
+
+        if (popArray[item.location] === undefined) {
+            popArray[item.location] = {};
+        }
+        if (popArray[item.location][item.phase] === undefined) {
+            popArray[item.location][item.phase] = {};
+        }
+        for (var cheeseIndex = 0; cheeseIndex < item.cheese.length; cheeseIndex++) {
+            var cheese = item.cheese[cheeseIndex];
+            var locationPhase = popArray[item.location][item.phase];
+
+            if (locationPhase[cheese] === undefined) {
+                locationPhase[cheese] = {};
+            }
+            if (locationPhase[cheese][item.charm] === undefined) {
+                locationPhase[cheese][item.charm] = {};
+            }
+            locationPhase[cheese][item.charm][item.mouse] = parseFloat(item.attraction);
+
+            if (includeSampleSize && item.sampleSize) {
+                locationPhase[cheese][item.charm][SAMPLE_SIZE_LABEL] = parseInt(item.sampleSize);
+            }
+        }
+    }
+}
+
 function calcSpecialCharms(charmName) {
-    var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
-
-    /* Basics */
-    charmPower = charmsArrayN[0];
-    charmBonus = charmsArrayN[1];
-    charmAtt = charmsArrayN[2];
-    charmLuck = charmsArrayN[3];
-    charmEff = parseFreshness[charmsArrayN[4].trim()];
-    if (charmName == "Champion Charm") {
+    populateCharmData(charmName);
+    if (charmName === "Champion Charm") {
         //Check if GTB used. If so +4 luck
-        if (baseName == "Golden Tournament Base") {
-            charmLuck = charmsArrayN[3] + 4;
+        if (baseName === "Golden Tournament Base") {
+            charmLuck += 4;
         }
-        else if (baseName == "Silver Tournament Base") {
-            charmLuck = charmsArrayN[3] + 3;
+        else if (baseName === "Silver Tournament Base") {
+            charmLuck += 3;
         }
-        else if (baseName == "Bronze Tournament Base") {
-            charmLuck = charmsArrayN[3] + 2;
+        else if (baseName === "Bronze Tournament Base") {
+            charmLuck += 2;
         }
 
-    } else if (charmName == "Growth Charm") {
-        //Check if soiled base used.
-        if (baseName == "Soiled Base") {
+    } else if (charmName === "Growth Charm") {
+        if (baseName === "Soiled Base") {
             charmPower += 100;
             charmBonus += 3;
             charmAtt += 5;
             charmLuck += 4;
         }
-    } else if (charmName == "Spellbook Charm") {
-        //Spellbook base
-        if (baseName == "Spellbook Base") {
+    } else if (charmName === "Wild Growth Charm") {
+        if (baseName === "Soiled Base") {
+            charmPower += 300;
+            charmBonus += 8;
+            charmAtt += 20;
+            charmLuck += 9;
+        }
+    } else if (charmName === "Spellbook Charm") {
+        if (baseName === "Spellbook Base") {
             charmPower += 500;
             charmBonus += 8;
 
         }
 
-    } else if (charmName == "Wild Growth Charm") {
-        //Soiled base
-        if (baseName == "Soiled Base") {
-            charmPower += 300;
-            charmBonus += 8;
-            charmAtt += 20;
-            charmLuck += 9;
-
-        }
-    } else if (charmName == "Snowball Charm") {
-        if (festiveTraps.indexOf(weaponName) > -1) {
+    }  else if (charmName === "Snowball Charm") {
+        if (contains(festiveTraps, weaponName)) {
             charmBonus += 20;
         }
     }
 
-    if (user == CRE_USER)
+    if (user === CRE_USER) {
         calculateTrapSetup();
+    }
 }
 
+/**
+ * Get a specific parameter from the URL
+ * @param name
+ * @return {string|null}
+ */
 function getURLParameter(name) {
-    //Use component here to ensure correct decoding
-    return decodeURIComponent(
-        (new RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
-    );
+    var regexExec = new RegExp("[?&]" + name + "=(.+?)(&|$)").exec(location.search);
+    var value = (regexExec || [, null])[1];
+
+    if (value === null) {
+        return null;
+    }
+    else {
+        return decodeURIComponent(value);
+    }
 }
 
 /**
  * Build URL from key/value pairs.
- * Keys are only added to the URL if their value is !false, >0, != "-"
- * NB: Always test with Toxic Spill sublocations
+ *  - Keys are only added to the URL if their value is !false, >0, != "-"
+ *  - NB: Always test this with Toxic Spill sublocations if it is changed
  * @param location
  * @param urlParams
  * @returns {string}
@@ -114,262 +172,297 @@ function buildURL(location, urlParams) {
     var url = location + "?";
     for (var key in urlParams) {
         var urlParam = urlParams[key];
-        if (urlParam && urlParam != "-") {
-            var value = encodeURIComponent(urlParam);
-            url += key + "=" + value + "&"
+        if (urlParam && urlParam !== EMPTY_SELECTION) {
+            url += key + "=" + encodeURIComponent(urlParam) + "&";
         }
     }
     return url;
 }
 
-function getRiftCount() {
+/**
+ * Gets the number of rift items
+ * @param weapon {String} Weapon Name
+ * @param base {String} Base Name
+ * @param charm [String} Charm Name
+ * @return {number}
+ */
+function getRiftCount(weapon, base, charm) {
     var riftCount = 0;
-    if (weaponName in riftWeapons) riftCount++;
-    if (baseName in riftBases) riftCount++;
-    if (charmName in riftCharms) riftCount++;
+    if (contains(riftWeapons, weapon)) riftCount++;
+    if (contains(riftBases, base)) riftCount++;
+    if (contains(riftCharms, charm)) riftCount++;
     return riftCount;
 }
 
 function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
-    //console.log(weaponPower + " " + basePower + " " + charmPower);
+    riftStalkerCodex = $("#riftstalker").prop("checked");
 
-    if (weaponPower && basePower) { //Only calculate if both weapon and base selected
+    if (locationName && cheeseName && weaponName && baseName && phaseName) {
+        locationSpecificEffects();
 
-        //Exceptions
-
-        if (locationName.indexOf("Claw Shot City") >= 0 && (weaponName == "S.L.A.C." || weaponName == "S.L.A.C. II") && baseName == "Claw Shot Base") {
-            if (charmName.indexOf("Cactus Charm") >= 0) specialPower += 2500;
-            else specialPower += 1000;
-        }
-        else if ((weaponName == "Soul Harvester" || weaponName == "Terrifying Spider Trap") && ((locationName == "Seasonal Garden" && phaseName == "Fall") || locationName.indexOf("Haunted Terrortories") >= 0)) {
-            specialLuck += 10;
-        }
-        else if ((locationName.indexOf("Iceberg") >= 0 || locationName.indexOf("Slushy Shoreline") >= 0) && weaponName.indexOf("Steam Laser Mk.") >= 0) {
-            if (weaponName == "Steam Laser Mk. I") {
-                specialPower += 1750;
-                specialLuck += 3;
-            }
-            else if (weaponName == "Steam Laser Mk. II") {
-                specialPower += 1250;
-                specialLuck += 2;
-            }
-            else if (weaponName == "Steam Laser Mk. III") {
-                specialPower += 1500;
-                specialLuck += 2;
-            }
-        } else if (locationName.indexOf("Gnawnian Express Station") >= 0) {
-            if (weaponName == "Bandit Deflector" && phaseName.indexOf("Raider River") >= 0) specialPower += 1500;
-            else if (weaponName == "Engine Doubler" && phaseName.indexOf("Daredevil Canyon") >= 0) specialPower += 1500;
-            else if (weaponName == "Supply Grabber" && phaseName.indexOf("Supply Depot") >= 0) specialPower += 1500;
-        } else if (locationName == "Derr Dunes" && charmName == "Derr Power Charm") {
-            specialPower += 600;
-            specialBonus += 5;
-        } else if (locationName == "Nerg Plains" && charmName == "Nerg Power Charm") {
-            specialPower += 600;
-            specialBonus += 5;
-        } else if (locationName == "Elub Shore" && charmName == "Elub Power Charm") {
-            specialPower += 600;
-            specialBonus += 5;
-        } else if (locationName.indexOf("Fiery Warpath") >= 0) {
-            if (charmName == "Flamebane Charm") {
-                specialBonus += 150;
-            }
-            if (phaseName == "Wave 4" && weaponName == "Warden Slayer Trap") {
-                specialPower += 2500;
-                specialBonus += 2500;
-            }
-        } else if (locationName.indexOf("Toxic Spill") >= 0) {
-            if (baseName == "Washboard Base") {
-                specialBonus += 5;
-                specialLuck += 5;
-            }
-            if (charmName == "Soap Charm") {
-                specialPower += 5000;
-                specialLuck += 10;
-            } else if (charmName == "Super Soap Charm") {
-                specialPower += 8000;
-                specialLuck += 12;
-            }
-        } else if ((locationName == "Cape Clawed" || locationName == "Elub Shore" || locationName == "Nerg Plains" || locationName == "Derr Dunes") && baseName == "Tiki Base") {
-            specialLuck += 6;
-        } else if ((phaseName.indexOf("Icewing's Lair") >= 0 || phaseName.indexOf("Hidden Depths") >= 0 || phaseName.indexOf("The Deep Lair") >= 0) && baseName == "Deep Freeze Base") {
-            specialPower += 665;
-            specialLuck += 9;
-        } else if (locationName == "Jungle of Dread" && weaponName == "Dreaded Totem Trap") {
-            specialPower += 8500;
-        } else if (locationName == "Sunken City" && baseName == "Depth Charge Base" && phaseName != "Docked") {
-            specialPower += 1000;
-        } else if (locationName == "Seasonal Garden" && baseName == "Seasonal Base") {
-            specialBonus += 18;
-        }
-
-        if (cheeseName == "Limelight" && charmName == "Mining Charm") {
-            specialBonus += 30;
-        } else if (locationName == "Jungle of Dread" && charmName == "Dreaded Charm") {
-            specialBonus += 300;
-        } else if (cheeseName.indexOf("Fusion Fondue") >= 0 && charmName == "EMP400 Charm") {
-            specialPower += 25000;
-        }
-
-        if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
-            braceBonus += .25;
-        } else if ((baseName == "Polluted Base" || baseName == "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
-            if (charmName == "Polluted Charm") {
+        if (trapType === "Physical" && baseName === "Physical Brace Base") {
+            //noinspection ReuseOfLocalVariableJS
+            braceBonus = 25;
+        } else if ((baseName === "Polluted Base" || baseName === "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
+            if (charmName === "Polluted Charm") {
                 specialLuck += 4;
-            } else if (charmName == "Super Polluted Charm") {
+            } else if (charmName === "Super Polluted Charm") {
                 specialLuck += 6;
-            } else if (charmName == "Extreme Polluted Charm") {
+            } else if (charmName === "Extreme Polluted Charm") {
                 specialLuck += 10;
-            } else if (charmName == "Ultimate Polluted Charm") {
+            } else if (charmName === "Ultimate Polluted Charm") {
                 specialLuck += 15;
             }
         }
-        var riftCount = getRiftCount();
 
-        if (riftCount == 2) {
-            specialBonus += 10;
-        } else if (riftCount == 3) {
-            specialBonus += 10;
-            specialLuck += 5;
-        }
+        determineRiftBonus(riftStalkerCodex);
 
         /*
          * Battery Levels
          */
-        if (typeof batteryPower == 'undefined') {
-        }
-        else if (batteryPower == 1) {
-            specialPower += 90;
-        }
-        else if (batteryPower == 2) {
-            specialPower += 500;
-            specialLuck += 1;
-        }
-        else if (batteryPower == 3) {
-            specialPower += 3000;
-            specialLuck += 2;
-        }
-        else if (batteryPower == 4) {
-            specialPower += 8500;
-            specialLuck += 5;
-        }
-        else if (batteryPower == 5) {
-            specialPower += 16000;
-            specialLuck += 10;
-        }
-        else if (batteryPower == 6) {
-            specialPower += 30000;
-            specialLuck += 12;
-        }
-        else if (batteryPower == 7) {
-            specialPower += 50000;
-            specialLuck += 25;
-        }
-        else if (batteryPower == 8) {
-            specialPower += 90000;
-            specialLuck += 35;
-        }
-        else if (batteryPower == 9) {
-            specialPower += 190000;
-            specialLuck += 50;
-        }
-        else if (batteryPower == 10) {
-            specialPower += 300000;
-            specialLuck += 100;
-        }
+        checkBatteryLevel();
+        trapType = getPowerType(charmName, weaponName);
 
-        if (charmName == "Forgotten Charm") {
-            trapType = "Forgotten";
-        } else if (charmName == "Nanny Charm") {
-            trapType = "Parental";
-        } else if (charmName == "Hydro Charm") {
-            trapType = "Hydro";
-        } else if (charmName == "Shadow Charm") {
-            trapType = "Shadow";
-        } else {
-            trapType = weaponsArray[weaponName][0].trim();
-        }
+        trapPower = getTotalTrapPower();
 
-        if (weaponName == "Isle Idol Stakeshooter Skin") {
-            trapType = "Tactical";
-        } else if (weaponName == "Isle Idol Hydroplane Skin") {
-            trapType = "Hydro";
-        }
-
-        var totalPower = weaponPower + basePower + charmPower + specialPower;
-        var totalBonus = 1 + weaponBonus / 100 + baseBonus / 100 + charmBonus / 100 + specialBonus / 100 + cheeseBonus / 100;
-        var totalPourBonus = 1 + pourBonus / 100 + pourBonus / 100 * (weaponBonus / 100 + baseBonus / 100 + charmBonus / 100);
-        var ampBonus = ztAmp / 100 + braceBonus;
-        trapPower = Math.round(totalPower * totalBonus * totalPourBonus * ampBonus);
-
-        if (!parseInt(bonusLuck)) bonusLuck = 0;
-        trapLuck = Math.floor((weaponLuck + baseLuck + parseInt(gsLuck) + charmLuck + parseInt(bonusLuck) + parseInt(pourLuck) + specialLuck) * Math.min(1, ampBonus));
+        //noinspection OverlyComplexArithmeticExpressionJS
+        var totalLuck = weaponLuck + baseLuck + gsLuck + charmLuck + bonusLuck + pourLuck + specialLuck;
+        trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
         trapAtt = weaponAtt + baseAtt + charmAtt;
-        if (trapAtt > 100) trapAtt = 100;
+        if (trapAtt > 100) {
+            trapAtt = 100;
+        }
         trapEff = weaponEff + baseEff + charmEff;
-        if (trapEff > 6) trapEff = 6;
-        else if (trapEff < -6) trapEff = -6;
+        if (trapEff > 6) {
+            trapEff = 6;
+        }
+        else if (trapEff < -6) {
+            trapEff = -6;
+        }
 
-        if (user == CRE_USER && !skipDisp) {
+        if (user === CRE_USER && !skipDisp) {
             showPop(2);
             showTrapSetup();
         }
-    } else showTrapSetup(0);
+    } else {
+        showTrapSetup(0);
+    }
+
+    //Only calculate if both weapon and base selected
+    //TODO: Cleanup
+    function locationSpecificEffects() {
+        function isTribalArea(location) {
+            return location === "Elub Shore"
+                || location === "Nerg Plains"
+                || location === "Derr Dunes";
+        }
+
+        if (locationName === "Claw Shot City") {
+            if ((weaponName === "S.L.A.C." || weaponName === "S.L.A.C. II")
+                && baseName === "Claw Shot Base") {
+                if (charmName.indexOf("Cactus Charm") >= 0) specialPower += 2500;
+                else specialPower += 1000;
+            }
+        } else if (locationName === "Seasonal Garden") {
+            if (baseName === "Seasonal Base") {
+                specialBonus += 18;
+            }
+            if ((weaponName === "Soul Harvester"  || weaponName === "Terrifying Spider Trap")
+                && phaseName === "Fall") {
+                specialLuck += 10;
+            }
+        } else if ((contains(locationName,"Iceberg") || locationName === "Slushy Shoreline")
+            && weaponName.indexOf("Steam Laser Mk.") >= 0) {
+            if (weaponName === "Steam Laser Mk. I") {
+                specialPower += 1750;
+                specialLuck += 3;
+            }
+            else if (weaponName === "Steam Laser Mk. II") {
+                specialPower += 1250;
+                specialLuck += 2;
+            }
+            else if (weaponName === "Steam Laser Mk. III") {
+                specialPower += 1500;
+                specialLuck += 2;
+            }
+        } else if ((phaseName.indexOf("Icewing's Lair") >= 0 || phaseName.indexOf("Hidden Depths") >= 0 || phaseName.indexOf("The Deep Lair") >= 0)
+            && baseName === "Deep Freeze Base") {
+            specialPower += 665;
+            specialLuck += 9;
+        } else if (locationName === "Gnawnian Express Station") {
+            if (weaponName === "Bandit Deflector" && phaseName.indexOf("Raider River") >= 0) {
+                specialPower += 1500;
+            } else if (weaponName === "Engine Doubler" && phaseName.indexOf("Daredevil Canyon") >= 0) {
+                specialPower += 1500;
+            } else if (weaponName === "Supply Grabber" && phaseName.indexOf("Supply Depot") >= 0) {
+                specialPower += 1500;
+            }
+        } else if (isTribalArea(locationName) || locationName === "Cape Clawed") {
+            if (baseName === "Tiki Base") {
+                specialLuck += 6;
+            }
+
+            if ((locationName === "Derr Dunes" && charmName === "Derr Power Charm")
+                || (locationName === "Nerg Plains" && charmName === "Nerg Power Charm")
+                || (locationName === "Elub Shore" && charmName === "Elub Power Charm")) {
+                specialPower += 600;
+                specialBonus += 5;
+            }
+        } else if (locationName === "Fiery Warpath") {
+            if (charmName === "Flamebane Charm") {
+                specialBonus += 150;
+            }
+            if (phaseName === "Wave 4" && weaponName === "Warden Slayer Trap") {
+                specialPower += 2500;
+                specialBonus += 2500;
+            }
+        } else if (locationName === "Toxic Spill") {
+            if (baseName === "Washboard Base") {
+                specialBonus += 5;
+                specialLuck += 5;
+            }
+            if (charmName === "Soap Charm") {
+                specialPower += 5000;
+                specialLuck += 10;
+            } else if (charmName === "Super Soap Charm") {
+                specialPower += 8000;
+                specialLuck += 12;
+            }
+        } else if (locationName === "Jungle of Dread" ) {
+            if (weaponName === "Dreaded Totem Trap") {
+                specialPower += 8500;
+            }
+            if (charmName === "Dreaded Charm") {
+                specialBonus += 300;
+            }
+        }  else if (locationName === "Sunken City" && baseName === "Depth Charge Base" && phaseName !== "Docked") {
+            specialPower += 1000;
+        } else if (locationName === "Town of Digby" && cheeseName === "Limelight" && charmName === "Mining Charm") {
+            specialBonus += 30;
+        } else if (locationName === "Fort Rox") {
+            fortRox.ballistaLevel = $("#ballistaLevel").val();
+            fortRox.canonLevel = $("#canonLevel").val();
+        }
+
+        if (cheeseName.indexOf("Fusion Fondue") >= 0 && charmName === "EMP400 Charm") {
+            specialPower += 25000;
+        }
+    }
+
+    function getTotalTrapPower() {
+        var totalPower = weaponPower + basePower + charmPower + specialPower;
+        var setupPowerBonus = weaponBonus + baseBonus + charmBonus;
+        var totalBonus = 1 + (setupPowerBonus + specialBonus + cheeseBonus + braceBonus) / 100;
+        var totalPourBonus = 1 + pourBonus / 100 * (1 + setupPowerBonus/100);
+
+        return Math.round(totalPower * totalBonus * totalPourBonus * getAmpBonus());
+    }
+
+    function getAmpBonus() {
+        return ztAmp / 100;
+    }
+
+    function determineRiftBonus(codex) {
+        var riftCount = getRiftCount(weaponName, baseName, charmName);
+        var multiplier = 1;
+
+        if (codex) {
+            multiplier = 2;
+        }
+
+        if (riftCount === 2) {
+            specialBonus += 10 * multiplier;
+        } else if (riftCount === 3) {
+            specialBonus += 10 * multiplier;
+            specialLuck += 5 * multiplier;
+        }
+    }
+
+    function checkBatteryLevel() {
+        if (locationName !== "Furoma Rift") {
+            batteryPower = 0;
+        }
+        var batteryExtras = batteryEffects[batteryPower] || [0, 0];
+        specialPower += batteryExtras[0];
+        specialLuck += batteryExtras[1];
+    }
+
+    /**
+     * Get power type
+     */
+    function getPowerType(charm, weapon) {
+        var charmPowerTypes = {
+            "Forgotten Charm": "Forgotten",
+            "Nanny Charm": "Parental",
+            "Hydro Charm": "Hydro",
+            "Shadow Charm": "Shadow"
+        };
+
+        return charmPowerTypes[charm] || weaponsArray[weapon][0];
+    }
 }
 
 /**
  * Catch Rate calculation
  * Source: https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/
- * @param E Effectiveness
- * @param P Trap Power
- * @param L Trap Luck
- * @param M Mouse Power
- * @returns {number} Catch Rate Estimate
+ * @param effectiveness {number} Trap power effectiveness
+ * @param trapPower {number}
+ * @param trapLuck {number}
+ * @param mousePower {number}
+ * @returns {number} Catch Rate Estimate: Number between 0 and 1
  */
-function calcCR(E, P, L, M) {
-    return Math.min((E * P + (3 - Math.min(E, 2)) * Math.pow((Math.min(E, 2) * L), 2)) / (E * P + M), 1);
+function calcCR(effectiveness, trapPower, trapLuck, mousePower) {
+    var finalEffectiveness = Math.min(effectiveness, 2);
+    var effectiveTrapPower = finalEffectiveness * trapPower;
+    var effectiveTrapLuck = finalEffectiveness * trapLuck;
+
+    var numerator = effectiveTrapPower + (3 - finalEffectiveness) * Math.pow(effectiveTrapLuck, 2);
+    var denominator = effectiveTrapPower + mousePower;
+
+    var catchRate = numerator / denominator;
+
+    return Math.min(catchRate, 1);
+}
+
+/**
+ * Calculates minimum luck required for 100% CR
+ * @see calcCR
+ * @param effectiveness {number} Trap power effectiveness
+ * @param mousePower {number}
+ * @return {number}
+ */
+function minLuck(effectiveness, mousePower) {
+    var finalEffectiveness = Math.min(effectiveness, 2);
+    var minLuckSquared = (mousePower / (3 - finalEffectiveness)) / Math.pow(finalEffectiveness, 2);
+    return Math.ceil(Math.sqrt(minLuckSquared));
 }
 
 function batteryChanged() {
-    var input = document.getElementById("battery");
-    var batteryLevel = input.value;
+    var batteryLevel = document.getElementById("battery").value;
     batteryPower = parseInt(batteryLevel) || 0;
 
-    if (batteryPower < 0)
+    if (batteryPower < 0) {
         batteryPower = 0;
-    else if (batteryPower > 10)
+    }
+    else if (batteryPower > 10) {
         batteryPower = 10;
-
-    updateLink();
-
-    if (user == CRE_USER)
-        calculateTrapSetup();
-}
-
-var baselineArray = [];
-function processBaseline(baselineText) {
-    baselineArray = baselineText.split("\n");
-    var baselineArrayLength = baselineArray.length;
-
-    for (var i = 0; i < baselineArrayLength; i++) {
-        baselineArray[i] = baselineArray[i].split("\t");
-
-        baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
     }
-
-    baselineLoaded = 1;
-    checkLoadState();
-
+    genericOnChange();
 }
 
+/**
+ * Returns effectiveness of current power type against a mouse.
+ * @param mouseName
+ * @returns {number}
+ */
 function findEff(mouseName) {
-    var eff;
-    if (trapType == '') eff = 0;
-    else {
-        eff = (powersArray[mouseName][typeEff[trapType]]) / 100;
+    if (trapType === "") {
+        return 0;
+    } else {
+        var typeIndex = typeEff[trapType];
+        return (powersArray[mouseName][typeIndex]) / 100;
     }
-    return eff;
 }
 
 function getCheeseAttraction() {
@@ -379,25 +472,40 @@ function getCheeseAttraction() {
 
 function gsParamCheck() {
     var gsParameter = getURLParameter("gs");
-    if (gsParameter != "null") {
-        gsParameter = "No";
+    if (gsParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("gs");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == gsParameter) {
-                child.selected = true;
-                gsChanged();
-                break;
-            }
-        }
+        select.value = "No";
+        gsChanged();
     }
 }
 
-function toxicChanged() {
-    var select = document.getElementById("toxic");
-    isToxic = select.children[select.selectedIndex].innerHTML;
+function riftstalkerParamCheck() {
+    var riftstalkerParam = getURLParameter("riftstalker") !== NULL_URL_PARAM;
+    $("#riftstalker").prop("checked", riftstalkerParam)
+}
 
-    if (isToxic == "Yes" && (cheeseName == "Brie" || cheeseName == "SB+")) {
+function fortRoxParamCheck() {
+    fortRox.ballistaLevel = parseInt(getURLParameter("ballistaLevel"));
+    fortRox.canonLevel = parseInt(getURLParameter("canonLevel"));
+}
+
+function checkToxicWidget(custom) {
+    if (!custom) {
+        if (cheeseName === "Brie" || cheeseName === "SB+") {
+            $("#toxicRow").show(500);
+        }
+        else {
+            $("#toxicRow").hide();
+        }
+        updateToxicValue();
+    }
+}
+
+function updateToxicValue() {
+    var select = document.getElementById("toxic");
+    isToxic = select.value;
+
+    if (isToxic === "Yes" && (cheeseName === "Brie" || cheeseName === "SB+")) {
         cheeseBonus = 20;
     }
     else {
@@ -405,91 +513,115 @@ function toxicChanged() {
     }
 
     updateLink();
+}
+
+function toxicChanged() {
+    updateToxicValue();
     calculateTrapSetup();
 }
 
-function populateSublocationDropdown(locationName) {
-    var sublDropdown = document.getElementById("phase");
-    var sublDropdownHTML = '';
-
-    var sublocations = Object.keys(popArray[locationName] || []);
-    for (var key in sublocations) {
-        sublDropdownHTML += "<option>" + sublocations[key] + "</option>\n";
+function charmChangeCommon(newCharmName) {
+    if (newCharmName) {
+        charmName = newCharmName;
     }
-
-    sublDropdown.innerHTML = sublDropdownHTML;
-    phaseName = sublocations[0];
-
-    var phaseParameter = getURLParameter("phase");
-    if (phaseParameter != "null") {
-        var select = document.getElementById("phase");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == phaseParameter) {
-                child.selected = true;
-                break;
-            }
-        }
-    }
-
-    loadCheeseDropdown();
-    phaseChanged();
-}
-
-function charmChangeCommon() {
     updateLink();
-    var charmsArrayN = charmsArray[charmName] || [0, 0, 0, 0, "No Effect"];
     if (specialCharm[charmName]) calcSpecialCharms(charmName);
     else {
-        charmPower = charmsArrayN[0];
-        charmBonus = charmsArrayN[1];
-        charmAtt = charmsArrayN[2];
-        charmLuck = charmsArrayN[3];
-        charmEff = parseFreshness[charmsArrayN[4].trim()];
+        populateCharmData(charmName);
     }
 }
 
+/**
+ * Populates global variables with charm data
+ * @param selectedCharm Name of charm
+ */
+function populateCharmData(selectedCharm) {
+    var charmsArrayN = charmsArray[selectedCharm] || DEFAULT_STATS;
+    charmPower = parseInt(charmsArrayN[0]);
+    charmBonus = parseInt(charmsArrayN[1]);
+    charmAtt = parseInt(charmsArrayN[2]);
+    charmLuck = parseInt(charmsArrayN[3]);
+    charmEff = parseFreshness[charmsArrayN[4]];
+}
+
+/**
+ * Populates the global variables for the weapon
+ * @param armedWeapon the name of the weapon
+ */
+function populateWeaponData(armedWeapon) {
+    var weaponsArrayN = weaponsArray[armedWeapon] || DEFAULT_STATS;
+    trapType = weaponsArrayN[0];
+    weaponPower = weaponsArrayN[1];
+    weaponBonus = weaponsArrayN[2];
+    weaponAtt = weaponsArrayN[3];
+    weaponLuck = weaponsArrayN[4];
+    weaponEff = parseFreshness[weaponsArrayN[5]];
+}
+
+/**
+ * Populates the global variables for the base
+ * @param {string} armedBase the name of the base
+ */
+function populateBaseData(armedBase) {
+    var basesArrayN = basesArray[armedBase] || DEFAULT_STATS;
+    baseName = armedBase;
+    basePower = parseInt(basesArrayN[0]);
+    baseBonus = parseInt(basesArrayN[1]);
+    baseAtt = parseInt(basesArrayN[2]);
+    baseLuck = parseInt(basesArrayN[3]);
+    baseEff = parseFreshness[basesArrayN[4]];
+}
+
+/**
+ * Loads a dropdown menu for weapons, bases or charms
+ * @param {string} category The items to load. The same as the URL parameter and the item ID
+ * @param {string[]} array The item names
+ * @param {function} callback A callback fucntion that takes no parameters
+ * @param {string} [initialHtml] Optional. Initial html content in the select
+ */
+function loadDropdown(category, array, callback, initialHtml) {
+    var inputElement = document.getElementById(category);
+    var dropdownHtml =  initialHtml || "";
+    for (var key in array) {
+        dropdownHtml += "<option>" + array[key] + "</option>\n";
+    }
+
+    inputElement.innerHTML = dropdownHtml;
+
+    inputElement.value = getURLParameter(category);
+    if (inputElement.selectedIndex === -1) {
+        inputElement.selectedIndex = 0;
+    }
+    callback();
+
+}
+
+/**
+ * Load the location drop down list from the population data and select correct location from URL apramters
+ */
 function loadLocationDropdown() {
-    var locationDropdown = document.getElementById("location");
-    var locationDropdownHTML = '<option></option>';
+    var array = Object.keys(popArray || []);
+    array.sort();
 
-    var locations = Object.keys(popArray || []);
-    /* Safety, JS does not define iteration order */
-    locations.sort();
-
-    for (var key in locations) {
-        locationDropdownHTML += "<option>" + locations[key] + "</option>\n";
-    }
-
-    locationDropdown.innerHTML = locationDropdownHTML;
-
-    var locationParameter = getURLParameter("location");
-    if (locationParameter != "null") {
-        var select = document.getElementById("location");
-        for (var i = 0; i < select.children.length; i++) {
-            var child = select.children[i];
-            if (child.innerHTML == locationParameter) {
-                child.selected = true;
-                locationChanged();
-                break;
-            }
-        }
-    }
+    loadDropdown("location", array, locationChanged, "<option></option>")
 }
+
 
 function showTrapSetup(type) {
     var trapSetup = document.getElementById("trapSetup");
 
-    if (type == 0) trapSetup.innerHTML = "<tr><td></td></tr>";
+    if (type === 0) trapSetup.innerHTML = "<tr><td></td></tr>";
     else {
-        trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr><tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr><tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
+        trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr>" +
+            "<tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr>" +
+            "<tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
     }
 }
 
 function gsChanged() {
     var select = document.getElementById("gs");
 
-    if (select.value == 'Y') gsLuck = 7;
+    if (select.value === "Y") gsLuck = 7;
     else gsLuck = 0;
 
     updateLink();
@@ -498,43 +630,55 @@ function gsChanged() {
 }
 
 function getIcebergBase() {
-    var autoBase = '';
-    var autoPhase = '';
-    if (phaseName.indexOf("Magnet") >= 0) autoBase = "Magnet Base";
-    else if (phaseName.indexOf("Hearthstone") >= 0) autoBase = "Hearthstone Base";
-
-    else if ((phaseName == "Bombing Run"
-        || phaseName == "The Mad Depths"
-        || phaseName == "Treacherous Tunnels")
-        && baseName == "Magnet Base") {
+    var autoBase = "";
+    if (contains(phaseName,"Magnet")) {
+        autoBase = "Magnet Base";
+    }
+    else if (contains(phaseName,"Hearthstone")) {
+        autoBase = "Hearthstone Base";
+    }
+    else if ((phaseName === "Bombing Run"
+        || phaseName === "The Mad Depths"
+        || phaseName === "Treacherous Tunnels")
+        && baseName === "Magnet Base") {
+        autoBase = "";
+    }
+    else if (phaseName === "The Mad Depths"
+        && baseName === "Hearthstone Base") {
         autoBase = "";
     }
 
-    else if (phaseName == "The Mad Depths"
-        && baseName == "Hearthstone Base") autoBase = "";
-
-    if (autoBase != "") {
+    if (autoBase !== "") {
         var selectBase = document.getElementById("base");
         selectBase.value = autoBase;
         baseChanged();
     }
 }
+
 function phaseChanged() {
-    console.log("Phase changed");
-    if (phaseName == "-") {
-        $("#phaseRow").hide();
-    }
-    else {
-        $("#phaseRow").show(500);
+    function setPhase() {
+        var select = document.getElementById("phase");
+        phaseName = select.value;
+
+        if (phaseName === "") {
+            phaseName = EMPTY_SELECTION;
+        }
     }
 
-    var select = document.getElementById("phase");
-    phaseName = select.children[select.selectedIndex].innerHTML;
+    setPhase();
+
+    if (!popArray[locationName][phaseName]) {
+        var phases = Object.keys(popArray[locationName]);
+        loadDropdown("phase", phases, function () {
+            document.getElementById("#phase").selectedIndex = 0;
+            setPhase();
+        })
+    }
 
     getIcebergBase();
 
-    if (locationName == "Twisted Garden"
-        && phaseName == "Poured") {
+    if (locationName === "Twisted Garden"
+        && phaseName === "Poured") {
         pourBonus = 5;
         pourLuck = 5;
         calculateTrapSetup();
@@ -543,13 +687,12 @@ function phaseChanged() {
         pourLuck = 0;
         calculateTrapSetup();
     }
-
-    loadCheeseDropdown();
+    loadCheeseDropdown(locationName, phaseName);
     updateLink();
 }
 
 function bonusLuckChanged() {
-    var luckInput = document.getElementById("bonusLuck").value;
+    var luckInput = parseInt(document.getElementById("bonusLuck").value);
 
     if (luckInput >= 0) {
         bonusLuck = luckInput;
@@ -565,10 +708,86 @@ function bonusLuckChanged() {
 
 function checkToxicParam() {
     var toxicParameter = getURLParameter("toxic");
-    if (toxicParameter != "null") {
+    if (toxicParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("toxic");
         select.value = toxicParameter;
         toxicChanged();
     }
 }
 
+/**
+ * Show or hide and reset UI widgets based on the selected location:
+ *    - All items with the css class display-location are hidden
+ *    - Items wih the location-specific custom class is shown (eg. location-fiery-warpath, location-labyrinth) are shown
+ *    - If a custom setup is used only location specific items inside the .comments block will be shown
+ * @param custom Is a custom setup being used
+ */
+function showHideWidgets(custom) {
+    $("#toxicRow").hide();
+    $("#toxic").val('No');
+    $("#battery").val('-');
+    $("#ampSlider").slider('option', 'value', 100);
+
+    $(".display-location").hide();
+    var locationNameClass = ".display-" + locationName.replace(/ /g, "-").replace(/'/g,"").toLowerCase();
+    $(".comments " + locationNameClass).show(500);
+    if (!custom) {
+        $(locationNameClass).show(500);
+    }
+    checkToxicWidget(custom);
+}
+
+function clearResults() {
+    var results = document.getElementById("results");
+    results.innerHTML = '';
+    if (user === CRE_USER) {
+        formatSampleSize();
+    }
+}
+
+/**
+ * Location change handler
+ * - Update location variable
+ * - Show/hide widgets
+ * - Populate phases
+ * - Clear results
+ */
+function locationChanged() {
+    var select = document.getElementById("location");
+    locationName = select.value;
+
+    var checked = user === CRE_USER && document.getElementById("toggleCustom").checked;
+
+    updateLink();
+    showHideWidgets(checked);
+
+    batteryPower = 0;
+    ztAmp = 100;
+    sampleSize = 0;
+
+    //Populate sublocation dropdown and select first option
+    if (locationName && locationName !== "") {
+        populateSublocationDropdown(locationName);
+    } else {
+        $("#phaseRow").hide();
+    }
+
+    clearResults();
+
+    function populateSublocationDropdown(locationName) {
+        var category = "phase";
+        var array = Object.keys(popArray[locationName]) || [EMPTY_SELECTION];
+        loadDropdown(category, array, phaseChanged, "");
+        if (array.length > 1) {
+            $("#phaseRow").show()
+        } else {
+            $("#phaseRow").hide()
+        }
+    }
+}
+
+function genericOnChange() {
+    calculateTrapSetup(false) ;
+    updateLink();
+    if (user === CRE_USER) showPop(2);
+}

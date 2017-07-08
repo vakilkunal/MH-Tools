@@ -1,92 +1,4 @@
 "use strict";
-var POPULATIONS_URL = "data/populations.csv";
-var BASELINES_URL = "data/baselines.txt";
-// var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
-// var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
-// Uncomment above to bypass Cross-Origin on Chrome
-
-// This will parse a delimited string into an array of
-// arrays. The default delimiter is the comma, but this
-// can be overriden in the second argument.
-function CSVToArray(strData, strDelimiter) {
-    // Check to see if the delimiter is defined. If not,
-    // then default to comma.
-    strDelimiter = ",";
-
-    // Create a regular expression to parse the CSV values.
-    var objPattern = new RegExp(
-        (
-            // Delimiters.
-        "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-
-            // Quoted fields.
-        "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-
-            // Standard fields.
-        "([^\"\\" + strDelimiter + "\\r\\n]*))"),
-        "gi");
-
-
-    // Create an array to hold our data. Give the array
-    // a default empty first row.
-    var arrData = [
-        []
-    ];
-
-    // Create an array to hold our individual pattern
-    // matching groups.
-    var arrMatches = null;
-
-
-    // Keep looping over the regular expression matches
-    // until we can no longer find a match.
-    while (arrMatches = objPattern.exec(strData)) {
-
-        // Get the delimiter that was found.
-        var strMatchedDelimiter = arrMatches[1];
-
-        // Check to see if the given delimiter has a length
-        // (is not the start of string) and if it matches
-        // field delimiter. If id does not, then we know
-        // that this delimiter is a row delimiter.
-        if (
-            strMatchedDelimiter.length &&
-            (strMatchedDelimiter != strDelimiter)) {
-
-            // Since we have reached a new row of data,
-            // add an empty row to our data array.
-            arrData.push([]);
-
-        }
-
-
-        // Now that we have our delimiter out of the way,
-        // let's check to see which kind of value we
-        // captured (quoted or unquoted).
-        if (arrMatches[2]) {
-
-            // We found a quoted value. When we capture
-            // this value, unescape any double quotes.
-            var strMatchedValue = arrMatches[2].replace(
-                new RegExp("\"\"", "g"),
-                "\"");
-
-        } else {
-
-            // We found a non-quoted value.
-            var strMatchedValue = arrMatches[3];
-
-        }
-
-
-        // Now that we have our value string, let's add
-        // it to the data array.
-        arrData[arrData.length - 1].push(strMatchedValue);
-    }
-
-    // Return the parsed data.
-    return (arrData);
-}
 
 var standardCheeseCost = {
     "Cheddar" : 10,
@@ -101,229 +13,43 @@ var standardCheeseCost = {
 //Function for determining size of multi-level array
 Object.size = function (obj) {
     var size = 0;
-    //var text = '';
     for (var key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-        //text += obj[key] + "<br>";
+        if (obj.hasOwnProperty(key)) {
+            size++;
+        }
     }
-    //results.innerHTML += text;
     return size;
 };
 
 var ztAmp = 100;
-var riftWeapons = {
-    "Biomolecular Re-atomizer Trap": true, "Crystal Tower": true, "Focused Crystal Laser": true,
-    "Multi-Crystal Laser": true, "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes": true
-};
-var riftBases = {
-    "Fissure Base": true, "Fracture Base": true, "Rift Base": true,
-    "Enerchi Induction Base": true, "Attuned Enerchi Induction Base": true
-};
-var riftCharms = {
-    "Cherry Charm": true, "Gnarled Charm": true, "Stagnant Charm": true,
-    "Rift Power Charm": true, "Rift Ultimate Luck Charm": true,
-    "Rift Ultimate Power Charm": true, "Rift Vacuum Charm": true,
-    "Super Rift Vacuum Charm": true, "Enerchi Charm": true,
-    "Rift Ultimate Lucky Power Charm": true
-};
+var riftWeapons = [
+    "Biomolecular Re-atomizer Trap",
+    "Crystal Tower",
+    "Focused Crystal Laser",
+    "Multi-Crystal Laser",
+    "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes"
+];
 
-function calculateTrapSetup(user) {
-    var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
-    //console.log(weaponPower + " " + basePower + " " + charmPower);
+var riftBases = [
+    "Fissure Base",
+    "Fracture Base",
+    "Rift Base",
+    "Enerchi Induction Base",
+    "Attuned Enerchi Induction Base"
+];
 
-    if (weaponPower && basePower) { //Only calculate if both weapon and base selected
-
-        //Exceptions
-
-        if (locationName.indexOf("Claw Shot City") >= 0 && (weaponName == "S.L.A.C." || weaponName == "S.L.A.C. II") && baseName == "Claw Shot Base") {
-            if (charmName.indexOf("Cactus Charm") >= 0) specialPower += 2500;
-            else specialPower += 1000;
-        }
-        else if ((weaponName == "Soul Harvester" || weaponName == "Terrifying Spider Trap") && ((locationName == "Seasonal Garden" && phaseName == "Fall") || locationName.indexOf("Haunted Terrortories") >= 0)) {
-            specialLuck += 10;
-        }
-        else if ((locationName.indexOf("Iceberg") >= 0 || locationName.indexOf("Slushy Shoreline") >= 0) && weaponName.indexOf("Steam Laser Mk.") >= 0) {
-            if (weaponName == "Steam Laser Mk. I") {
-                specialPower += 1750;
-                specialLuck += 3;
-            }
-            else if (weaponName == "Steam Laser Mk. II") {
-                specialPower += 1250;
-                specialLuck += 2;
-            }
-            else if (weaponName == "Steam Laser Mk. III") {
-                specialPower += 1500;
-                specialLuck += 2;
-            }
-        } else if (locationName.indexOf("Gnawnian Express Station") >= 0) {
-            if (weaponName == "Bandit Deflector" && phaseName.indexOf("Raider River") >= 0) specialPower += 1500;
-            else if (weaponName == "Engine Doubler" && phaseName.indexOf("Daredevil Canyon") >= 0) specialPower += 1500;
-            else if (weaponName == "Supply Grabber" && phaseName.indexOf("Supply Depot") >= 0) specialPower += 1500;
-        } else if (locationName == "Derr Dunes" && charmName == "Derr Power Charm") {
-            specialPower += 600;
-            specialBonus += 5;
-        } else if (locationName == "Nerg Plains" && charmName == "Nerg Power Charm") {
-            specialPower += 600;
-            specialBonus += 5;
-        } else if (locationName == "Elub Shore" && charmName == "Elub Power Charm") {
-            specialPower += 600;
-            specialBonus += 5;
-        } else if (locationName.indexOf("Fiery Warpath") >= 0) {
-            if (charmName == "Flamebane Charm") {
-                specialBonus += 150;
-            }
-            if (phaseName == "Wave 4" && weaponName == "Warden Slayer Trap") {
-                specialPower += 2500;
-                specialBonus += 2500;
-            }
-        } else if (locationName.indexOf("Toxic Spill") >= 0) {
-            if (baseName == "Washboard Base") {
-                specialBonus += 5;
-                specialLuck += 5;
-            }
-            if (charmName == "Soap Charm") {
-                specialPower += 5000;
-                specialLuck += 10;
-            } else if (charmName == "Super Soap Charm") {
-                specialPower += 8000;
-                specialLuck += 12;
-            }
-        } else if ((locationName == "Cape Clawed" || locationName == "Elub Shore" || locationName == "Nerg Plains" || locationName == "Derr Dunes") && baseName == "Tiki Base") {
-            specialLuck += 6;
-        } else if ((phaseName.indexOf("Icewing's Lair") >= 0 || phaseName.indexOf("Hidden Depths") >= 0 || phaseName.indexOf("The Deep Lair") >= 0) && baseName == "Deep Freeze Base") {
-            specialPower += 665;
-            specialLuck += 9;
-        } else if (locationName == "Jungle of Dread" && weaponName == "Dreaded Totem Trap") {
-            specialPower += 8500;
-        } else if (locationName == "Sunken City" && baseName == "Depth Charge Base" && phaseName != "Docked") {
-            specialPower += 1000;
-        } else if (locationName == "Seasonal Garden" && baseName == "Seasonal Base") {
-            specialBonus += 18;
-        }
-
-        if (cheeseName == "Limelight" && charmName == "Mining Charm") {
-            specialBonus += 30;
-        } else if (locationName == "Jungle of Dread" && charmName == "Dreaded Charm") {
-            specialBonus += 300;
-        } else if (cheeseName.indexOf("Fusion Fondue") >= 0 && charmName == "EMP400 Charm") {
-            specialPower += 25000;
-        }
-
-        if (weaponName == "Ice Blaster" && charmName == "Snowball Charm") {
-            specialBonus += 10;
-        } else if (weaponName == "Glacier Gatler" && charmName == "Snowball Charm") {
-            specialBonus += 20;
-        } else if (trapType.trim() == "Physical" && baseName == "Physical Brace Base") {
-            braceBonus += .25;
-        } else if ((baseName == "Polluted Base" || baseName == "Refined Pollutinum Base") && charmName.indexOf("Polluted Charm") >= 0) {
-            if (charmName == "Polluted Charm") {
-                specialLuck += 4;
-            } else if (charmName == "Super Polluted Charm") {
-                specialLuck += 6;
-            } else if (charmName == "Extreme Polluted Charm") {
-                specialLuck += 10;
-            } else if (charmName == "Ultimate Polluted Charm") {
-                specialLuck += 15;
-            }
-        }
-
-        var riftCount = 0;
-        if (weaponName in riftWeapons) riftCount++;
-        if (baseName in riftBases) riftCount++;
-        if (charmName in riftCharms) riftCount++;
-        else if (charmName.indexOf("Gnarled Charm") >= 0 || charmName.indexOf("Cherry Charm") >= 0 || charmName.indexOf("Stagnant Charm") >= 0) {
-            riftCount++;
-        }
-        if (riftCount == 2) {
-            specialBonus += 10;
-        } else if (riftCount == 3) {
-            specialBonus += 10;
-            specialLuck += 5;
-        }
-
-        /*
-         * Battery Levels
-         */
-        if (typeof batteryPower == 'undefined') {
-        }
-        else if (batteryPower == 1) {
-            specialPower += 90;
-        }
-        else if (batteryPower == 2) {
-            specialPower += 500;
-            specialLuck += 1;
-        }
-        else if (batteryPower == 3) {
-            specialPower += 3000;
-            specialLuck += 2;
-        }
-        else if (batteryPower == 4) {
-            specialPower += 8500;
-            specialLuck += 5;
-        }
-        else if (batteryPower == 5) {
-            specialPower += 16000;
-            specialLuck += 10;
-        }
-        else if (batteryPower == 6) {
-            specialPower += 30000;
-            specialLuck += 12;
-        }
-        else if (batteryPower == 7) {
-            specialPower += 50000;
-            specialLuck += 25;
-        }
-        else if (batteryPower == 8) {
-            specialPower += 90000;
-            specialLuck += 35;
-        }
-        else if (batteryPower == 9) {
-            specialPower += 190000;
-            specialLuck += 50;
-        }
-        else if (batteryPower == 10) {
-            specialPower += 300000;
-            specialLuck += 100;
-        }
-
-        if (charmName == "Forgotten Charm") {
-            trapType = "Forgotten";
-        } else if (charmName == "Nanny Charm") {
-            trapType = "Parental";
-        } else if (charmName == "Hydro Charm") {
-            trapType = "Hydro";
-        } else if (charmName == "Shadow Charm") {
-            trapType = "Shadow";
-        } else {
-            trapType = weaponsArray[weaponName][0].trim();
-        }
-
-        if (weaponName == "Isle Idol Stakeshooter Skin") {
-            trapType = "Tactical";
-        } else if (weaponName == "Isle Idol Hydroplane Skin") {
-            trapType = "Hydro";
-        }
-
-        var totalPower = weaponPower + basePower + charmPower + specialPower;
-        var totalBonus = 1 + weaponBonus / 100 + baseBonus / 100 + charmBonus / 100 + specialBonus / 100 + cheeseBonus / 100;
-        var totalPourBonus = 1 + pourBonus / 100 + pourBonus / 100 * (weaponBonus / 100 + baseBonus / 100 + charmBonus / 100);
-        var ampBonus = ztAmp / 100 + braceBonus;
-        trapPower = Math.round(totalPower * totalBonus * totalPourBonus * ampBonus);
-
-        if (!parseInt(bonusLuck)) bonusLuck = 0;
-        trapLuck = Math.floor((weaponLuck + baseLuck + parseInt(gsLuck) + charmLuck + parseInt(bonusLuck) + parseInt(pourLuck) + specialLuck)*Math.min(1,ampBonus));
-        trapAtt = weaponAtt + baseAtt + charmAtt;
-        if (trapAtt > 100) trapAtt = 100;
-        trapEff = weaponEff + baseEff + charmEff;
-        if (trapEff > 6) trapEff = 6;
-        else if (trapEff < -6) trapEff = -6;
-
-        if (user == "cre") {
-            showPop(2);
-            showTrapSetup();
-        }
-    } else showTrapSetup(0);
-}
+var riftCharms = [
+    "Cherry Charm",
+    "Enerchi Charm",
+    "Gnarled Charm",
+    "Stagnant Charm",
+    "Rift Power Charm",
+    "Rift Ultimate Luck Charm",
+    "Rift Ultimate Power Charm",
+    "Rift Vacuum Charm",
+    "Super Rift Vacuum Charm",
+    "Rift Ultimate Lucky Power Charm"
+];
 
 var labyrinthMiceClues = {
     "Ash Golem": 1,
@@ -541,6 +267,9 @@ var parseFreshness = {
     "Uber Fresh": 6
 };
 
+/**
+ * Maps types to integers for lookup in the powers array
+ */
 var typeEff = {
     "Arcane": 1,
     "Draconic": 2,
@@ -612,7 +341,7 @@ var tourneysArray = {
         "Monstrous Abomination": 10,
         "Plutonium Tentacle": 15,
         "Assassin Beast": 15,
-        "The Menace of the Rift": 20
+        "Menace of the Rift": 20
     },
     "Burroughs Rift: Stay in the green": {
         "Amplified White": 1,
@@ -641,7 +370,7 @@ var tourneysArray = {
         "Mecha Tail": 3,
         "Radioactive Ooze": 3,
         "Toxikinetic": 3,
-        "The Menace of the Rift": 5,
+        "Menace of the Rift": 5,
         "Zombot Unipire the Third": 10,
         "Lycanoid": 10,
         "Revenant": 10,
@@ -689,7 +418,7 @@ var tourneysArray = {
         "Portable Generator": 15,
         "Monstrous Abomination": 20,
         "Big Bad Behemoth Burroughs": 20,
-        "The Menace of the Rift": 50
+        "Menace of the Rift": 50
     },
     "Catacombs Competitors": {
         "Bat": 1,
@@ -2840,7 +2569,7 @@ var powersArray = {
     "Toxic Avenger": 	[2100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Rancid Bog Beast": 	[2200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Super Mega Mecha Ultra RoboGold": 	[2300, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
-    "The Menace of the Rift": 	[5000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
+    "Menace of the Rift": 	[5000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Plutonium Tentacle": 	[15000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Assassin Beast": 	[15000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
     "Monstrous Abomination": 	[25000, 10, 10, 10, 10, 10, 10, 10, 10, 10, 100],
@@ -3470,7 +3199,7 @@ var miceArray = {
     "Lycanoid": [6500, 50000],
     "Master Exploder": [12000, 65000],
     "Mecha Tail": [1000, 45000],
-    "The Menace of the Rift": [150000, 350000],
+    "Menace of the Rift": [150000, 350000],
     "Monstrous Abomination": [15000, 150000],
     "Phase Zombie": [4400, 34000],
     "Plutonium Tentacle": [50000, 260000],
@@ -3815,411 +3544,6 @@ var miceArray = {
     "Werehauler": [1500, 19000],
     "Wereminer": [2900, 28000]
 };
-//HT arrays
-var locations = {
-    "Acolyte Realm": 31,
-    "Balack's Cove - Low Tide": 38,
-    "Balack's Cove - Mid Tide": 38,
-    "Balack's Cove - High Tide": 38,
-    "Bazaar": 48,
-    "Birthday Party": 70,
-    "Birthday Party Celebration": 295,
-    "Calm Clearing": 34,
-    "Cape Clawed": 47,
-    "Catacombs": 13,
-    "Catacombs (Antiskele)": 13,
-    "Chocolate Factory": 111,
-    "Construction Yard": 283,
-    "Crystal Library": 273,
-    "Crystal Library (Scholar)": 273,
-    "Derr Dunes": 12,
-    "Dojo": 45,
-    "Dracano": 35,
-    "Elub Shore": 30,
-    "Empty Event Lot": 53,
-    "Festive Comet": 64,
-    "Fiery Warpath (Wave 1)": 75,
-    "Fiery Warpath (Wave 2)": 75,
-    "Fiery Warpath (Wave 3)": 75,
-    "Fiery Warpath (Wave 4)": 75,
-    "Forbidden Grove": 28,
-    "Great Gnarled Tree": 42,
-    "Harbour": 21,
-    "Haunted Terrortories": 51,
-    "Jungle of Dread": 32,
-    "King's Arms": 286,
-    "King's Gauntlet": 14,
-    "King's Party Zone": 52,
-    "Laboratory": 33,
-    "Lagoon": 36,
-    "Meadow": 40,
-    "Meditation Room": 44,
-    "Mountain": 41,
-    "Mountain (Prospector)": 41,
-    "Mousoleum": 43,
-    "Muridae Market": 114,
-    "Muridae Market (Artisan)": 114,
-    "Nerg Plains": 11,
-    "Pinnacle Chamber": 10,
-    "Ronza's Traveling Shoppe": 69,
-    "S.S. Huntington II": 39,
-    "S.S. Huntington III": 298,
-    "Seasonal Garden": 1,
-    "Slushy Shoreline": 296,
-    "Slushy Shoreline (Softserve)": 296,
-    "Snow Fortress": 280,
-    "Tournament Hall": 285,
-    "Town of Digby": 9,
-    "Town of Gnawnia": 37,
-    "Training Grounds": 46,
-    "Vacant Lot": 68,
-    "Windmill": 20,
-    "Year of the Dragon Festival": 288,
-    "Zugzwang's Tower": 3,
-    "Iceberg": 297,
-    "Great Gnawnian Games": 299,
-    "Living Garden (Poured)": 301,
-    "Living Garden (Not Poured)": 301,
-    "Sand Dunes (No Stampede)": 302,
-    "Sand Dunes (Stampede)": 302,
-    "Sand Dunes (Stampede) (Grubling Chow)": 302,
-    "Lost City (Cursed)": 304,
-    "Lost City (Curse Lifted)": 304,
-    "Twisted Garden (Poured)": 309,
-    "Twisted Garden (Not Poured)": 309,
-    "Twisted Garden (Poured) (Shattering)": 309,
-    "Twisted Garden (Not Poured) (Shattering)": 309,
-    "Cursed City (Cursed)": 311,
-    "Cursed City (Curse Lifted)": 311,
-    "Cursed City (Curse Lifted) (Shattering)": 311,
-    "Sand Crypts": 314,
-    "Sand Crypts (Grub Scent)": 314,
-    "Sand Crypts (Shattering)": 314,
-    "MegaBuy Mart": 315,
-    "Festive Lot": 316,
-    "Calamity Carl's Cozy Cruise": 318,
-    "Docked Cruise Ship": 319,
-    "Claw Shot City (Hunting Bounty Hunter)": 320,
-    "Claw Shot City (Crew)": 320,
-    "Claw Shot City (Ringleaders)": 320,
-    "Gnawnian Express Station (Waiting)": 321,
-    "Gnawnian Express Station (Supply Depot)": 321,
-    "Gnawnian Express Station (Raider River)": 321,
-    "Gnawnian Express Station (Daredevil Canyon)": 321
-};
-
-var baits = {
-    "Ancient": 16,
-    "Brie": 10,
-    "Candy Corn": 50,
-    "Checkmate": 6,
-    "Cheddar": 32,
-    "Cherry": 26,
-    "Combat": 39,
-    "Creamy Havarti": 25,
-    "Crunchy": 34,
-    "Crunchy Havarti": 27,
-    "Cupcake Colby": 65,
-    "Festive Feta": 76,
-    "Gauntlet Tier 2": 24,
-    "Gauntlet Tier 3": 14,
-    "Gauntlet Tier 4": 40,
-    "Gauntlet Tier 5": 11,
-    "Gauntlet Tier 6": 18,
-    "Gauntlet Tier 7": 31,
-    "Gauntlet Tier 8": 49,
-    "Ghoulgonzola": 51,
-    "Gilded": 45,
-    "Gingerbread": 47,
-    "Glutter": 38,
-    "Gnarled": 29,
-    "Gouda": 4,
-    "Gumbo": 13,
-    "Inferno Havarti": 28,
-    "Limelight": 8,
-    "Magical Havarti": 23,
-    "Maki": 41,
-    "Marble": 12,
-    "Marshmallow Monterey": 70,
-    "Moon": 37,
-    "Mozzarella": 52,
-    "Nutmeg": 62,
-    "Onyx Gorgonzola": 30,
-    "Pungent Havarti": 44,
-    "Radioactive Blue": 9,
-    "Rockforth": 53,
-    "Rumble": 15,
-    "Runic": 20,
-    "Seasoned Gouda": 61,
-    "Shell": 19,
-    "Spicy Havarti": 21,
-    "SB+": 3,
-    "Susheese": 42,
-    "Sweet Havarti": 22,
-    "Swiss": 17,
-    "Undead Emmental": 72,
-    "Vanilla Stilton": 33,
-    "Vengeful Vanilla Stilton": 36,
-    "White Cheddar": 35,
-    "Wicked Gnarly": 43,
-    "Runny": 77,
-    "Dewthief Camembert": 78,
-    "Duskshade Camembert": 80,
-    "Graveblossom Camembert": 81,
-    "Lunaria Camembert": 82
-};
-
-var weapons = {
-    "2010 Blastoff Trap": 21,
-    "2012 Big Boom Trap": 144,
-    "500 Pound Spiked Crusher": 42,
-    "Ambrosial Portal": 47,
-    "Ambush": 35,
-    "Ancient Box Trap": 15,
-    "Ancient Spear Gun": 11,
-    "Arcane Blast Trap": 103,
-    "Arcane Capturing Rod Of Never Yielding Mystery": 6,
-    "Birthday Candle Kaboom": 105,
-    "Birthday Party Pinata Bonanza": 148,
-    "Blackstone Pass Trap": 30,
-    "Bottomless Grave": 50,
-    "Cackle Lantern Trap": 53,
-    "Christmas Cracker Trap": 18,
-    "Chrome DeathBot": 45,
-    "Chrome DrillBot": 1,
-    "Chrome Nannybot": 51,
-    "Chrome RhinoBot": 145,
-    "Chrome Tacky Glue Trap": 147,
-    "Clockapult of Time": 9,
-    "Clockapult of Winter Past": 87,
-    "Digby DrillBot": 20,
-    "Dimensional Chest Trap": 123,
-    "Double Diamond Adventure": 95,
-    "Enraged RhinoBot": 108,
-    "Explosive Toboggan Ride": 94,
-    "Fluffy DeathBot": 84,
-    "Giant Speaker": 7,
-    "Gingerbread House Surprise": 31,
-    "Gorgon Trap": 36,
-    "Grungy Deathbot": 78,
-    "Harpoon Gun": 39,
-    "Heat Bath": 17,
-    "High Tension Spring": 37,
-    "HitGrab Horsey": 89,
-    "HitGrab Rainbow Rockin' Horse": 54,
-    "HitGrab Rockin' Horse": 14,
-    "Horrific Venus Mouse Trap": 8,
-    "Ice Maiden": 22,
-    "Icy RhinoBot": 86,
-    "Kraken Chaos": 13,
-    "Mouse DeathBot": 32,
-    "Mouse Mary O'Nette": 40,
-    "Mouse Rocketine": 26,
-    "Mouse Trebuchet": 24,
-    "Mutated Venus Mouse Trap": 44,
-    "Mystic Pawn Pincher": 4,
-    "Nannybot": 55,
-    "Net Cannon": 43,
-    "Ninja Ambush Trap": 90,
-    "Nutcracker Nuisance Trap": 142,
-    "NVMRC Forcefield Trap": 28,
-    "Oasis Water Node Trap": 109,
-    "Obelisk of Incineration": 49,
-    "Obelisk of Slumber": 41,
-    "Obvious Ambush Trap": 3,
-    "Onyx Mallet": 19,
-    "PartyBot": 27,
-    "Pneumatic Tube Trap": 102,
-    "Pumpkin Pummeler": 52,
-    "Reaper's Perch": 137,
-    "Rewers Riposte": 101,
-    "RhinoBot": 25,
-    "Sandstorm MonstroBot": 110,
-    "Sandtail Sentinel": 122,
-    "Shrink Ray Trap": 104,
-    "Sinister Portal": 33,
-    "Snow Barrage": 29,
-    "Snowglobe Trap": 38,
-    "Soul Catcher": 140,
-    "Soul Harvester": 141,
-    "Sphynx Wrath": 111,
-    "Swiss Army Mouse Trap": 10,
-    "Tacky Glue Trap": 23,
-    "Technic Pawn Pincher": 2,
-    "Thorned Venus Mouse Trap": 80,
-    "Venus Mouse Trap": 16,
-    "Warpath Thrasher": 146,
-    "Zugzwang's First Move": 5,
-    "Zugzwang's Last Move": 34,
-    "Zurreal's Folly": 136,
-    "Steam Laser Mk. I": 149,
-    "Steam Laser Mk. II": 150,
-    "Steam Laser Mk. III": 151,
-    "Steam Laser Mk. II (Broken!)": 152,
-    "Ancient Gauntlet": 153,
-    "Terrifying Spider Trap": 158,
-    "Phantasmic Oasis Trap": 159,
-    "Clockwork Portal Trap": 160,
-    "Grand Arcanum Trap": 161,
-    "Wrapped Gift Trap": 162,
-    "S.A.M. F.E.D. DN-5": 165,
-    "Tarannosaurus Rex Trap": 166,
-    "Chrome MonstroBot": 167,
-    "Isle Idol": 169,
-    "Ultra MegaMouser MechaBot Trap": 172,
-    "Mouse Hot Tub": 173,
-    "S.L.A.C.": 174,
-    "S.L.A.C. II": 175,
-    "Sandcastle Shard Trap" : 245
-};
-
-var bases = {
-    "Aqua Base": 5,
-    "Bacon Base": 20,
-    "Bamboozler Base": 13,
-    "Birthday Cake Base": 19,
-    "Bronze Tournament Base": 40,
-    "Candy Cane Base": 10,
-    "Carrot Birthday Cake Base": 45,
-    "Cheesecake Base": 24,
-    "Chocolate Birthday Cake Base": 11,
-    "Dehydration Base": 8,
-    "Dragon Jade Base": 43,
-    "Explosive Base": 6,
-    "Firecracker Base": 17,
-    "Gingerbread Base": 12,
-    "Golden Tournament Base": 39,
-    "Jade Base": 44,
-    "Magma Base": 1,
-    "Molten Shrapnel Base": 7,
-    "Monolith Base": 16,
-    "Papyrus Base": 27,
-    "Polar Base": 15,
-    "Runic Base": 21,
-    "Seasonal Base": 22,
-    "Silver Tournament Base": 42,
-    "Spellbook Base": 4,
-    "Stone Base": 14,
-    "Tiki Base": 23,
-    "Tribal Base": 3,
-    "Wooden Base": 9,
-    "Wooden Base with Target": 2,
-    "Magnet Base": 46,
-    "Remote Detonator Base": 47,
-    "Spiked Base": 48,
-    "Hearthstone Base": 49,
-    "Deep Freeze Base": 50,
-    "Fan Base": 51,
-    "Soiled Base": 52,
-    "Rift Base": 54,
-    "Snake Jade Base": 55,
-    "Crushed Birthday Cake Base": 56,
-    "Claw Shot Base": 57,
-};
-
-var trinkets = {
-    "No Charm": 1,
-    "Amplifier Charm": 70,
-    "Antiskele Charm": 14,
-    "Artisan Charm": 57,
-    "Attraction Charm": 5,
-    "Cackle Charm": 77,
-    "Champion Charm": 90,
-    "Chrome Charm": 96,
-    "Dark Chocolate Charm": 53,
-    "Derr Power Charm": 66,
-    "Dragon Breath Charm": 93,
-    "Dragonbane Charm": 11,
-    "Dreaded Charm": 78,
-    "Eggstra Charm": 98,
-    "Elub Power Charm": 67,
-    "Empowered Anchor Charm": 13,
-    "Firecracker Charm": 91,
-    "First Ever Charm": 4,
-    "Flamebane Charm": 62,
-    "Freshness Charm": 56,
-    "Luck Charm": 3,
-    "Lucky Power Charm": 59,
-    "Lucky Rabbit Charm": 19,
-    "Mining Charm": 95,
-    "Monger Charm": 61,
-    "Nanny Charm": 20,
-    "Nerg Power Charm": 68,
-    "Nitropop Charm": 92,
-    "Party Charm": 97,
-    "Power Charm": 6,
-    "Prospector's Charm": 10,
-    "Rook Crumble Charm": 71,
-    "Rotten Charm": 16,
-    "Scholar Charm": 74,
-    "Scientist's Charm": 17,
-    "Spellbook Charm": 72,
-    "Spooky Charm": 76,
-    "Super Luck Charm": 54,
-    "Super Power Charm": 58,
-    "Super Rotten Charm": 15,
-    "Super Warpath Archer Charm": 28,
-    "Super Warpath Cavalry Charm": 36,
-    "Super Warpath Commander's Charm": 60,
-    "Super Warpath Mage Charm": 34,
-    "Super Warpath Scout Charm": 31,
-    "Super Warpath Warrior Charm": 27,
-    "Tarnished Charm": 94,
-    "Ultimate Luck Charm": 7,
-    "Ultimate Power Charm": 39,
-    "Uncharged Scholar Charm": 73,
-    "Valentine Charm": 18,
-    "Warpath Archer Charm": 30,
-    "Warpath Cavalry Charm": 38,
-    "Warpath Commander's Charm": 33,
-    "Warpath Mage Charm": 37,
-    "Warpath Scout Charm": 32,
-    "Warpath Warrior Charm": 29,
-    "Wealth Charm": 69,
-    "Winter Charm": 86,
-    "Winter Screw Charm": 87,
-    "Winter Spring Charm": 89,
-    "Winter Wood Charm": 88,
-    "Softserve Charm": 99,
-    "Wax Charm": 100,
-    "Sticky Charm": 101,
-    "Athlete Charm": 102,
-    "Ancient Charm": 103,
-    "Mobile Charm": 104,
-    "Sponge Charm": 106,
-    "Grubling Chow Charm": 107,
-    "Searcher Charm": 108,
-    "Red Sponge Charm": 109,
-    "Yellow Sponge Charm": 110,
-    "Bravery Charm": 111,
-    "Shine Charm": 112,
-    "Clarity Charm": 113,
-    "Grub Salt Charm": 114,
-    "Growth Charm": 115,
-    "Grub Scent Charm": 116,
-    "Wild Growth Charm": 117,
-    "Shattering Charm": 118,
-    "Snakebite Charm": 119,
-    "Dragonbreath Charm": 120,
-    "Safeguard Charm": 121,
-    "Grubling Bonanza Charm": 122,
-    "Super Salt Charm": 123,
-    "Red Double Sponge Charm": 124,
-    "Yellow Double Sponge Charm": 125,
-    "Blue Double Sponge Charm": 126,
-    "Shamrock Charm": 127,
-    "Eggscavator Charge Charm": 128,
-    "Ultimate Charm": 129,
-    "Sheriff's Badge Charm": 131,
-    "Cactus Charm": 132,
-    "Supply Schedule Charm": 133,
-    "Roof Rack Charm": 134,
-    "Dusty Coal Charm": 135,
-    "Door Guard Charm": 136,
-    "Greasy Glob Charm": 137,
-    "Black Powder Charm": 138,
-    "Magmatic Crystal Charm": 139
-};
 
 var festiveTraps = ["Christmas Cracker Trap",
     "Double Diamond Adventure",
@@ -4234,3 +3558,40 @@ var festiveTraps = ["Christmas Cracker Trap",
     "Snow Barrage",
     "Snowglobe Trap",
     "Wrapped Gift Trap"];
+
+var wereMice = [
+    "Alpha Weremouse",
+    "Mischievous Wereminer",
+    "Night Shift Materials Manager",
+    "Reveling Lycanthrope",
+    "Wealthy Werewarrior",
+    "Werehauler",
+    "Wereminer"
+];
+
+var cosmicCritters = [
+    "Arcane Summoner",
+    "Cursed Taskmaster",
+    "Hypnotized Gunslinger",
+    "Meteorite Golem",
+    "Meteorite Mystic",
+    "Night Watcher"
+];
+
+/**
+ * Maps Furoma Rift battery level to bonus power and luck
+ * Level : [Power, Luck]
+ */
+var batteryEffects = {
+    0 : [0,0],
+    1 : [90, 0],
+    2 : [500, 1],
+    3 : [3000, 2],
+    4 : [8500, 5],
+    5 : [16000, 10],
+    6 : [30000, 12],
+    7 : [50000, 25],
+    8 : [90000, 35],
+    9 : [190000, 50],
+    10 : [300000, 100]
+};

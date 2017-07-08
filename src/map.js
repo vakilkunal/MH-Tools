@@ -1,33 +1,21 @@
 "use strict";
 
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
+var EMPTY_SELECTION = "-";
+var NULL_URL_PARAM = null;
+
+var autoCompleteSettings = {
+    'delimiters': '\n',
+    'endingSymbols': '\n'
+};
+
+function contains(collection, searchElement) {
+    return collection.indexOf(searchElement) > -1;
+}
 
 window.onload = function () {
 
-	// if (location.href.indexOf("https") < 0) {
-	// 	var currLoc = location.href;
-	// 	currLoc = currLoc.replace("http", "https");
-	// 	location.href = currLoc;
-	// }
-	var pop = new XMLHttpRequest();
-	pop.open("get", POPULATIONS_URL, true);
-	pop.onreadystatechange = function() {
-		if (pop.readyState == 4) {
-			processPop(pop.responseText);
-		}
-	};
-	pop.send();
-
-	var baseline = new XMLHttpRequest();
-	baseline.open("get", BASELINES_URL, true);
-	baseline.onreadystatechange = function() {
-		if (baseline.readyState == 4) {
-			//console.log(baseline.responseText);
-
-			processBaseline(baseline.responseText);
-		}
-	};
-	baseline.send();
+    startPopulationLoad();
 
 	//Bookmarklet storage logic
 	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {
@@ -137,8 +125,7 @@ window.onload = function () {
     }
 
     if (Cookies.get('savedAttraction') !== undefined) {
-    	var x = parseInt(Cookies.get('savedAttraction'));
-    	attractionBonus = x;
+        attractionBonus = parseInt(Cookies.get('savedAttraction'));
     	$("#ampSlider").slider('option','value',attractionBonus);
     }
 
@@ -164,7 +151,7 @@ window.onload = function () {
 			clearTimeout(timeDelay);
 			var mapText = document.getElementById("map").value;
 			var b = (mapText.match(/\n/g)||[]).length;
-			if (b != numLineBreaks) {
+			if (b !== numLineBreaks) {
 				numLineBreaks = b;
 				processMap(mapText);
 			}
@@ -200,141 +187,47 @@ window.onload = function () {
 		var mapText = document.getElementById("map").value;
 		processMap(mapText);
 	});
-}
+};
 
 String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
 
-function CSVToArray(strData, strDelimiter) {
-    // Check to see if the delimiter is defined. If not,
-    // then default to comma.
-    strDelimiter = ",";
+function processPop (popText) {
+	var popCSV = csvToArray(popText);
+	var popCSVLength =  popCSV.length;
+    popArray = {};
 
-    // Create a regular expression to parse the CSV values.
-    var objPattern = new RegExp(
-    (
-    // Delimiters.
-    "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-
-    // Quoted fields.
-    "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-
-    // Standard fields.
-    "([^\"\\" + strDelimiter + "\\r\\n]*))"),
-        "gi");
-
-
-    // Create an array to hold our data. Give the array
-    // a default empty first row.
-    var arrData = [
-        []
-    ];
-
-    // Create an array to hold our individual pattern
-    // matching groups.
-    var arrMatches = null;
-
-
-    // Keep looping over the regular expression matches
-    // until we can no longer find a match.
-    while (arrMatches = objPattern.exec(strData)) {
-
-        // Get the delimiter that was found.
-        var strMatchedDelimiter = arrMatches[1];
-
-        // Check to see if the given delimiter has a length
-        // (is not the start of string) and if it matches
-        // field delimiter. If id does not, then we know
-        // that this delimiter is a row delimiter.
-        if (
-            strMatchedDelimiter.length &&
-            (strMatchedDelimiter != strDelimiter)) {
-
-            // Since we have reached a new row of data,
-            // add an empty row to our data array.
-            arrData.push([]);
-
-        }
-
-
-        // Now that we have our delimiter out of the way,
-        // let's check to see which kind of value we
-        // captured (quoted or unquoted).
-        if (arrMatches[2]) {
-
-            // We found a quoted value. When we capture
-            // this value, unescape any double quotes.
-            var strMatchedValue = arrMatches[2].replace(
-                new RegExp("\"\"", "g"),
-                "\"");
-
-        } else {
-
-            // We found a non-quoted value.
-            var strMatchedValue = arrMatches[3];
-
-        }
-
-
-        // Now that we have our value string, let's add
-        // it to the data array.
-        arrData[arrData.length - 1].push(strMatchedValue);
+    for(var i=1; i<popCSVLength; i++) {
+        processPopItem(i);
     }
 
-    // Return the parsed data.
-    return (arrData);
-}
-
-Object.size = function(obj) {
-    var size = 0;
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
-
-
-var baselineArray = [];
-function processBaseline(baselineText) {
-	baselineArray = baselineText.split("\n");
-	var baselineArrayLength = baselineArray.length;
-	
-	for (var i=0; i<baselineArrayLength; i++) {
-		baselineArray[i] = baselineArray[i].split("\t");
-		//console.log(baselineArray[i][0]);
-		baselineArray[baselineArray[i][0]] = parseFloat(baselineArray[i][1]);
-	}
-}
-
-var popCSV = new Array();
-var popArray = new Array();
-function processPop(popText) {
-	popCSV = CSVToArray(popText);
-	//console.log(popCSV);
-	var popCSVLength = Object.size(popCSV);
-	//console.log(popCSVLength);
-		
-	//Creating popArray
-	for(var i=1; i<popCSVLength; i++) {
-		var row = popCSV[i];
-		var location = row[0];
-		var phase = row[1];
-		var cheese = row[2];
-		var charm = row[3];
-		var mouseName = row[5];
-		mouseName = mouseName.capitalise();
-		var population = row[4];
-
-		if (popArray[mouseName] == undefined) popArray[mouseName] = new Array(); //If mouse doesn't exist in array
-		if (popArray[mouseName][location] == undefined) popArray[mouseName][location] = new Array();
-		if (popArray[mouseName][location][phase] == undefined) popArray[mouseName][location][phase] = new Array();
-		if (popArray[mouseName][location][phase][cheese] == undefined) popArray[mouseName][location][phase][cheese] = new Array();
-		popArray[mouseName][location][phase][cheese][charm] = population;
-	}
+    popLoaded = 1;
 
 	loadMouseDropdown();
+
+    function processPopItem(index) {
+        var item = parseCsvRow(popCSV[index], false);
+
+        var mouseName = item.mouse.capitalise();
+        var cheese = item.cheese[0];
+        var population = parseFloat(item.attraction);
+
+        if (popArray[mouseName] === undefined) {
+            popArray[mouseName] = {};
+        }
+        if (popArray[mouseName][item.location] === undefined) {
+            popArray[mouseName][item.location] = {};
+        }
+        if (popArray[mouseName][item.location][item.phase] === undefined) {
+            popArray[mouseName][item.location][item.phase] = {};
+        }
+
+        if (popArray[mouseName][item.location][item.phase][cheese] === undefined) {
+            popArray[mouseName][item.location][item.phase][cheese] = {};
+        }
+        popArray[mouseName][item.location][item.phase][cheese][item.charm] = population;
+    }
 }
 
 function loadMouseDropdown() {
@@ -345,8 +238,8 @@ function loadMouseDropdown() {
 		suggests.push(Object.keys(popArray)[i]);
 		suggests.push(Object.keys(popArray)[i].toLowerCase());
 	}
-	
-	$("#map").asuggest(suggests);
+
+	$("#map").asuggest(suggests, autoCompleteSettings);
 
 }
 
@@ -394,7 +287,7 @@ function processMap(mapText) {
 			notRecognized = true;
 		}
 		else {			
-			if (seenMice.indexOf(mouseName) >= 0) {
+			if (contains(seenMice,mouseName)) {
 				continue;
 			}
 			else {
@@ -436,7 +329,7 @@ function processMap(mapText) {
 							//Replace apostrophes with %27
 							URLString += "location=" + locationName;
 
-							if (phaseName != "-") {
+							if (phaseName != EMPTY_SELECTION) {
 								locationPhaseCheeseCharm += "(" + phaseName + ")" + "<br>";
 								URLString += "&phase=" + phaseName;
 							}
@@ -452,7 +345,7 @@ function processMap(mapText) {
 								locationPhaseCheeseCharm += cheeseName + "<br>";
 							}
 
-							if (charmName != "-") {
+							if (charmName != EMPTY_SELECTION) {
 								locationPhaseCheeseCharm += "[" + charmName + "]" + "<br>";
 								URLString += "&charm=" + charmName;
 							}
@@ -556,24 +449,27 @@ function sortBestLocation (bestLocationArray, weightedBLA) {
 	var bLALength = Object.size(bestLocationArray);
 	var bLAKeys = Object.keys(bestLocationArray);
 	
-	if (typeof weightedBLA != 'undefined') {
-		for (var i=0; i<bLALength; i++) {
-			var locationCheese = bLAKeys[i];
-			//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
-			sortedLocation.push([locationCheese, bestLocationArray[locationCheese], weightedBLA[locationCheese]]);
-		}
-		
-		sortedLocation.sort(function(a,b) {return b[2]-a[2]});
-	}
-	else {
-		for (var i=0; i<bLALength; i++) {
-			var locationCheese = bLAKeys[i];
-			//sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
-			sortedLocation.push([locationCheese, bestLocationArray[locationCheese]]);
-		}
+	if (typeof weightedBLA == 'undefined') {
+        for (var i = 0; i < bLALength; i++) {
+            var locationCheese = bLAKeys[i];
+            //sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
+            sortedLocation.push([locationCheese, bestLocationArray[locationCheese]]);
+        }
 
-		sortedLocation.sort(function(a,b) {return b[1]-a[1]});
-	}
+        sortedLocation.sort(function (a, b) {
+            return b[1] - a[1]
+        });
+    } else {
+        for (var i = 0; i < bLALength; i++) {
+            var locationCheese = bLAKeys[i];
+            //sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
+            sortedLocation.push([locationCheese, bestLocationArray[locationCheese], weightedBLA[locationCheese]]);
+        }
+
+        sortedLocation.sort(function (a, b) {
+            return b[2] - a[2]
+        });
+    }
 	
 	return sortedLocation;
 }
@@ -596,7 +492,7 @@ function printBestLocation (sortedLocation, mouseLocationArray) {
 		//Checking mouse location
 		var mouseLocationHTML = '';
 		var lpcc = sortedLocation[i][0];
-		if (mouseLocationArray[lpcc] != undefined) {
+		if (mouseLocationArray[lpcc]) {
 			for (var j=0; j<Object.size(mouseLocationArray[lpcc]); j++) {
 				mouseLocationHTML += mouseLocationArray[lpcc][j][0] + " (" + mouseLocationArray[lpcc][j][1] + "%)<br>";
 			}
@@ -635,7 +531,7 @@ function findBaseline(location, cheese) {
 
 function getMouseListFromURL(parameters) {
     if (parameters) {
-        parameters = decodeURI(parameters[1]);
+        parameters = decodeURIComponent(parameters[1]);
 
         return parameters
             .split('/')
