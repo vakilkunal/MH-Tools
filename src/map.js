@@ -1,6 +1,13 @@
 "use strict";
 
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
+var EMPTY_SELECTION = "-";
+var NULL_URL_PARAM = null;
+
+var autoCompleteSettings = {
+    'delimiters': '\n',
+    'endingSymbols': '\n'
+};
 
 function contains(collection, searchElement) {
     return collection.indexOf(searchElement) > -1;
@@ -231,8 +238,8 @@ function loadMouseDropdown() {
 		suggests.push(Object.keys(popArray)[i]);
 		suggests.push(Object.keys(popArray)[i].toLowerCase());
 	}
-	
-	$("#map").asuggest(suggests);
+
+	$("#map").asuggest(suggests, autoCompleteSettings);
 
 }
 
