@@ -5,6 +5,10 @@ javascript:void(function () {
     }
     var userBase;
 
+    function contains(collection, searchElement) {
+        return collection.indexOf(searchElement) > -1;
+    }
+
     /**
      * Reads sumblocation from the user object
      * @returns {string} Subloaction name
@@ -26,18 +30,13 @@ javascript:void(function () {
         }
         else if (userLocation == "Burroughs Rift") {
             var tier = user["quests"]["QuestRiftBurroughs"]["mist_tier"];
-            if (tier == "tier_0") {
-                sublocation = "Mist Level 0";
-            }
-            else if (tier == "tier_1") {
-                sublocation = "Mist Level 1-5";
-            }
-            else if (tier == "tier_2") {
-                sublocation = "Mist Level 6-18";
-            }
-            else if (tier == "tier_3") {
-                sublocation = "Mist Level 19-20";
-            }
+            var tierMapping = {
+                "tier_0": "Mist Level 0",
+                "tier_1": "Mist Level 1-5",
+                "tier_2": "Mist Level 6-18",
+                "tier_3": "Mist Level 19-20"
+            };
+            sublocation = tierMapping[tier];
         }
         else if (userLocation == "Claw Shot City") {
             // Not viable? Available data: map_active, phase lawless
@@ -48,17 +47,10 @@ javascript:void(function () {
             }
         }
         else if (userLocation == "Fiery Warpath") {
-            //Single digit string - "1", "2", "3", "4"
             var wave = user["viewing_atts"]["desert_warpath"]["wave"];
             sublocation = "Wave " + wave;
         }
         else if (userLocation == "Fort Rox") {
-            //Phases
-            //Twilight = is_dawn: null, is_night: true, current_phase: night, current_stage: stage_one
-            //phases object (stage_one through five)
-            //Ballista etc in fort/upgrades object
-
-            //upgrades object = ballista, cannon, moat, tower, wall (level_num: complete/current/next/cannotUpgrade nightTime)
             var tmpPhase = user['quests']['QuestFortRox']['current_phase'];
             if (tmpPhase == 'night') {
                 var stage = user['quests']['QuestFortRox']['current_stage'];
@@ -73,6 +65,7 @@ javascript:void(function () {
             } else {
                 sublocation = tmpPhase;
             }
+
         }
         else if (userLocation == "Gnawnian Express Station") {
             var onTrain = user["quests"]["QuestTrainStation"]["on_train"];
@@ -134,18 +127,13 @@ javascript:void(function () {
         }
         else if (userLocation == "Seasonal Garden") {
             var season = user["viewing_atts"]["season"];
-            if (season == "fl") {
-                sublocation = "Fall";
-            }
-            else if (season == "wr") {
-                sublocation = "Winter";
-            }
-            else if (season == "sg") {
-                sublocation = "Spring";
-            }
-            else if (season == "sr") {
-                sublocation = "Summer";
-            }
+            var seasonMapping = {
+                "fl": "Fall",
+                "wr": "Winter",
+                "sg": "Spring",
+                "sr": "Summer"
+            };
+            sublocation = seasonMapping[season];
         }
         else if (userLocation == "Sunken City") {
             sublocation = user["quests"]["QuestSunkenCity"]["zone_name"];
@@ -154,6 +142,7 @@ javascript:void(function () {
             }
         }
         else if (userLocation == "Toxic Spill") {
+            //TODO: This is probably not correct - an Archduke can hunt in the Hero-level spill
             if (userRank == "Archduke" || userRank == "Archduchess") {
                 sublocation = "Archduke/Archduchess";
             }
@@ -194,22 +183,6 @@ javascript:void(function () {
             sublocation = state;
         }
         else if (userLocation == "Zokor") {
-            /**
-             var district = user["quests"]["QuestAncientCity"]["district_name"];
-             if (district == "The Tech Manaforge") {
-                sublocation = "Manaforge Smith"; //remove "Smith"
-            }
-             else if (district == "The Farming Garden") {
-                sublocation = "Farming Garden";
-            }
-             else if (district == "The Overgrown Farmhouse") {
-                sublocation = "Overgrown Farmhouse";
-            }
-             else if (district == "The Treasure Vault") {
-                sublocation = "Treasure Vault";
-            }
-             // More else ifs
-             */
             var quest = user["quests"]["QuestAncientCity"];
 
             var districtname = quest.district_name;
@@ -286,7 +259,6 @@ javascript:void(function () {
         return sublocation;
     }
 
-
     if (!user) { /* Handles null and undefined */
         alert("User object not found.");
         return;
@@ -297,7 +269,6 @@ javascript:void(function () {
      */
     var urlParams = {};
 
-    // Some items may not correspond 1:1 with CRE (e.g. SB+)
     var userRank = user["title_name"];
     var userLocation = user["location"];
     urlParams["location"] = userLocation;
@@ -344,6 +315,12 @@ javascript:void(function () {
         }
     }
 
+    if (userLocation == "Fort Rox") {
+        var fort = user['quests']['QuestFortRox']['fort'];
+        urlParams["ballistaLevel"] = fort["b"]["level"];
+        urlParams["canonLevel"] = fort["c"]["level"]
+    }
+
     if (document.querySelector("div.tournamentStatusHud") != null) {
         var tourney = user["viewing_atts"]["tournament"];
         if (tourney["status"] == "active" || tourney["status"] == "pending") {
@@ -379,14 +356,17 @@ javascript:void(function () {
         urlParams["amplifier"] = user["viewing_atts"]["zzt_amplifier"];
     }
 
-    var url = "https://tsitu.github.io/MH-Tools/cre.html?";
-    // url = "http://localhost:63342/MH-Tools-Fork/cre.html?";
-    // Build URL with loop instead of everything separately
-    for (var key in urlParams) {
-        //Server side changed to decode Component, makes 'if' here unnecessary
-        var value = encodeURIComponent(urlParams[key]);
-        url += key + "=" + value + "&"
+    function sendData(parameters) {
+        var url = "https://tsitu.github.io/MH-Tools/cre.html?";
+        // url = "http://localhost:63342/MH-Tools-Fork/cre.html?";
+
+        for (var key in parameters) {
+            var value = encodeURIComponent(parameters[key]);
+            url += key + "=" + value + "&"
+        }
+
+        var newWindow = window.open(url, 'mhcre');
     }
 
-    var newWindow = window.open(url, 'mhcre');
+    sendData(urlParams);
 })();
