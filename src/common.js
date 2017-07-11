@@ -413,15 +413,7 @@ function calculateTrapSetup(skipDisp) {
  * @returns {number} Catch Rate Estimate: Number between 0 and 1
  */
 function calcCR(effectiveness, trapPower, trapLuck, mousePower) {
-    var finalEffectiveness = Math.min(effectiveness, 2);
-    var effectiveTrapPower = finalEffectiveness * trapPower;
-    var effectiveTrapLuck = finalEffectiveness * trapLuck;
-
-    var numerator = effectiveTrapPower + (3 - finalEffectiveness) * Math.pow(effectiveTrapLuck, 2);
-    var denominator = effectiveTrapPower + mousePower;
-
-    var catchRate = numerator / denominator;
-
+    var catchRate = (effectiveness * trapPower + (3 - Math.min(effectiveness, 2)) * Math.pow((Math.min(effectiveness, 2) * trapLuck), 2)) / (effectiveness * trapPower + mousePower);
     return Math.min(catchRate, 1);
 }
 
