@@ -466,7 +466,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 var mouseGold = mouseRewards[0];
                 var mousePoints = mouseRewards[1];
 
-                if (charmName === "Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
+                if (charmName === "Wealth Charm" || charmName === "Rift Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
                 else if (charmName === "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
                 else if (charmName === "Extreme Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.20, 15000));
 

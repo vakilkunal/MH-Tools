@@ -27,7 +27,8 @@ var riftWeapons = [
     "Crystal Tower",
     "Focused Crystal Laser",
     "Multi-Crystal Laser",
-    "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes"
+    "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes",
+    "Timesplit Dissonance Weapon"
 ];
 
 var riftBases = [
@@ -35,20 +36,19 @@ var riftBases = [
     "Fracture Base",
     "Rift Base",
     "Enerchi Induction Base",
-    "Attuned Enerchi Induction Base"
+    "Attuned Enerchi Induction Base",
+    "Clockwork Base"
 ];
 
+/**
+ * Rift charms with names that do not contain the word 'rift"
+ */
 var riftCharms = [
     "Cherry Charm",
     "Enerchi Charm",
     "Gnarled Charm",
     "Stagnant Charm",
-    "Rift Power Charm",
-    "Rift Ultimate Luck Charm",
-    "Rift Ultimate Power Charm",
-    "Rift Vacuum Charm",
-    "Super Rift Vacuum Charm",
-    "Rift Ultimate Lucky Power Charm"
+    "Timesplit Charm"
 ];
 
 var labyrinthMiceClues = {
@@ -1487,6 +1487,7 @@ var basesArray = {
     "Cheesecake Base": [175, 3, 20, 0, "No Effect"],
     "Chocolate Birthday Cake Base": [175, 8, 5, 1, "No Effect"],
     "Claw Shot Base": [250, 10, 5, 4, "Very Fresh"],
+    "Clockwork Base": [800, 20, 5, 13, "No Effect"],
     "Crushed Birthday Cake Base": [185, 3, 15, 5, "Uber Stale"],
     "Cupcake Birthday Base": [300, 7, 7, 7, "Extremely Fresh"],
     "Deep Freeze Base": [35, 0, 0, 0, "Uber Fresh"],
@@ -1690,6 +1691,7 @@ var weaponsArray = {
     "The Forgotten Art of Dance": ["Forgotten", 5000, 12, 6, 6, "No Effect"],
     "The Law Draw": ["Law", 1100, 5, 20, 5, "Fresh"],
     "Thorned Venus Mouse Trap": ["Tactical", 3400, 5, 2, 14, "Very Fresh"],
+    "Timesplit Dissonance Weapon": ["Rift", 3000, 10, 10, 7, "No Effect"],
     "Ultra MegaMouser MechaBot Trap": ["Physical", 2250, 5, 15, 8, "No Effect"],
     "Veiled Vine Trap": ["Tactical", 3500, 12, 0, 20, "Very Stale"],
     "Venus Mouse Trap": ["Tactical", 1900, 0, 5, 5, "Extremely Fresh"],
@@ -1801,11 +1803,19 @@ var charmsArray = {
     "Red Double Sponge Charm": [0, 0, 0, 0, "No Effect"],
     "Red Sponge Charm": [0, 0, 0, 0, "No Effect"],
     "Regal Charm": [1000, 0, 20, 6, "No Effect"],
-    "Rift Power Charm": [500, 5, 0, 0, "No Effect"],
+
+    "Rift Antiskele Charm": [0, 0, 0, 0, "No Effect"],
+    "Rift Luck Charm": [0, 0, 0, 1, "No Effect"],
+    "Rift Super Luck Charm": [0, 0, 0, 3, "No Effect"],
+    "Rift Extreme Luck Charm": [0, 0, 0, 5, "No Effect"],
     "Rift Ultimate Luck Charm": [0, 0, 0, 20, "No Effect"],
-    "Rift Ultimate Lucky Power Charm": [2400, 20, 0, 20, "No Effect"],
+    "Rift Power Charm": [500, 5, 0, 0, "No Effect"],
     "Rift Ultimate Power Charm": [2400, 20, 0, 0, "No Effect"],
+    "Rift Ultimate Lucky Power Charm": [2400, 20, 0, 20, "No Effect"],
     "Rift Vacuum Charm": [0, 0, 0, 0, "No Effect"],
+    "Rift Wealth Charm": [0, 0, 0, 0, "No Effect"],
+    "Timesplit Charm": [3000, 25, 20, 18, "Uber Stale"],
+
     "Roof Rack Charm": [0, 3, 0, 5, "Fresh"],
     "Rook Crumble Charm": [0, 0, 0, 0, "No Effect"],
     "Rotten Charm": [160, 1, 0, 0, "Stale"],
@@ -1895,8 +1905,8 @@ var charmsArray = {
 var charmKeys = Object.keys(charmsArray);
 charmKeys.sort();
 
-/*
-Mouse power
+/**
+Mouse power & power type effectiveness
 0 => Mouse power
 1 =>  Arcane (%)
 2 =>  Draconic (%)

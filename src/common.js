@@ -179,6 +179,10 @@ function buildURL(location, urlParams) {
     return url;
 }
 
+function isRiftCharm(charmName) {
+    return contains(riftCharms, charmName)
+        || contains(charmName.toLowerCase(), "rift");
+}
 /**
  * Gets the number of rift items
  * @param weapon {String} Weapon Name
@@ -190,7 +194,7 @@ function getRiftCount(weapon, base, charm) {
     var riftCount = 0;
     if (contains(riftWeapons, weapon)) riftCount++;
     if (contains(riftBases, base)) riftCount++;
-    if (contains(riftCharms, charm)) riftCount++;
+    if (isRiftCharm(charm)) riftCount++;
     return riftCount;
 }
 

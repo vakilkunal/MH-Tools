@@ -330,10 +330,10 @@ function loadURLData() {
             }
         }
 
-        if (Object.size(dataObject) > 0) {
-            localStorage.setItem("setupData", JSON.stringify(dataObject));
-            window.location.replace("setupwaiting.html");
-        }
+        dataObject[type] = ownedItemArray;
+
+        localStorage.setItem("setupData", JSON.stringify(dataObject));
+        window.location.replace("setupwaiting.html");
     }
 }
 
