@@ -2,11 +2,12 @@
 
 var POPULATIONS_URL = "data/populations.csv";
 var BASELINES_URL = "data/baselines.txt";
+var ADVANCEMENT_URL = "data/advancement.csv";
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
 // var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
 // Uncomment above during local testing to bypass Cross-Origin on Chrome
 
-var popLoaded = 0, baselineLoaded = 0;
+var popLoaded = 0, baselineLoaded = 0, advancementLoaded = 0;
 
 /**
  * Population data parsed from CSV
@@ -21,11 +22,20 @@ var popArray = {};
 var baselineArray = {};
 
 /**
+ * Title advancement percentage
+ * @type {{mouse: String, novice: number, recruit: number, apprentice: number, initiate: number, journeyman: number, master: number, grandmaster: number, legendary: number, hero: number, knight: number, lord: : number, baron: : number, count: number, duke: number, grandduke: number, archduke: number}[]}
+ */
+var advancementArray = {};
+
+/**
  * Start population and baseline loading
  */
 function startPopulationLoad() {
     $.get(POPULATIONS_URL, processPop);
     $.get(BASELINES_URL, processBaseline);
+    if (typeof processAdvancement === 'function' ) {
+        $.get(ADVANCEMENT_URL, processAdvancement);
+    }
 }
 
 /**
