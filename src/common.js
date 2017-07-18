@@ -97,6 +97,67 @@ function processPop(popText) {
     }
 }
 
+/**
+ * Process the advancement data ajax response
+ * @param advText advancement data in CSV format
+ */
+function processAdvancement(advText) {
+    // for now only in cre is used
+    if (user !== CRE_USER) {
+        advancementLoaded = 1;
+        if (typeof checkLoadState !== 'undefined' ) {
+            checkLoadState();
+        }
+    }
+
+    var advCSV = csvToArray(advText);
+    var advCSVLength = advCSV.length;
+    advancementArray = {};
+
+    for (var i = 1; i < advCSVLength; i++) {
+        processAdvItem(i);
+    }
+
+    advancementLoaded = 1;
+    if (typeof checkLoadState !== 'undefined' ) {
+        checkLoadState();
+    }
+
+    function processAdvItem(index) {
+        var item = parseAdvCsvRow(advCSV[index]);
+        if (item.mouse) {
+            advancementArray[ item.mouse ] = item
+        }
+    }
+
+    /**
+     * Splits a CSV row into an object with labels
+     * @param csvRow []
+     * @return {{mouse: String, novice: number, recruit: number, apprentice: number, initiate: number, journeyman: number, master: number, grandmaster: number, legendary: number, hero: number, knight: number, lord: : number, baron: : number, count: number, duke: number, grandduke: number, archduke: number}}
+     */
+    function parseAdvCsvRow(csvRow) {
+        return {
+            mouse: csvRow[0],
+            novice: csvRow[1],
+            recruit: csvRow[2],
+            apprentice: csvRow[3],
+            initiate: csvRow[4],
+            journeyman: csvRow[5],
+            master: csvRow[6],
+            grandmaster: csvRow[7],
+            legendary: csvRow[8],
+            hero: csvRow[9],
+            knight: csvRow[10],
+            lord: csvRow[11],
+            baron: csvRow[12],
+            count: csvRow[13],
+            duke: csvRow[14],
+            grandduke: csvRow[15],
+            archduke: csvRow[16]
+        };
+    }
+}
+
 function calcSpecialCharms(charmName) {
     populateCharmData(charmName);
     if (charmName === "Champion Charm") {

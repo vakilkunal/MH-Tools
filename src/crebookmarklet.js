@@ -259,6 +259,20 @@ javascript:void(function () {
         return sublocation;
     }
 
+    /**
+     * Normalize user rank (i.e. Archduke/Archduchess -> archduke)
+     * @returns {String}
+     */
+    function findUserRank() {
+        if (userRank == "Archduke" || userRank == "Archduchess") return "archduke";
+        if (userRank == "Grand Duke" || userRank == "Grand Duchess") return "grandduke";
+        if (userRank == "Duke" || userRank == "Duchess") return "duke"
+        if (userRank == "Count" || userRank == "Countess") return "count"
+        if (userRank == "Baron" || userRank == "Baroness") return "baron"
+        if (userRank == "Lord" || userRank == "Lady") return "lord"
+        return userRank.toLowerCase()
+    }
+
     if (!user) { /* Handles null and undefined */
         alert("User object not found.");
         return;
@@ -355,6 +369,8 @@ javascript:void(function () {
     if (userLocation == "Zugzwang's Tower") {
         urlParams["amplifier"] = user["viewing_atts"]["zzt_amplifier"];
     }
+
+    urlParams["rank"] = findUserRank();
 
     function sendData(parameters) {
         var url = "https://tsitu.github.io/MH-Tools/cre.html?";
