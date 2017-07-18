@@ -261,7 +261,6 @@ function getRiftCount(weapon, base, charm) {
 
 function calculateTrapSetup(skipDisp) {
     var specialPower = 0, specialLuck = 0, specialBonus = 0, braceBonus = 0;
-    riftStalkerCodex = $("#riftstalker").prop("checked");
 
     if (locationName && cheeseName && weaponName && baseName && phaseName) {
         locationSpecificEffects();
@@ -536,14 +535,28 @@ function gsParamCheck() {
     }
 }
 
+
+function getRiftstalkerKey() {
+    return "riftstalker-" + user;
+}
+
 function riftstalkerParamCheck() {
+    var key = getRiftstalkerKey();
     var riftstalkerParam = getURLParameter("riftstalker") !== NULL_URL_PARAM;
-    $("#riftstalker").prop("checked", riftstalkerParam)
+    var riftStalkerChecked = riftstalkerParam || (localStorage.getItem(key) === 'true');
+    $("#riftstalker").prop("checked", riftStalkerChecked)
+}
+
+function riftstalkerChange() {
+    var key = getRiftstalkerKey();
+    riftStalkerCodex = $("#riftstalker").prop("checked");
+    localStorage.setItem(key, riftStalkerCodex);
+    genericOnChange();
 }
 
 function fortRoxParamCheck() {
-    fortRox.ballistaLevel = parseInt(getURLParameter("ballistaLevel"));
-    fortRox.canonLevel = parseInt(getURLParameter("canonLevel"));
+    updateInputFromParameter("ballistaLevel", genericOnChange);
+    updateInputFromParameter("canonLevel", genericOnChange);
 }
 
 function checkToxicWidget(custom) {
@@ -848,3 +861,18 @@ function genericOnChange() {
     updateLink();
     if (user === CRE_USER) showPop(2);
 }
+
+/**
+ * Update a text input's value from a url paramter
+ * @param {string} category The input id and url parameter
+ * @param {function()} callback
+ */
+function updateInputFromParameter(category, callback) {
+    var parameter = getURLParameter(category);
+    var input = document.getElementById(category);
+    if (parameter && parameter !== NULL_URL_PARAM) {
+        input.value = parameter;
+        callback();
+    }
+}
+

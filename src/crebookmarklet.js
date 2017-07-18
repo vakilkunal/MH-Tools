@@ -10,14 +10,16 @@ javascript:void(function () {
     }
 
     /**
-     * Reads sumblocation from the user object
-     * @returns {string} Subloaction name
+     * Reads sublocation from the user object
+     * @returns {string} Sublocation name
      */
     function findSublocation() {
         var sublocation = "N/A";
+        var userQuests = user["quests"];
 
+        var userViewingAtts = user["viewing_atts"];
         if (userLocation == "Balack's Cove") {
-            var tide = user["viewing_atts"]["tide"];
+            var tide = userViewingAtts["tide"];
             if (tide == "low") {
                 sublocation = "Low Tide";
             }
@@ -29,7 +31,7 @@ javascript:void(function () {
             }
         }
         else if (userLocation == "Burroughs Rift") {
-            var tier = user["quests"]["QuestRiftBurroughs"]["mist_tier"];
+            var tier = userQuests["QuestRiftBurroughs"]["mist_tier"];
             var tierMapping = {
                 "tier_0": "Mist Level 0",
                 "tier_1": "Mist Level 1-5",
@@ -42,18 +44,19 @@ javascript:void(function () {
             // Not viable? Available data: map_active, phase lawless
         }
         else if (userLocation == "Cursed City") {
-            if (user["quests"]["QuestLostCity"]["minigame"]["is_cursed"] == true) {
+            if (userQuests["QuestLostCity"]["minigame"]["is_cursed"] == true) {
                 sublocation = "Cursed";
             }
         }
         else if (userLocation == "Fiery Warpath") {
-            var wave = user["viewing_atts"]["desert_warpath"]["wave"];
+            var wave = userViewingAtts["desert_warpath"]["wave"];
             sublocation = "Wave " + wave;
         }
         else if (userLocation == "Fort Rox") {
-            var tmpPhase = user['quests']['QuestFortRox']['current_phase'];
+            var fortRoxQuest = userQuests['QuestFortRox'];
+            var tmpPhase = fortRoxQuest['current_phase'];
             if (tmpPhase == 'night') {
-                var stage = user['quests']['QuestFortRox']['current_stage'];
+                var stage = fortRoxQuest['current_stage'];
                 var stages = {
                     'stage_one' : "Twilight",
                     'stage_two' : "Midnight",
@@ -65,14 +68,14 @@ javascript:void(function () {
             } else {
                 sublocation = tmpPhase;
             }
-
         }
         else if (userLocation == "Gnawnian Express Station") {
-            var onTrain = user["quests"]["QuestTrainStation"]["on_train"];
+            var onTrain = userQuests["QuestTrainStation"]["on_train"];
             if (onTrain == true) {
-                var stageName = user["viewing_atts"]["tournament"]["minigame"]["name"];
+                var trainData = userViewingAtts["tournament"]["minigame"];
+                var stageName = trainData["name"];
                 if (stageName == "Supply Depot") {
-                    var supplyHoarder = user["viewing_atts"]["tournament"]["minigame"]["supply_hoarder_turns"];
+                    var supplyHoarder = trainData["supply_hoarder_turns"];
                     if (supplyHoarder > 0) {
                         sublocation = "Supply Depot (Supply Rush)";
                     }
@@ -86,7 +89,7 @@ javascript:void(function () {
             }
         }
         else if (userLocation == "Iceberg") {
-            sublocation = user["quests"]["QuestIceberg"]["current_phase"];
+            sublocation = userQuests["QuestIceberg"]["current_phase"];
             if (sublocation == "General") {
                 sublocation = "Generals";
             }
@@ -102,7 +105,7 @@ javascript:void(function () {
             }
         }
         else if (userLocation == "Labyrinth") {
-            var hallwayName = user["quests"]["QuestLabyrinth"]["hallway_name"];
+            var hallwayName = userQuests["QuestLabyrinth"]["hallway_name"];
             var length = "";
             if (contains(hallwayName,"Short")) hallwayName = hallwayName.slice(6, hallwayName.length);
             else if (contains(hallwayName,"Medium")) hallwayName = hallwayName.slice(7, hallwayName.length);
@@ -111,22 +114,22 @@ javascript:void(function () {
             sublocation = hallwayName;
         }
         else if (userLocation == "Living Garden") {
-            if (user["quests"]["QuestLivingGarden"]["minigame"]["bucket_state"] == "dumped") {
+            if (userQuests["QuestLivingGarden"]["minigame"]["bucket_state"] == "dumped") {
                 sublocation = "Poured";
             }
         }
         else if (userLocation == "Lost City") {
-            if (user["quests"]["QuestLostCity"]["minigame"]["is_cursed"] == 1) {
+            if (userQuests["QuestLostCity"]["minigame"]["is_cursed"] == 1) {
                 sublocation = "Cursed";
             }
         }
         else if (userLocation == "Sand Dunes") {
-            if (user["quests"]["QuestSandDunes"]["minigame"]["has_stampede"] == true) {
+            if (userQuests["QuestSandDunes"]["minigame"]["has_stampede"] == true) {
                 sublocation = "Stampede";
             }
         }
         else if (userLocation == "Seasonal Garden") {
-            var season = user["viewing_atts"]["season"];
+            var season = userViewingAtts["season"];
             var seasonMapping = {
                 "fl": "Fall",
                 "wr": "Winter",
@@ -136,42 +139,40 @@ javascript:void(function () {
             sublocation = seasonMapping[season];
         }
         else if (userLocation == "Sunken City") {
-            sublocation = user["quests"]["QuestSunkenCity"]["zone_name"];
+            sublocation = userQuests["QuestSunkenCity"]["zone_name"];
             if (sublocation == "Sunken City") {
                 sublocation = "Docked";
             }
         }
-        else if (userLocation == "Toxic Spill") {
-            //TODO: This is probably not correct - an Archduke can hunt in the Hero-level spill
-            if (userRank == "Archduke" || userRank == "Archduchess") {
-                sublocation = "Archduke/Archduchess";
-            }
-            else if (userRank == "Grand Duke" || userRank == "Grand Duchess") {
-                sublocation = "Grand Duke/Grand Duchess";
-            }
-            else if (userRank == "Duke" || userRank == "Duchess") {
-                sublocation = "Duke/Duchess";
-            }
-            else if (userRank == "Count" || userRank == "Countess") {
-                sublocation = "Count/Countess";
-            }
-            else if (userRank == "Baron" || userRank == "Baroness") {
-                sublocation = "Baron/Baroness";
-            }
-            else if (userRank == "Lord" || userRank == "Lady") {
-                sublocation = "Lord/Lady";
-            }
-            else if (userRank == "Knight" || userRank == "Hero") {
-                sublocation = userRank;
+        else if (userLocation === "Toxic Spill") {
+            var pollutionQuest = userQuests["QuestPollutionOutbreak"];
+            var titles = pollutionQuest["titles"];
+
+            var spillSublocationMap = {
+                "archduke_archduchess" : "Archduke/Archduchess",
+                "grand_duke": "Grand Duke/Grand Duchess",
+                "duke_dutchess" : "Duke/Duchess",
+                "count_countess" : "Count/Countess",
+                "baron_baroness" : "Baron/Baroness",
+                "lord_lady" :  "Lord/Lady",
+                "hero" : "Hero",
+                "knight" : "Knight"
+            };
+
+            //TODO: Investigate possibility of using nextStatus and rising/falling to determine this instead of looping over titles
+            for (var key in titles) {
+                if (titles.hasOwnProperty(key) && titles[key].active) {
+                   sublocation = spillSublocationMap[key];
+                }
             }
         }
         else if (userLocation == "Twisted Garden") {
-            if (user["quests"]["QuestLivingGarden"]["minigame"]["vials_state"] == "dumped") {
+            if (userQuests["QuestLivingGarden"]["minigame"]["vials_state"] == "dumped") {
                 sublocation = "Poured";
             }
         }
         else if (userLocation == "Whisker Woods Rift") {
-            var zones = user["quests"]["QuestRiftWhiskerWoods"]["zones"];
+            var zones = userQuests["QuestRiftWhiskerWoods"]["zones"];
             var clearing = zones["clearing"]["status"];
             var tree = zones["tree"]["status"];
             var lagoon = zones["lagoon"]["status"];
@@ -183,7 +184,7 @@ javascript:void(function () {
             sublocation = state;
         }
         else if (userLocation == "Zokor") {
-            var quest = user["quests"]["QuestAncientCity"];
+            var quest = userQuests["QuestAncientCity"];
 
             var districtname = quest.district_name;
             var district_type = quest.clue_name;
@@ -205,8 +206,8 @@ javascript:void(function () {
             }
         }
         else if (userLocation == "Zugzwang's Tower") {
-            var mystic = user["viewing_atts"]["zzt_mage_progress"];
-            var tech = user["viewing_atts"]["zzt_tech_progress"];
+            var mystic = userViewingAtts["zzt_mage_progress"];
+            var tech = userViewingAtts["zzt_tech_progress"];
             if (mystic >= tech) {
                 if (mystic >= 0 && mystic < 8) {
                     sublocation = "Mystic Pawn Pincher";
@@ -255,7 +256,6 @@ javascript:void(function () {
             }
         }
 
-
         return sublocation;
     }
 
@@ -266,10 +266,10 @@ javascript:void(function () {
     function findUserRank() {
         if (userRank == "Archduke" || userRank == "Archduchess") return "archduke";
         if (userRank == "Grand Duke" || userRank == "Grand Duchess") return "grandduke";
-        if (userRank == "Duke" || userRank == "Duchess") return "duke"
-        if (userRank == "Count" || userRank == "Countess") return "count"
-        if (userRank == "Baron" || userRank == "Baroness") return "baron"
-        if (userRank == "Lord" || userRank == "Lady") return "lord"
+        if (userRank == "Duke" || userRank == "Duchess") return "duke";
+        if (userRank == "Count" || userRank == "Countess") return "count";
+        if (userRank == "Baron" || userRank == "Baroness") return "baron";
+        if (userRank == "Lord" || userRank == "Lady") return "lord";
         return userRank.toLowerCase()
     }
 

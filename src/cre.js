@@ -94,7 +94,7 @@ window.onload = function () {
 
     document.getElementById("ballistaLevel").onchange = genericOnChange;
     document.getElementById("canonLevel").onchange = genericOnChange;
-    document.getElementById("riftstalker").onchange = genericOnChange;
+    document.getElementById("riftstalker").onchange = riftstalkerChange;
 
     document.getElementById("cheeseCost").onchange = function () {
         cheeseCost = parseInt(document.getElementById("cheeseCost").value);
@@ -140,15 +140,6 @@ function updateCustomSetup() {
     showPop(2);
 }
 
-function updateInputFromParameter(category, callback) {
-    var parameter = getURLParameter(category);
-    var input = document.getElementById(category);
-    if (parameter && parameter !== NULL_URL_PARAM) {
-        input.value = parameter;
-        callback();
-    }
-}
-
 function checkLoadState() {
     var loadPercentage = (popLoaded + baselineLoaded + advancementLoaded) / 3 * 100;
     var status = document.getElementById("status");
@@ -160,8 +151,7 @@ function checkLoadState() {
 
         updateInputFromParameter("oil", oilChanged);
         riftstalkerParamCheck();
-        updateInputFromParameter("ballistaLevel", genericOnChange);
-        updateInputFromParameter("canonLevel", genericOnChange);
+        fortRoxParamCheck();
         checkToxicParam();
 
         updateInputFromParameter("battery", batteryChanged);

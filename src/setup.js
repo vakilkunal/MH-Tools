@@ -45,6 +45,7 @@ $(window).load(function () {
     }
     gsParamCheck();
     riftstalkerParamCheck();
+    fortRoxParamCheck();
 
     bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
     if (bonusLuckParameter >= 0) {
@@ -64,6 +65,7 @@ $(window).load(function () {
     document.querySelector("#bonusLuck").onchange = bonusLuckChanged;
     document.querySelector("#ballistaLevel").onchange = genericOnChange;
     document.querySelector("#canonLevel").onchange = genericOnChange;
+    document.querySelector("#riftstalker").onchange = riftstalkerChange;
 
     $("#save_setup_button").click(saveSetupCookie);
 
