@@ -2,18 +2,7 @@
 
 window.onload = function () {
 
-	// if (location.href.indexOf("https") < 0) {
-	// 	var currLoc = location.href;
-	// 	currLoc = currLoc.replace("http", "https");
-	// 	location.href = currLoc;
-	// }
-
-	//Bookmarklet storage logic
-	if (analyzerBookmarkletString != localStorage.getItem('analyzerBookmarklet')) {
-		alert("Bookmarklet has changed! Please update accordingly.");
-		localStorage.setItem('analyzerBookmarklet', analyzerBookmarkletString);
-	}
-    $("#bookmarklet").attr("href", analyzerBookmarkletString);
+    loadBookmarkletFromJS("src/bookmarklet/analyzerBookmarklet.min.js", "analyzerBookmarklet", "#bookmarklet");
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';

@@ -530,7 +530,7 @@ function gsParamCheck() {
     var gsParameter = getURLParameter("gs");
     if (gsParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("gs");
-        select.value = "No";
+        select.value = "N";
         gsChanged();
     }
 }

@@ -24,12 +24,7 @@ window.onload = function () {
         alert(instructionString);
     });
 
-    if (creBookmarkletString !== localStorage.getItem('creBookmarklet')) {
-        alert("Bookmarklet has changed! Please update accordingly.");
-        localStorage.setItem('creBookmarklet', creBookmarkletString);
-    }
-
-    $("#bookmarklet").attr("href", creBookmarkletString);
+    loadBookmarkletFromJS("src/bookmarklet/crebookmarklet.min.js", "creBookmarklet", "#bookmarklet");
 
     startPopulationLoad();
 

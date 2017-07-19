@@ -24,14 +24,10 @@ $(window).load(function () {
         alert(instructionString);
     });
 
-    //Bookmarklet storage logic
-    if (setupBookmarkletString !== localStorage.getItem("setupBookmarklet")) {
-        alert("Bookmarklet has changed! Please update accordingly.");
-        localStorage.setItem("setupBookmarklet", setupBookmarkletString);
-    }
-    $("#bookmarklet").attr("href", setupBookmarkletString);
-    $("#slowBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=2500"));
-    $("#evenslowerBookmarklet").attr("href", setupBookmarkletString.replace(/=500/g, "=6000"));
+    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#bookmarklet");
+    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#slowBookmarklet", function(data) {return data.replace(/=500/g, "=2500")});
+    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#evenslowerBookmarklet", function(data) {return data.replace(/=500/g, "=6000")});
+
 
     loadItemSelection(weaponKeys, "weapon");
     loadItemSelection(baseKeys, "base");

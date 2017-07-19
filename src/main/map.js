@@ -16,13 +16,7 @@ function contains(collection, searchElement) {
 window.onload = function () {
 
     startPopulationLoad();
-
-	//Bookmarklet storage logic
-	if (mapBookmarkletString != localStorage.getItem('mapBookmarklet')) {
-		alert("Bookmarklet has changed! Please update accordingly.");
-		localStorage.setItem('mapBookmarklet', mapBookmarkletString);
-	}
-    $("#bookmarklet").attr("href", mapBookmarkletString);
+    loadBookmarkletFromJS("src/bookmarklet/mapbookmarklet.min.js", "mapBookmarklet", "#bookmarklet");
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';

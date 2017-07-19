@@ -1,4 +1,8 @@
 playground/
+node_modules
+out/
 testing/
 .idea/
 .eslintrc.json
+*.min.js
+!lib/*.min.js

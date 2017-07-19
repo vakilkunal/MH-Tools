@@ -1,4 +1,4 @@
-javascript:void(function () {
+(function () {
     if (location.href.indexOf("mousehuntgame.com") < 0) {
         alert("You are not on mousehuntgame.com! Please try again.");
         return;
