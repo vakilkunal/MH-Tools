@@ -1,7 +1,7 @@
 language: node_js
 
 script:
- - npm bookmarklet
+ - npm run bookmarklet
 
 after_success:
  - ./build/copyFiles.sh
