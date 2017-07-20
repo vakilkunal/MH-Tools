@@ -21,3 +21,6 @@ deploy:
 branches:
   only:
   - master
+
+git:
+  depth: 3
