@@ -12,7 +12,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	padding: 4px;
 }
 table.tablesorter thead tr .tablesorter-header {
-	background-image: url(../img/bg.png);
+	background-image: url(../resources/img/bg.png);
 	background-repeat: no-repeat;
 	background-position: left;
 	cursor: pointer;
@@ -29,10 +29,10 @@ table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
 table.tablesorter thead tr .tablesorter-headerDesc {
-	background-image: url(../img/asc.png);
+	background-image: url(../resources/img/asc.png);
 }
 table.tablesorter thead tr .tablesorter-headerAsc {
-	background-image: url(../img/desc.png);
+	background-image: url(../resources/img/desc.png);
 }
 table.tablesorter thead tr .tablesorter-headerAsc, table.tablesorter thead tr .tablesorter-headerDesc {
 	background-color: #8dbdd8;

@@ -3,6 +3,7 @@ node_modules
 out/
 testing/
 .idea/
+*.iml
 .eslintrc.json
 *.min.js
 !lib/*.min.js
