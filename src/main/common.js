@@ -58,7 +58,7 @@ function processPop(popText) {
 
     var popCSV = csvToArray(popText);
     var popCSVLength = popCSV.length;
-    popArray = {};
+    populationObject = {};
 
     for (var i = 1; i < popCSVLength; i++) {
         processPopItem(i, creUser);
@@ -670,7 +670,7 @@ function loadDropdown(category, array, callback, initialHtml) {
  * Load the location drop down list from the population data and select correct location from URL apramters
  */
 function loadLocationDropdown() {
-    var array = Object.keys(popArray || []);
+    var array = Object.keys(populationObject || []);
     array.sort();
 
     loadDropdown("location", array, locationChanged, "<option></option>")
@@ -737,8 +737,8 @@ function phaseChanged() {
 
     setPhase();
 
-    if (!popArray[locationName][phaseName]) {
-        var phases = Object.keys(popArray[locationName]);
+    if (!populationObject[locationName][phaseName]) {
+        var phases = Object.keys(populationObject[locationName]);
         loadDropdown("phase", phases, function () {
             document.getElementById("#phase").selectedIndex = 0;
             setPhase();
@@ -846,7 +846,7 @@ function locationChanged() {
 
     function populateSublocationDropdown(locationName) {
         var category = "phase";
-        var array = Object.keys(popArray[locationName]) || [EMPTY_SELECTION];
+        var array = Object.keys(populationObject[locationName]) || [EMPTY_SELECTION];
         loadDropdown(category, array, phaseChanged, "");
         if (array.length > 1) {
             $("#phaseRow").show()

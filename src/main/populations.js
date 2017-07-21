@@ -13,7 +13,7 @@ var popLoaded = 0, baselineLoaded = 0, advancementLoaded = 0;
  * Population data parsed from CSV
  * Object with location - phase - cheese - charm - mouse - pop %
  */
-var popArray = {};
+var populationObject = {};
 
 /**
  * Cheese baseline attractions

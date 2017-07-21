@@ -6,3 +6,4 @@ testing/
 *.iml
 .eslintrc.json
 src/**/*.min.js
+data/**/*.json

@@ -376,7 +376,7 @@ function loadCheeseDropdown(location, phase) {
 
     var insertedCheeses = [];
 
-    for (var cheeseOption in popArray[location][phase]) {
+    for (var cheeseOption in populationObject[location][phase]) {
         if (cheeseOption.indexOf("/") < 0 || contains(cheeseOption,"Combat")) { //Todo: Fix this master cheese thingy
             cheeseDropdownHTML = addCheeseOption(insertedCheeses, cheeseOption, cheeseDropdownHTML);
         }
@@ -428,7 +428,7 @@ function loadCharmDropdown(location, phase, cheese) {
     /**
      * Population array for Location-Phase-Cheese
      */
-    var popArrayLPC = popArray[location][phase][cheese];
+    var popArrayLPC = populationObject[location][phase][cheese];
 
     fillPopArray(cheese);
 
@@ -468,12 +468,12 @@ function loadCharmDropdown(location, phase, cheese) {
     function fillPopArray(searchCheese) {
         var popArrayLP;
         if (!popArrayLPC) {
-            popArrayLP = popArray[location][phase];
+            popArrayLP = populationObject[location][phase];
             // Search through popArrayLP for cheese matching currently armed cheese
             // TODO: Improve
             for (var popcheese in popArrayLP) {
                 if (contains(popcheese,searchCheese)) {
-                    popArrayLPC = popArray[location][phase][searchCheese];
+                    popArrayLPC = populationObject[location][phase][searchCheese];
                 }
             }
         }
@@ -576,7 +576,7 @@ function showPop() {
  * @return Mouse Populations
  */
 function getPopulation(selectedCharm) {
-    var popArrayLPC = popArray[locationName][phaseName][cheeseName];
+    var popArrayLPC = populationObject[locationName][phaseName][cheeseName];
     if (!popArrayLPC) {
         popArrayLPC = checkPopArray();
     }
@@ -587,9 +587,9 @@ function getPopulation(selectedCharm) {
      * @return Charm Populations
      */
     function checkPopArray() {
-        var popArrayL = popArray[locationName][phaseName];
+        var popArrayL = populationObject[locationName][phaseName];
         var cheeseNameKeys = Object.keys(popArrayL);
-        var popArrayLLength = Object.size(popArray[locationName][phaseName]);
+        var popArrayLLength = Object.size(populationObject[locationName][phaseName]);
         var commonCheeseIndex;
         for (var i = 0; i < popArrayLLength; i++) {
             if (cheeseNameKeys[i].indexOf(cheeseName) >= 0 && cheeseNameKeys[i].indexOf("/") >= 0) {
@@ -597,7 +597,7 @@ function getPopulation(selectedCharm) {
                 break;
             }
         }
-        return popArray[locationName][phaseName][commonCheeseIndex];
+        return populationObject[locationName][phaseName][commonCheeseIndex];
     }
 }
 
