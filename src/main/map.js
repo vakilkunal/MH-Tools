@@ -1,5 +1,6 @@
 "use strict";
 
+var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.js";
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
 var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
@@ -16,7 +17,7 @@ function contains(collection, searchElement) {
 window.onload = function () {
 
     startPopulationLoad();
-    loadBookmarkletFromJS("src/bookmarklet/mapbookmarklet.min.js", "mapBookmarklet", "#bookmarklet");
+    loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, "mapBookmarklet", "#bookmarklet");
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';

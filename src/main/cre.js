@@ -1,8 +1,7 @@
 "use strict";
 
-/*
- * Variable Initialization
- */
+var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.js";
+
 var cheeseCost = 0, sampleSize = 0, rank = '';
 
 function loadCharmDropdown() {
@@ -24,7 +23,7 @@ window.onload = function () {
         alert(instructionString);
     });
 
-    loadBookmarkletFromJS("src/bookmarklet/crebookmarklet.min.js", "creBookmarklet", "#bookmarklet");
+    loadBookmarkletFromJS(CRE_BOOKMARKLET_URL, "creBookmarklet", "#bookmarklet");
 
     startPopulationLoad();
 

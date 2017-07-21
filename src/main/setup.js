@@ -1,5 +1,7 @@
 "use strict";
 
+var SETUP_BOOKMARKLET_URL = "src/minified/setupbookmarklet.min.js";
+
 var loadedParams = {
     cheese: false,
     charm: false
@@ -24,9 +26,9 @@ $(window).load(function () {
         alert(instructionString);
     });
 
-    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#bookmarklet");
-    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#slowBookmarklet", function(data) {return data.replace(/=500/g, "=2500")});
-    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#evenslowerBookmarklet", function(data) {return data.replace(/=500/g, "=6000")});
+    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarklet", "#bookmarklet");
+    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarkletSlow", "#slowBookmarklet", function(data) {return data.replace(/=500/g, "=2500")});
+    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarkletSlower", "#evenslowerBookmarklet", function(data) {return data.replace(/=500/g, "=6000")});
 
 
     loadItemSelection(weaponKeys, "weapon");
