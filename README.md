@@ -5,7 +5,7 @@ Suite of JavaScript-based tools for the browser game [MouseHunt](https://www.mou
 Jump to:
 
  - Changelog ([deprecated](https://github.com/tsitu/MH-Tools/blob/gh-pages/CHANGELOG.md))
- - Population data file ([CSV](https://github.com/tsitu/MH-Tools/blob/gh-pages/data/populations.csv))
+ - Population data file ([CSV](https://github.com/tsitu/MH-Tools/blob/gh-pages/data/populations.csv) | [source](https://docs.google.com/spreadsheets/d/1Y_urUwbp7XpbL9vRV4w4uoexkIM_DbuAc5Fb1JL_u20/edit?usp=sharing))
  - Catch Rate Estimator ([source code](https://github.com/tsitu/MH-Tools/blob/gh-pages/src/cre.js) | [bookmarklet](https://github.com/tsitu/MH-Tools/blob/gh-pages/src/crebookmarklet.js))
  - Best Setup Tool ([source code](https://github.com/tsitu/MH-Tools/blob/gh-pages/src/setup.js) | [bookmarklet](https://github.com/tsitu/MH-Tools/blob/gh-pages/src/setupbookmarklet.js))
  - Map Solver and Mouse Finder ([source code](https://github.com/tsitu/MH-Tools/blob/gh-pages/src/map.js) | [bookmarklet](https://github.com/tsitu/MH-Tools/blob/gh-pages/src/mapbookmarklet.js))
@@ -20,7 +20,6 @@ To generate all required files simply run 'npm install' and 'npm run build'
  - Marketplace Analyzer [discussion](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost)
  - [Mouse Power Values](https://docs.google.com/spreadsheets/d/1cGu0eG0Fgwf-OWFAfed_tVJC0GQh-j6utxiSDdWRFZE/)
  - [Bookmarklet Maker](http://www.bookmarklets.org/maker/)
- - [Mousehunt Populations](https://docs.google.com/spreadsheets/d/1Y_urUwbp7XpbL9vRV4w4uoexkIM_DbuAc5Fb1JL_u20/edit?usp=sharing)
 
 ### Thanks to
 

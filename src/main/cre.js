@@ -1,6 +1,7 @@
 "use strict";
 
-var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.js";
+var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
+var POPULATION_JSON_URL = "data/populations-cre.json";
 
 var cheeseCost = 0, sampleSize = 0, rank = '';
 
@@ -25,7 +26,7 @@ window.onload = function () {
 
     loadBookmarkletFromJS(CRE_BOOKMARKLET_URL, "creBookmarklet", "#bookmarklet");
 
-    startPopulationLoad();
+    startPopulationLoad(POPULATION_JSON_URL);
 
     loadDropdown("weapon", weaponKeys, weaponChanged, "<option></option>");
     loadDropdown("base", baseKeys, baseChanged, "<option></option>");
@@ -449,7 +450,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 else if (mouseName === "Bounty Hunter" && charmName === "Sheriff's Badge Charm") catchRate = 1;
                 else if (mouseName === "Zurreal the Eternal" && weaponName !== "Zurreal's Folly") catchRate = 0;
 
-                var attractions = parseFloat(popArrayLC[mouseName]) * overallAR;
+                var attractions = popArrayLC[mouseName] * overallAR;
 
                 var catches = attractions * catchRate;
 

@@ -1,6 +1,7 @@
 "use strict";
 
 var SETUP_BOOKMARKLET_URL = "src/minified/setupbookmarklet.min.js";
+var POPULATION_JSON_URL = "data/populations-setup.json";
 
 var loadedParams = {
     cheese: false,
@@ -38,7 +39,7 @@ $(window).load(function () {
     loaded = loadURLData();
     if (!loaded) {
         checkCookies();
-        startPopulationLoad();
+        startPopulationLoad(POPULATION_JSON_URL);
         $("#main").show();
     }
     gsParamCheck();
