@@ -4,7 +4,7 @@ script:
  - npm run bookmarklet
 
 after_success:
- - ./build/copyFiles.sh
+ - ./build/deploy.sh
 
 cache:
   directories:

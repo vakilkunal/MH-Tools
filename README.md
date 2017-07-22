@@ -1,4 +1,4 @@
-# [MH Tools](https://tsitu.github.io/MH-Tools/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/tsitu/MH-Tools/pulls)
+# [MH Tools](https://tsitu.github.io/MH-Tools/) &middot; [![Build Status](https://travis-ci.org/tsitu/MH-Tools.svg?branch=master)](https://travis-ci.org/tsitu/MH-Tools)
 
 Suite of JavaScript-based tools for the browser game [MouseHunt](https://www.mousehuntgame.com/). Ongoing forum discussion [here](https://www.mousehuntgame.com/forum/showthread.php?95543-Catch-Rate-Calculator&goto=newpost). Feel free to let us know about any issues there (or [here](https://github.com/tsitu/MH-Tools/issues) if it is important).
 
