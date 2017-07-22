@@ -3,6 +3,9 @@ language: node_js
 script:
  - npm run bookmarklet
 
+before_install:
+ - chmod +x build/deploy.sh
+
 after_success:
  - ./build/deploy.sh
 
