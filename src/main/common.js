@@ -1,6 +1,9 @@
 /**
  * Functions that are used for both the CRE and the Best setup tool
  */
+var user;
+var CRE_USER = "cre";
+var SETUP_USER = "setup";
 var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
 var SAMPLE_SIZE_LABEL = "SampleSize";
 
@@ -61,9 +64,7 @@ function processAdvancement(advText) {
     }
 
     advancementLoaded = 1;
-    if (typeof checkLoadState !== 'undefined' ) {
-        checkLoadState();
-    }
+    checkLoadState();
 
     function processAdvItem(index) {
         var item = parseAdvCsvRow(advCSV[index]);
@@ -616,7 +617,7 @@ function loadDropdown(category, array, callback, initialHtml) {
  * Load the location drop down list from the population data and select correct location from URL apramters
  */
 function loadLocationDropdown() {
-    var array = Object.keys(populationObject || []);
+    var array = Object.keys(popArray || []);
     array.sort();
 
     loadDropdown("location", array, locationChanged, "<option></option>")
@@ -683,8 +684,8 @@ function phaseChanged() {
 
     setPhase();
 
-    if (!populationObject[locationName][phaseName]) {
-        var phases = Object.keys(populationObject[locationName]);
+    if (!popArray[locationName][phaseName]) {
+        var phases = Object.keys(popArray[locationName]);
         loadDropdown("phase", phases, function () {
             document.getElementById("#phase").selectedIndex = 0;
             setPhase();
@@ -792,7 +793,7 @@ function locationChanged() {
 
     function populateSublocationDropdown(locationName) {
         var category = "phase";
-        var array = Object.keys(populationObject[locationName]) || [EMPTY_SELECTION];
+        var array = Object.keys(popArray[locationName]) || [EMPTY_SELECTION];
         loadDropdown(category, array, phaseChanged, "");
         if (array.length > 1) {
             $("#phaseRow").show()

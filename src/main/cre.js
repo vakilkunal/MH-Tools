@@ -536,16 +536,16 @@ function showPop(type) { //type = 2 means don't reset charms
             formatSampleSize();
         }
 
-        if (populationObject[locationName][phaseName][commonCheeseIndex] || populationObject[locationName][phaseName][cheeseName]) {
+        if (popArray[locationName][phaseName][commonCheeseIndex] || popArray[locationName][phaseName][cheeseName]) {
             if (charmName === "No Charm") {
                 if (commonCheeseIndex) {
-                    if (populationObject[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION]) {
-                        sampleSize = populationObject[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
+                    if (popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION]) {
+                        sampleSize = popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                     }
                 }
                 else {
-                    if (populationObject[locationName][phaseName][cheeseName][EMPTY_SELECTION]) {
-                        sampleSize = populationObject[locationName][phaseName][cheeseName][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
+                    if (popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION]) {
+                        sampleSize = popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                     }
                 }
             }
@@ -558,22 +558,22 @@ function showPop(type) { //type = 2 means don't reset charms
                     slice = charmName.slice(0, -6);
                 }
                 if (commonCheeseIndex ) {
-                    if (populationObject[locationName][phaseName][commonCheeseIndex][slice]) {
-                        sampleSize = populationObject[locationName][phaseName][commonCheeseIndex][slice][SAMPLE_SIZE_LABEL];
+                    if (popArray[locationName][phaseName][commonCheeseIndex][slice]) {
+                        sampleSize = popArray[locationName][phaseName][commonCheeseIndex][slice][SAMPLE_SIZE_LABEL];
                     }
                     else {
-                        if (populationObject[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION]) {
-                            sampleSize = populationObject[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
+                        if (popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION]) {
+                            sampleSize = popArray[locationName][phaseName][commonCheeseIndex][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                         }
                     }
                 }
                 else {
-                    if (populationObject[locationName][phaseName][cheeseName][slice]) {
-                        sampleSize = populationObject[locationName][phaseName][cheeseName][slice][SAMPLE_SIZE_LABEL];
+                    if (popArray[locationName][phaseName][cheeseName][slice]) {
+                        sampleSize = popArray[locationName][phaseName][cheeseName][slice][SAMPLE_SIZE_LABEL];
                     }
                     else {
-                        if (populationObject[locationName][phaseName][cheeseName][EMPTY_SELECTION]) {
-                            sampleSize = populationObject[locationName][phaseName][cheeseName][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
+                        if (popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION]) {
+                            sampleSize = popArray[locationName][phaseName][cheeseName][EMPTY_SELECTION][SAMPLE_SIZE_LABEL];
                         }
                     }
                 }
@@ -641,11 +641,11 @@ function showPop(type) { //type = 2 means don't reset charms
 
 
     function extractPopArrayLPC(location, phase, cheese) {
-        var popArrayLPC = populationObject[location][phase][cheese];
+        var popArrayLPC = popArray[location][phase][cheese];
 
         //For common cheeses e.g. gouda, brie etc.
         if (popArrayLPC === undefined && cheese !== "Cheese") {
-            var popArrayL = populationObject[location][phase];
+            var popArrayL = popArray[location][phase];
             var locationKeys = Object.keys(popArrayL || []);
             var popArrayLLength = locationKeys.length;
             for (var i = 0; i < popArrayLLength; i++) {
@@ -654,7 +654,7 @@ function showPop(type) { //type = 2 means don't reset charms
                     break;
                 }
             }
-            popArrayLPC = populationObject[location][phase][commonCheeseIndex];
+            popArrayLPC = popArray[location][phase][commonCheeseIndex];
         }
         return popArrayLPC;
     }
@@ -695,7 +695,7 @@ function highlightSpecialCharms (charmList) {
 function loadCheeseDropdown(locationName, phaseName) {
 
     function getCheeseDropdownHTML(location, phase) {
-        var cheeses = Object.keys(populationObject[location][phase] || []);
+        var cheeses = Object.keys(popArray[location][phase] || []);
         var cheeseDropdownHTML = "";
         for (var key in cheeses) {
             var option = cheeses[key];

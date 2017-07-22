@@ -198,12 +198,12 @@ function checkLoadState() {
 }
 
 function loadMouseDropdown() {
-	var popArrayLength = Object.size(populationObject);
+	var popArrayLength = Object.size(popArray);
 	var suggests = [];
 
 	for (var i=0; i<popArrayLength; i++) {
-		suggests.push(Object.keys(populationObject)[i]);
-		suggests.push(Object.keys(populationObject)[i].toLowerCase());
+		suggests.push(Object.keys(popArray)[i]);
+		suggests.push(Object.keys(popArray)[i].toLowerCase());
 	}
 
 	miceLoaded = true;
@@ -250,7 +250,7 @@ function processMap(mapText) {
 			mouseName = mouseName.slice(0,indexOfMouse);
 		}
 		
-		if (populationObject[mouseName] == undefined) { //Mouse name not recognised
+		if (popArray[mouseName] == undefined) { //Mouse name not recognised
 			interpretedAsText += mouseName + "<br>";
 			notRecognized = true;
 		}
@@ -267,26 +267,26 @@ function processMap(mapText) {
 			mouseListText += "<tr><td style='font-size: 12px; padding: 10px'><b>" + mouseName + "</b></td>";
 			remainingMice++;
 
-			var mouseLocation = Object.keys(populationObject[mouseName]);
-			var noLocations = Object.size(populationObject[mouseName]); //console.log(noLocations);
+			var mouseLocation = Object.keys(popArray[mouseName]);
+			var noLocations = Object.size(popArray[mouseName]); //console.log(noLocations);
 
 			for (var j=0; j<noLocations; j++) {
 				var locationName = mouseLocation[j];
 				
-				var mousePhase = Object.keys(populationObject[mouseName][locationName]);
-				var noPhases = Object.size(populationObject[mouseName][locationName]);
+				var mousePhase = Object.keys(popArray[mouseName][locationName]);
+				var noPhases = Object.size(popArray[mouseName][locationName]);
 				
 				for (var k=0; k<noPhases; k++) {
 					var phaseName = mousePhase[k];
 
-					var mouseCheese = Object.keys(populationObject[mouseName][locationName][phaseName]);
-					var noCheeses = Object.size(populationObject[mouseName][locationName][phaseName]);
+					var mouseCheese = Object.keys(popArray[mouseName][locationName][phaseName]);
+					var noCheeses = Object.size(popArray[mouseName][locationName][phaseName]);
 
 					for (var l=0; l<noCheeses; l++) {
 						var cheeseName = mouseCheese[l];
 
-						var mouseCharm = Object.keys(populationObject[mouseName][locationName][phaseName][cheeseName]);
-						var noCharms = Object.size(populationObject[mouseName][locationName][phaseName][cheeseName]);
+						var mouseCharm = Object.keys(popArray[mouseName][locationName][phaseName][cheeseName]);
+						var noCharms = Object.size(popArray[mouseName][locationName][phaseName][cheeseName]);
 
 						for (var m=0; m<noCharms; m++) {
 							var charmName = mouseCharm[m]
@@ -321,7 +321,7 @@ function processMap(mapText) {
 							var modURLString = URLString.replace(/ /g, "%20");
 							locationPhaseCheeseCharm += "<a href=" + modURLString + " target=\"_blank\">Link to best setup</a>";
 							
-							var attractionRate = parseFloat(populationObject[mouseName][locationName][phaseName][cheeseName][charmName]);
+							var attractionRate = parseFloat(popArray[mouseName][locationName][phaseName][cheeseName][charmName]);
 
 							//Populate mouse location array
 							if (mouseLocationArray[locationPhaseCheeseCharm] == undefined) {

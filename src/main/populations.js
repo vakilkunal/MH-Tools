@@ -1,10 +1,5 @@
 "use strict";
 
-var user;
-var CRE_USER = "cre";
-var SETUP_USER = "setup";
-
-var POPULATIONS_URL = "data/populations.csv";
 var BASELINES_URL = "data/baselines.json";
 var ADVANCEMENT_URL = "data/advancement.csv";
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
@@ -17,7 +12,7 @@ var popLoaded = 0, baselineLoaded = 0, advancementLoaded = 0;
  * Population data parsed from CSV
  * Object with location - phase - cheese - charm - mouse - pop %
  */
-var populationObject = {};
+var popArray = {};
 
 /**
  * Cheese baseline attractions
@@ -43,7 +38,7 @@ function startPopulationLoad(populkationJsonUrl) {
     }
 
     function setPopulation(jsoNData) {
-        populationObject = jsoNData;
+        popArray = jsoNData;
         popLoaded = true;
         checkLoadState();
     }
