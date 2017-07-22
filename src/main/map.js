@@ -516,11 +516,7 @@ function printBestLocation (sortedLocation, mouseLocationArray) {
 }
 
 function findBaseline(location, cheese) {
-	//TODO make common cheese ar be global
-	var baselineAtt = baselineAttArray[cheese];
-	if (baselineAtt == undefined) {
-		baselineAtt = baselineArray[location + " (" + cheese + ")"];
-	}
+	var baselineAtt = baselineAttArray[cheese] || baselineArray[location + " (" + cheese + ")"];
 	return baselineAtt;
 }
 

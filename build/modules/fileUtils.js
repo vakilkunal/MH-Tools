@@ -1,6 +1,7 @@
 (function () {
     const fs = require("fs");
     const readline = require('readline');
+    const mkdirp = require("mkdirp");
 
     module.exports = {
 
@@ -8,16 +9,16 @@
          * Read a file line by line
          * @param {string} filename
          * @param {function(err, data)} lineCallback Function called for each line that is read
-         * @param {function()} fileCallback Function called when the file stream is closed
+         * @param {function()} fileCloseCallback Function called when the file stream is closed
          */
-        readFileByLine: function (filename, lineCallback, fileCallback) {
+        readFileByLine: function (filename, lineCallback, fileCloseCallback) {
             var inputStream = fs.createReadStream(filename);
             var lineReader = readline.createInterface({
                 input: inputStream
             });
 
             lineReader.on("line", lineCallback);
-            lineReader.on("close", fileCallback);
+            lineReader.on("close", fileCloseCallback);
         },
 
         saveJsonFile: function (filename, object, whitespace) {
@@ -28,6 +29,10 @@
                 }
                 console.log(filename + " was saved");
             });
+        },
+
+        makeDirectory : function (directory) {
+            mkdirp(directory)
         }
     };
 })();

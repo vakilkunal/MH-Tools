@@ -8,7 +8,11 @@
     "bookmarklet:map": "uglifyjs src/bookmarklet/mapbookmarklet.js -cmo src/bookmarklet/mapbookmarklet.min.js",
     "bookmarklet:analyzer": "uglifyjs src/bookmarklet/analyzerbookmarklet.js -cmo src/bookmarklet/analyzerbookmarklet.min.js",
     "bookmarklet": "npm-run-all bookmarklet:*",
-    "population": "node build/parseCrePopulation.js"
+    "population": "node build/processPopulation.js",
+    "baselines": "node build/processBaselines.js",
+    "advancement": "node build/processAdvancement.js",
+
+    "build" : "npm-run-all --parallel bookmarklet population baselines advancement"
   },
   "repository": {
     "type": "git",
@@ -23,6 +27,7 @@
   "homepage": "https://tsitu.github.io/MH-Tools",
   "license": "Apache-2.0",
   "dependencies": {
+    "csvtojson": "^1.1.7",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.0.2",
     "uglify-js": "^3.0.25"

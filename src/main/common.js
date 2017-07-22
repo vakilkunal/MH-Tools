@@ -521,8 +521,12 @@ function findEff(mouseName) {
     }
 }
 
+function findBaselineAttraction(cheese, location) {
+    return baselineAttArray[cheese] || baselineArray[location + " (" + cheese + ")"];
+}
+
 function getCheeseAttraction() {
-    var baselineAtt = baselineAttArray[cheeseName] || baselineArray[locationName + " (" + cheeseName + ")"];
+    var baselineAtt = findBaselineAttraction(charmName, locationName);
     return baselineAtt + trapAtt / 100 - trapAtt / 100 * baselineAtt;
 }
 
