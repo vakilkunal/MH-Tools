@@ -491,7 +491,8 @@ function riftstalkerParamCheck() {
     var key = getRiftstalkerKey();
     var riftstalkerParam = getURLParameter("riftstalker") !== NULL_URL_PARAM;
     var riftStalkerChecked = riftstalkerParam || (localStorage.getItem(key) === 'true');
-    $("#riftstalker").prop("checked", riftStalkerChecked)
+    $("#riftstalker").prop("checked", riftStalkerChecked);
+    riftstalkerChange();
 }
 
 function riftstalkerChange() {

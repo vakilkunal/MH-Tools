@@ -25,14 +25,11 @@ window.onload = function () {
     });
 
     loadBookmarkletFromJS(CRE_BOOKMARKLET_URL, "creBookmarklet", "#bookmarklet");
-
     startPopulationLoad(POPULATION_JSON_URL);
 
     loadDropdown("weapon", weaponKeys, weaponChanged, "<option></option>");
     loadDropdown("base", baseKeys, baseChanged, "<option></option>");
     loadCharmDropdown();
-
-    gsParamCheck();
 
     showHideWidgets(document.getElementById("toggleCustom").checked);
 
@@ -144,6 +141,7 @@ function checkLoadState() {
         loadLocationDropdown();
         loadTourneyDropdown();
 
+        gsParamCheck();
         updateInputFromParameter("oil", oilChanged);
         riftstalkerParamCheck();
         fortRoxParamCheck();
