@@ -1,6 +1,5 @@
 "use strict";
 
-var SETUP_BOOKMARKLET_URL = "src/minified/setupbookmarklet.min.js";
 var POPULATION_JSON_URL = "data/populations-setup.json";
 
 var loadedParams = {

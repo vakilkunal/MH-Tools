@@ -1,6 +1,5 @@
 "use strict";
 
-var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.js";
 var MAP_USER = "map";
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
 var miceLoaded = false;

@@ -1,5 +1,4 @@
 "use strict";
-var ANALYZER_BOOKMARKLET_URL = "src/bookmarklet/analyzerBookmarklet.min.js";
 
 window.onload = function () {
 

@@ -1,6 +1,5 @@
 "use strict";
 
-var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
 var POPULATION_JSON_URL = "data/populations-cre.json";
 
 var cheeseCost = 0, sampleSize = 0, rank = '';
