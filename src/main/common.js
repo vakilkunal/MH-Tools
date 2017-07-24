@@ -19,6 +19,7 @@ var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamen
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var riftStalkerCodex;
+var rank = "";
 
 var fortRox = {
     ballistaLevel : 0,
@@ -54,7 +55,6 @@ function contains(arrayOrString, searchElement) {
  * @param advText advancement data in CSV format
  */
 function processAdvancement(advText) {
-    // for now only in cre is used
     var advCSV = csvToArray(advText);
     var advCSVLength = advCSV.length;
     advancementArray = {};
@@ -505,6 +505,24 @@ function riftstalkerChange() {
 function fortRoxParamCheck() {
     updateInputFromParameter("ballistaLevel", genericOnChange);
     updateInputFromParameter("canonLevel", genericOnChange);
+}
+
+function getRankKey () {
+    return "rank-" + user;
+}
+
+function rankParamCheck() {
+    var key = getRankKey();
+    rank = getURLParameter("rank") || localStorage.getItem(key) || "";
+    document.getElementById("rank").value = rank;
+    genericOnChange();
+}
+
+function rankChange() {
+    var key = getRankKey();
+    rank = document.getElementById("rank").value;
+    localStorage.setItem(key, rank);
+    genericOnChange();
 }
 
 function checkToxicWidget(custom) {

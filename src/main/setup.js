@@ -44,6 +44,7 @@ $(window).load(function () {
     gsParamCheck();
     riftstalkerParamCheck();
     fortRoxParamCheck();
+    rankParamCheck();
 
     bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
     if (bonusLuckParameter >= 0) {
@@ -64,6 +65,7 @@ $(window).load(function () {
     document.querySelector("#ballistaLevel").onchange = genericOnChange;
     document.querySelector("#canonLevel").onchange = genericOnChange;
     document.querySelector("#riftstalker").onchange = riftstalkerChange;
+    document.querySelector("#rank").onchange = rankChange;
 
     $("#save_setup_button").click(saveSetupCookie);
 
@@ -497,6 +499,7 @@ function updateLink() {
         "riftstalker" : riftStalkerCodex,
         "ballistaLevel" : fortRox.ballistaLevel,
         "canonLevel" : fortRox.canonLevel,
+        "rank": rank
     };
 
     var urlString = buildURL("setup.html",urlParams);
@@ -564,6 +567,9 @@ function showPop() {
         var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
         for (var mouseName in population) {
             resultsHeader += "<th data-filter='false'>" + mouseName + "</th>";
+        }
+        if (rank) {
+            resultsHeader += "<th data-filter='false' title='Rank progress per 100 hunts'>Rank %</th>";
         }
         resultsHeader += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead>";
         return resultsHeader;
@@ -635,6 +641,7 @@ function buildPowersArray(micePopulation) {
 function buildMiceCRCells(micePopulation) {
     var overallCR = 0;
     var overallAR = getCheeseAttraction();
+    var overallProgress = 0;
     var effectivenessArray = buildEffectivenessArray(micePopulation);
     var powersArray = buildPowersArray(micePopulation);
     var html = "";
@@ -642,9 +649,19 @@ function buildMiceCRCells(micePopulation) {
     for (var mouse in micePopulation) {
         var catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
         overallCR += catches;
+        if (rank) {
+            // handle missing data
+            if (advancementArray[ mouse ]) {
+                overallProgress += advancementArray[ mouse ][ rank ] * catches;
+            }
+        }
         html += "<td align='right'>" + catches.toFixed(2) + "</td>";
     }
 
+    if (rank) {
+        // numbers are usually 0.00##% per hunt, so for 100 hunts it is easier to grasp
+        html += "<td>" + (overallProgress*100).toFixed(2) + "%</td>";
+    }
     html += "<td>" + overallCR.toFixed(2) + "</td>";
     return html;
 }
@@ -760,7 +777,8 @@ function getCRELinkElement() {
             "battery": batteryPower,
             "riftstalker" : riftStalkerCodex,
             "ballistaLevel" : fortRox.ballistaLevel,
-            "canonLevel" : fortRox.canonLevel
+            "canonLevel" : fortRox.canonLevel,
+            "rank": rank
         };
         var urlString = buildURL("cre.html", urlParams);
         urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
