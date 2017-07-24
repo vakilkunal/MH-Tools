@@ -26,10 +26,14 @@ $(window).load(function () {
         alert(instructionString);
     });
 
-    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarklet", "#bookmarklet");
-    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarkletSlow", "#slowBookmarklet", function(data) {return data.replace(/=500/g, "=2500")});
-    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarkletSlower", "#evenslowerBookmarklet", function(data) {return data.replace(/=500/g, "=6000")});
+    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarklet", "#bookmarklet", loadAlternateBookmarklets );
 
+    function loadAlternateBookmarklets(data) {
+        var slow = makeBookmarkletString(data.replace(/=500/g, "=2500"));
+        $("#slowBookmarklet").attr("href", slow);
+        var slower = makeBookmarkletString(data.replace(/=500/g, "=6000"));
+        $("#evenSlowerBookmarklet").attr(href, slower)
+    }
 
     loadItemSelection(weaponKeys, "weapon");
     loadItemSelection(baseKeys, "base");
