@@ -32,7 +32,7 @@ $(window).load(function () {
         var slow = makeBookmarkletString(data.replace(/=500/g, "=2500"));
         $("#slowBookmarklet").attr("href", slow);
         var slower = makeBookmarkletString(data.replace(/=500/g, "=6000"));
-        $("#evenSlowerBookmarklet").attr(href, slower)
+        $("#evenslowerBookmarklet").attr("href", slower)
     }
 
     loadItemSelection(weaponKeys, "weapon");
