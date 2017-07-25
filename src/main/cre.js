@@ -1,8 +1,7 @@
 "use strict";
 
-/*
- * Variable Initialization
- */
+var POPULATION_JSON_URL = "data/populations-cre.json";
+
 var cheeseCost = 0, sampleSize = 0, rank = '';
 
 function loadCharmDropdown() {
@@ -24,15 +23,12 @@ window.onload = function () {
         alert(instructionString);
     });
 
-    loadBookmarkletFromJS("src/bookmarklet/crebookmarklet.min.js", "creBookmarklet", "#bookmarklet");
-
-    startPopulationLoad();
+    loadBookmarkletFromJS(CRE_BOOKMARKLET_URL, "creBookmarklet", "#bookmarklet");
+    startPopulationLoad(POPULATION_JSON_URL);
 
     loadDropdown("weapon", weaponKeys, weaponChanged, "<option></option>");
     loadDropdown("base", baseKeys, baseChanged, "<option></option>");
     loadCharmDropdown();
-
-    gsParamCheck();
 
     showHideWidgets(document.getElementById("toggleCustom").checked);
 
@@ -96,7 +92,7 @@ window.onload = function () {
         showPop(2);
     };
 
-    document.getElementById("rank").onchange = rankOnChange;
+    document.getElementById("rank").onchange = rankChange;
 
     //Send to google analytics that link to setup was clicked
     document.getElementById("link").onclick = function () {
@@ -144,13 +140,14 @@ function checkLoadState() {
         loadLocationDropdown();
         loadTourneyDropdown();
 
+        gsParamCheck();
         updateInputFromParameter("oil", oilChanged);
         riftstalkerParamCheck();
         fortRoxParamCheck();
         checkToxicParam();
 
         updateInputFromParameter("battery", batteryChanged);
-        updateInputFromParameter("rank", rankOnChange);
+        rankParamCheck();
 
         getSliderValue();
         calculateBonusLuck();
@@ -247,7 +244,7 @@ function showPop(type) { //type = 2 means don't reset charms
     function getHeaderRow() {
         var headerHTML = "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
         if (rank) {
-            headerHTML += "<th data-filter='false'>Rank<br>Advancement</th>";
+            headerHTML += "<th data-filter='false'>Rank % per<br>100 hunts</th>";
         }
         if (locationName.indexOf("Seasonal Garden") >= 0) {
             headerHTML += "<th data-filter='false'>Amp %</th>";
@@ -450,7 +447,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 else if (mouseName === "Bounty Hunter" && charmName === "Sheriff's Badge Charm") catchRate = 1;
                 else if (mouseName === "Zurreal the Eternal" && weaponName !== "Zurreal's Folly") catchRate = 0;
 
-                var attractions = parseFloat(popArrayLC[mouseName]) * overallAR;
+                var attractions = popArrayLC[mouseName] * overallAR;
 
                 var catches = attractions * catchRate;
 
@@ -489,9 +486,10 @@ function showPop(type) { //type = 2 means don't reset charms
                 var mouseRow = "<td align='left'>" + mouseName + "</td><td>" + attractions.toFixed(2) + "%</td><td>" + catchRate + "%</td><td>" + catches + "</td><td>" + commafy(mouseGold) + "</td><td>" + commafy(mousePoints) + "</td><td>" + tourneyPoints + "</td><td>" + minLuckValue + "</td>";
 
                 if (rank) {
-                    var adv = advancementArray.hasOwnProperty(mouseName) && advancementArray[ mouseName ][ rank ];
-                    mouseRow += "<td>" + (adv ? (adv*100).toFixed(4)+'%' : '&nbsp;') + "</td>";
-                    overallAdvancement += adv ? catches*adv/100 : 0;
+                    var adv = advancementArray.hasOwnProperty(mouseName) && advancementArray[ mouseName ][ rank ] || 0;
+                    adv *= catches
+                    mouseRow += "<td>" + (adv ? (adv * 100).toFixed(4)+'%' : '&nbsp;') + "</td>";
+                    overallAdvancement += adv;
                 }
 
                 if (locationName.indexOf("Seasonal Garden") >= 0) {
@@ -795,7 +793,8 @@ function updateLink() {
         "tourney" : tournamentName,
         "riftstalker" : riftStalkerCodex,
         "ballistaLevel" : fortRox.ballistaLevel,
-        "canonLevel" : fortRox.canonLevel
+        "canonLevel" : fortRox.canonLevel,
+        "rank": rank
     };
     var URLString = buildURL('cre.html',urlParams);
     document.getElementById("link").href = URLString;
@@ -885,9 +884,4 @@ function tourneyChanged() {
     tournamentName = select.value;
     updateLink();
     calculateTrapSetup();
-}
-
-function rankOnChange() {
-    rank = document.getElementById("rank").value;
-    showPop(2);
 }

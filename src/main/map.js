@@ -1,8 +1,12 @@
 "use strict";
 
+var MAP_USER = "map";
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
+var miceLoaded = false;
 var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
+var user = MAP_USER;
+var POPULATION_JSON_URL = "data/populations-map.json";
 
 var autoCompleteSettings = {
     'delimiters': '\n',
@@ -15,8 +19,8 @@ function contains(collection, searchElement) {
 
 window.onload = function () {
 
-    startPopulationLoad();
-    loadBookmarkletFromJS("src/bookmarklet/mapbookmarklet.min.js", "mapBookmarklet", "#bookmarklet");
+    startPopulationLoad(POPULATION_JSON_URL);
+    loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, "mapBookmarklet", "#bookmarklet");
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';
@@ -187,41 +191,9 @@ String.prototype.capitalise = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
 
-function processPop (popText) {
-	var popCSV = csvToArray(popText);
-	var popCSVLength =  popCSV.length;
-    popArray = {};
-
-    for(var i=1; i<popCSVLength; i++) {
-        processPopItem(i);
-    }
-
-    popLoaded = 1;
-
-	loadMouseDropdown();
-
-    function processPopItem(index) {
-        var item = parseCsvRow(popCSV[index], false);
-
-        var mouseName = item.mouse.capitalise();
-        var cheese = item.cheese[0];
-        var population = parseFloat(item.attraction);
-
-        if (popArray[mouseName] === undefined) {
-            popArray[mouseName] = {};
-        }
-        if (popArray[mouseName][item.location] === undefined) {
-            popArray[mouseName][item.location] = {};
-        }
-        if (popArray[mouseName][item.location][item.phase] === undefined) {
-            popArray[mouseName][item.location][item.phase] = {};
-        }
-
-        if (popArray[mouseName][item.location][item.phase][cheese] === undefined) {
-            popArray[mouseName][item.location][item.phase][cheese] = {};
-        }
-        popArray[mouseName][item.location][item.phase][cheese][item.charm] = population;
-    }
+function checkLoadState() {
+	if (!miceLoaded)
+		loadMouseDropdown();
 }
 
 function loadMouseDropdown() {
@@ -233,6 +205,7 @@ function loadMouseDropdown() {
 		suggests.push(Object.keys(popArray)[i].toLowerCase());
 	}
 
+	miceLoaded = true;
 	$("#map").asuggest(suggests, autoCompleteSettings);
 
 }
@@ -515,11 +488,7 @@ function printBestLocation (sortedLocation, mouseLocationArray) {
 }
 
 function findBaseline(location, cheese) {
-	//TODO make common cheese ar be global
-	var baselineAtt = baselineAttArray[cheese];
-	if (baselineAtt == undefined) {
-		baselineAtt = baselineArray[location + " (" + cheese + ")"];
-	}
+	var baselineAtt = baselineAttArray[cheese] || baselineArray[location + " (" + cheese + ")"];
 	return baselineAtt;
 }
 

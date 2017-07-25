@@ -1,5 +1,7 @@
 "use strict";
 
+var POPULATION_JSON_URL = "data/populations-setup.json";
+
 var loadedParams = {
     cheese: false,
     charm: false
@@ -24,10 +26,14 @@ $(window).load(function () {
         alert(instructionString);
     });
 
-    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#bookmarklet");
-    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#slowBookmarklet", function(data) {return data.replace(/=500/g, "=2500")});
-    loadBookmarkletFromJS("src/minified/setupbookmarklet.min.js", "setupBookmarklet", "#evenslowerBookmarklet", function(data) {return data.replace(/=500/g, "=6000")});
+    loadBookmarkletFromJS(SETUP_BOOKMARKLET_URL, "setupBookmarklet", "#bookmarklet", loadAlternateBookmarklets );
 
+    function loadAlternateBookmarklets(data) {
+        var slow = makeBookmarkletString(data.replace(/=500/g, "=2500"));
+        $("#slowBookmarklet").attr("href", slow);
+        var slower = makeBookmarkletString(data.replace(/=500/g, "=6000"));
+        $("#evenslowerBookmarklet").attr("href", slower)
+    }
 
     loadItemSelection(weaponKeys, "weapon");
     loadItemSelection(baseKeys, "base");
@@ -36,12 +42,13 @@ $(window).load(function () {
     loaded = loadURLData();
     if (!loaded) {
         checkCookies();
-        startPopulationLoad();
+        startPopulationLoad(POPULATION_JSON_URL);
         $("#main").show();
     }
     gsParamCheck();
     riftstalkerParamCheck();
     fortRoxParamCheck();
+    rankParamCheck();
 
     bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
     if (bonusLuckParameter >= 0) {
@@ -62,6 +69,7 @@ $(window).load(function () {
     document.querySelector("#ballistaLevel").onchange = genericOnChange;
     document.querySelector("#canonLevel").onchange = genericOnChange;
     document.querySelector("#riftstalker").onchange = riftstalkerChange;
+    document.querySelector("#rank").onchange = rankChange;
 
     $("#save_setup_button").click(saveSetupCookie);
 
@@ -495,6 +503,7 @@ function updateLink() {
         "riftstalker" : riftStalkerCodex,
         "ballistaLevel" : fortRox.ballistaLevel,
         "canonLevel" : fortRox.canonLevel,
+        "rank": rank
     };
 
     var urlString = buildURL("setup.html",urlParams);
@@ -562,6 +571,9 @@ function showPop() {
         var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
         for (var mouseName in population) {
             resultsHeader += "<th data-filter='false'>" + mouseName + "</th>";
+        }
+        if (rank) {
+            resultsHeader += "<th data-filter='false' title='Rank progress per 100 hunts'>Rank %</th>";
         }
         resultsHeader += "<th id='overallHeader' data-filter='false'>Overall</th></tr></thead>";
         return resultsHeader;
@@ -633,6 +645,7 @@ function buildPowersArray(micePopulation) {
 function buildMiceCRCells(micePopulation) {
     var overallCR = 0;
     var overallAR = getCheeseAttraction();
+    var overallProgress = 0;
     var effectivenessArray = buildEffectivenessArray(micePopulation);
     var powersArray = buildPowersArray(micePopulation);
     var html = "";
@@ -640,9 +653,19 @@ function buildMiceCRCells(micePopulation) {
     for (var mouse in micePopulation) {
         var catches = getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, powersArray);
         overallCR += catches;
+        if (rank) {
+            // handle missing data
+            if (advancementArray[ mouse ]) {
+                overallProgress += advancementArray[ mouse ][ rank ] * catches;
+            }
+        }
         html += "<td align='right'>" + catches.toFixed(2) + "</td>";
     }
 
+    if (rank) {
+        // numbers are usually 0.00##% per hunt, so for 100 hunts it is easier to grasp
+        html += "<td>" + (overallProgress*100).toFixed(2) + "%</td>";
+    }
     html += "<td>" + overallCR.toFixed(2) + "</td>";
     return html;
 }
@@ -758,7 +781,8 @@ function getCRELinkElement() {
             "battery": batteryPower,
             "riftstalker" : riftStalkerCodex,
             "ballistaLevel" : fortRox.ballistaLevel,
-            "canonLevel" : fortRox.canonLevel
+            "canonLevel" : fortRox.canonLevel,
+            "rank": rank
         };
         var urlString = buildURL("cre.html", urlParams);
         urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity

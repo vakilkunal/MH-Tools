@@ -2,16 +2,17 @@
   "name": "mh-tools",
   "version": "1.0.0",
   "description": "Assorted Mousehunt Tools",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
   "scripts": {
     "bookmarklet:cre": "uglifyjs src/bookmarklet/crebookmarklet.js -cmo src/bookmarklet/crebookmarklet.min.js",
     "bookmarklet:setup": "uglifyjs src/bookmarklet/setupbookmarklet.js -cmo src/bookmarklet/setupbookmarklet.min.js",
     "bookmarklet:map": "uglifyjs src/bookmarklet/mapbookmarklet.js -cmo src/bookmarklet/mapbookmarklet.min.js",
     "bookmarklet:analyzer": "uglifyjs src/bookmarklet/analyzerbookmarklet.js -cmo src/bookmarklet/analyzerbookmarklet.min.js",
-    "bookmarklet": "npm-run-all bookmarklet:*"
+    "bookmarklet": "npm-run-all bookmarklet:*",
+    "population": "node build/processPopulation.js",
+    "baselines": "node build/processBaselines.js",
+    "advancement": "node build/processAdvancement.js",
+
+    "build" : "npm-run-all --parallel bookmarklet population baselines advancement"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,11 @@
   "bugs": {
     "url": "https://github.com/tsitu/MH-Tools/issues"
   },
-  "homepage": "https://github.com/tsitu/MH-Tools#readme",
+  "homepage": "https://tsitu.github.io/MH-Tools",
+  "license": "Apache-2.0",
   "dependencies": {
+    "csvtojson": "^1.1.7",
+    "mkdirp": "^0.5.1",
     "npm-run-all": "^4.0.2",
     "uglify-js": "^3.0.25"
   }

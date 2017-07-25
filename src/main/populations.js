@@ -1,7 +1,6 @@
 "use strict";
 
-var POPULATIONS_URL = "data/populations.csv";
-var BASELINES_URL = "data/baselines.txt";
+var BASELINES_URL = "data/baselines.json";
 var ADVANCEMENT_URL = "data/advancement.csv";
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
 // var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
@@ -30,57 +29,25 @@ var advancementArray = {};
 /**
  * Start population and baseline loading
  */
-function startPopulationLoad() {
-    $.get(POPULATIONS_URL, processPop);
-    $.get(BASELINES_URL, processBaseline);
+function startPopulationLoad(populkationJsonUrl) {
+
+    $.getJSON(populkationJsonUrl, setPopulation);
+    $.getJSON(BASELINES_URL, setBaseline);
     if (typeof processAdvancement === 'function' ) {
         $.get(ADVANCEMENT_URL, processAdvancement);
     }
-}
 
-/**
- * Process baseline response text and save it to the baseline Array
- * @param baselineText
- */
-function processBaseline(baselineText) {
-    var tmpBaselineArray = baselineText.split("\n");
-
-    for (var i = 0; i < tmpBaselineArray.length; i++) {
-        var split = tmpBaselineArray[i].split("\t");
-        var cheeseName = split[0];
-        var attraction = split[1];
-        baselineArray[cheeseName] = parseFloat(attraction);
-    }
-
-    baselineLoaded = 1;
-    if (typeof checkLoadState !== 'undefined' ) {
+    function setPopulation(jsoNData) {
+        popArray = jsoNData;
+        popLoaded = true;
         checkLoadState();
     }
-}
 
-/**
- * Splits a CSV row into an object with labels
- * @param csvRow []
- * @param splitCheese Boolean Indicates whether the cheese string should be split
- * @return {{location: string, phase: string, cheese: [string], charm: string, attraction: Number, mouse: String, sampleSize: String}}
- */
-function parseCsvRow(csvRow, splitCheese) {
-    var cheese = csvRow[2];
-
-    var cheeseArr = [cheese];
-    if (splitCheese) {
-        cheeseArr = cheese.split("/");
+    function setBaseline(jsonData) {
+        baselineArray = jsonData;
+        baselineLoaded = true;
+        checkLoadState();
     }
-
-    return {
-        location: csvRow[0],
-        phase: csvRow[1],
-        cheese: cheeseArr,
-        charm: csvRow[3],
-        attraction: csvRow[4],
-        mouse: csvRow[5],
-        sampleSize: csvRow[6]
-    };
 }
 
 /**

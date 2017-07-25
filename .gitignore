@@ -5,5 +5,5 @@ testing/
 .idea/
 *.iml
 .eslintrc.json
-*.min.js
-!lib/*.min.js
+src/**/*.min.js
+data/**/*.json

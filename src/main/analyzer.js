@@ -2,7 +2,7 @@
 
 window.onload = function () {
 
-    loadBookmarkletFromJS("src/bookmarklet/analyzerBookmarklet.min.js", "analyzerBookmarklet", "#bookmarklet");
+    loadBookmarkletFromJS(ANALYZER_BOOKMARKLET_URL, "analyzerBookmarklet", "#bookmarklet");
 
 	//Initialize tablesorter, bind to table
 	$.tablesorter.defaults.sortInitialOrder = 'desc';

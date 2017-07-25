@@ -2,9 +2,8 @@
 /**
  * This file contains only overridden functions/variables from original map solver. 
  */
-
-POPULATIONS_URL = "../data/populations.csv";
-BASELINES_URL = "../data/baselines.txt";
+POPULATION_JSON_URL = "../" + POPULATION_JSON_URL;
+BASELINES_URL = "../" + BASELINES_URL;
 
 buildMouselist = function (mouseListText, sortedMLCLength, sortedMLC) {
 	mouseListText += "<td><table class=\'subtable\'>";

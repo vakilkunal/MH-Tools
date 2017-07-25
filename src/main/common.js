@@ -1,5 +1,4 @@
 /**
- * Created by renet on 2016/10/29.
  * Functions that are used for both the CRE and the Best setup tool
  */
 var user;
@@ -20,6 +19,7 @@ var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamen
 var cheeseBonus = 0;
 var cheeseLoaded = 0, charmLoaded = 0;
 var riftStalkerCodex;
+var rank = "";
 
 var fortRox = {
     ballistaLevel : 0,
@@ -49,67 +49,12 @@ function contains(arrayOrString, searchElement) {
     return arrayOrString.indexOf(searchElement) > -1;
 }
 
-/**
- * Process the population data ajax response
- * @param popText population dta inCSV format
- */
-function processPop(popText) {
-    var creUser = (user === CRE_USER);
-
-    var popCSV = csvToArray(popText);
-    var popCSVLength = popCSV.length;
-    popArray = {};
-
-    for (var i = 1; i < popCSVLength; i++) {
-        processPopItem(i, creUser);
-    }
-
-    popLoaded = 1;
-    if (typeof checkLoadState !== 'undefined' ) {
-        checkLoadState();
-    }
-
-    function processPopItem(index, includeSampleSize) {
-        var item = parseCsvRow(popCSV[index], includeSampleSize);
-
-        if (popArray[item.location] === undefined) {
-            popArray[item.location] = {};
-        }
-        if (popArray[item.location][item.phase] === undefined) {
-            popArray[item.location][item.phase] = {};
-        }
-        for (var cheeseIndex = 0; cheeseIndex < item.cheese.length; cheeseIndex++) {
-            var cheese = item.cheese[cheeseIndex];
-            var locationPhase = popArray[item.location][item.phase];
-
-            if (locationPhase[cheese] === undefined) {
-                locationPhase[cheese] = {};
-            }
-            if (locationPhase[cheese][item.charm] === undefined) {
-                locationPhase[cheese][item.charm] = {};
-            }
-            locationPhase[cheese][item.charm][item.mouse] = parseFloat(item.attraction);
-
-            if (includeSampleSize && item.sampleSize) {
-                locationPhase[cheese][item.charm][SAMPLE_SIZE_LABEL] = parseInt(item.sampleSize);
-            }
-        }
-    }
-}
 
 /**
  * Process the advancement data ajax response
  * @param advText advancement data in CSV format
  */
 function processAdvancement(advText) {
-    // for now only in cre is used
-    if (user !== CRE_USER) {
-        advancementLoaded = 1;
-        if (typeof checkLoadState !== 'undefined' ) {
-            checkLoadState();
-        }
-    }
-
     var advCSV = csvToArray(advText);
     var advCSVLength = advCSV.length;
     advancementArray = {};
@@ -119,9 +64,7 @@ function processAdvancement(advText) {
     }
 
     advancementLoaded = 1;
-    if (typeof checkLoadState !== 'undefined' ) {
-        checkLoadState();
-    }
+    checkLoadState();
 
     function processAdvItem(index) {
         var item = parseAdvCsvRow(advCSV[index]);
@@ -521,8 +464,12 @@ function findEff(mouseName) {
     }
 }
 
+function findBaselineAttraction(cheese, location) {
+    return baselineAttArray[cheese] || baselineArray[location + " (" + cheese + ")"];
+}
+
 function getCheeseAttraction() {
-    var baselineAtt = baselineAttArray[cheeseName] || baselineArray[locationName + " (" + cheeseName + ")"];
+    var baselineAtt = findBaselineAttraction(cheeseName, locationName);
     return baselineAtt + trapAtt / 100 - trapAtt / 100 * baselineAtt;
 }
 
@@ -544,7 +491,8 @@ function riftstalkerParamCheck() {
     var key = getRiftstalkerKey();
     var riftstalkerParam = getURLParameter("riftstalker") !== NULL_URL_PARAM;
     var riftStalkerChecked = riftstalkerParam || (localStorage.getItem(key) === 'true');
-    $("#riftstalker").prop("checked", riftStalkerChecked)
+    $("#riftstalker").prop("checked", riftStalkerChecked);
+    riftstalkerChange();
 }
 
 function riftstalkerChange() {
@@ -557,6 +505,24 @@ function riftstalkerChange() {
 function fortRoxParamCheck() {
     updateInputFromParameter("ballistaLevel", genericOnChange);
     updateInputFromParameter("canonLevel", genericOnChange);
+}
+
+function getRankKey () {
+    return "rank-" + user;
+}
+
+function rankParamCheck() {
+    var key = getRankKey();
+    rank = getURLParameter("rank") || localStorage.getItem(key) || "";
+    document.getElementById("rank").value = rank;
+    genericOnChange();
+}
+
+function rankChange() {
+    var key = getRankKey();
+    rank = document.getElementById("rank").value;
+    localStorage.setItem(key, rank);
+    genericOnChange();
 }
 
 function checkToxicWidget(custom) {
