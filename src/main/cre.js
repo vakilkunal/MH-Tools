@@ -459,8 +459,9 @@ function showPop(type) { //type = 2 means don't reset charms
                 var mousePoints = mouseRewards[1];
 
                 if (charmName === "Wealth Charm" || charmName === "Rift Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.05, 1800));
-                else if (charmName === "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.10, 4500));
-                else if (charmName === "Extreme Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.20, 15000));
+                else if (charmName === "Super Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.1, 4500));
+                else if (charmName === "Extreme Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.2, 15000));
+                else if (charmName === "Ultimate Wealth Charm") mouseGold += Math.ceil(Math.min(mouseGold * 0.4, 50000));
 
                 var gold = catches * mouseGold / 100;
                 var points = catches * mousePoints / 100;
@@ -507,10 +508,10 @@ function showPop(type) { //type = 2 means don't reset charms
                         deltaDepthCatch += 1;
                     } else if (charmName === "Sticky Charm" && contains(berglings,mouseName)) {
                         deltaDepthFTC = 0;
-                    } else if (baseName === "Spiked Base" && contains(brutes,mouseName)) {
+                    } else if ((baseName === "Spiked Base" || baseName === "Ultimate Iceberg Base") && contains(brutes,mouseName)) {
                         deltaDepthCatch = 0;
                         deltaDepthFTC = 0
-                    } else if (baseName === "Remote Detonator Base" && contains(bombSquad,mouseName)) {
+                    } else if ((baseName === "Remote Detonator Base" || baseName === "Ultimate Iceberg Base") && contains(bombSquad,mouseName)) {
                         deltaDepthCatch = 20;
                     }
 
