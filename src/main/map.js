@@ -2,7 +2,7 @@
 
 var MAP_USER = "map";
 var columnLimit = 0, rowLimit = 0, attractionBonus = 0, numLineBreaks = 0, timeDelay, remainingMice = 0;
-var miceLoaded = false;
+
 var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
 var user = MAP_USER;
@@ -17,134 +17,143 @@ function contains(collection, searchElement) {
     return collection.indexOf(searchElement) > -1;
 }
 
+function loadMiceFromUrlOrCookie() {
+    var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
+    if (mouseList.length === 0) {
+        var cookie = Cookies.get('savedMice');
+        if (cookie !== undefined) {
+            findLoadedMice(cookie);
+        }
+    } else {
+        findLoadedMice(mouseList);
+    }
+
+    function findLoadedMice(mouseList) {
+        $('#map').val(mouseList);
+        var mapText = document.getElementById("map").value;
+        timeDelay = setTimeout(function () {
+            processMap(mapText);
+        }, 100);
+        $("#weightAR").click();
+    }
+}
+
+function loadCookies() {
+    if (Cookies.get('savedRows') !== undefined) {
+        var x = parseInt(Cookies.get('savedRows'));
+        var s = "#row" + x;
+        $(s).prop('checked', true);
+        rowLimit = x;
+    }
+    if (Cookies.get('savedCols') !== undefined) {
+        var x = parseInt(Cookies.get('savedCols'));
+        var s = "#col" + x;
+        $(s).prop('checked', true);
+        columnLimit = x;
+    }
+
+    if (Cookies.get('savedAttraction') !== undefined) {
+        attractionBonus = parseInt(Cookies.get('savedAttraction'));
+        $("#ampSlider").slider('option', 'value', attractionBonus);
+    }
+}
+function initTablesorter() {
+    $.tablesorter.defaults.sortInitialOrder = 'desc';
+    $("#bestLocation").tablesorter({
+        // sortForce: [[noMice,1]],
+        sortReset: true,
+        widthFixed: true,
+        ignoreCase: false,
+        widgets: ["filter"],
+        widgetOptions: {
+            filter_childRows: false,
+            filter_childByColumn: false,
+            filter_childWithSibs: true,
+            filter_columnFilters: true,
+            filter_columnAnyMatch: true,
+            filter_cellFilter: '',
+            filter_cssFilter: '', // or []
+            filter_defaultFilter: {},
+            filter_excludeFilter: {},
+            filter_external: '',
+            filter_filteredRow: 'filtered',
+            filter_formatter: null,
+            filter_functions: null,
+            filter_hideEmpty: true,
+            filter_hideFilters: true,
+            filter_ignoreCase: true,
+            filter_liveSearch: true,
+            filter_matchType: {'input': 'exact', 'select': 'exact'},
+            filter_onlyAvail: 'filter-onlyAvail',
+            filter_placeholder: {search: 'Filter results...', select: ''},
+            filter_reset: 'button.reset',
+            filter_resetOnEsc: true,
+            filter_saveFilters: false,
+            filter_searchDelay: 420,
+            filter_searchFiltered: true,
+            filter_selectSource: null,
+            filter_serversideFiltering: false,
+            filter_startsWith: false,
+            filter_useParsedData: false,
+            filter_defaultAttrib: 'data-value',
+            filter_selectSourceSeparator: '|',
+        }
+    });
+
+    $("#mouseList").tablesorter({
+        // sortForce: [[noMice,1]],
+        sortReset: true,
+        widthFixed: true,
+        ignoreCase: false,
+        widgets: ["filter"],
+        widgetOptions: {
+            filter_childRows: false,
+            filter_childByColumn: false,
+            filter_childWithSibs: true,
+            filter_columnFilters: true,
+            filter_columnAnyMatch: true,
+            filter_cellFilter: '',
+            filter_cssFilter: '', // or []
+            filter_defaultFilter: {},
+            filter_excludeFilter: {},
+            filter_external: '',
+            filter_filteredRow: 'filtered',
+            filter_formatter: null,
+            filter_functions: null,
+            filter_hideEmpty: true,
+            filter_hideFilters: true,
+            filter_ignoreCase: true,
+            filter_liveSearch: true,
+            filter_matchType: {'input': 'exact', 'select': 'exact'},
+            filter_onlyAvail: 'filter-onlyAvail',
+            filter_placeholder: {search: 'Filter results...', select: ''},
+            filter_reset: 'button.reset',
+            filter_resetOnEsc: true,
+            filter_saveFilters: false,
+            filter_searchDelay: 420,
+            filter_searchFiltered: true,
+            filter_selectSource: null,
+            filter_serversideFiltering: false,
+            filter_startsWith: false,
+            filter_useParsedData: false,
+            filter_defaultAttrib: 'data-value',
+            filter_selectSourceSeparator: '|',
+        }
+    });
+}
 window.onload = function () {
 
     startPopulationLoad(POPULATION_JSON_URL);
     loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, "mapBookmarklet", "#bookmarklet");
 
 	//Initialize tablesorter, bind to table
-	$.tablesorter.defaults.sortInitialOrder = 'desc';
-    $("#bestLocation").tablesorter({
-		// sortForce: [[noMice,1]],
-		sortReset: true,
-		widthFixed: true,
-		ignoreCase: false,
-		widgets: ["filter"],
-		widgetOptions: {
-			filter_childRows : false,
-			filter_childByColumn : false,
-			filter_childWithSibs : true,
-			filter_columnFilters : true,
-			filter_columnAnyMatch: true,
-			filter_cellFilter : '',
-			filter_cssFilter : '', // or []
-			filter_defaultFilter : {},
-			filter_excludeFilter : {},
-			filter_external : '',
-			filter_filteredRow : 'filtered',
-			filter_formatter : null,
-			filter_functions : null,
-			filter_hideEmpty : true,
-			filter_hideFilters : true,
-			filter_ignoreCase : true,
-			filter_liveSearch : true,
-			filter_matchType : { 'input': 'exact', 'select': 'exact' },
-			filter_onlyAvail : 'filter-onlyAvail',
-			filter_placeholder : { search : 'Filter results...', select : '' },
-			filter_reset : 'button.reset',
-			filter_resetOnEsc : true,
-			filter_saveFilters : false,
-			filter_searchDelay : 420,
-			filter_searchFiltered: true,
-			filter_selectSource  : null,
-			filter_serversideFiltering : false,
-			filter_startsWith : false,
-			filter_useParsedData : false,
-			filter_defaultAttrib : 'data-value',
-			filter_selectSourceSeparator : '|',
-		}
-	});
-
-	$("#mouseList").tablesorter({
-		// sortForce: [[noMice,1]],
-		sortReset: true,
-		widthFixed: true,
-		ignoreCase: false,
-		widgets: ["filter"],
-		widgetOptions: {
-			filter_childRows : false,
-			filter_childByColumn : false,
-			filter_childWithSibs : true,
-			filter_columnFilters : true,
-			filter_columnAnyMatch: true,
-			filter_cellFilter : '',
-			filter_cssFilter : '', // or []
-			filter_defaultFilter : {},
-			filter_excludeFilter : {},
-			filter_external : '',
-			filter_filteredRow : 'filtered',
-			filter_formatter : null,
-			filter_functions : null,
-			filter_hideEmpty : true,
-			filter_hideFilters : true,
-			filter_ignoreCase : true,
-			filter_liveSearch : true,
-			filter_matchType : { 'input': 'exact', 'select': 'exact' },
-			filter_onlyAvail : 'filter-onlyAvail',
-			filter_placeholder : { search : 'Filter results...', select : '' },
-			filter_reset : 'button.reset',
-			filter_resetOnEsc : true,
-			filter_saveFilters : false,
-			filter_searchDelay : 420,
-			filter_searchFiltered: true,
-			filter_selectSource  : null,
-			filter_serversideFiltering : false,
-			filter_startsWith : false,
-			filter_useParsedData : false,
-			filter_defaultAttrib : 'data-value',
-			filter_selectSourceSeparator : '|',
-		}
-	});
-
-	var mouseList = getMouseListFromURL(window.location.search.match(/mice=([^&]*)/));
-
-	//Row/column cookies
-    if (Cookies.get('savedRows') !== undefined) {
-    	var x = parseInt(Cookies.get('savedRows'));
-    	var s = "#row" + x;
-    	$(s).prop('checked', true);
-    	rowLimit = x;
-    }
-    if (Cookies.get('savedCols') !== undefined) {
-    	var x = parseInt(Cookies.get('savedCols'));
-    	var s = "#col" + x;
-    	$(s).prop('checked', true);
-    	columnLimit = x;
-    }
-
-    if (Cookies.get('savedAttraction') !== undefined) {
-        attractionBonus = parseInt(Cookies.get('savedAttraction'));
-    	$("#ampSlider").slider('option','value',attractionBonus);
-    }
-
-    if (mouseList.length === 0) {
-        var cookie = Cookies.get('savedMice');
-        if (cookie !== undefined) {
-            $('#map').val(Cookies.get('savedMice'));
-            var mapText = document.getElementById("map").value;
-            setTimeout(function() { processMap(mapText); }, 100);
-            $("#weightAR").click();
-        }
-    } else {
-        $('#map').val(mouseList);
-        var mapText = document.getElementById("map").value;
-        setTimeout(function() { processMap(mapText); }, 100);
-        $("#weightAR").click();
-    }
+    initTablesorter();
+    loadCookies();
 
 	$("#map").keyup(function(event) {
 		// Checking for enter/return, backspace, and delete
 		// Then finding newlines and only processing when that differs from previous value
+		//TODO: Check for paste too?
 		if (event.keyCode == 13 || event.keyCode == 8 || event.keyCode == 46) {
 			clearTimeout(timeDelay);
 			var mapText = document.getElementById("map").value;
@@ -192,8 +201,10 @@ String.prototype.capitalise = function() {
 };
 
 function checkLoadState() {
-	if (!miceLoaded)
-		loadMouseDropdown();
+	if (popLoaded && baselineLoaded) {
+        loadMouseDropdown();
+        loadMiceFromUrlOrCookie();
+    }
 }
 
 function loadMouseDropdown() {
@@ -205,9 +216,7 @@ function loadMouseDropdown() {
 		suggests.push(Object.keys(popArray)[i].toLowerCase());
 	}
 
-	miceLoaded = true;
 	$("#map").asuggest(suggests, autoCompleteSettings);
-
 }
 
 var buildMouselist = function (mouseListText, sortedMLCLength, sortedMLC) {
@@ -232,10 +241,10 @@ function processMap(mapText) {
 	var interpretedAsText = "<b>Invalid:<br></b><span class='invalid'>";
 	var mouseListText = '<thead><tr><th align=\'center\'>Mouse</th><th align=\'center\' id=\'locationAR\'>Location (Raw AR)</th></tr></thead><tbody>';
 	
-	var bestLocationArray = new Array();
-	var weightedBLA = new Array();
-	var mouseLocationArray = new Array();
-	var seenMice = new Array();
+	var bestLocationArray = [];
+	var weightedBLA = [];
+	var mouseLocationArray = [];
+	var seenMice = [];
 	var notRecognized = false;
 	remainingMice = 0;
 	
