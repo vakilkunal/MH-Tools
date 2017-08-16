@@ -8,27 +8,7 @@
         return;
     }
 
-    var mice = [];
-    var currLoc = document.getElementsByClassName("treasureMapPopup-mice-groups")[0].className;
-    if (currLoc.indexOf("inotherenvironments") < 0) {
-        //Locations with periods and apostrophes
-        //Extra escapes are workaround for copy link address/JS string handling
-        currLoc = currLoc.replace(/\\./g, "\\\\.");
-        currLoc = currLoc.replace(/\\'/g, "\\\\'");
-        currLoc = currLoc.replace(" ", ".");
-        var uncaughtLoc = document.querySelectorAll("." + currLoc + " .treasureMapPopup-mice-group-mouse-name span");
-        for (var i=0; i<uncaughtLoc.length; i++) {
-            mice.push(uncaughtLoc[i].textContent);
-        }
-    }
-
-    var uncaughtOther = document.querySelectorAll(".treasureMapPopup-mice-groups.uncaughtmiceinotherenvironments .treasureMapPopup-mice-group-mouse-name span");
-    if (uncaughtOther != null) {
-        for (var i=0; i<uncaughtOther.length; i++) {
-            mice.push(uncaughtOther[i].textContent);
-        }
-    }
-
+    var mice = $(".treasureMapPopup-mice-group-mouse:not(.caught)").map(function(){return $(this).data("name")}).toArray();
     var url = "https://tsitu.github.io/MH-Tools/map.html";
     window.open(url + "?mice=" + encodeURIComponent(mice.join("/")), "mhmapsolver");
 })();
