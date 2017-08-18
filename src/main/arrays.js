@@ -1478,6 +1478,7 @@ var basesArray = {
     "2017 New Year's Base" : [200, 7, 0, 10, "Fresh"],
     "Aqua Base": [230, 0, 0, 8, "No Effect"],
     "Attuned Enerchi Induction Base": [500, 10, 10, 10, "Stale"],
+    "Ancient Booster Base" : [300, 0, 10, 10, "Fresh"],
     "Bacon Base": [200, 0, 15, 0, "Extremely Fresh"],
     "Bamboozler Base": [200, 10, 5, 0, "Very Fresh"],
     "Birthday Cake Base": [175, 11, 5, 0, "No Effect"],
