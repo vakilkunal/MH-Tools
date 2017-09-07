@@ -11,8 +11,7 @@
     "population": "node build/processPopulation.js",
     "baselines": "node build/processBaselines.js",
     "advancement": "node build/processAdvancement.js",
-
-    "build" : "npm-run-all --parallel bookmarklet population baselines advancement"
+    "build": "npm-run-all --parallel bookmarklet population baselines advancement"
   },
   "repository": {
     "type": "git",
