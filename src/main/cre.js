@@ -84,7 +84,7 @@ window.onload = function () {
     document.getElementById("tourney").onchange = tourneyChanged;
 
     document.getElementById("ballistaLevel").onchange = genericOnChange;
-    document.getElementById("canonLevel").onchange = genericOnChange;
+    document.getElementById("cannonLevel").onchange = genericOnChange;
     document.getElementById("riftstalker").onchange = riftstalkerChange;
 
     document.getElementById("cheeseCost").onchange = function () {
@@ -223,7 +223,7 @@ function formatSampleSize(sampleSizeParam) {
     }
 
     var ss = document.getElementById("sampleSize");
-    ss.innerHTML = "<strong>Sample Size:</strong> " + sizeDescriptor;
+    if (ss) { ss.innerHTML = sizeDescriptor; }
 }
 
 function checkPhase() {
@@ -329,7 +329,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 var mousePower = powersArray[mouseName][0];
 
                 if (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 1
-                    || contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 1) {
+                    || contains(cosmicCritters, mouseName) && fortRox.cannonLevel >= 1) {
                     mousePower /= 2;
                 }
 
@@ -417,7 +417,7 @@ function showPop(type) { //type = 2 means don't reset charms
                 var minLuckValue = minLuck(eff, mousePower);
 
                 /**
-                 * Increase CR by 50% for ZUM in ZT/SG and Ballista/Canon 2 in FR
+                 * Increase CR by 50% for ZUM in ZT/SG and Ballista/Cannon 2 in FR
                  */
                 if (locationName === "Zugzwang's Tower" || locationName === "Seasonal Garden") {
                     if (ztAmp > 0 && weaponName === "Zugzwang's Ultimate Move") {
@@ -425,11 +425,11 @@ function showPop(type) { //type = 2 means don't reset charms
                     }
                 } else if (locationName ==="Fort Rox" ) {
                     if ((contains(wereMice, mouseName) && fortRox.ballistaLevel >= 2)
-                        || (contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 2)) {
+                        || (contains(cosmicCritters, mouseName) && fortRox.cannonLevel >= 2)) {
                         catchRate += ((1 - catchRate) / 2);
                     }
 
-                    if ((fortRox.canonLevel >= 3 && mouseName === "Nightfire")
+                    if ((fortRox.cannonLevel >= 3 && mouseName === "Nightfire")
                         || (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
                     ) {
                         catchRate = 1;
@@ -793,7 +793,7 @@ function updateLink() {
         "tourney" : tournamentName,
         "riftstalker" : riftStalkerCodex,
         "ballistaLevel" : fortRox.ballistaLevel,
-        "canonLevel" : fortRox.canonLevel,
+        "cannonLevel" : fortRox.cannonLevel,
         "rank": rank
     };
     var URLString = buildURL('cre.html',urlParams);
@@ -838,6 +838,60 @@ function weaponChanged() {
     populateWeaponData(weaponName);
     calculateTrapSetup();
 }
+
+// function icebergPhase() {
+//     var autoPhase = "";
+//     switch (phaseName) {
+//         case "Treacherous Tunnels":
+//             if (baseName === "Magnet Base" || baseName === "Ultimate Iceberg Base") {
+//                 autoPhase = "Treacherous Tunnels (Magnet)";
+//             }
+//             break;
+//         case "Treacherous Tunnels (Magnet)":
+//             if (baseName !== "Magnet Base" || baseName !== "Ultimate Iceberg Base") {
+//                 autoPhase = "Treacherous Tunnels";
+//             }
+//             break;
+//         case "Bombing Run":
+//             if (baseName === "Remote Detonator Base" || baseName === "Ultimate Iceberg Base") {
+//                 autoPhase = "Bombing Run (Remote Detonator)";
+//             }
+//             break;
+//         case "Bombing Run (Remote Detonator)":
+//             if (baseName !== "Remote Detonator Base" || baseName !== "Ultimate Iceberg Base") {
+//                 autoPhase = "Bombing Run";
+//             }
+//             break;
+//         case "The Mad Depths":
+//             if (baseName === "Magnet Base" || baseName === "Ultimate Iceberg Base") {
+//                 autoPhase = "The Mad Depths (Magnet)";
+//             }
+//             break;
+//         case "The Mad Depths (Magnet)":
+//             if (baseName !== "Magnet Base" || baseName !== "Ultimate Iceberg Base") {
+//                 autoPhase = "The Mad Depths";
+//             }
+//             break;
+//         case "The Mad Depths":
+//             if (baseName === "Hearthstone Base" || baseName === "Ultimate Iceberg Base") {
+//                 autoPhase = "The Mad Depths (Hearthstone)";
+//             }
+//             break;
+//         case "The Mad Depths (Hearthstone)":
+//             if (baseName !== "Hearthstone Base" || baseName !== "Ultimate Iceberg Base") {
+//                 autoPhase = "The Mad Depths";
+//             }
+//             break;
+//         default:
+//             autoPhase = "";
+//     }
+
+//     if (autoPhase !== "") {
+//         var phaseSelect = document.getElementById("phase");
+//         phaseSelect.value = autoPhase;
+//         phaseChanged();
+//     }
+// }
 
 function icebergPhase() {
     var autoPhase = "";

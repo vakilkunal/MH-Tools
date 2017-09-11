@@ -67,7 +67,7 @@ $(window).load(function () {
     document.querySelector("#gs").onchange = gsChanged;
     document.querySelector("#bonusLuck").onchange = bonusLuckChanged;
     document.querySelector("#ballistaLevel").onchange = genericOnChange;
-    document.querySelector("#canonLevel").onchange = genericOnChange;
+    document.querySelector("#cannonLevel").onchange = genericOnChange;
     document.querySelector("#riftstalker").onchange = riftstalkerChange;
     document.querySelector("#rank").onchange = rankChange;
 
@@ -502,7 +502,7 @@ function updateLink() {
         "tourney" : tournamentName,
         "riftstalker" : riftStalkerCodex,
         "ballistaLevel" : fortRox.ballistaLevel,
-        "canonLevel" : fortRox.canonLevel,
+        "cannonLevel" : fortRox.cannonLevel,
         "rank": rank
     };
 
@@ -781,7 +781,7 @@ function getCRELinkElement() {
             "battery": batteryPower,
             "riftstalker" : riftStalkerCodex,
             "ballistaLevel" : fortRox.ballistaLevel,
-            "canonLevel" : fortRox.canonLevel,
+            "cannonLevel" : fortRox.cannonLevel,
             "rank": rank
         };
         var urlString = buildURL("cre.html", urlParams);
@@ -809,7 +809,7 @@ function getMouseACR(micePopulation, mouseName, overallAR, effectivenessArray, p
     }
     if (locationName === "Fort Rox" ) {
         if (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 1
-            || contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 1) {
+            || contains(cosmicCritters, mouseName) && fortRox.cannonLevel >= 1) {
             mousePower /= 2;
         }
     }
@@ -824,12 +824,12 @@ function getMouseACR(micePopulation, mouseName, overallAR, effectivenessArray, p
         }
     } else if (locationName ==="Fort Rox" ) {
         if ((contains(wereMice, mouseName) && fortRox.ballistaLevel >= 2)
-            || (contains(cosmicCritters, mouseName) && fortRox.canonLevel >= 2)) {
+            || (contains(cosmicCritters, mouseName) && fortRox.cannonLevel >= 2)) {
             catchRate += ((1 - catchRate) / 2);
         }
     }
 
-    if ((fortRox.canonLevel >= 3 && mouseName === "Nightfire")
+    if ((fortRox.cannonLevel >= 3 && mouseName === "Nightfire")
         || (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
     ) {
         catchRate = 1;

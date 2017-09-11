@@ -23,7 +23,7 @@ var rank = "";
 
 var fortRox = {
     ballistaLevel : 0,
-    canonLevel : 0
+    cannonLevel : 0
 };
 
 var specialCharm = {
@@ -349,7 +349,7 @@ function calculateTrapSetup(skipDisp) {
             specialBonus += 30;
         } else if (locationName === "Fort Rox") {
             fortRox.ballistaLevel = $("#ballistaLevel").val();
-            fortRox.canonLevel = $("#canonLevel").val();
+            fortRox.cannonLevel = $("#cannonLevel").val();
         }
 
         if (cheeseName.indexOf("Fusion Fondue") >= 0 && charmName === "EMP400 Charm") {
@@ -504,7 +504,7 @@ function riftstalkerChange() {
 
 function fortRoxParamCheck() {
     updateInputFromParameter("ballistaLevel", genericOnChange);
-    updateInputFromParameter("canonLevel", genericOnChange);
+    updateInputFromParameter("cannonLevel", genericOnChange);
 }
 
 function getRankKey () {
@@ -650,7 +650,8 @@ function showTrapSetup(type) {
     else {
         trapSetup.innerHTML = "<tr><td>Type</td><td>" + trapType + "<tr><td>Power</td><td>" + commafy(trapPower) + "</td></tr>" +
             "<tr><td>Luck</td><td>" + trapLuck + "</td></tr><tr><td>Attraction Bonus</td><td>" + trapAtt + "%</td></tr>" +
-            "<tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>";
+            "<tr><td>Cheese Effect</td><td>" + reverseParseFreshness[trapEff] + "</td></tr>"
+            + "<tr><td>Sample Size</td><td id=\"sampleSize\">N/A</td></tr>";
     }
 }
 
@@ -761,7 +762,7 @@ function checkToxicParam() {
 function showHideWidgets(custom) {
     $("#toxicRow").hide();
     $("#toxic").val('No');
-    $("#battery").val('-');
+    $("#battery").val(0);
     $("#ampSlider").slider('option', 'value', 100);
 
     $(".display-location").hide();
@@ -820,6 +821,7 @@ function locationChanged() {
             $("#phaseRow").hide()
         }
     }
+    genericOnChange();
 }
 
 function genericOnChange() {

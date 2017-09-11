@@ -332,7 +332,7 @@
     if (userLocation == "Fort Rox") {
         var fort = user['quests']['QuestFortRox']['fort'];
         urlParams["ballistaLevel"] = fort["b"]["level"];
-        urlParams["canonLevel"] = fort["c"]["level"]
+        urlParams["cannonLevel"] = fort["c"]["level"]
     }
 
     if (document.querySelector("div.tournamentStatusHud") != null) {
