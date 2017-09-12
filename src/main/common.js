@@ -17,7 +17,6 @@ var gsLuck = 7, bonusLuck = 0, pourBonus = 0, pourLuck = 0, isToxic = "", batter
 var trapPower = 0, trapLuck = 0, trapType = "", trapAtt = 0, trapEff = 0;
 var baseName = "", charmName = "", locationName = "", cheeseName = "", tournamentName = "", weaponName = "", phaseName = "";
 var cheeseBonus = 0;
-var cheeseLoaded = 0, charmLoaded = 0;
 var riftStalkerCodex;
 var rank = "";
 

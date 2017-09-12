@@ -718,11 +718,11 @@ function loadCheeseDropdown(locationName, phaseName) {
     }
 
     var cheeseParameter = getURLParameter("cheese");
-    if (cheeseParameter !== NULL_URL_PARAM && cheeseLoaded < 3) {
+    if (cheeseParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("cheese");
         select.value = cheeseParameter;
-        if (select.selectedIndex !== -1) {
-            cheeseLoaded++;
+        if (select.selectedIndex === -1) {
+            select.selectedIndex = 0;
         }
     }
     selectCharm();
@@ -732,7 +732,7 @@ function loadCheeseDropdown(locationName, phaseName) {
 function selectCharm() {
     var charmParameter = getURLParameter("charm");
     var specialCharmParameter = charmParameter + "*";
-    if (charmParameter !== NULL_URL_PARAM && charmLoaded < 5) {
+    if (charmParameter !== NULL_URL_PARAM) {
         var select = document.getElementById("charm");
         //TODO: Improve
         for (var i = 0; i < select.children.length; i++) {
@@ -741,9 +741,11 @@ function selectCharm() {
                 || child.innerHTML === specialCharmParameter) {
                 child.selected = true;
                 charmChanged();
-                charmLoaded++;
                 break;
             }
+        }
+        if (select.selectedIndex === -1) {
+            select.selectedIndex = 0;
         }
     }
 }
