@@ -712,7 +712,7 @@ function phaseChanged() {
         })
     }
 
-    getIcebergBase();
+    if (user === CRE_USER) getIcebergBase();
 
     if (locationName === "Twisted Garden"
         && phaseName === "Poured") {

@@ -207,7 +207,7 @@ var baselineAttArray = {
     "Galleon Gouda": 0.95,
     "Lactrodectus Lancashire": 0.9995,
     "Magical String + Brie String": 0.9, // Fused
-    "Maki String": 0.99, // Below are estimates as of now
+    "Maki String": 0.99, // Below are estimates
     "Rift Susheese": 0.985,
     "Rift Combat": 0.985,
     "Rift Glutter": 0.985,

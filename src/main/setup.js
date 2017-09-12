@@ -2,11 +2,6 @@
 
 var POPULATION_JSON_URL = "data/populations-setup.json";
 
-var loadedParams = {
-    cheese: false,
-    charm: false
-};
-
 var instructionString = "Drag the blue 'Best Setup' link to your bookmarks bar if possible. If that doesn't work, try the manual steps below.\n\n"
     + "Google Chrome:\n- Bookmark a random page and name it 'Best Setup Bookmarklet'"
     + "\n- Copy the bookmarklet code by right-clicking the 'Best Setup' link and selecting 'Copy link address...'"
@@ -382,6 +377,21 @@ function loadCheeseDropdown(location, phase) {
 
     var insertedCheeses = [];
 
+    function addCheeseOption(insertedCheeses, cheeseName, cheeseDropdownHTML) {
+        if (!contains(insertedCheeses, cheeseName)) {
+            cheeseDropdownHTML += "<option>" + cheeseName + "</option>\n";
+            insertedCheeses.push(cheeseName);
+        }
+        return cheeseDropdownHTML;
+    }
+
+    function splitCheeseOption(option) {
+        var optionArray = option.split("/");
+        for (var j = 0; j < Object.size(optionArray); j++) {
+            cheeseDropdownHTML = addCheeseOption(insertedCheeses, optionArray[j], cheeseDropdownHTML);
+        }
+    }
+
     for (var cheeseOption in popArray[location][phase]) {
         if (cheeseOption.indexOf("/") < 0 || contains(cheeseOption,"Combat")) { //Todo: Fix this master cheese thingy
             cheeseDropdownHTML = addCheeseOption(insertedCheeses, cheeseOption, cheeseDropdownHTML);
@@ -394,82 +404,23 @@ function loadCheeseDropdown(location, phase) {
     cheeseDropdown.innerHTML = cheeseDropdownHTML;
     cheeseDropdown.selectedIndex = 0;
 
-    if (!loadedParams.cheese) {
-        checkCheeseParam();
-        loadedParams.cheese = true;
+    var select = document.querySelector("#cheese");
+    var cheeseParameter = getURLParameter("cheese");
+    if (cheeseParameter !== NULL_URL_PARAM) {
+        select.value = cheeseParameter;
+    }
+    if (select.selectedIndex === -1) {
+        select.selectedIndex = 0;
     }
 
     cheeseChanged();
-
-    function splitCheeseOption(option) {
-        var optionArray = option.split("/");
-        for (var j = 0; j < Object.size(optionArray); j++) {
-            cheeseDropdownHTML = addCheeseOption(insertedCheeses, optionArray[j], cheeseDropdownHTML);
-        }
-    }
-
-    function checkCheeseParam() {
-        var select = document.querySelector("#cheese");
-        var cheeseParameter = getURLParameter("cheese");
-        if (cheeseParameter !== NULL_URL_PARAM) {
-            select.value = cheeseParameter;
-        }
-        if (select.selectedIndex === -1) {
-            select.selectedIndex = 0;
-        }
-    }
-
-    function addCheeseOption(insertedCheeses, cheeseName, cheeseDropdownHTML) {
-        if (!contains(insertedCheeses, cheeseName)) {
-            cheeseDropdownHTML += "<option>" + cheeseName + "</option>\n";
-            insertedCheeses.push(cheeseName);
-        }
-        return cheeseDropdownHTML;
-    }
 }
 
 function loadCharmDropdown(location, phase, cheese) {
-    var charms;
-
     /**
      * Population array for Location-Phase-Cheese
      */
     var popArrayLPC = popArray[location][phase][cheese];
-
-    fillPopArray(cheese);
-
-    charms = Object.keys(popArrayLPC);
-    charms.sort();
-    populateDropdown(charms, "#charm");
-
-    if (!loadedParams.charm) {
-        checkCharmParameter();
-        loadedParams.charm = true;
-    }
-
-    function populateDropdown(items, selector) {
-        var dropdown = $(selector).html("<option>-</option>");
-        for (var i = 0; i < items.length; i++) {
-            if (items[i] != EMPTY_SELECTION) {
-                $("<option/>", {
-                    text: items[i],
-                    value: items[i]
-                }).appendTo(dropdown);
-            }
-        }
-    }
-
-    function checkCharmParameter() {
-        var charmParameter = getURLParameter("charm");
-        var select = document.querySelector("#charm");
-        if (charmParameter != NULL_URL_PARAM) {
-            select.value = charmParameter;
-        }
-        if (select.selectedIndex == -1) {
-            select.selectedIndex = 0;
-        }
-        charmChanged();
-    }
 
     function fillPopArray(searchCheese) {
         var popArrayLP;
@@ -484,10 +435,43 @@ function loadCharmDropdown(location, phase, cheese) {
             }
         }
     }
+
+    function populateDropdown(items, selector) {
+        var dropdown = $(selector).html("<option>-</option>");
+        if (items) {
+            for (var i = 0; i < items.length; i++) {
+                if (items[i] != EMPTY_SELECTION) {
+                    $("<option/>", {
+                        text: items[i],
+                        value: items[i]
+                    }).appendTo(dropdown);
+                }
+            }
+        }
+    }
+
+    fillPopArray(cheese);
+
+    var charms;
+    if (popArrayLPC) {
+        charms = Object.keys(popArrayLPC);
+        charms.sort();
+    }
+    populateDropdown(charms, "#charm");
+
+    var charmParameter = getURLParameter("charm");
+    var select = document.querySelector("#charm");
+    if (charmParameter != NULL_URL_PARAM) {
+        select.value = charmParameter;
+    }
+    if (select.selectedIndex == -1) {
+        select.selectedIndex = 0;
+    }
+    charmChanged();
 }
 
 function updateLink() {
-    var select =document.querySelector("#charm");
+    var select = document.querySelector("#charm");
     var selectedCharm = select.value;
 
     var urlParams = {
