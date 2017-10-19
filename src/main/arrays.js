@@ -1936,6 +1936,15 @@ Mouse power & power type effectiveness
  */
 //TODO: Put this in an external file (csv) abd add to CI build
 var powersArray = {
+    // Moussu Picchu
+    "Breeze Borrower": [3500, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Cloud Collector": [3000, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Homeopathic Apothecary": [3000, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Nightshade Flower Girl": [3250, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Nightshade Maiden": [3000, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Rainwater Purifier": [4000, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Spore Salesman": [3000, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
+    "Windy Farmer": [3000, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
     "Swabbie":      [570, 0, 0, 0, 175, 0, 100, 0, 100, 0, 0],
     "Pinchy":       [635, 0, 0, 0, 175, 0, 100, 0, 100, 0, 0],
     "Briegull":     [635, 0, 0, 0, 175, 0, 100, 0, 100, 0, 0],
@@ -3609,6 +3618,15 @@ var miceArray = {
     "Timeslither Pythoness" : [20000,100000],
     "Portal Paladin" : [3000,32000],
     "Portal Pursuer" : [2500,28000],
+    // Moussu Picchu
+    "Breeze Borrower": [2250, 32000],
+    "Cloud Collector": [2500, 42000],
+    "Homeopathic Apothecary": [3000, 45000],
+    "Nightshade Flower Girl": [1200, 25000],
+    "Nightshade Maiden": [2000, 30000],
+    "Rainwater Purifier": [2250, 32000],
+    "Spore Salesman": [900, 18000],
+    "Windy Farmer": [2500, 42000],
 };
 
 var festiveTraps = [
