@@ -60,6 +60,9 @@ Meditation Room (Combat/Glutter/Susheese)	0.985
 Mousoleum (Moon)	0.96
 Mousoleum (Radioactive Blue)	0.95551886682651
 Mousoleum (Undead Emmental)	0.98763367731179
+Moussu Picchu (Dragonvine)	0.9873
+Moussu Picchu (Rainy)	0.9923
+Moussu Picchu (Windy)	0.9888
 Nerg Plains (Gumbo)	0.99127285052308
 Pinnacle Chamber (Onyx Gorgonzola)	0.99255033994598
 Pinnacle Chamber (Rumble)	0.98837793353777
