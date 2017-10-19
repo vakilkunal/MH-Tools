@@ -244,7 +244,7 @@ function showPop(type) { //type = 2 means don't reset charms
     function getHeaderRow() {
         var headerHTML = "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches per<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tournament<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
         if (rank) {
-            headerHTML += "<th data-filter='false'>Rank % per<br>100 hunts</th>";
+            headerHTML += "<th data-filter='false'>Rank %</th>";
         }
         if (locationName.indexOf("Seasonal Garden") >= 0) {
             headerHTML += "<th data-filter='false'>Amp %</th>";
@@ -487,8 +487,8 @@ function showPop(type) { //type = 2 means don't reset charms
 
                 if (rank) {
                     var adv = advancementArray.hasOwnProperty(mouseName) && advancementArray[ mouseName ][ rank ] || 0;
-                    adv *= catches
                     mouseRow += "<td>" + (adv ? (adv * 100).toFixed(4)+'%' : '&nbsp;') + "</td>";
+                    adv *= catches
                     overallAdvancement += adv;
                 }
 
