@@ -412,6 +412,13 @@ function showPop(type) { //type = 2 means don't reset charms
                             calculateTrapSetup(true);
                         }
                     }
+                } else if (charmName === "Dragonbane Charm" && contains(dragons, mouseName)) {
+                    //Dragonbane Charm has 300% power bonus agains dragons
+                    charmBonus += 300;
+                    calculateTrapSetup(true); // not "cre" or else infinite loop
+                    catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+                    charmBonus -= 300;
+                    calculateTrapSetup(true);
                 }
 
                 var minLuckValue = minLuck(eff, mousePower);
@@ -440,10 +447,8 @@ function showPop(type) { //type = 2 means don't reset charms
                 minLuckOverall = Math.max(minLuckValue, minLuckOverall);
 
                 //Exceptions, modifications to catch rates
-                //Dragonbane Charm
                 if (charmName === "Ultimate Charm") catchRate = 1;
                 else if (locationName === "Sunken City" && charmName === "Ultimate Anchor Charm" && phaseName !== "Docked") catchRate = 1;
-                else if (mouseName === "Dragon" && charmName === "Dragonbane Charm") catchRate *= 2;
                 else if (mouseName === "Bounty Hunter" && charmName === "Sheriff's Badge Charm") catchRate = 1;
                 else if (mouseName === "Zurreal the Eternal" && weaponName !== "Zurreal's Folly") catchRate = 0;
 

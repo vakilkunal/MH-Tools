@@ -81,6 +81,8 @@ var labyrinthMiceClues = {
     "Treasure Brawler": 2
 };
 
+var dragons = ["Dragon", "Dragoon", "Ful'Mina", "Thunder Strike", "Thundering Watcher", "Thunderlord", "Violet Stormchild"];
+
 var berglings = ["Incompetent Ice Climber", "Polar Bear", "Snow Slinger", "Snow Soldier", "Iceblock", "Wolfskie", "Snowblind"];
 var brutes = ["Snow Bowler", "Yeti", "Mammoth"];
 var bombSquad = ["Saboteur", "Stickybomber", "Heavy Blaster"];
