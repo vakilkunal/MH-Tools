@@ -1,6 +1,6 @@
 (function () {
     const SAMPLE_SIZE_LABEL = "SampleSize";
-    const POPULATIONS = "data/populations.csv";
+    const POPULATIONS = ["data/populations.csv"];
 
     const fs = require("fs");
     const csv = require("csvtojson");
@@ -18,7 +18,7 @@
         }
     });
 
-    var inputStream = fs.createReadStream(POPULATIONS);
+    var inputStream = fileUtils.createCombinedStream(POPULATIONS);
     csvConverter
         .fromStream(inputStream)
         .on('json', function (jsonObj) {

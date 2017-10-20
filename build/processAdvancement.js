@@ -1,7 +1,7 @@
 (function () {
     const MOUSE_HEADER = 'mouse';
 
-    const csvFilePath = 'data/advancement.csv';
+    const ADVANCEMENTS = ['data/advancement.csv'];
     const csv = require('csvtojson');
     const fs = require('fs');
     const fileUtils = require("./modules/fileUtils");
@@ -29,7 +29,7 @@
 
     var advancementData = {};
 
-    var inputStream = fs.createReadStream(csvFilePath);
+    var inputStream = fileUtils.createCombinedStream(ADVANCEMENTS);
     csvConverter
         .fromStream(inputStream)
         .on('json', function(jsonObj) {
