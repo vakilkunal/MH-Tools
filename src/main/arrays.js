@@ -216,7 +216,9 @@ var baselineAttArray = {
     "Null Onyx Gorgonzola": 0.99,
     "Ascended": 0.99,
     "Crescent": 0.85, // Slightly higher than Gouda?
-    "Moon": 0.9995
+    "Moon": 0.9995,
+    "Runic String": 0.99,
+    "Ancient String": 0.99,
 };
 
 /* Its okay using strings as keys here, JS will convert it */
@@ -1930,6 +1932,7 @@ Mouse power & power type effectiveness
 9 =>  Law (%)
 10 =>  Rift (%)
  */
+//TODO: Put this in an external file (csv) abd add to CI build
 var powersArray = {
     "Swabbie":      [570, 0, 0, 0, 175, 0, 100, 0, 100, 0, 0],
     "Pinchy":       [635, 0, 0, 0, 175, 0, 100, 0, 100, 0, 0],
@@ -2733,7 +2736,27 @@ var powersArray = {
     "Reveling Lycanthrope": [23500, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
     "Wealthy Werewarrior": [18900, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
     "Werehauler": [17000, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
-    "Wereminer": [29001, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0]
+    "Wereminer": [29001, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
+    "Chronomaster" : [1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Epoch Golem" : [1250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Chamber Cleaver" : [1400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Skeletal Champion" : [1550, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Record Keeper's Assistant" : [1650, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Portal Plunderer" : [1650, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Sentient Slime" : [1750, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Record Keeper" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Clockwork Timespinner" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Dread Knight" : [2450, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Harbinger of Death" : [2125, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Absolute Acolyte" : [2161, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Timelost Thaumaturge" : [2350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Vigilant Ward" : [2500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Carrion Medium" : [2667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Shackled Servant" : [2900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Timeless Lich" : [3167, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Timeslither Pythoness" : [4400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Portal Paladin" : [8000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    "Portal Pursuer" : [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
 };
 /* [Gold, Points] */
 var miceArray = {
@@ -3563,7 +3586,27 @@ var miceArray = {
     "Reveling Lycanthrope": [1500, 18000],
     "Wealthy Werewarrior": [5000, 36000],
     "Werehauler": [1500, 19000],
-    "Wereminer": [2900, 28000]
+    "Wereminer": [2900, 28000],
+    "Chronomaster" : [20000,170000],
+    "Epoch Golem" : [10000,60000],
+    "Chamber Cleaver" : [10000,60000],
+    "Skeletal Champion" : [1000,20000],
+    "Record Keeper's Assistant" : [3000,27000],
+    "Portal Plunderer" : [9000,50000],
+    "Sentient Slime" : [6000,30000],
+    "Record Keeper" : [4000,28000],
+    "Clockwork Timespinner" : [7000,38000],
+    "Dread Knight" : [10000,60000],
+    "Harbinger of Death" : [50000,200000],
+    "Absolute Acolyte" : [300000,1000000],
+    "Timelost Thaumaturge" : [7500,70000],
+    "Vigilant Ward" : [5000,42275],
+    "Carrion Medium" : [8340,10000],
+    "Shackled Servant" : [8000,55000],
+    "Timeless Lich" : [18000,130000],
+    "Timeslither Pythoness" : [20000,100000],
+    "Portal Paladin" : [3000,32000],
+    "Portal Pursuer" : [2500,28000],
 };
 
 var festiveTraps = [
