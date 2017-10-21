@@ -2,6 +2,7 @@
     const fs = require("fs");
     const readline = require('readline');
     const mkdirp = require("mkdirp");
+    const CombinedStream = require("combined-stream");
 
     module.exports = {
 
@@ -33,6 +34,14 @@
 
         makeDirectory : function (directory) {
             mkdirp(directory)
-        }
+        },
+        
+        createCombinedStream : function (files) {
+            var combinedStream = CombinedStream.create();
+            for (var i = 0, l = files.length; i < l; i++) {
+                combinedStream.append(fs.createReadStream(files[i]));
+            }
+            return combinedStream;
+        },
     };
 })();
