@@ -1,10 +1,11 @@
 (function () {
     const SAMPLE_SIZE_LABEL = "SampleSize";
-    const POPULATIONS = ["data/populations.csv"];
+    const POPULATIONS = ["data/populations.csv", "data/pop_mopi.csv"];
 
     const fs = require("fs");
     const csv = require("csvtojson");
     const fileUtils = require("./modules/fileUtils");
+    const CombinedStream = require("combined-stream");
 
     var mapPopulations = {};
     var crePopulations = {};

@@ -28,6 +28,7 @@
   "dependencies": {
     "combined-stream": "^1.0.5",
     "csvtojson": "^1.1.7",
+    "delayed-stream": "^1.0.0",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.0.2",
     "uglify-js": "^3.0.25"
