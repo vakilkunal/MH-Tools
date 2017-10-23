@@ -2739,7 +2739,7 @@ var powersArray = {
     "Wealthy Werewarrior": [18900, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
     "Werehauler": [17000, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
     "Wereminer": [29001, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
-    "Chronomaster" : [2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200],
+    "Chronomaster" : [1000*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
     "Epoch Golem" : [1250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
     "Chamber Cleaver" : [1400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
     "Skeletal Champion" : [1550, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
@@ -2749,16 +2749,16 @@ var powersArray = {
     "Record Keeper" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
     "Clockwork Timespinner" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
     "Dread Knight" : [2450, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
-    "Harbinger of Death" : [4250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200],
-    "Absolute Acolyte" : [7020, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325],
-    "Timelost Thaumaturge" : [4700, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200],
-    "Vigilant Ward" : [5000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200],
-    "Carrion Medium" : [6667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 250],
-    "Shackled Servant" : [5800, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200],
-    "Timeless Lich" : [7128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 225],
-    "Timeslither Pythoness" : [8800, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200],
+    "Harbinger of Death" : [2125*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
+    "Absolute Acolyte" : [2160*3.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325], // unconfirmed eff
+    "Timelost Thaumaturge" : [2350*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
+    "Vigilant Ward" : [2500*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
+    "Carrion Medium" : [2667*2.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 250], // unconfirmed eff
+    "Shackled Servant" : [2900*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
+    "Timeless Lich" : [3168*2.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 225], // unconfirmed eff
+    "Timeslither Pythoness" : [4400*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
     "Portal Paladin" : [8000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
-    "Portal Pursuer" : [7500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75],
+    "Portal Pursuer" : [10000*0.75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75], // unconfirmed eff
     // Moussu Picchu
     "Breeze Borrower": [3500, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
     "Cloud Collector": [2400, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
@@ -2778,12 +2778,12 @@ var powersArray = {
     "Rain Summoner": [7000, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
     "Monsoon Maker": [9500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
     "Rainmancer": [18500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
-    "Thunder Strike": [1700*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
-    "Violet Stormchild": [2500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
-    "Thunderlord": [4500*5, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
-    "Thundering Watcher": [5500*5, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
-    "Dragoon": [9600*2.5, 0, 250, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
-    "Ful'Mina": [260000, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
+    "Thunder Strike": [1650, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
+    "Violet Stormchild": [2500, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
+    "Thunderlord": [4500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+    "Thundering Watcher": [5500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+    "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+    "Ful'Mina": [8667*30, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
 };
 /* [Gold, Points] */
 var miceArray = {
@@ -3656,7 +3656,7 @@ var miceArray = {
     "Thunder Strike": [10000, 60000],
     "Violet Stormchild": [10000, 70000],
     "Thunderlord": [15000, 90000],
-    "Thunder Watcher": [18000, 100000],
+    "Thundering Watcher": [18000, 100000],
     "Dragoon": [20000, 100000],
     "Ful'Mina": [30000, 120000],
 };
