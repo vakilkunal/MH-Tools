@@ -2778,12 +2778,12 @@ var powersArray = {
     "Rain Summoner": [7000, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
     "Monsoon Maker": [9500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
     "Rainmancer": [18500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
-    "Thunder Strike": [1700*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0],
-    "Violet Stormchild": [2500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0],
-    "Thunderlord": [4500*5, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0],
-    "Thundering Watcher": [5500*5, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0],
-    "Dragoon": [9600*2.5, 0, 250, 0, 0, 0, 0, 0, 0, 0, 0],
-    "Ful'Mina": [260000, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0],
+    "Thunder Strike": [1700*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
+    "Violet Stormchild": [2500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
+    "Thunderlord": [4500*5, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
+    "Thundering Watcher": [5500*5, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
+    "Dragoon": [9600*2.5, 0, 250, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
+    "Ful'Mina": [260000, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed
 };
 /* [Gold, Points] */
 var miceArray = {
