@@ -797,6 +797,9 @@ function getMouseACR(micePopulation, mouseName, overallAR, effectivenessArray, p
             mousePower /= 2;
         }
     }
+    if (contains(dragons, mouseName) && charmName === "Dragonbane Charm") {
+        charmBonus += 300;
+    }
 
     calculateTrapSetup();
 
@@ -843,10 +846,9 @@ function getMouseCatches(micePopulation, mouse, overallAR, effectivenessArray, p
     var catchRate = mouseACDetails.catchRate;
 
 
-    //Exceptions, modifications to catch rates
+    //Exceptions, final modifications to catch rates
     if (charmName == "Ultimate Charm") catchRate = 1;
     else if (locationName == "Sunken City" && charmName == "Ultimate Anchor Charm" && phaseName != "Docked") catchRate = 1;
-    else if (mouse == "Dragon" && charmName == "Dragonbane Charm") catchRate *= 2;
     else if (mouse == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") catchRate = 1;
     else if (mouse == "Zurreal the Eternal" && weaponName != "Zurreal's Folly") catchRate = 0;
 
