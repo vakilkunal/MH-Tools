@@ -354,23 +354,25 @@
 
     // Cheese edge cases
     var userCheese = user["bait_name"];
-    if (contains(userCheese, "Toxic")) {
-        userCheese = userCheese.slice(6, userCheese.length);
-        urlParams["toxic"] = "Yes";
-    }
+    if (userCheese) {
+        if (contains(userCheese, "Toxic")) {
+            userCheese = userCheese.slice(6, userCheese.length);
+            urlParams["toxic"] = "Yes";
+        }
 
-    if (userCheese.indexOf("SUPER|brie+") >= 0) {
-        userCheese = "SB+";
-    } else if (userCheese.indexOf(" Cheese") >= 0) {
-        if (contains(userCheese, "Gauntlet")) {
-            userCheese = userCheese.slice(16, userCheese.length);
-            userSublocation = userCheese;
+        if (userCheese.indexOf("SUPER|brie+") >= 0) {
+            userCheese = "SB+";
+        } else if (userCheese.indexOf(" Cheese") >= 0) {
+            if (contains(userCheese, "Gauntlet")) {
+                userCheese = userCheese.slice(16, userCheese.length);
+                userSublocation = userCheese;
+            }
+            else {
+                userCheese = userCheese.slice(0, userCheese.indexOf(" Cheese"));
+            }
         }
-        else {
-            userCheese = userCheese.slice(0, userCheese.indexOf(" Cheese"));
-        }
+        urlParams["cheese"] = userCheese;
     }
-    urlParams["cheese"] = userCheese;
 
     if (userSublocation !== "N/A") {
         urlParams["phase"] = userSublocation;

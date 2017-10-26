@@ -49,7 +49,8 @@ var riftCharms = [
     "Gnarled Charm",
     "Stagnant Charm",
     "Super Enerchi Charm",
-    "Timesplit Charm"
+    "Timesplit Charm",
+    "Extra Spooky Charm"
 ];
 
 var labyrinthMiceClues = {
@@ -219,8 +220,8 @@ var baselineAttArray = {
     "Ascended": 0.99,
     "Crescent": 0.85, // Slightly higher than Gouda?
     "Moon": 0.9995,
-    "Runic String": 0.99,
-    "Ancient String": 0.99,
+    "Runic String": 0.99, //Guesstimate
+    "Ancient String": 0.99, //Guesstimate
 };
 
 /* Its okay using strings as keys here, JS will convert it */
@@ -1621,6 +1622,7 @@ var weaponsArray = {
     "Grand Arcanum Trap": ["Arcane", 4800, 12, 5, 22, "No Effect"],
     "Grungy Deathbot": ["Physical", 2400, 15, 10, 2, "Stale"],
     "Harpoon Gun": ["Hydro", 3000, 7, 0, 0, "Stale"],
+    "Haunted Shipwreck Trap": ["Hydro", 5000, 20, 10, 16, "Very Stale"],
     "Heat Bath": ["Hydro", 4000, 5, 0, 14, "Stale"],
     "High Tension Spring": ["Physical", 75, 5, 20, 2, "No Effect"],
     "HitGrab Horsey": ["Physical", 550, 2, 0, 20, "Very Fresh"],
