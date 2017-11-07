@@ -1,5 +1,38 @@
 "use strict";
 
+// Utility function for determining size of multi-level array
+Object.size = function (obj) {
+    var size = 0;
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            size++;
+        }
+    }
+    return size;
+};
+
+var rankupDiff = {
+    "novice": 2000, //2000-0
+    "recruit": 3000, //5000-2000
+    "apprentice": 7500, //12500-5000
+    "initiate": 18750, //31250-12500
+    "journeyman": 34190, //65440-31250
+    "master": 72373, //137813-65440
+    "grandmaster": 165375, //303188-137813
+    "legendary": 363825, //667013-303188
+    "hero": 800415, //1467428-667013
+    "knight": 1760913, //3228341-1467428
+    "lord": 3874008, //7102349-3228341
+    "baron": 8522819, //15625168-7102349
+    "count": 18750202, //34375370-15625168
+    "duke": 41250443, //75625813-34375370
+    "grandduke": 90750976, //166376789-75625813
+    "archduke": 199652147, //366028936-166376789
+    "viceroy": 439234723, //805263659-366028936
+    "elder": 966316389, //1771580048-805263659
+    "sage": 2125896058, //3897476106-1771580048
+}
+
 var standardCheeseCost = {
     "Cheddar" : 10,
     "Marble" : 50,
@@ -9,16 +42,6 @@ var standardCheeseCost = {
     "Marble String" : 300,
     "Swiss String" : 800,
     "Brie String" : 1600,
-};
-//Function for determining size of multi-level array
-Object.size = function (obj) {
-    var size = 0;
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            size++;
-        }
-    }
-    return size;
 };
 
 var ztAmp = 100;

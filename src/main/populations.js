@@ -1,12 +1,12 @@
 "use strict";
 
 var BASELINES_URL = "data/baselines.json";
-var ADVANCEMENT_URL = "data/advancement.csv";
+var WISDOM_URL = "data/mouse_wisdom.json";
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
 // var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
 // Uncomment above during local testing to bypass Cross-Origin on Chrome
 
-var popLoaded = 0, baselineLoaded = 0, advancementLoaded = 0;
+var popLoaded = 0, baselineLoaded = 0, wisdomLoaded = 0;
 
 /**
  * Population data parsed from CSV
@@ -21,24 +21,22 @@ var popArray = {};
 var baselineArray = {};
 
 /**
- * Title advancement percentage
- * @type {{mouse: String, novice: number, recruit: number, apprentice: number, initiate: number, journeyman: number, master: number, grandmaster: number, legendary: number, hero: number, knight: number, lord: : number, baron: : number, count: number, duke: number, grandduke: number, archduke: number}[]}
+ * Mouse wisdom parsed from JSON
+ * @type {{mouse: String, wisdom: number}}
  */
-var advancementArray = {};
+var mouseWisdom = {};
 
 /**
  * Start population and baseline loading
  */
-function startPopulationLoad(populkationJsonUrl) {
+function startPopulationLoad(populationJsonUrl) {
 
-    $.getJSON(populkationJsonUrl, setPopulation);
+    $.getJSON(populationJsonUrl, setPopulation);
     $.getJSON(BASELINES_URL, setBaseline);
-    if (typeof processAdvancement === 'function' ) {
-        $.get(ADVANCEMENT_URL, processAdvancement);
-    }
+    $.getJSON(WISDOM_URL, setWisdom);
 
-    function setPopulation(jsoNData) {
-        popArray = jsoNData;
+    function setPopulation(jsonData) {
+        popArray = jsonData;
         popLoaded = true;
         checkLoadState();
     }
@@ -46,6 +44,12 @@ function startPopulationLoad(populkationJsonUrl) {
     function setBaseline(jsonData) {
         baselineArray = jsonData;
         baselineLoaded = true;
+        checkLoadState();
+    }
+
+    function setWisdom(jsonData) {
+        mouseWisdom = jsonData;
+        wisdomLoaded = true;
         checkLoadState();
     }
 }

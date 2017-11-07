@@ -10,8 +10,8 @@
     "bookmarklet": "npm-run-all bookmarklet:*",
     "population": "node build/processPopulation.js",
     "baselines": "node build/processBaselines.js",
-    "advancement": "node build/processAdvancement.js",
-    "build": "npm-run-all --parallel bookmarklet population baselines advancement"
+    "wisdom": "node build/processWisdom.js",
+    "build": "npm-run-all --parallel bookmarklet population baselines wisdom"
   },
   "repository": {
     "type": "git",
