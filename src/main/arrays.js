@@ -2805,7 +2805,7 @@ var powersArray = {
     "Rainmancer": [18500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
     "Thunder Strike": [1650, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
     "Violet Stormchild": [2500, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
-    "Thunderlord": [4500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+    "Thunderlord": [4500*2.25, 0, 225, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
     "Thundering Watcher": [5500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
     "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
     "Ful'Mina": [8667*30, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff

@@ -10,5 +10,8 @@
 
     var mice = $(".treasureMapPopup-mice-group-mouse:not(.caught)").map(function(){return $(this).data("name")}).toArray();
     var url = "https://tsitu.github.io/MH-Tools/map.html";
-    window.open(url + "?mice=" + encodeURIComponent(mice.join("/")), "mhmapsolver");
+    url += "?mice=" + encodeURIComponent(mice.join("/"));
+
+    var newWindow = window.open("", "mhmapsolver");
+    newWindow.location = url;
 })();

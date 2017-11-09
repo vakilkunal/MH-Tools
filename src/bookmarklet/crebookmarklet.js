@@ -142,6 +142,11 @@
                 return "Poured";
             }
         }
+        else if (userLocation == "Moussu Picchu") {
+            if (userQuests["QuestMoussuPicchu"]["elements"]["storm"]["level"] === "high") {
+                return "Storm Max";
+            }
+        }
         else if (userLocation === "Twisted Garden") {
             if (userQuests["QuestLivingGarden"]["minigame"]["vials_state"] === "dumped") {
                 return "Poured";
@@ -315,7 +320,8 @@
         if (userRank === "Count" || userRank === "Countess") return "count";
         if (userRank === "Baron" || userRank === "Baroness") return "baron";
         if (userRank === "Lord" || userRank === "Lady") return "lord";
-        return userRank.toLowerCase()
+        if (userRank === "Journeyman" || userRank === "Journeywoman") return "journeyman";
+        return userRank.toLowerCase();
     }
 
     if (location.href.indexOf("mousehuntgame.com") < 0) {
@@ -389,7 +395,8 @@
             url += key + "=" + value + "&"
         }
 
-        var newWindow = window.open(url, 'mhcre');
+        var newWindow = window.open("", "mhcre");
+        newWindow.location = url;
     }
 
 })();

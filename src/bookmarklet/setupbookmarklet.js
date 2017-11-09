@@ -23,7 +23,8 @@
     var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
     var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
     // Open default URL and give it time to preload, should solve problem of only bases not loading
-    var newWindow = window.open(defaultURL, 'mhsetup');
+    var newWindow = window.open("", "mhsetup");
+    newWindow.location = defaultURL;
 
     function openURL(category, items) {
         var url = defaultURL + "?" + category + "=";

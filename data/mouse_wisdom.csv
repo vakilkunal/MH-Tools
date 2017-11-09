@@ -1,6 +1,6 @@
 mouse,wisdom
 Abominable Snow,175
-Absolute Acolyte,0
+Absolute Acolyte,90000
 Acolyte,3185
 Aether,8400
 Aged,691
@@ -8,7 +8,7 @@ Agitated Gentle Giant,5010
 Alchemist,131
 Alnilam,619
 Alnitak,817
-Alpha Weremouse,0
+Alpha Weremouse,4350
 Amplified Brown,5700
 Amplified Grey,5600
 Amplified White,5500
@@ -18,7 +18,7 @@ Angelfish,4480
 Angler,5657
 Angry Train Staff,850
 Aquos,675
-Arcane Summoners,0
+Arcane Summoner,9000
 Archer,450
 Armored Archer,4500
 Artillery Commander,0
@@ -99,7 +99,7 @@ Cavalier,130
 Cavern Crumbler,8400
 Centaur,380
 Centaur Ranger,50000
-Chamber Cleaver,0
+Chamber Cleaver,10000
 Chameleon,60
 Champion,1380
 Charming Chimer,0
@@ -117,7 +117,7 @@ Circuit Judge,2250
 City Noble,2720
 City Worker,3040
 Clockwork Samurai,23
-Clockwork Timespinner,0
+Clockwork Timespinner,5500
 Cloud Collector,0
 Clownfish,7176
 Clump,7300
@@ -153,6 +153,7 @@ Cowardly,40
 Cowbell,70
 Crabolia,3888
 Crag Elder,9600
+Craggy Ore,320
 Cranky Caterpillar,6000
 Crate Camo,900
 Crazed Goblin,8000
@@ -181,7 +182,7 @@ Cursed,1000
 Cursed Enchanter,2800
 Cursed Engineer,3100
 Cursed Librarian,4000
-Cursed Taskmaster,0
+Cursed Taskmaster,6050
 Cursed Thief,3400
 Cute Crate Carrier,800
 Cuttle,1856
@@ -199,7 +200,7 @@ Dark Magi,29250
 Dark Templar,12120
 Dashing Buccaneer,0
 Davy Jones,900
-Dawn Guardian,0
+Dawn Guardian,10000
 Decrepit Tentacle Terror,21600
 Deep,21500
 Deep Sea Diver,5760
@@ -256,7 +257,7 @@ Elven Princess,270
 Enginseer,2848
 Enlightened Labourer,10000
 Enslaved Spirit,2000
-Epoch Golem,0
+Epoch Golem,10000
 Escape Artist,30
 Essence Collector,3400
 Essence Guardian,3400
@@ -357,7 +358,7 @@ Guppy,3888
 Guqin Player,500
 Hapless,15
 Hapless Marionette,15
-Harbinger of Death,0
+Harbinger of Death,20000
 Hardboiled,500
 Hardworking Hauler,0
 Hare Razer,1050
@@ -383,7 +384,7 @@ Hurdle,400
 Hydra,964
 Hydrologist,4000
 Hydrophobe,300
-Hypnotized Gunslinger,0
+Hypnotized Gunslinger,8250
 Iceblade,2185
 Iceblock,1115
 Icebreaker,875
@@ -463,10 +464,10 @@ Medicine,5000
 Mermouse,240
 Mermousette,5432
 Mershark,5760
-Meteorite Golem,0
+Meteorite Golem,4500
 Meteorite Miner,0
 Meteorite Mover,0
-Meteorite Mystic,0
+Meteorite Mystic,5250
 Meteorite Snacker,0
 Micro,5600
 Mighty Mole,7000
@@ -477,7 +478,7 @@ Miner,535
 Mining Materials Manager,0
 Mintaka,450
 Mischievous Meteorite Miner,0
-Mischievous Wereminer,0
+Mischievous Wereminer,3750
 Miser,450
 Missile Toe,6000
 Mlounder Flounder,3600
@@ -488,13 +489,14 @@ Monarch,250
 Monk,525
 Monsoon Maker,0
 Monster,910
-Monster of the Meteor,0
+Monster of the Meteor,18000
 Monster Tail,2700
 Monstrous Abomination,20000
 Monstrous Black Widow,125000
 Moosker,35
 Mossy Moosker,7500
 Mouldy Mole,4000
+Mountain,600
 Mousataur Priestess,5500
 Mouse of Winter Future,1500
 Mouse of Winter Past,1500
@@ -532,10 +534,10 @@ Nerg Chieftain,1255
 Nerg Lich,4015
 New Year's,220
 Nibbler,110
-Night Shift Materials Manager,0
-Night Watcher,0
-Nightfire,0
-Nightmancer,0
+Night Shift Materials Manager,5000
+Night Watcher,4500
+Nightfire,1150
+Nightmancer,900
 Nightshade Flower Girl,0
 Nightshade Fungalmancer,10200
 Nightshade Maiden,0
@@ -584,8 +586,8 @@ Pneumatic Dirt Displacement,7000
 Pocketwatch,960
 Polar Bear,1015
 Portable Generator,5000
-Portal Paladin,0
-Portal Plunderer,0
+Portal Paladin,4000
+Portal Plunderer,7000
 Portal Pursuer,0
 Present,135
 Primal,1645
@@ -616,8 +618,8 @@ Raw Diamond,12000
 Realm Ripper,450
 Reanimated Carver,13500
 Reaper,870
-Record Keeper,0
-Record Keeper's Assistant,0
+Record Keeper,4100
+Record Keeper's Assistant,4000
 Red Coat Bear,7000
 Red Envelope,89
 Red-Eyed Watcher Owl,12000
@@ -625,7 +627,7 @@ Reinbo,240
 Relic Hunter,100
 Renegade,55
 Retired Minotaur,200000
-Reveling Lycanthrope,0
+Reveling Lycanthrope,2700
 Revenant,6700
 Ribbon,750
 Ridiculous Sweater,2625
@@ -671,11 +673,11 @@ Scrooge,75
 Scruffy,38
 Seadragon,3888
 Seer,500
-Sentient Slime,0
+Sentient Slime,4400
 Sentinel,3408
 Serpent Monster,15200
 Serpentine,3800
-Shackled Servant,0
+Shackled Servant,7000
 Shadow Stalker,10500
 Shaman,60
 Shaolin Kung Fu,10000
@@ -700,6 +702,7 @@ Slay Ride,6000
 Slayer,1046
 Sleepwalker,130
 Slimefist,22000
+Slope Swimmer,550
 Sludge,900
 Sludge Soaker,7000
 Sludge Swimmer,24000
@@ -819,13 +822,13 @@ Thundering Watcher,0
 Thunderlord,0
 Tidal Fisher,1470
 Tiger,550
-Timeless Lich,0
-Timelost Thaumaturge,0
-Timeslither Pythoness,0
+Timeless Lich,25000
+Timelost Thaumaturge,9000
+Timeslither Pythoness,15000
 Tiny,35
 Titanic Brain-Taker,5000
 Toboggan Technician,475
-Tomb Exhumer,0
+Tomb Exhumer,6600
 Tome Sprite,2100
 Tonic Salesman,450
 Totally Not Bitter,300
@@ -880,9 +883,9 @@ Water Sprite,7000
 Water Wielder,1975
 Wave Racer,500
 Wealth,7000
-Wealthy Werewarrior,0
-Werehauler,0
-Wereminer,0
+Wealthy Werewarrior,7200
+Werehauler,2850
+Wereminer,4200
 Whelpling,131
 Whirleygig,200
 White,35

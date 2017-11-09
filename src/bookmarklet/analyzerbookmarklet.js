@@ -21,8 +21,9 @@
     var counter = 0;
     var timeout = '';
     var interval = '';
-    var domTrack = '';
-    var newWindow = window.open('https://tsitu.github.io/MH-Tools/analyzerwaiting.html', 'mhanalyzer');
+	var domTrack = '';
+	var newWindow = window.open("", "mhanalyzer");
+    newWindow.location = "https://tsitu.github.io/MH-Tools/analyzerwaiting.html";
 
     function parse() {
         var a = document.querySelector("div.history-details .paginate_button.next");
@@ -65,7 +66,7 @@
 	        if (counter == iterations) {
 	        	console.log("Parse complete!");
 	        	url += "&isDone=true";
-	            newWindow.location.href = url;
+	            newWindow.location = url;
 	            clearTimeout(timeout);
 	            clearInterval(interval);
 	        }
@@ -75,7 +76,7 @@
 	        		 *Split data to contain URL length
 	        		 */
 	        		url += "&isDone=false";
-	        		newWindow.location.href = url;
+	        		newWindow.location = url;
 	        		url = "https://tsitu.github.io/MH-Tools/analyzer.html?data=";
 	        		// url = "https://192.168.0.101:8888/analyzer.html?data="; //debug
 	        	}
