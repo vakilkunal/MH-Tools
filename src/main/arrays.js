@@ -1645,7 +1645,7 @@ var weaponsArray = {
     "Grand Arcanum Trap": ["Arcane", 4800, 12, 5, 22, "No Effect"],
     "Grungy Deathbot": ["Physical", 2400, 15, 10, 2, "Stale"],
     "Harpoon Gun": ["Hydro", 3000, 7, 0, 0, "Stale"],
-    "Haunted Shipwreck Trap": ["Hydro", 5000, 20, 10, 16, "Very Stale"],
+    "Haunted Shipwreck Trap": ["Hydro", 5000, 20, 10, 10, "Very Stale"],
     "Heat Bath": ["Hydro", 4000, 5, 0, 14, "Stale"],
     "High Tension Spring": ["Physical", 75, 5, 20, 2, "No Effect"],
     "HitGrab Horsey": ["Physical", 550, 2, 0, 20, "Very Fresh"],
