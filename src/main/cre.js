@@ -419,6 +419,24 @@ function showPop(type) { //type = 2 means don't reset charms
                     catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
                     charmBonus -= 300;
                     calculateTrapSetup(true);
+                } else if (charmName === "Taunting Charm" && contains(tauntings, mouseName)) {
+                    var riftCount = getRiftCount(weaponName, baseName, charmName);
+                    var multiplier = (riftStalkerCodex) ? 2 : 1;
+                    if (riftCount === 1) {
+                        weaponPower *= (1 + (1/10 * multiplier));
+                    } else if (riftCount === 2) {
+                        weaponPower *= (1 + (1/10 * multiplier));
+                        bonusLuck += 5 * multiplier;
+                    }
+                    calculateTrapSetup(true);
+                    catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+                    if (riftCount === 1) {
+                        weaponPower /= (1 + (1/10 * multiplier));
+                    } else if (riftCount === 2) {
+                        weaponPower /= (1 + (1/10 * multiplier));
+                        bonusLuck -= 5 * multiplier;
+                    }
+                    calculateTrapSetup(true);
                 }
 
                 var minLuckValue = minLuck(eff, mousePower);

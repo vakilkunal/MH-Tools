@@ -106,6 +106,7 @@ var labyrinthMiceClues = {
 };
 
 var dragons = ["Dragon", "Dragoon", "Ful'Mina", "Thunder Strike", "Thundering Watcher", "Thunderlord", "Violet Stormchild"];
+var tauntings = ["Centaur Ranger", "Cyclops Barbarian", "Monstrous Black Widow", "Tri-dra"];
 
 var berglings = ["Incompetent Ice Climber", "Polar Bear", "Snow Slinger", "Snow Soldier", "Iceblock", "Wolfskie", "Snowblind"];
 var brutes = ["Snow Bowler", "Yeti", "Mammoth"];

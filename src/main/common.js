@@ -319,11 +319,7 @@ function calculateTrapSetup(skipDisp) {
 
     function determineRiftBonus(codex) {
         var riftCount = getRiftCount(weaponName, baseName, charmName);
-        var multiplier = 1;
-
-        if (codex) {
-            multiplier = 2;
-        }
+        var multiplier = (codex) ? 2 : 1;
 
         if (riftCount === 2) {
             specialBonus += 10 * multiplier;
