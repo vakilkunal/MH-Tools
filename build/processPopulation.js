@@ -1,6 +1,10 @@
 (function () {
     const SAMPLE_SIZE_LABEL = "SampleSize";
-    const POPULATIONS = ["data/populations.csv", "data/pop_mopi.csv"];
+    const POPULATIONS = [
+        "data/populations.csv",
+        "data/pop_mopi.csv",
+        "data/pop-bwrift.csv",
+    ];
 
     const fs = require("fs");
     const csv = require("csvtojson");

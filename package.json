@@ -8,6 +8,8 @@
     "bookmarklet:map": "uglifyjs src/bookmarklet/mapbookmarklet.js -cmo src/bookmarklet/mapbookmarklet.min.js",
     "bookmarklet:analyzer": "uglifyjs src/bookmarklet/analyzerbookmarklet.js -cmo src/bookmarklet/analyzerbookmarklet.min.js",
     "bookmarklet": "npm-run-all bookmarklet:*",
+    "update:population:bwrift": "node tools/bwriftpop.js > data/pop-bwrift.csv",
+    "update:population": "npm-run-all update:population:*",
     "population": "node build/processPopulation.js",
     "baselines": "node build/processBaselines.js",
     "wisdom": "node build/processWisdom.js",
@@ -32,5 +34,12 @@
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.0.2",
     "uglify-js": "^3.0.25"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.1",
+    "jacksmhtools-client": "0.0.1",
+    "js-combinatorics": "^0.5.2",
+    "json2csv": "^3.11.5",
+    "lodash": "^4.17.4"
   }
 }
