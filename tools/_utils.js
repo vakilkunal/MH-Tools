@@ -17,7 +17,7 @@ exports.POP_FIELDS = [
 exports.preparePopulation = function (base, population) {
   return _.extend({}, base, {
     mouse: population.mouse,
-    attraction: (population.attraction*100).toFixed(2)+'%',
+    attraction: (population.attraction * 100).toFixed(2) + '%',
     sample: population.sample
   })
 }
@@ -38,14 +38,14 @@ exports.toCsv = function toCsv (fields, rows) {
 exports.process = function (config) {
   return Promise
     .mapSeries(config.series, function (setup) {
-      var vectors = _.values(setup)
+      var vectors = _.values(_.defaultsDeep(setup, _.cloneDeep(config.default || {})))
       if (!vectors || !vectors.length) vectors = [ [ {} ] ]
       var p = Combinatorics.cartesianProduct.apply(Combinatorics, vectors)
       return Promise
         .mapSeries(p.toArray(), function (iter) {
           var item = iter.reduce(function (opts, vec) {
             return _.defaultsDeep(opts, vec)
-          }, _.cloneDeep(config.default || {}))
+          }, {})
 
           return config.process(item)
         })
@@ -57,18 +57,30 @@ exports.process = function (config) {
 /**
  * Creates an array with items based on values
  * @param {string} type
+ * @param {string} value
+ * @param {object} [{}] base
+ * @returns {{vars: {type: {value: true}}, fields:{type: value}}}}
+ */
+exports.genVarItem = function genVarItem (type, value, base) {
+  base = base || {}
+  var item = { vars: {}, fields: {} }
+  item.vars[ type ] = {}
+  item.vars[ type ][ value ] = true
+  item.fields[ type ] = value
+  return _.defaultsDeep({}, base, item)
+}
+
+/**
+ * Creates an array with items based on values
+ * @param {string} type
  * @param {string[]|string} values
  * @param {object} [{}] base
  * @returns {{vars: {type: {value: true}}, fields:{type: value}}}[]}
  */
 exports.genVarField = function genVarField (type, values, base) {
-  base = base || {}
   if (!Array.isArray(values)) values = [ values ]
   return _.map(values, function (value) {
-    var item = { vars: {}, fields: {} }
-    item.vars[ type ] = {}
-    item.vars[ type ][ value ] = true
-    item.fields[ type ] = value
-    return _.defaultsDeep({}, base, item)
+    return exports.genVarItem(type, value, base)
   })
 }
+

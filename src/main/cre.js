@@ -921,21 +921,29 @@ function weaponChanged() {
 
 function icebergPhase() {
     var autoPhase = "";
-    if (phaseName === "Bombing Run" && baseName === "Remote Detonator Base") autoPhase = "Bombing Run (Remote Detonator)";
+    if (!!~phaseName.indexOf("Bombing Run") && baseName === "Remote Detonator Base") autoPhase = "Bombing Run (Remote Detonator)";
+    else if (!!~phaseName.indexOf("Bombing Run") && baseName === "Ultimate Iceberg Base") autoPhase = "Bombing Run (Ultimate Iceberg)";
     else if (phaseName === "Bombing Run (Remote Detonator)" && baseName !== "Remote Detonator Base") autoPhase = "Bombing Run";
+    else if (phaseName === "Bombing Run (Ultimate Iceberg)" && baseName !== "Ultimate Iceberg Base") autoPhase = "Bombing Run";
 
-    else if (phaseName === "Treacherous Tunnels" && baseName === "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
+    else if (!!~phaseName.indexOf("Treacherous Tunnels") && baseName === "Magnet Base") autoPhase = "Treacherous Tunnels (Magnet)";
+    else if (!!~phaseName.indexOf("Treacherous Tunnels") && baseName === "Ultimate Iceberg Base") autoPhase = "Treacherous Tunnels (Ultimate Iceberg)";
     else if (phaseName === "Treacherous Tunnels (Magnet)" && baseName !== "Magnet Base") autoPhase = "Treacherous Tunnels";
+    else if (phaseName === "Treacherous Tunnels (Ultimate Iceberg)" && baseName !== "Ultimate Iceberg") autoPhase = "Treacherous Tunnels";
 
-    else if ((phaseName === "The Mad Depths" || phaseName === "The Mad Depths (Magnet)") && baseName === "Hearthstone Base") autoPhase = "The Mad Depths (Hearthstone)";
-    else if ((phaseName === "The Mad Depths" || phaseName === "The Mad Depths (Hearthstone)") && baseName === "Magnet Base") autoPhase = "The Mad Depths (Magnet)";
+    else if ((!!~phaseName.indexOf("The Mad Depths")) && baseName === "Hearthstone Base") autoPhase = "The Mad Depths (Hearthstone)";
+    else if ((!!~phaseName.indexOf("The Mad Depths")) && baseName === "Magnet Base") autoPhase = "The Mad Depths (Magnet)";
+    else if ((!!~phaseName.indexOf("The Mad Depths")) && baseName === "Ultimate Iceberg Base") autoPhase = "The Mad Depths (Ultimate Iceberg)";
     else if (phaseName === "The Mad Depths (Hearthstone)" && baseName !== "Hearthstone Base") autoPhase = "The Mad Depths";
     else if (phaseName === "The Mad Depths (Magnet)" && baseName !== "Magnet Base") autoPhase = "The Mad Depths";
+    else if (phaseName === "The Mad Depths (Ultimate Iceberg)" && baseName !== "Ultimate Iceberg") autoPhase = "The Mad Depths";
 
     if (autoPhase !== "") {
         var phaseSelect = document.getElementById("phase");
-        phaseSelect.value = autoPhase;
-        phaseChanged();
+        if (phaseSelect.value !== autoPhase) {
+            phaseSelect.value = autoPhase;
+            phaseChanged();
+        }
     }
 }
 
