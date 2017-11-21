@@ -105,7 +105,7 @@ var labyrinthMiceClues = {
     "Treasure Brawler": 2
 };
 
-var dragons = ["Dragon", "Dragoon", "Ful'Mina", "Thunder Strike", "Thundering Watcher", "Thunderlord", "Violet Stormchild"];
+var dragons = ["Dragon", "Dragoon", "Ful'Mina, The Mountain Queen", "Thunder Strike", "Thundering Watcher", "Thunderlord", "Violet Stormchild"];
 var tauntings = ["Centaur Ranger", "Cyclops Barbarian", "Monstrous Black Widow", "Tri-dra"];
 
 var berglings = ["Incompetent Ice Climber", "Polar Bear", "Snow Slinger", "Snow Soldier", "Iceblock", "Wolfskie", "Snowblind"];
@@ -2809,7 +2809,7 @@ var powersArray = {
     "Thunderlord": [4500*2.25, 0, 225, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
     "Thundering Watcher": [5500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
     "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
-    "Ful'Mina": [8667*30, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+    "Ful'Mina, The Mountain Queen": [8667*30, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
 };
 /* [Gold, Points] */
 var miceArray = {
@@ -3684,7 +3684,7 @@ var miceArray = {
     "Thunderlord": [15000, 90000],
     "Thundering Watcher": [18000, 100000],
     "Dragoon": [20000, 100000],
-    "Ful'Mina": [30000, 120000],
+    "Ful'Mina, The Mountain Queen": [30000, 120000],
 };
 
 var festiveTraps = [

@@ -142,9 +142,22 @@
                 return "Poured";
             }
         }
-        else if (userLocation == "Moussu Picchu") {
-            if (userQuests["QuestMoussuPicchu"]["elements"]["storm"]["level"] === "high") {
-                return "Storm Max";
+        else if (userLocation === "Moussu Picchu") {
+            var UP_DIRECTION = 'up';
+            var LEVEL_KEY = 'level';
+            var DIRECTION_KEY = 'direction';
+            var RAIN_KEY = 'rain';
+            var WIND_KEY = 'wind';
+
+            var elements = userQuests["QuestMoussuPicchu"]['elements'];
+            var stormLevel = elements['storm'][LEVEL_KEY];
+
+            if (stormLevel !== "none") {
+                return "Storm " + stormLevel
+            } else if (elements[RAIN_KEY][DIRECTION_KEY] === UP_DIRECTION) {
+                return "Rain " + elements[RAIN_KEY][LEVEL_KEY]
+            } else  if (elements[WIND_KEY][DIRECTION_KEY] === UP_DIRECTION) {
+                return "Wind " + elements[WIND_KEY][LEVEL_KEY]
             }
         }
         else if (userLocation === "Twisted Garden") {

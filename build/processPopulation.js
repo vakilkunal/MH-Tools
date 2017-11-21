@@ -35,9 +35,11 @@
     });
 
     function lineHandler(rowJson) {
-        processCreSetupPopItem(crePopulations, rowJson, true, true);
-        processCreSetupPopItem(setupPopulations, rowJson, false, false);
-        processMapPopItem(mapPopulations, rowJson)
+        if (rowJson.location.toLowerCase() !== "location") {
+            processCreSetupPopItem(crePopulations, rowJson, true, true);
+            processCreSetupPopItem(setupPopulations, rowJson, false, false);
+            processMapPopItem(mapPopulations, rowJson)
+        }
     }
 
     function saveFiles() {
