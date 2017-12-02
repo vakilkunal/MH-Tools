@@ -8,6 +8,10 @@ function loadCharmDropdown() {
     loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
 }
 
+function isCustom() {
+    return document.getElementById("toggleCustom").checked
+}
+
 window.onload = function () {
     user = CRE_USER;
 
@@ -30,7 +34,7 @@ window.onload = function () {
     loadDropdown("base", baseKeys, baseChanged, "<option></option>");
     loadCharmDropdown();
 
-    showHideWidgets(document.getElementById("toggleCustom").checked);
+    showHideWidgets(isCustom());
 
     //Listening for changes in dropdowns or textboxes
     document.getElementById("toggleCustom").onchange = function () {
@@ -259,8 +263,8 @@ function showPop(type) { //type = 2 means don't reset charms
         return headerHTML;
     }
 
-    if (!locationName || !cheeseName
-        || !weaponName || !baseName || type === 0) {
+    if (!locationName || !cheeseName || type === 0
+        || !(weaponName && baseName || isCustom)) {
         results.innerHTML = '';
     }
     else {
