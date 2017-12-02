@@ -245,7 +245,7 @@
             } else {
                 var districts = {
                     "Tech": ["Tech Foundry Outskirts", "Tech Research Center", "Manaforge"],
-                    "Scholar": ["Neophyte Scholar Study", "Master Scholar Auditorium", "Dark Libary"],
+                    "Scholar": ["Neophyte Scholar Study", "Master Scholar Auditorium", "Dark Library"],
                     "Fealty": ["Outer Fealty Shrine", "Inner Fealty Temple", "Templar's Sanctum"],
                     "Treasury": ["Treasure Room", "Treasure Vault"],
                     "Farming": ["Farming Garden", "Overgrown Farmhouse"]
