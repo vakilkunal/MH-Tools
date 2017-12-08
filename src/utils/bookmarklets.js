@@ -9,7 +9,7 @@ var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.min.js";
  * @return {string}
  */
 function makeBookmarkletString(content) {
-    return "javascript:void" + encodeURI(" " + content);
+  return "javascript:void" + encodeURI(" " + content);
 }
 /**
  * Loads bookmarklet content from a js file into an html element's href attribute
@@ -19,19 +19,23 @@ function makeBookmarkletString(content) {
  * @param {function(string)} [callback] Callback function that takes the ajax response data as parameter
  */
 function loadBookmarkletFromJS(url, storageKey, linkSelector, callback) {
-    $.get(url, function (data) {
-        checkBookmarklet(makeBookmarkletString(data), storageKey);
-        if (callback) {
-            callback(data)
-        }
-    }, "text");
+  $.get(
+    url,
+    function(data) {
+      checkBookmarklet(makeBookmarkletString(data), storageKey);
+      if (callback) {
+        callback(data);
+      }
+    },
+    "text"
+  );
 
-    function checkBookmarklet(bookmarkletString) {
-        if (bookmarkletString !== localStorage.getItem(storageKey)) {
-            alert("Bookmarklet has changed! Please update accordingly.");
-            localStorage.setItem(storageKey, bookmarkletString);
-        }
-
-        $(linkSelector).attr("href", bookmarkletString);
+  function checkBookmarklet(bookmarkletString) {
+    if (bookmarkletString !== localStorage.getItem(storageKey)) {
+      alert("Bookmarklet has changed! Please update accordingly.");
+      localStorage.setItem(storageKey, bookmarkletString);
     }
+
+    $(linkSelector).attr("href", bookmarkletString);
+  }
 }
