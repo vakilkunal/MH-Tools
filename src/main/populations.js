@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-var BASELINES_URL = "data/baselines.json";
-var WISDOM_URL = "data/mouse_wisdom.json";
+var BASELINES_URL = 'data/baselines.json';
+var WISDOM_URL = 'data/mouse_wisdom.json';
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
 // var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
 // Uncomment above during local testing to bypass Cross-Origin on Chrome
@@ -62,21 +62,21 @@ function startPopulationLoad(populationJsonUrl) {
  * @param {string} [strDelimiter=","] - Delimiter for the string. Default is a comma
  * */
 function csvToArray(strData, strDelimiter) {
-  strDelimiter = strDelimiter || ",";
+  strDelimiter = strDelimiter || ',';
 
   // Create a regular expression to parse the CSV values.
   var objPattern = new RegExp(
     // Delimiters.
-    "(\\" +
+    '(\\' +
       strDelimiter +
-      "|\\r?\\n|\\r|^)" +
+      '|\\r?\\n|\\r|^)' +
       // Quoted fields.
       '(?:"([^"]*(?:""[^"]*)*)"|' +
       // Standard fields.
       '([^"\\' +
       strDelimiter +
-      "\\r\\n]*))",
-    "gi"
+      '\\r\\n]*))',
+    'gi'
   );
 
   // Create an array to hold our data. Give the array
@@ -109,7 +109,7 @@ function csvToArray(strData, strDelimiter) {
     if (arrMatches[2]) {
       // We found a quoted value. When we capture
       // this value, unescape any double quotes.
-      var strMatchedValue = arrMatches[2].replace(new RegExp('""', "g"), '"');
+      var strMatchedValue = arrMatches[2].replace(new RegExp('""', 'g'), '"');
     } else {
       // We found a non-quoted value.
       var strMatchedValue = arrMatches[3];
