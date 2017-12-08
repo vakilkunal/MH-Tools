@@ -13,29 +13,29 @@
     sortReset: true,
     widthFixed: true,
     ignoreCase: false,
-    widgets: ['filter'],
+    widgets: ["filter"],
     widgetOptions: {
       filter_childRows: false,
       filter_childByColumn: false,
       filter_childWithSibs: true,
       filter_columnFilters: true,
       filter_columnAnyMatch: true,
-      filter_cellFilter: '',
-      filter_cssFilter: '', // or []
+      filter_cellFilter: "",
+      filter_cssFilter: "", // or []
       filter_defaultFilter: {},
       filter_excludeFilter: {},
-      filter_external: '',
-      filter_filteredRow: 'filtered',
+      filter_external: "",
+      filter_filteredRow: "filtered",
       filter_formatter: null,
       filter_functions: null,
       filter_hideEmpty: true,
       filter_hideFilters: true,
       filter_ignoreCase: true,
       filter_liveSearch: true,
-      filter_matchType: { input: 'exact', select: 'exact' },
-      filter_onlyAvail: 'filter-onlyAvail',
-      filter_placeholder: { search: 'Filter results...', select: '' },
-      filter_reset: 'button.reset',
+      filter_matchType: { input: "exact", select: "exact" },
+      filter_onlyAvail: "filter-onlyAvail",
+      filter_placeholder: { search: "Filter results...", select: "" },
+      filter_reset: "button.reset",
       filter_resetOnEsc: true,
       filter_saveFilters: false,
       filter_searchDelay: 420,
@@ -44,14 +44,14 @@
       filter_serversideFiltering: false,
       filter_startsWith: false,
       filter_useParsedData: false,
-      filter_defaultAttrib: 'data-value',
-      filter_selectSourceSeparator: '|'
+      filter_defaultAttrib: "data-value",
+      filter_selectSourceSeparator: "|"
     }
   };
 
   function setupGA() {
     (function(i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r;
+      i["GoogleAnalyticsObject"] = r;
       (i[r] =
         i[r] ||
         function() {
@@ -65,24 +65,24 @@
     })(
       window,
       document,
-      'script',
-      'https://www.google-analytics.com/analytics.js',
-      'ga'
+      "script",
+      "https://www.google-analytics.com/analytics.js",
+      "ga"
     );
 
     //Google Analytics for haoala
-    ga('create', 'UA-31924811-5', 'dropboxusercontent.com');
-    ga('send', 'pageview');
+    ga("create", "UA-31924811-5", "dropboxusercontent.com");
+    ga("send", "pageview");
 
     //Google Analytics for me
-    ga('create', 'UA-61581935-1', { name: 'auto' });
-    ga('auto.send', 'pageview');
+    ga("create", "UA-61581935-1", { name: "auto" });
+    ga("auto.send", "pageview");
   }
 
   /**
    * Initialize the tablesorter and bind it to the results table
    */
   function initTableSorter() {
-    $('#results').tablesorter(tablesorterOptions);
+    $("#results").tablesorter(tablesorterOptions);
   }
 })();

@@ -1,23 +1,23 @@
-var Promise = require('bluebird');
-var json2csv = require('json2csv');
-var _ = require('lodash');
-var Combinatorics = require('js-combinatorics');
+var Promise = require("bluebird");
+var json2csv = require("json2csv");
+var _ = require("lodash");
+var Combinatorics = require("js-combinatorics");
 
 // Location,Phase,Cheese,Charm,Attraction Rate,Mouse,Sample Size
 exports.POP_FIELDS = [
-  { label: 'Location', value: 'location' },
-  { label: 'Phase', value: 'stage' },
-  { label: 'Cheese', value: 'cheese' },
-  { label: 'Charm', value: 'charm' },
-  { label: 'Attraction Rate', value: 'attraction' },
-  { label: 'Mouse', value: 'mouse' },
-  { label: 'Sample Size', value: 'sample', default: '' }
+  { label: "Location", value: "location" },
+  { label: "Phase", value: "stage" },
+  { label: "Cheese", value: "cheese" },
+  { label: "Charm", value: "charm" },
+  { label: "Attraction Rate", value: "attraction" },
+  { label: "Mouse", value: "mouse" },
+  { label: "Sample Size", value: "sample", default: "" }
 ];
 
 exports.preparePopulation = function(base, population) {
   return _.extend({}, base, {
     mouse: population.mouse,
-    attraction: (population.attraction * 100).toFixed(2) + '%',
+    attraction: (population.attraction * 100).toFixed(2) + "%",
     sample: population.sample
   });
 };
@@ -29,7 +29,7 @@ exports.toCsv = function toCsv(fields, rows) {
       return json2csv({
         data: rows,
         fields: fields,
-        defaultValue: '-'
+        defaultValue: "-"
       });
     });
 };

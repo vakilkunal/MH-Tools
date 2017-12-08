@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-var MAP_USER = 'map';
+var MAP_USER = "map";
 var columnLimit = 0,
   rowLimit = 0,
   attractionBonus = 0,
@@ -8,14 +8,14 @@ var columnLimit = 0,
   timeDelay,
   remainingMice = 0;
 
-var EMPTY_SELECTION = '-';
+var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
 var user = MAP_USER;
-var POPULATION_JSON_URL = 'data/populations-map.json';
+var POPULATION_JSON_URL = "data/populations-map.json";
 
 var autoCompleteSettings = {
-  delimiters: '\n',
-  endingSymbols: '\n'
+  delimiters: "\n",
+  endingSymbols: "\n"
 };
 
 function contains(collection, searchElement) {
@@ -27,7 +27,7 @@ function loadMiceFromUrlOrCookie() {
     window.location.search.match(/mice=([^&]*)/)
   );
   if (mouseList.length === 0) {
-    var cookie = Cookies.get('savedMice');
+    var cookie = Cookies.get("savedMice");
     if (cookie !== undefined) {
       findLoadedMice(cookie);
     }
@@ -36,64 +36,64 @@ function loadMiceFromUrlOrCookie() {
   }
 
   function findLoadedMice(mouseList) {
-    $('#map').val(mouseList);
-    var mapText = document.getElementById('map').value;
+    $("#map").val(mouseList);
+    var mapText = document.getElementById("map").value;
     timeDelay = setTimeout(function() {
       processMap(mapText);
     }, 100);
-    $('#weightAR').click();
+    $("#weightAR").click();
   }
 }
 
 function loadCookies() {
-  if (Cookies.get('savedRows') !== undefined) {
-    var x = parseInt(Cookies.get('savedRows'));
-    var s = '#row' + x;
-    $(s).prop('checked', true);
+  if (Cookies.get("savedRows") !== undefined) {
+    var x = parseInt(Cookies.get("savedRows"));
+    var s = "#row" + x;
+    $(s).prop("checked", true);
     rowLimit = x;
   }
-  if (Cookies.get('savedCols') !== undefined) {
-    var x = parseInt(Cookies.get('savedCols'));
-    var s = '#col' + x;
-    $(s).prop('checked', true);
+  if (Cookies.get("savedCols") !== undefined) {
+    var x = parseInt(Cookies.get("savedCols"));
+    var s = "#col" + x;
+    $(s).prop("checked", true);
     columnLimit = x;
   }
 
-  if (Cookies.get('savedAttraction') !== undefined) {
-    attractionBonus = parseInt(Cookies.get('savedAttraction'));
-    $('#ampSlider').slider('option', 'value', attractionBonus);
+  if (Cookies.get("savedAttraction") !== undefined) {
+    attractionBonus = parseInt(Cookies.get("savedAttraction"));
+    $("#ampSlider").slider("option", "value", attractionBonus);
   }
 }
 function initTablesorter() {
-  $.tablesorter.defaults.sortInitialOrder = 'desc';
-  $('#bestLocation').tablesorter({
+  $.tablesorter.defaults.sortInitialOrder = "desc";
+  $("#bestLocation").tablesorter({
     // sortForce: [[noMice,1]],
     sortReset: true,
     widthFixed: true,
     ignoreCase: false,
-    widgets: ['filter'],
+    widgets: ["filter"],
     widgetOptions: {
       filter_childRows: false,
       filter_childByColumn: false,
       filter_childWithSibs: true,
       filter_columnFilters: true,
       filter_columnAnyMatch: true,
-      filter_cellFilter: '',
-      filter_cssFilter: '', // or []
+      filter_cellFilter: "",
+      filter_cssFilter: "", // or []
       filter_defaultFilter: {},
       filter_excludeFilter: {},
-      filter_external: '',
-      filter_filteredRow: 'filtered',
+      filter_external: "",
+      filter_filteredRow: "filtered",
       filter_formatter: null,
       filter_functions: null,
       filter_hideEmpty: true,
       filter_hideFilters: true,
       filter_ignoreCase: true,
       filter_liveSearch: true,
-      filter_matchType: { input: 'exact', select: 'exact' },
-      filter_onlyAvail: 'filter-onlyAvail',
-      filter_placeholder: { search: 'Filter results...', select: '' },
-      filter_reset: 'button.reset',
+      filter_matchType: { input: "exact", select: "exact" },
+      filter_onlyAvail: "filter-onlyAvail",
+      filter_placeholder: { search: "Filter results...", select: "" },
+      filter_reset: "button.reset",
       filter_resetOnEsc: true,
       filter_saveFilters: false,
       filter_searchDelay: 420,
@@ -102,39 +102,39 @@ function initTablesorter() {
       filter_serversideFiltering: false,
       filter_startsWith: false,
       filter_useParsedData: false,
-      filter_defaultAttrib: 'data-value',
-      filter_selectSourceSeparator: '|'
+      filter_defaultAttrib: "data-value",
+      filter_selectSourceSeparator: "|"
     }
   });
 
-  $('#mouseList').tablesorter({
+  $("#mouseList").tablesorter({
     // sortForce: [[noMice,1]],
     sortReset: true,
     widthFixed: true,
     ignoreCase: false,
-    widgets: ['filter'],
+    widgets: ["filter"],
     widgetOptions: {
       filter_childRows: false,
       filter_childByColumn: false,
       filter_childWithSibs: true,
       filter_columnFilters: true,
       filter_columnAnyMatch: true,
-      filter_cellFilter: '',
-      filter_cssFilter: '', // or []
+      filter_cellFilter: "",
+      filter_cssFilter: "", // or []
       filter_defaultFilter: {},
       filter_excludeFilter: {},
-      filter_external: '',
-      filter_filteredRow: 'filtered',
+      filter_external: "",
+      filter_filteredRow: "filtered",
       filter_formatter: null,
       filter_functions: null,
       filter_hideEmpty: true,
       filter_hideFilters: true,
       filter_ignoreCase: true,
       filter_liveSearch: true,
-      filter_matchType: { input: 'exact', select: 'exact' },
-      filter_onlyAvail: 'filter-onlyAvail',
-      filter_placeholder: { search: 'Filter results...', select: '' },
-      filter_reset: 'button.reset',
+      filter_matchType: { input: "exact", select: "exact" },
+      filter_onlyAvail: "filter-onlyAvail",
+      filter_placeholder: { search: "Filter results...", select: "" },
+      filter_reset: "button.reset",
       filter_resetOnEsc: true,
       filter_saveFilters: false,
       filter_searchDelay: 420,
@@ -143,33 +143,33 @@ function initTablesorter() {
       filter_serversideFiltering: false,
       filter_startsWith: false,
       filter_useParsedData: false,
-      filter_defaultAttrib: 'data-value',
-      filter_selectSourceSeparator: '|'
+      filter_defaultAttrib: "data-value",
+      filter_selectSourceSeparator: "|"
     }
   });
 }
 window.onload = function() {
   startPopulationLoad(POPULATION_JSON_URL);
-  loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, 'mapBookmarklet', '#bookmarklet');
+  loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, "mapBookmarklet", "#bookmarklet");
 
   //Initialize tablesorter, bind to table
   initTablesorter();
   loadCookies();
 
-  $('#map').keyup(function(event) {
+  $("#map").keyup(function(event) {
     // Checking for enter/return, backspace, and delete
     // Then finding newlines and only processing when that differs from previous value
     //TODO: Check for paste too?
     if (event.keyCode == 13 || event.keyCode == 8 || event.keyCode == 46) {
       clearTimeout(timeDelay);
-      var mapText = document.getElementById('map').value;
+      var mapText = document.getElementById("map").value;
       var b = (mapText.match(/\n/g) || []).length;
       if (b !== numLineBreaks) {
         numLineBreaks = b;
         processMap(mapText);
       } else {
         clearTimeout(timeDelay);
-        var mapText = document.getElementById('map').value;
+        var mapText = document.getElementById("map").value;
         timeDelay = setTimeout(function() {
           processMap(mapText);
         }, 1000);
@@ -178,7 +178,7 @@ window.onload = function() {
       // 1-second delay after every keypress before processing map
       // Implicitly handles pasting
       clearTimeout(timeDelay);
-      var mapText = document.getElementById('map').value;
+      var mapText = document.getElementById("map").value;
       timeDelay = setTimeout(function() {
         processMap(mapText);
       }, 1000);
@@ -187,19 +187,19 @@ window.onload = function() {
 
   $("input[name='colLimit']").change(function() {
     columnLimit = $(this).val();
-    Cookies.set('savedCols', columnLimit, {
+    Cookies.set("savedCols", columnLimit, {
       expires: 30
     });
-    var mapText = document.getElementById('map').value;
+    var mapText = document.getElementById("map").value;
     processMap(mapText);
   });
 
   $("input[name='rowLimit']").change(function() {
     rowLimit = $(this).val();
-    Cookies.set('savedRows', rowLimit, {
+    Cookies.set("savedRows", rowLimit, {
       expires: 30
     });
-    var mapText = document.getElementById('map').value;
+    var mapText = document.getElementById("map").value;
     processMap(mapText);
   });
 };
@@ -226,33 +226,33 @@ function loadMouseDropdown() {
     suggests.push(Object.keys(popArray)[i].toLowerCase());
   }
 
-  $('#map').asuggest(suggests, autoCompleteSettings);
+  $("#map").asuggest(suggests, autoCompleteSettings);
 }
 
 var buildMouselist = function(mouseListText, sortedMLCLength, sortedMLC) {
   for (var l = 0; l < sortedMLCLength; l++) {
-    var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf('<a href'));
+    var sliceMLC = sortedMLC[l][0].slice(0, sortedMLC[l][0].indexOf("<a href"));
     mouseListText +=
       "<td style='font-size: 11px; padding: 10px'>" +
       "<p style='font-size: 16px'>" +
       sortedMLC[l][1] +
-      '%</p><br>' +
+      "%</p><br>" +
       sliceMLC +
-      '</td>';
+      "</td>";
   }
   return mouseListText;
 };
 function processMap(mapText) {
   //Save a cookie
-  Cookies.set('savedMice', mapText, {
+  Cookies.set("savedMice", mapText, {
     expires: 14
   });
 
-  var mouseArray = mapText.split('\n');
+  var mouseArray = mapText.split("\n");
   var mouseArrayLength = Object.size(mouseArray);
 
-  var interpretedAs = document.getElementById('interpretedAs');
-  var mouseList = document.getElementById('mouseList');
+  var interpretedAs = document.getElementById("interpretedAs");
+  var mouseList = document.getElementById("mouseList");
 
   var interpretedAsText = "<b>Invalid:<br></b><span class='invalid'>";
   var mouseListText =
@@ -270,14 +270,14 @@ function processMap(mapText) {
     if (mouseName.length == 0) continue;
     mouseName = mouseName.capitalise();
     mouseName = mouseName.trim();
-    var indexOfMouse = mouseName.indexOf(' Mouse');
+    var indexOfMouse = mouseName.indexOf(" Mouse");
     if (indexOfMouse >= 0) {
       mouseName = mouseName.slice(0, indexOfMouse);
     }
 
     if (popArray[mouseName] == undefined) {
       //Mouse name not recognised
-      interpretedAsText += mouseName + '<br>';
+      interpretedAsText += mouseName + "<br>";
       notRecognized = true;
     } else {
       if (contains(seenMice, mouseName)) {
@@ -291,7 +291,7 @@ function processMap(mapText) {
       mouseListText +=
         "<tr><td style='font-size: 12px; padding: 10px'><b>" +
         mouseName +
-        '</b></td>';
+        "</b></td>";
       remainingMice++;
 
       var mouseLocation = Object.keys(popArray[mouseName]);
@@ -326,42 +326,42 @@ function processMap(mapText) {
             for (var m = 0; m < noCharms; m++) {
               var charmName = mouseCharm[m];
 
-              var locationPhaseCheeseCharm = '<b>' + locationName + '</b><br>';
+              var locationPhaseCheeseCharm = "<b>" + locationName + "</b><br>";
 
-              var URLString = 'setup.html?';
+              var URLString = "setup.html?";
               //Replace apostrophes with %27
-              URLString += 'location=' + locationName;
+              URLString += "location=" + locationName;
 
               if (phaseName != EMPTY_SELECTION) {
-                locationPhaseCheeseCharm += '(' + phaseName + ')' + '<br>';
-                URLString += '&phase=' + phaseName;
+                locationPhaseCheeseCharm += "(" + phaseName + ")" + "<br>";
+                URLString += "&phase=" + phaseName;
               }
 
-              if (cheeseName.indexOf('/') > 0) {
+              if (cheeseName.indexOf("/") > 0) {
                 var trimmedCheese = cheeseName.slice(
                   0,
-                  cheeseName.indexOf('/')
+                  cheeseName.indexOf("/")
                 );
-                URLString += '&cheese=' + trimmedCheese;
+                URLString += "&cheese=" + trimmedCheese;
                 var restCheese = cheeseName.slice(
-                  cheeseName.indexOf('/'),
+                  cheeseName.indexOf("/"),
                   cheeseName.length + 1
                 );
                 locationPhaseCheeseCharm +=
-                  '<ins>' + trimmedCheese + '</ins>' + restCheese + '<br>';
+                  "<ins>" + trimmedCheese + "</ins>" + restCheese + "<br>";
               } else {
-                URLString += '&cheese=' + cheeseName;
-                locationPhaseCheeseCharm += cheeseName + '<br>';
+                URLString += "&cheese=" + cheeseName;
+                locationPhaseCheeseCharm += cheeseName + "<br>";
               }
 
               if (charmName != EMPTY_SELECTION) {
-                locationPhaseCheeseCharm += '[' + charmName + ']' + '<br>';
-                URLString += '&charm=' + charmName;
+                locationPhaseCheeseCharm += "[" + charmName + "]" + "<br>";
+                URLString += "&charm=" + charmName;
               }
 
-              var modURLString = URLString.replace(/ /g, '%20');
+              var modURLString = URLString.replace(/ /g, "%20");
               locationPhaseCheeseCharm +=
-                '<a href=' +
+                "<a href=" +
                 modURLString +
                 ' target="_blank">Link to best setup</a>';
 
@@ -382,10 +382,10 @@ function processMap(mapText) {
 
               if (bestLocationArray[locationPhaseCheeseCharm] == undefined) {
                 bestLocationArray[locationPhaseCheeseCharm] = attractionRate;
-                if (cheeseName.indexOf('/') > 0) {
+                if (cheeseName.indexOf("/") > 0) {
                   var trimmedCheese = cheeseName.slice(
                     0,
-                    cheeseName.indexOf('/')
+                    cheeseName.indexOf("/")
                   );
                   var baseline = findBaseline(locationName, trimmedCheese);
                   weightedBLA[locationPhaseCheeseCharm] =
@@ -403,10 +403,10 @@ function processMap(mapText) {
                 }
               } else {
                 bestLocationArray[locationPhaseCheeseCharm] += attractionRate;
-                if (cheeseName.indexOf('/') > 0) {
+                if (cheeseName.indexOf("/") > 0) {
                   var trimmedCheese = cheeseName.slice(
                     0,
-                    cheeseName.indexOf('/')
+                    cheeseName.indexOf("/")
                   );
                   var baseline = findBaseline(locationName, trimmedCheese);
                   weightedBLA[locationPhaseCheeseCharm] +=
@@ -443,29 +443,29 @@ function processMap(mapText) {
     }
   }
 
-  mouseListText += '</tbody>';
+  mouseListText += "</tbody>";
   mouseList.innerHTML = mouseListText;
   var resort = true,
     callback = function() {
-      var header = $('#locationAR');
-      if (header.hasClass('tablesorter-headerAsc')) {
+      var header = $("#locationAR");
+      if (header.hasClass("tablesorter-headerAsc")) {
         header.click();
         header.click();
-      } else if (header.hasClass('tablesorter-headerUnSorted')) {
+      } else if (header.hasClass("tablesorter-headerUnSorted")) {
         header.click();
       }
     };
-  $('#mouseList').trigger('updateAll', [resort, callback]);
+  $("#mouseList").trigger("updateAll", [resort, callback]);
 
-  interpretedAsText += '</span>';
+  interpretedAsText += "</span>";
   interpretedAs.innerHTML = interpretedAsText;
   if (notRecognized) {
-    $('#interpretedAs').show(500);
+    $("#interpretedAs").show(500);
   } else {
-    $('#interpretedAs').hide(500);
+    $("#interpretedAs").hide(500);
   }
 
-  $('#remainValue').text(remainingMice);
+  $("#remainValue").text(remainingMice);
 
   //Sort mouseLocationArray
   for (var lpcc in mouseLocationArray) {
@@ -486,7 +486,7 @@ function sortBestLocation(bestLocationArray, weightedBLA) {
   var bLALength = Object.size(bestLocationArray);
   var bLAKeys = Object.keys(bestLocationArray);
 
-  if (typeof weightedBLA == 'undefined') {
+  if (typeof weightedBLA == "undefined") {
     for (var i = 0; i < bLALength; i++) {
       var locationCheese = bLAKeys[i];
       //sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
@@ -516,7 +516,7 @@ function sortBestLocation(bestLocationArray, weightedBLA) {
 }
 
 function printBestLocation(sortedLocation, mouseLocationArray) {
-  var bestLocation = document.getElementById('bestLocation');
+  var bestLocation = document.getElementById("bestLocation");
   var bestLocationHTML =
     "<thead><tr><th align='center'>Location Info</th><th align='center'>Mice (Raw AR)</th><th align='center' data-filter='false'>Total AR</th><th align='center' id='weightAR' data-filter='false'>Weighted AR</th></tr></thead><tbody>";
 
@@ -531,18 +531,18 @@ function printBestLocation(sortedLocation, mouseLocationArray) {
 
   for (var i = 0; i < sortedLocationLength; i++) {
     //Checking mouse location
-    var mouseLocationHTML = '';
+    var mouseLocationHTML = "";
     var lpcc = sortedLocation[i][0];
     if (mouseLocationArray[lpcc]) {
       for (var j = 0; j < Object.size(mouseLocationArray[lpcc]); j++) {
         mouseLocationHTML +=
           mouseLocationArray[lpcc][j][0] +
-          ' (' +
+          " (" +
           mouseLocationArray[lpcc][j][1] +
-          '%)<br>';
+          "%)<br>";
       }
     } else {
-      mouseLocationHTML = 'N/A';
+      mouseLocationHTML = "N/A";
     }
 
     bestLocationHTML +=
@@ -554,28 +554,28 @@ function printBestLocation(sortedLocation, mouseLocationArray) {
       sortedLocation[i][1].toFixed(2) +
       "%</td><td align='center'>" +
       sortedLocation[i][2].toFixed(2) +
-      '%</td></tr>';
+      "%</td></tr>";
   }
 
-  bestLocationHTML += '</tbody>';
+  bestLocationHTML += "</tbody>";
   bestLocation.innerHTML = bestLocationHTML;
 
   var resort = true,
     callback = function() {
-      var header = $('#weightAR');
-      if (header.hasClass('tablesorter-headerAsc')) {
+      var header = $("#weightAR");
+      if (header.hasClass("tablesorter-headerAsc")) {
         header.click();
         header.click();
-      } else if (header.hasClass('tablesorter-headerUnSorted')) {
+      } else if (header.hasClass("tablesorter-headerUnSorted")) {
         header.click();
       }
     };
-  $('#bestLocation').trigger('updateAll', [resort, callback]);
+  $("#bestLocation").trigger("updateAll", [resort, callback]);
 }
 
 function findBaseline(location, cheese) {
   var baselineAtt =
-    baselineAttArray[cheese] || baselineArray[location + ' (' + cheese + ')'];
+    baselineAttArray[cheese] || baselineArray[location + " (" + cheese + ")"];
   return baselineAtt;
 }
 
@@ -583,7 +583,7 @@ function getMouseListFromURL(parameters) {
   if (parameters) {
     parameters = decodeURIComponent(parameters[1]);
 
-    return parameters.split('/').join('\n');
+    return parameters.split("/").join("\n");
   } else {
     return [];
   }

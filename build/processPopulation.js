@@ -1,16 +1,16 @@
 (function() {
-  const SAMPLE_SIZE_LABEL = 'SampleSize';
+  const SAMPLE_SIZE_LABEL = "SampleSize";
   const POPULATIONS = [
-    'data/populations.csv',
-    'data/pop_mopi.csv',
-    'data/pop-bwrift.csv',
-    'data/pop-iceberg.csv'
+    "data/populations.csv",
+    "data/pop_mopi.csv",
+    "data/pop-bwrift.csv",
+    "data/pop-iceberg.csv"
   ];
 
-  const fs = require('fs');
-  const csv = require('csvtojson');
-  const fileUtils = require('./modules/fileUtils');
-  const CombinedStream = require('combined-stream');
+  const fs = require("fs");
+  const csv = require("csvtojson");
+  const fileUtils = require("./modules/fileUtils");
+  const CombinedStream = require("combined-stream");
 
   var mapPopulations = {};
   var crePopulations = {};
@@ -18,33 +18,33 @@
 
   var csvConverter = csv({
     headers: [
-      'location',
-      'phase',
-      'cheese',
-      'charm',
-      'attraction',
-      'mouse',
-      'sampleSize'
+      "location",
+      "phase",
+      "cheese",
+      "charm",
+      "attraction",
+      "mouse",
+      "sampleSize"
     ],
     colParser: {
-      attraction: 'Number',
-      sampleSize: 'Number'
+      attraction: "Number",
+      sampleSize: "Number"
     }
   });
 
   var inputStream = fileUtils.createCombinedStream(POPULATIONS);
   csvConverter
     .fromStream(inputStream)
-    .on('json', function(jsonObj) {
+    .on("json", function(jsonObj) {
       lineHandler(jsonObj);
     })
-    .on('done', function(error) {
+    .on("done", function(error) {
       if (error) return console.log(error);
       saveFiles();
     });
 
   function lineHandler(rowJson) {
-    if (rowJson.location.toLowerCase() !== 'location') {
+    if (rowJson.location.toLowerCase() !== "location") {
       processCreSetupPopItem(crePopulations, rowJson, true, true);
       processCreSetupPopItem(setupPopulations, rowJson, false, false);
       processMapPopItem(mapPopulations, rowJson);
@@ -52,23 +52,23 @@
   }
 
   function saveFiles() {
-    fileUtils.saveJsonFile('data/populations-cre.json', crePopulations);
-    fileUtils.saveJsonFile('data/populations-map.json', mapPopulations);
-    fileUtils.saveJsonFile('data/populations-setup.json', setupPopulations);
+    fileUtils.saveJsonFile("data/populations-cre.json", crePopulations);
+    fileUtils.saveJsonFile("data/populations-map.json", mapPopulations);
+    fileUtils.saveJsonFile("data/populations-setup.json", setupPopulations);
 
-    fileUtils.makeDirectory('data/pretty/');
+    fileUtils.makeDirectory("data/pretty/");
     fileUtils.saveJsonFile(
-      'data/pretty/populations-cre.json',
+      "data/pretty/populations-cre.json",
       crePopulations,
       4
     );
     fileUtils.saveJsonFile(
-      'data/pretty/populations-map.json',
+      "data/pretty/populations-map.json",
       mapPopulations,
       4
     );
     fileUtils.saveJsonFile(
-      'data/pretty/populations-setup.json',
+      "data/pretty/populations-setup.json",
       setupPopulations,
       4
     );
@@ -94,7 +94,7 @@
     addKey(population, row.location);
     addKey(population[row.location], row.phase);
 
-    var cheeses = splitCheese ? row.cheese.split('/') : [row.cheese];
+    var cheeses = splitCheese ? row.cheese.split("/") : [row.cheese];
     for (var cheeseIndex = 0; cheeseIndex < cheeses.length; cheeseIndex++) {
       var cheese = cheeses[cheeseIndex];
 

@@ -1,7 +1,7 @@
-var SETUP_BOOKMARKLET_URL = 'src/bookmarklet/setupbookmarklet.min.js';
-var ANALYZER_BOOKMARKLET_URL = 'src/bookmarklet/analyzerbookmarklet.min.js';
-var CRE_BOOKMARKLET_URL = 'src/bookmarklet/crebookmarklet.min.js';
-var MAP_BOOKMARKLET_URL = 'src/bookmarklet/mapbookmarklet.min.js';
+var SETUP_BOOKMARKLET_URL = "src/bookmarklet/setupbookmarklet.min.js";
+var ANALYZER_BOOKMARKLET_URL = "src/bookmarklet/analyzerbookmarklet.min.js";
+var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
+var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.min.js";
 
 /**
  * Escape special characters and prepend javascript:void to the string
@@ -9,7 +9,7 @@ var MAP_BOOKMARKLET_URL = 'src/bookmarklet/mapbookmarklet.min.js';
  * @return {string}
  */
 function makeBookmarkletString(content) {
-  return 'javascript:void' + encodeURI(' ' + content);
+  return "javascript:void" + encodeURI(" " + content);
 }
 /**
  * Loads bookmarklet content from a js file into an html element's href attribute
@@ -27,15 +27,15 @@ function loadBookmarkletFromJS(url, storageKey, linkSelector, callback) {
         callback(data);
       }
     },
-    'text'
+    "text"
   );
 
   function checkBookmarklet(bookmarkletString) {
     if (bookmarkletString !== localStorage.getItem(storageKey)) {
-      alert('Bookmarklet has changed! Please update accordingly.');
+      alert("Bookmarklet has changed! Please update accordingly.");
       localStorage.setItem(storageKey, bookmarkletString);
     }
 
-    $(linkSelector).attr('href', bookmarkletString);
+    $(linkSelector).attr("href", bookmarkletString);
   }
 }

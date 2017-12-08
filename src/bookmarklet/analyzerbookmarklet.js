@@ -1,71 +1,71 @@
 (function() {
-  if (location.href.indexOf('mousehuntgame.com') < 0) {
-    alert('You are not on mousehuntgame.com! Please try again.');
+  if (location.href.indexOf("mousehuntgame.com") < 0) {
+    alert("You are not on mousehuntgame.com! Please try again.");
     return;
   }
-  var url = 'https://tsitu.github.io/MH-Tools/analyzer.html?data=';
+  var url = "https://tsitu.github.io/MH-Tools/analyzer.html?data=";
   // var url = "https://192.168.0.101:8888/analyzer.html?data="; //debug
-  var sellString = 'div.history-details .dataTable .sell';
-  var buyString = 'div.history-details .dataTable .buy';
+  var sellString = "div.history-details .dataTable .sell";
+  var buyString = "div.history-details .dataTable .buy";
   if (
-    document.querySelector('div.history-details .paginate_button.current') ==
+    document.querySelector("div.history-details .paginate_button.current") ==
     null
   ) {
-    alert('Please navigate to Marketplace -> My History');
+    alert("Please navigate to Marketplace -> My History");
     return;
   }
   var initPage = parseInt(
-    document.querySelector('div.history-details .paginate_button.current')
+    document.querySelector("div.history-details .paginate_button.current")
       .innerHTML
   );
-  var orig = document.querySelector('div.history-details .dataTables_info')
+  var orig = document.querySelector("div.history-details .dataTables_info")
     .innerHTML;
-  var entries = orig.slice(orig.indexOf('of') + 3, orig.length);
+  var entries = orig.slice(orig.indexOf("of") + 3, orig.length);
   var entriesSlice = parseInt(
-    entries.slice(0, entries.indexOf('entries')).replace(/,/g, '')
+    entries.slice(0, entries.indexOf("entries")).replace(/,/g, "")
   );
   var totalPages = Math.ceil(entriesSlice / 10);
   var iterations = totalPages - initPage + 1;
-  console.log('Total Pages: ' + totalPages + ' | Iterations: ' + iterations);
+  console.log("Total Pages: " + totalPages + " | Iterations: " + iterations);
   var counter = 0;
-  var timeout = '';
-  var interval = '';
-  var domTrack = '';
-  var newWindow = window.open('', 'mhanalyzer');
-  newWindow.location = 'https://tsitu.github.io/MH-Tools/analyzerwaiting.html';
+  var timeout = "";
+  var interval = "";
+  var domTrack = "";
+  var newWindow = window.open("", "mhanalyzer");
+  newWindow.location = "https://tsitu.github.io/MH-Tools/analyzerwaiting.html";
 
   function parse() {
-    var a = document.querySelector('div.history-details .paginate_button.next');
+    var a = document.querySelector("div.history-details .paginate_button.next");
     if (
-      a.className.indexOf('disabled') < 0 ||
+      a.className.indexOf("disabled") < 0 ||
       parseInt(
-        document.querySelector('div.history-details .paginate_button.current')
+        document.querySelector("div.history-details .paginate_button.current")
           .innerHTML
       ) == totalPages
     ) {
       var sell = document.querySelectorAll(
         sellString +
-          ' .sorting_1, ' +
+          " .sorting_1, " +
           sellString +
-          ' .item-name, ' +
+          " .item-name, " +
           sellString +
-          ' .numeric.quantity, ' +
+          " .numeric.quantity, " +
           sellString +
-          ' .numeric, ' +
+          " .numeric, " +
           sellString +
-          ' .numeric.total'
+          " .numeric.total"
       );
       var buy = document.querySelectorAll(
         buyString +
-          ' .sorting_1, ' +
+          " .sorting_1, " +
           buyString +
-          ' .item-name, ' +
+          " .item-name, " +
           buyString +
-          ' .numeric.quantity, ' +
+          " .numeric.quantity, " +
           buyString +
-          ' .numeric, ' +
+          " .numeric, " +
           buyString +
-          ' .numeric.total'
+          " .numeric.total"
       );
 
       var sellArr = [];
@@ -74,32 +74,32 @@
       for (var i = 0; i < sell.length / 5; i++) {
         if (i == 0) {
           sellArr.push(
-            'Sell ' +
+            "Sell " +
               sell[i].textContent +
-              ' ' +
-              sell[i + 1].textContent.split(' ').length +
-              ' ' +
+              " " +
+              sell[i + 1].textContent.split(" ").length +
+              " " +
               sell[i + 1].textContent +
-              ' ' +
+              " " +
               sell[i + 2].textContent +
-              ' ' +
+              " " +
               sell[i + 3].textContent +
-              ' ' +
+              " " +
               sell[i + 4].textContent
           );
         } else {
           sellArr.push(
-            'Sell ' +
+            "Sell " +
               sell[i * 5].textContent +
-              ' ' +
-              sell[i * 5 + 1].textContent.split(' ').length +
-              ' ' +
+              " " +
+              sell[i * 5 + 1].textContent.split(" ").length +
+              " " +
               sell[i * 5 + 1].textContent +
-              ' ' +
+              " " +
               sell[i * 5 + 2].textContent +
-              ' ' +
+              " " +
               sell[i * 5 + 3].textContent +
-              ' ' +
+              " " +
               sell[i * 5 + 4].textContent
           );
         }
@@ -108,51 +108,51 @@
       for (var i = 0; i < buy.length / 5; i++) {
         if (i == 0) {
           buyArr.push(
-            'Buy ' +
+            "Buy " +
               buy[i].textContent +
-              ' ' +
-              buy[i + 1].textContent.split(' ').length +
-              ' ' +
+              " " +
+              buy[i + 1].textContent.split(" ").length +
+              " " +
               buy[i + 1].textContent +
-              ' ' +
+              " " +
               buy[i + 2].textContent +
-              ' ' +
+              " " +
               buy[i + 3].textContent +
-              ' ' +
+              " " +
               buy[i + 4].textContent
           );
         } else {
           buyArr.push(
-            'Buy ' +
+            "Buy " +
               buy[i * 5].textContent +
-              ' ' +
-              buy[i * 5 + 1].textContent.split(' ').length +
-              ' ' +
+              " " +
+              buy[i * 5 + 1].textContent.split(" ").length +
+              " " +
               buy[i * 5 + 1].textContent +
-              ' ' +
+              " " +
               buy[i * 5 + 2].textContent +
-              ' ' +
+              " " +
               buy[i * 5 + 3].textContent +
-              ' ' +
+              " " +
               buy[i * 5 + 4].textContent
           );
         }
       }
 
       if (sellArr.length > 0) {
-        url += encodeURI(sellArr.join('/'));
-        url += '/';
+        url += encodeURI(sellArr.join("/"));
+        url += "/";
       }
 
       if (buyArr.length > 0) {
-        url += encodeURI(buyArr.join('/'));
-        url += '/';
+        url += encodeURI(buyArr.join("/"));
+        url += "/";
       }
 
       counter++;
       if (counter == iterations) {
-        console.log('Parse complete!');
-        url += '&isDone=true';
+        console.log("Parse complete!");
+        url += "&isDone=true";
         newWindow.location = url;
         clearTimeout(timeout);
         clearInterval(interval);
@@ -161,23 +161,23 @@
           /*
 	        		 *Split data to contain URL length
 	        		 */
-          url += '&isDone=false';
+          url += "&isDone=false";
           newWindow.location = url;
-          url = 'https://tsitu.github.io/MH-Tools/analyzer.html?data=';
+          url = "https://tsitu.github.io/MH-Tools/analyzer.html?data=";
           // url = "https://192.168.0.101:8888/analyzer.html?data="; //debug
         }
         a.click();
         checkDOM();
       }
     } else if (a == null) {
-      console.log('Next button is null.');
+      console.log("Next button is null.");
     } else if (
-      document.querySelector('div.history-details .paginate_button.current') ==
+      document.querySelector("div.history-details .paginate_button.current") ==
       null
     ) {
-      console.log('Current button is null.');
+      console.log("Current button is null.");
     } else {
-      console.log('Unknown error.');
+      console.log("Unknown error.");
     }
   }
 
@@ -185,10 +185,10 @@
     interval = setInterval(function() {
       if (
         domTrack !=
-        document.querySelector('div.history-details .dataTables_info').innerHTML
+        document.querySelector("div.history-details .dataTables_info").innerHTML
       ) {
         domTrack = document.querySelector(
-          'div.history-details .dataTables_info'
+          "div.history-details .dataTables_info"
         ).innerHTML;
         clearTimeout(timeout);
         clearInterval(interval);
@@ -198,7 +198,7 @@
     timeout = setTimeout(function() {
       newWindow.close();
       clearInterval(interval);
-      alert('Parse timed out! Please check your connection and try again.');
+      alert("Parse timed out! Please check your connection and try again.");
     }, 4000);
   }
 

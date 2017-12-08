@@ -1,8 +1,8 @@
 (function() {
-  const fs = require('fs');
-  const readline = require('readline');
-  const mkdirp = require('mkdirp');
-  const CombinedStream = require('combined-stream');
+  const fs = require("fs");
+  const readline = require("readline");
+  const mkdirp = require("mkdirp");
+  const CombinedStream = require("combined-stream");
 
   module.exports = {
     /**
@@ -17,17 +17,17 @@
         input: inputStream
       });
 
-      lineReader.on('line', lineCallback);
-      lineReader.on('close', fileCloseCallback);
+      lineReader.on("line", lineCallback);
+      lineReader.on("close", fileCloseCallback);
     },
 
     saveJsonFile: function(filename, object, whitespace) {
       const content = JSON.stringify(object, null, whitespace);
-      fs.writeFile(filename, content, 'utf8', function(err) {
+      fs.writeFile(filename, content, "utf8", function(err) {
         if (err) {
           return console.log(err);
         }
-        console.log(filename + ' was saved');
+        console.log(filename + " was saved");
       });
     },
 
