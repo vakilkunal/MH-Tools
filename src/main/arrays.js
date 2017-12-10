@@ -278,6 +278,7 @@ var baselineAttArray = {
   "Moon": 0.9995,
   "Runic String": 0.99, //Guesstimate
   "Ancient String": 0.99, //Guesstimate
+  "Chedd-Ore": 0.9, //Guesstimate
   "Abominable Asiago": 0.95, //Guesstimate
 };
 
