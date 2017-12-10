@@ -278,6 +278,7 @@ var baselineAttArray = {
   "Moon": 0.9995,
   "Runic String": 0.99, //Guesstimate
   "Ancient String": 0.99, //Guesstimate
+  "Abominable Asiago": 0.95, //Guesstimate
 };
 
 /* Its okay using strings as keys here, JS will convert it */
@@ -2877,12 +2878,15 @@ var powersArray = {
   "Thundering Watcher": [5500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
   "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
   "Ful'Mina, The Mountain Queen": [8667*30, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+  "Craggy Ore": [1200, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
+  "Slope Swimmer": [1200, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
+  "Mountain": [1900, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
 };
 
 /* [Gold, Points] */
 // prettier-ignore
 var miceArray = {
-  "Abominable Snow": [1750, 1750],
+  "Abominable Snow": [5000, 5000],
   "Bionic": [550, 300],
   "Black Widow": [10, 480],
   "Brown": [150, 115],
@@ -3754,6 +3758,9 @@ var miceArray = {
   "Thundering Watcher": [18000, 100000],
   "Dragoon": [20000, 100000],
   "Ful'Mina, The Mountain Queen": [30000, 120000],
+  "Craggy Ore": [1000, 1600],
+  "Slope Swimmer": [1000, 1600],
+  "Mountain": [1000, 3000],
 };
 
 var festiveTraps = [

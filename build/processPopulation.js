@@ -3,8 +3,8 @@
   const POPULATIONS = [
     "data/populations.csv",
     "data/pop_mopi.csv",
-    "data/pop-bwrift.csv",
-    "data/pop-iceberg.csv"
+    "data/pop_bwrift.csv",
+    "data/pop_iceberg.csv"
   ];
 
   const fs = require("fs");
