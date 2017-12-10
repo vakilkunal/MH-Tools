@@ -67,7 +67,7 @@ Boulder Biter,7700
 Bounty Hunter,950
 Brawny,3600
 Breakdancer,225
-Breeze Borrower,0
+Breeze Borrower,4800
 Briegull,36
 Brimstone,1120
 Brown,35
@@ -118,7 +118,7 @@ City Noble,2720
 City Worker,3040
 Clockwork Samurai,23
 Clockwork Timespinner,5500
-Cloud Collector,0
+Cloud Collector,6300
 Clownfish,7176
 Clump,7300
 Clumsy Carrier,4496
@@ -228,7 +228,7 @@ Doktor,6800
 Double Black Diamond Racer,3800
 Draconic Warden,1290
 Dragon,7420
-Dragoon,0
+Dragoon,20000
 Dread Knight,9000
 Dread Pirate Mousert,5432
 Dream Drifter,6000
@@ -289,7 +289,7 @@ Flame Ordnance,5280
 Flame Warrior,2880
 Floating Spore,7800
 Flutterby,1800
-Fluttering Flutist,0
+Fluttering Flutist,7200
 Flying,50
 Fog,80
 Force Fighter Blue,275
@@ -309,7 +309,7 @@ Frostwing Commander,3400
 Frosty Snow,60
 Frozen,50
 Fuel,800
-"Ful'Mina, The Mountain Queen",24000
+Ful'Mina,24000
 Fungal Frog,5000
 Fungal Spore,2300
 Fungal Technomorph,12120
@@ -375,7 +375,7 @@ Hoarder,375
 Hollowed,15000
 Hollowed Minion,15000
 Hollowhead,88
-Homeopathic Apothecary,0
+Homeopathic Apothecary,9000
 Hookshot,1000
 Hope,100
 Hot Head,338
@@ -487,7 +487,7 @@ Mole,55
 Molten Midas,19800
 Monarch,250
 Monk,525
-Monsoon Maker,0
+Monsoon Maker,7500
 Monster,910
 Monster of the Meteor,18000
 Monster Tail,2700
@@ -607,11 +607,11 @@ Quesodillo,2400
 Quillback,6200
 Radioactive Ooze,8250
 Rain Collector,0
-Rain Summoner,0
+Rain Summoner,7200
 Rain Wallower,0
 Rainbow Racer,4268
-Rainmancer,0
-Rainwater Purifier,0
+Rainmancer,12000
+Rainwater Purifier,4800
 Rancid Bog Beast,10000
 Ravenous Zombie,540
 Raw Diamond,12000
@@ -818,8 +818,8 @@ Thirsty,150
 Thistle,1400
 Thorn,1900
 Thunder Strike,0
-Thundering Watcher,0
-Thunderlord,0
+Thundering Watcher,20000
+Thunderlord,18000
 Tidal Fisher,1470
 Tiger,550
 Timeless Lich,25000
@@ -894,9 +894,9 @@ Wicked Witch of Whisker Woods,45
 Wiggler,35
 Wight,875
 Wild Chainsaw,300
-Wind Warrior,0
+Wind Warrior,12000
 Wind Watcher,0
-Windy Farmer,0
+Windy Farmer,6300
 Winged Harpy,12000
 Winter Games,300
 Winter Mage,2710
