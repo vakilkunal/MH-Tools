@@ -1,7 +1,7 @@
 "use strict";
 
 var BASELINES_URL = "data/baselines.json";
-var WISDOM_URL = "data/mouse_wisdom.json";
+var WISDOM_URL = "data/mouse-wisdom.json";
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
 // var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
 // Uncomment above during local testing to bypass Cross-Origin on Chrome

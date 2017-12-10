@@ -1,5 +1,5 @@
 (function() {
-  const WISDOM = ["data/mouse_wisdom.csv"];
+  const WISDOM = ["data/mouse-wisdom.csv"];
   const csv = require("csvtojson");
   const fs = require("fs");
   const fileUtils = require("./modules/fileUtils");
@@ -19,8 +19,8 @@
       mouseWisdom[jsonObj["mouse"]] = jsonObj["wisdom"];
     })
     .on("done", function(error) {
-      fileUtils.saveJsonFile("data/mouse_wisdom.json", mouseWisdom);
+      fileUtils.saveJsonFile("data/mouse-wisdom.json", mouseWisdom);
       fileUtils.makeDirectory("data/pretty");
-      fileUtils.saveJsonFile("data/pretty/mouse_wisdom.json", mouseWisdom, 4);
+      fileUtils.saveJsonFile("data/pretty/mouse-wisdom.json", mouseWisdom, 4);
     });
 })();
