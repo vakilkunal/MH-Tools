@@ -2,6 +2,7 @@ var SETUP_BOOKMARKLET_URL = "src/bookmarklet/setupbookmarklet.min.js";
 var ANALYZER_BOOKMARKLET_URL = "src/bookmarklet/analyzerbookmarklet.min.js";
 var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
 var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.min.js";
+var CROWN_BOOKMARKLET_URL = "src/bookmarklet/crownbookmarklet.min.js";
 
 /**
  * Escape special characters and prepend javascript:void to the string

@@ -165,12 +165,12 @@
         <td>
 
         <div class="header">
-            <p>based on Chad Moore's and <a href="http://olf.github.io/mhmapsolver/" target="_blank">Olaf's</a><br>
+            <p>based on vsong's <a href="https://tsitu.github.io/MH-Tools/map.html" target="_blank">Map Solver</a> tweaks<br>
             <a href="https://www.mousehuntgame.com/forum/showthread.php?132397-MouseHunt-Tools-by-tsitu&goto=newpost" target="_blank">Report bugs and suggest features</a></p><br>
-        	<p>Type the mouse name on one line and the number of catches on the next line. Press <b>Enter</b> to autocomplete and <b>Tab</b> to cycle through suggestions.</p><br>
-            <p><ins>Note</ins>: Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results.
-            The first cheese listed is used to calculate a fuse's combined baseline attraction.</p><br>
-            <p>Bookmark <a id="bookmarklet" href="#">this link</a> and click it while on "King's Crowns" (mousehuntgame.com only) to open a new window and copy the list of bronze crowns here.</p><br>
+        	<p>Type a mouse name on one line and its number of catches on the next line. Press <b>Enter</b> to autocomplete and <b>Tab</b> to cycle through suggestions.</p><br>
+            <p>Bookmark <a id="bookmarklet" href="#">this link</a> and click it while on "King's Crowns" to automatically populate your top 30 mice.
+                For those hunters with many bronze crowns, the <b>rest of the list is copied to your clipboard</b>. Simply paste it into the text box below.</p><br>
+            <p><i>Raw CP</i>: Percentage of progress towards silver crown per hunt (Raw AR divided by 100 minus catches)<br><i>Total CP</i>: Summed silver crown progress for a specific location/phase/cheese/charm<br><i>Weighted CP</i>: Same as above, with cheese attraction factored in</p>
         </div>
 
         </td>
@@ -247,7 +247,9 @@
     <div id="location">
         <h2>Best Locations</h2><br>
         <p><a href="#mouselistcontainer">Mouse List</a></p>
-		<table id='bestLocation' class='tablesorter'><thead></thead><tbody></tbody></table>
+        <table id='bestLocation' class='tablesorter'><thead></thead><tbody></tbody></table><br>
+        <p><ins>Note</ins>: Fused common cheeses (e.g. Gouda/Brie/Swiss) will often show up in results.
+            This indicates that attraction data from the underlined cheese has been extrapolated to the others due to low sample sizes.</p><br>
     </div>
 
     <div id="mouselistcontainer">

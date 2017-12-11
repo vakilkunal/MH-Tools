@@ -4,7 +4,9 @@
     return;
   }
   if (document.querySelector("div.crownheader") == null) {
-    alert("Please navigate to \"King's Crowns'!\"");
+    alert(
+      "Please navigate to Hunter's Profile (Golden Shield) -> King's Crowns"
+    );
     return;
   }
 
@@ -22,13 +24,13 @@
     })
     .get();
 
+  /**
+   * Copy full list to clipboard
+   */
   var combinedString = "";
   for (var i = 0; i < miceNames.length; i++) {
     combinedString += miceNames[i] + "\n" + miceCatches[i] + "\n";
   }
-
-  //splice(1,30) and autopopulate with crownmode=true, full list in clipboard
-
   var copyListener = function(event) {
     document.removeEventListener("copy", copyListener, true);
     event.preventDefault();
@@ -38,4 +40,13 @@
   };
   document.addEventListener("copy", copyListener, true);
   document.execCommand("copy");
+
+  /**
+   * Auto-populate top 30 mice
+   */
+  var url = "https://tsitu.github.io/MH-Tools/crown.html";
+  url += "?mice=" + encodeURIComponent(miceNames.splice(0, 30).join("/"));
+  url += "?catches=" + encodeURIComponent(miceCatches.splice(0, 30).join("/"));
+  var newWindow = window.open("", "mhcrownsolver");
+  newWindow.location = url;
 })();

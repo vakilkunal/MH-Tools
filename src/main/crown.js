@@ -31,7 +31,7 @@ function loadMiceFromUrlOrCookie() {
   );
 
   if (mouseList.length === 0) {
-    var cookie = Cookies.get("savedMice");
+    var cookie = Cookies.get("crownSavedMice");
     if (cookie !== undefined) {
       findLoadedMice(cookie);
     }
@@ -163,7 +163,11 @@ function initTablesorter() {
 }
 window.onload = function() {
   startPopulationLoad(POPULATION_JSON_URL);
-  loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, "mapBookmarklet", "#bookmarklet");
+  loadBookmarkletFromJS(
+    CROWN_BOOKMARKLET_URL,
+    "crownBookmarklet",
+    "#bookmarklet"
+  );
 
   //Initialize tablesorter, bind to table
   initTablesorter();
@@ -257,7 +261,7 @@ var buildMouselist = function(mouseListText, sortedMLCLength, sortedMLC) {
 };
 function processMap(mapText) {
   //Save a cookie
-  Cookies.set("savedMice", mapText, {
+  Cookies.set("crownSavedMice", mapText, {
     expires: 14
   });
 
@@ -276,7 +280,7 @@ function processMap(mapText) {
 
   var interpretedAsText = "<b>Invalid:<br></b><span class='invalid'>";
   var mouseListText =
-    "<thead><tr><th align='center'>Mouse</th><th align='center' id='locationAR'>Location (Raw AR)</th></tr></thead><tbody>";
+    "<thead><tr><th align='center'>Mouse</th><th align='center' id='locationAR'>Location (Raw CP)</th></tr></thead><tbody>";
 
   var bestLocationArray = [];
   var weightedBLA = [];
@@ -540,7 +544,7 @@ function sortBestLocation(bestLocationArray, weightedBLA) {
 function printBestLocation(sortedLocation, mouseLocationArray) {
   var bestLocation = document.getElementById("bestLocation");
   var bestLocationHTML =
-    "<thead><tr><th align='center'>Location Info</th><th align='center'>Mice (Raw AR)</th><th align='center' data-filter='false'>Total AR</th><th align='center' id='weightAR' data-filter='false'>Weighted AR</th></tr></thead><tbody>";
+    "<thead><tr><th align='center'>Location Info</th><th align='center'>Mice (Raw CP)</th><th align='center' data-filter='false'>Total CP</th><th align='center' id='weightAR' data-filter='false'>Weighted CP</th></tr></thead><tbody>";
 
   var sortedLocationLength = Object.size(sortedLocation);
 
