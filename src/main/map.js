@@ -150,6 +150,11 @@ function initTablesorter() {
 }
 window.onload = function() {
   startPopulationLoad(POPULATION_JSON_URL);
+  loadBookmarkletFromJS(
+    BOOKMARKLET_LOADER_URL,
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
   loadBookmarkletFromJS(MAP_BOOKMARKLET_URL, "mapBookmarklet", "#bookmarklet");
 
   //Initialize tablesorter, bind to table

@@ -36,6 +36,11 @@ window.onload = function() {
     alert(instructionString);
   });
 
+  loadBookmarkletFromJS(
+    BOOKMARKLET_LOADER_URL,
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
   loadBookmarkletFromJS(CRE_BOOKMARKLET_URL, "creBookmarklet", "#bookmarklet");
   startPopulationLoad(POPULATION_JSON_URL);
 

@@ -23,6 +23,12 @@ $(window).load(function() {
   });
 
   loadBookmarkletFromJS(
+    BOOKMARKLET_LOADER_URL,
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
+
+  loadBookmarkletFromJS(
     SETUP_BOOKMARKLET_URL,
     "setupBookmarklet",
     "#bookmarklet",

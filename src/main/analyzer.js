@@ -2,6 +2,11 @@
 
 window.onload = function() {
   loadBookmarkletFromJS(
+    BOOKMARKLET_LOADER_URL,
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
+  loadBookmarkletFromJS(
     ANALYZER_BOOKMARKLET_URL,
     "analyzerBookmarklet",
     "#bookmarklet"

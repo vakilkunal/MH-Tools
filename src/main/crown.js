@@ -164,6 +164,11 @@ function initTablesorter() {
 window.onload = function() {
   startPopulationLoad(POPULATION_JSON_URL);
   loadBookmarkletFromJS(
+    BOOKMARKLET_LOADER_URL,
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
+  loadBookmarkletFromJS(
     CROWN_BOOKMARKLET_URL,
     "crownBookmarklet",
     "#bookmarklet"

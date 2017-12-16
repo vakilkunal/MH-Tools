@@ -3,6 +3,7 @@ var ANALYZER_BOOKMARKLET_URL = "src/bookmarklet/analyzerbookmarklet.min.js";
 var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
 var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.min.js";
 var CROWN_BOOKMARKLET_URL = "src/bookmarklet/crownbookmarklet.min.js";
+var BOOKMARKLET_LOADER_URL = "src/bookmarklet/bookmarkletloader.min.js";
 
 /**
  * Escape special characters and prepend javascript:void to the string
@@ -31,9 +32,9 @@ function loadBookmarkletFromJS(url, storageKey, linkSelector, callback) {
     "text"
   );
 
-  function checkBookmarklet(bookmarkletString) {
+  function checkBookmarklet(bookmarkletString, storageKey) {
     if (bookmarkletString !== localStorage.getItem(storageKey)) {
-      alert("Bookmarklet has changed! Please update accordingly.");
+      alert(storageKey + " has changed - please update accordingly.");
       localStorage.setItem(storageKey, bookmarkletString);
     }
 
