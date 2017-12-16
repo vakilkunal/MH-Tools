@@ -34,7 +34,31 @@ function loadBookmarkletFromJS(url, storageKey, linkSelector, callback) {
 
   function checkBookmarklet(bookmarkletString, storageKey) {
     if (bookmarkletString !== localStorage.getItem(storageKey)) {
-      alert(storageKey + " has changed - please update accordingly.");
+      var alertString = "";
+      if (storageKey === "bookmarkletLoader") {
+        alertString = "The Bookmarklet Auto-Loader has been updated!";
+      } else if (storageKey) {
+        switch (storageKey) {
+          case "creBookmarklet":
+            alertString = "The Catch Rate Estimator ";
+            break;
+          case "mapBookmarklet":
+            alertString = "The Map Solver ";
+            break;
+          case "setupBookmarklet":
+            alertString = "The Best Setup ";
+            break;
+          case "analyzerBookmarklet":
+            alertString = "The Marketplace Analyzer ";
+            break;
+          case "crownBookmarklet":
+            alertString = "The Silver Crown Solver ";
+            break;
+        }
+        alertString +=
+          "bookmarklet has been updated.\nPlease edit accordingly, or try the Auto-Loader!";
+      }
+      alert(alertString);
       localStorage.setItem(storageKey, bookmarkletString);
     }
 
