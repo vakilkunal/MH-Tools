@@ -393,7 +393,7 @@ function processMap(mapText) {
               locationPhaseCheeseCharm +=
                 "<a href=" +
                 modURLString +
-                ' target="_blank">Link to best setup</a>';
+                ' target="_blank" rel="noopener">Link to best setup</a>';
 
               var attractionRate =
                 parseFloat(

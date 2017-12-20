@@ -49,6 +49,7 @@ var standardCheeseCost = {
 
 var riftWeapons = [
   "Biomolecular Re-atomizer Trap",
+  "Christmas Crystalabra Trap",
   "Crystal Tower",
   "Focused Crystal Laser",
   "Multi-Crystal Laser",
@@ -3771,15 +3772,20 @@ var miceArray = {
 };
 
 var festiveTraps = [
+  "Christmas Cactus Trap",
   "Christmas Cracker Trap",
+  "Christmas Crystalabra Trap",
   "Double Diamond Adventure",
   "Explosive Toboggan Ride",
   "Festive Forgotten Fir Trap",
   "Festive Gauntlet Crusher",
   "Gingerbread House Surprise",
   "Glacier Gatler",
+  "Goldfrost Crossbow Trap",
+  "Harrowing Holiday Harpoon Trap",
   "Holiday Hydro Hailstone Trap",
   "Ice Blaster",
+  "Infinite Winter Horizon Trap",
   "Nutcracker Nuisance Trap",
   "Snow Barrage",
   "Snowglobe Trap",

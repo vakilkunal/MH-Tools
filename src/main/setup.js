@@ -787,7 +787,13 @@ function getCRELinkElement() {
   if (charmName && charmName != EMPTY_SELECTION) {
     caption += " / " + charmName;
   }
-  return "<a href='" + urlString + "' target='_blank'>" + caption + "</a>";
+  return (
+    "<a href='" +
+    urlString +
+    "' target='_blank' rel='noopener'>" +
+    caption +
+    "</a>"
+  );
 
   /**
    * Builds the actual url with parameter to the CRE page
