@@ -3782,7 +3782,7 @@ var festiveTraps = [
   "Gingerbread House Surprise",
   "Glacier Gatler",
   "Goldfrost Crossbow Trap",
-  "Harrowing Holiday Harpoon Trap",
+  "Harrowing Holiday Harpoon Harp",
   "Holiday Hydro Hailstone Trap",
   "Ice Blaster",
   "Infinite Winter Horizon Trap",
