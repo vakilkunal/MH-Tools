@@ -55,13 +55,15 @@ var fortRox = {
 
 var specialCharm = {
   "Champion Charm": 1,
-  "Growth Charm": 1,
-  "Spellbook Charm": 1,
-  "Wild Growth Charm": 1,
-  "Snowball Charm": 1,
+  "Bronze Tournament Base": 1,
+  "Silver Tournament Base": 1,
   "Golden Tournament Base": 1,
+  "Growth Charm": 1,
+  "Wild Growth Charm": 1,
   "Soiled Base": 1,
-  "Spellbook Base": 1
+  "Spellbook Charm": 1,
+  "Spellbook Base": 1,
+  "Snowball Charm": 1
 };
 
 Object.size = function(obj) {
@@ -77,7 +79,7 @@ function contains(arrayOrString, searchElement) {
 }
 
 function calcSpecialCharms(charmName) {
-  populateCharmData(charmName);
+  populateCharmData(charmName); //Resets charm globals
   if (charmName === "Champion Charm") {
     //Check if GTB used. If so +4 luck
     if (baseName === "Golden Tournament Base") {

@@ -1025,6 +1025,9 @@ function weaponChanged() {
   updateLink();
   weaponName = select.value;
   populateWeaponData(weaponName);
+
+  //Certain weapons have special effects when paired with particular charms (e.g. Festive + Snowball)
+  charmChangeCommon();
   calculateTrapSetup();
 }
 
@@ -1169,7 +1172,7 @@ function baseChanged() {
   icebergPhase();
   populateBaseData(baseName);
 
-  //Bases with special effects when paired with particular charm
+  //Certain bases have special effects when paired with particular charms
   charmChangeCommon();
   calculateTrapSetup();
 }
