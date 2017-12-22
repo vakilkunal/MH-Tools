@@ -733,7 +733,6 @@ function printCombinations(micePopulation, headerHtml) {
   });
 
   handleSort();
-
   function handleSort() {
     var resort = true;
     var callback = function() {

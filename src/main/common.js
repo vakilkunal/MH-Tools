@@ -108,7 +108,7 @@ function calcSpecialCharms(charmName) {
       charmPower += 500;
       charmBonus += 8;
     }
-  } else if (charmName === "Snowball Charm") {
+  } else if (charmName.indexOf("Snowball Charm") >= 0) {
     if (contains(festiveTraps, weaponName)) {
       charmBonus += 20;
     }
@@ -207,11 +207,10 @@ function calculateTrapSetup(skipDisp) {
     determineRiftBonus(riftStalkerCodex);
 
     /*
-         * Battery Levels
-         */
+     * Battery Levels
+     */
     checkBatteryLevel();
     trapType = getPowerType(charmName, weaponName);
-
     trapPower = getTotalTrapPower();
 
     //noinspection OverlyComplexArithmeticExpressionJS
