@@ -63,7 +63,10 @@ var specialCharm = {
   "Soiled Base": 1,
   "Spellbook Charm": 1,
   "Spellbook Base": 1,
-  "Snowball Charm": 1
+  "Snowball Charm": 1,
+  "Super Snowball Charm": 1,
+  "Extreme Snowball Charm": 1,
+  "Ultimate Snowball Charm": 1
 };
 
 Object.size = function(obj) {
