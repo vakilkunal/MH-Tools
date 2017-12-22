@@ -468,6 +468,71 @@ function showPop(type) {
             bonusLuck -= 5 * multiplier;
           }
           calculateTrapSetup(true);
+        } else if (locationName === "Fiery Warpath") {
+          if (charmName.indexOf("Super Warpath Archer Charm") >= 0) {
+            var warpathArcher = [
+              "Desert Archer",
+              "Flame Archer",
+              "Crimson Ranger"
+            ];
+            if (contains(warpathArcher, mouseName)) {
+              charmBonus += 50;
+              calculateTrapSetup(true);
+              catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+              charmBonus -= 50;
+              calculateTrapSetup(true);
+            }
+          } else if (charmName.indexOf("Super Warpath Warrior Charm") >= 0) {
+            var warpathWarrior = [
+              "Desert Soldier",
+              "Flame Warrior",
+              "Crimson Titan"
+            ];
+            if (contains(warpathWarrior, mouseName)) {
+              charmBonus += 50;
+              calculateTrapSetup(true);
+              catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+              charmBonus -= 50;
+              calculateTrapSetup(true);
+            }
+          } else if (charmName.indexOf("Super Warpath Scout Charm") >= 0) {
+            var warpathScout = ["Vanguard", "Sentinel", "Crimson Watch"];
+            if (contains(warpathScout, mouseName)) {
+              charmBonus += 50;
+              calculateTrapSetup(true);
+              catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+              charmBonus -= 50;
+              calculateTrapSetup(true);
+            }
+          } else if (charmName.indexOf("Super Warpath Cavalry Charm") >= 0) {
+            var warpathCavalry = ["Sand Cavalry", "Sandwing Cavalry"];
+            if (contains(warpathCavalry, mouseName)) {
+              charmBonus += 50;
+              calculateTrapSetup(true);
+              catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+              charmBonus -= 50;
+              calculateTrapSetup(true);
+            }
+          } else if (charmName.indexOf("Super Warpath Mage Charm") >= 0) {
+            var warpathMage = ["Inferno Mage", "Magmarage"];
+            if (contains(warpathMage, mouseName)) {
+              charmBonus += 50;
+              calculateTrapSetup(true);
+              catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+              charmBonus -= 50;
+              calculateTrapSetup(true);
+            }
+          } else if (
+            charmName.indexOf("Super Warpath Commander's Charm") >= 0
+          ) {
+            if (mouseName === "Crimson Commander") {
+              charmBonus += 50;
+              calculateTrapSetup(true);
+              catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+              charmBonus -= 50;
+              calculateTrapSetup(true);
+            }
+          }
         }
 
         var minLuckValue = minLuck(eff, mousePower);
