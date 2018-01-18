@@ -113,6 +113,9 @@ function initTablesorter() {
     widthFixed: true,
     ignoreCase: false,
     widgets: ["filter"],
+    textSorter: function(a, b) {
+      return a.localeCompare(b);
+    },
     widgetOptions: {
       filter_childRows: false,
       filter_childByColumn: false,
