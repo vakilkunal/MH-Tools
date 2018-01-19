@@ -113,9 +113,6 @@ function initTablesorter() {
     widthFixed: true,
     ignoreCase: false,
     widgets: ["filter"],
-    textSorter: function(a, b) {
-      return a.localeCompare(b);
-    },
     widgetOptions: {
       filter_childRows: false,
       filter_childByColumn: false,
@@ -243,7 +240,7 @@ var buildMouselist = function(mouseListText, sortedMLCLength, sortedMLC) {
     mouseListText +=
       "<td style='font-size: 11px; padding: 10px'>" +
       "<p style='font-size: 16px'>" +
-      sortedMLC[l][1] +
+      sortedMLC[l][1].toFixed(2) +
       "%</p><br>" +
       sliceMLC +
       "</td>";
