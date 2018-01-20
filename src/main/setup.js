@@ -145,8 +145,8 @@ function checkLoadState() {
 }
 
 /**
- * Get Jquery selectors for a specific type
- * @param type {string} 'weapon', 'base' or 'charm'
+ * Get jQuery selectors for a specific type
+ * @param {string} type 'weapon', 'base' or 'charm'
  * @returns {{checkbox: string, container: string, allCheckbox: string}}
  */
 function getSelectors(type) {
@@ -163,8 +163,8 @@ function getSelectors(type) {
 
 /**
  * Populates item checkboxes
- * @param itemKeys {string[]}
- * @param type {string} @see {@link getSelectors}
+ * @param {string[]} itemKeys
+ * @param {string} type @see {@link getSelectors}
  */
 function loadItemSelection(itemKeys, type) {
   var i;
@@ -186,7 +186,7 @@ function loadItemSelection(itemKeys, type) {
   });
 
   /**
-   * Builds jquery object with checkbox to insert
+   * Builds jQuery object with checkbox to insert
    * @param select
    * @param itemName
    * @returns {jQuery}
@@ -382,8 +382,8 @@ function saveSetupCookie() {
 
   /**
    * Builds array of 1's and 0's from selected checkboxes
-   * @param selector {string}
-   * @returns Number[]
+   * @param {string} selector
+   * @returns {number[]}
    */
   function getCookieArray(selector) {
     return $(selector)
@@ -600,7 +600,7 @@ function showPop() {
 
 /**
  * Get mouse population for current location/phase/cheese and the selected charm
- * @param selectedCharm {string}
+ * @param {string} selectedCharm
  * @return Mouse Populations
  */
 function getPopulation(selectedCharm) {
@@ -635,7 +635,7 @@ function getPopulation(selectedCharm) {
 /**
  * Builds associative array of chosen power type's effectiveness against the mice population
  * @param micePopulation
- * @return {{String: Number}} Object with Mouse : Effectiveness
+ * @return {{string: number}} Object with Mouse : Effectiveness
  */
 function buildEffectivenessArray(micePopulation) {
   var eff = {};
@@ -648,7 +648,7 @@ function buildEffectivenessArray(micePopulation) {
 /**
  * Builds associative array of mouse powers from current micePopulation
  * @param micePopulation
- * @return {{String: Number}} -  Object with Mouse : Power
+ * @return {{string: number}} -  Object with Mouse : Power
  */
 function buildPowersArray(micePopulation) {
   var power = {};
@@ -748,9 +748,9 @@ function printCombinations(micePopulation, headerHtml) {
   }
 
   /**
-   * Get <td> jquery element for the CRE link
-   * @param selectedCharm {string}
-   * @param eventData {{string:}} Data to pass tp the 'Find best charm' event listener
+   * Get <td> jQuery element for the CRE link
+   * @param {string} selectedCharm
+   * @param {object} eventData Data to pass to the 'Find best charm' event listener
    * @return {jQuery}
    */
   function getLinkCell(selectedCharm, eventData) {
@@ -823,11 +823,11 @@ function getCRELinkElement() {
 
 /**
  * Gets mouse attraction and catch rate
- * @param micePopulation {{String:Number}} Mouse population percentages for the current location
- * @param mouseName {String} Mouse name
- * @param overallAR {Number} Setup attraction rate
- * @param effectivenessArray {{String: Number}} Power type effectiveness array
- * @param powersArray {{String: Number}} Mouse powers array
+ * @param {{string: number}} micePopulation Mouse population percentages for the current location
+ * @param {string} mouseName Mouse name
+ * @param {number} overallAR Setup attraction rate
+ * @param {{string: number}} effectivenessArray Power type effectiveness array
+ * @param {{string: number}} powersArray Mouse powers array
  * @return {{attractions: number, catchRate: number}}
  */
 function getMouseACR(
@@ -928,10 +928,10 @@ function getMouseACR(
 /**
  * Gets the number of catches per 100 hunts
  * @param micePopulation
- * @param mouse {string} Mouse name
- * @param overallAR {Number} Setup attraction rate
- * @param effectivenessArray {{String: Number}}
- * @param powersArray {{String: Number}}
+ * @param {string} mouse Mouse name
+ * @param {number} overallAR Setup attraction rate
+ * @param {{string: number}} effectivenessArray
+ * @param {{string: number}} powersArray
  * @return {number} Mouse catches in 100 hunts
  */
 function getMouseCatches(
@@ -970,7 +970,7 @@ function getMouseCatches(
 /**
  * Print result of best charm. (Different charms with specific weapon, base)
  * @param micePopulation
- * @param headerHTML {String}
+ * @param {string} headerHTML
  */
 function printCharmCombinations(micePopulation, headerHTML) {
   var tableHTML = $("<tbody>");

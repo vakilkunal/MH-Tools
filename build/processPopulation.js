@@ -75,7 +75,7 @@
   }
 
   /**
-   * Adds an empty object as the value for a key if the object does not contain the key jet
+   * Adds an empty object as the value for a key if the object does not contain the key yet
    * @param object
    * @param key
    */

@@ -313,7 +313,7 @@
 
   /**
    * Normalize user rank (i.e. Archduke/Archduchess -> archduke)
-   * @returns {String}
+   * @returns {string}
    */
   function findUserRank() {
     var userRank = user["title_name"];

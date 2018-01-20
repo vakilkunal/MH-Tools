@@ -7,7 +7,7 @@ var BOOKMARKLET_LOADER_URL = "src/bookmarklet/bookmarkletloader.min.js";
 
 /**
  * Escape special characters and prepend javascript:void to the string
- * @param content
+ * @param {string} content
  * @return {string}
  */
 function makeBookmarkletString(content) {

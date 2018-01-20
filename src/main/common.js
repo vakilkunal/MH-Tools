@@ -1,12 +1,12 @@
 /**
- * Functions that are used for both the CRE and the Best setup tool
+ * Functions and variables used in both CRE and Best Setup tools
  */
+
 var user;
 var CRE_USER = "cre";
 var SETUP_USER = "setup";
 var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
 var SAMPLE_SIZE_LABEL = "SampleSize";
-
 var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
 
@@ -48,11 +48,17 @@ var cheeseBonus = 0;
 var riftStalkerCodex;
 var rank = "";
 
+/**
+ * Initialize Fort Rox ballista and cannon levels
+ */
 var fortRox = {
   ballistaLevel: 0,
   cannonLevel: 0
 };
 
+/**
+ * Contains charms which may have special interactions with certain weapons or bases
+ */
 var specialCharm = {
   "Champion Charm": 1,
   "Bronze Tournament Base": 1,
@@ -69,10 +75,19 @@ var specialCharm = {
   "Ultimate Snowball Charm": 1
 };
 
+/**
+ * Returns the size of an object based on its length or number of keys
+ * @param {object} obj
+ * @return {number} Object length
+ */
 Object.size = function(obj) {
   return obj.length || Object.keys(obj).length;
 };
 
+/**
+ * @param {string} x
+ * @return {string}
+ */
 function commafy(x) {
   return x.toLocaleString();
 }
@@ -124,7 +139,7 @@ function calcSpecialCharms(charmName) {
 
 /**
  * Get a specific parameter from the URL
- * @param name
+ * @param {string} name Desired URL parameter
  * @return {string|null}
  */
 function getURLParameter(name) {
@@ -144,8 +159,8 @@ function getURLParameter(name) {
  * Build URL from key/value pairs.
  *  - Keys are only added to the URL if their value is !false, >0, != "-"
  *  - NB: Always test this with Toxic Spill sublocations if it is changed
- * @param location
- * @param urlParams
+ * @param {string} location
+ * @param {string[]} urlParams
  * @returns {string}
  */
 function buildURL(location, urlParams) {
@@ -164,11 +179,12 @@ function isRiftCharm(charmName) {
     contains(riftCharms, charmName) || contains(charmName.toLowerCase(), "rift")
   );
 }
+
 /**
  * Gets the number of rift items
- * @param weapon {String} Weapon Name
- * @param base {String} Base Name
- * @param charm [String} Charm Name
+ * @param {string} weapon Weapon Name
+ * @param {string} base Base Name
+ * @param {string} charm Charm Name
  * @return {number}
  */
 function getRiftCount(weapon, base, charm) {
@@ -179,6 +195,10 @@ function getRiftCount(weapon, base, charm) {
   return riftCount;
 }
 
+/**
+ * Calculates overall power and luck, along with any special bonuses
+ * @param {boolean} skipDisp
+ */
 function calculateTrapSetup(skipDisp) {
   var specialPower = 0,
     specialLuck = 0,
@@ -433,10 +453,10 @@ function calculateTrapSetup(skipDisp) {
 /**
  * Catch Rate calculation
  * Source: https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/
- * @param effectiveness {number} Trap power effectiveness
- * @param trapPower {number}
- * @param trapLuck {number}
- * @param mousePower {number}
+ * @param {number} effectiveness Trap power effectiveness
+ * @param {number} trapPower Trap power
+ * @param {number} trapLuck Trap luck
+ * @param {number} mousePower Mouse power
  * @returns {number} Catch Rate Estimate: Number between 0 and 1
  */
 function calcCR(effectiveness, trapPower, trapLuck, mousePower) {
@@ -451,8 +471,8 @@ function calcCR(effectiveness, trapPower, trapLuck, mousePower) {
 /**
  * Calculates minimum luck required for 100% CR
  * @see calcCR
- * @param effectiveness {number} Trap power effectiveness
- * @param mousePower {number}
+ * @param {number} effectiveness Trap power effectiveness
+ * @param {number} mousePower Mouse power
  * @return {number}
  */
 function minLuck(effectiveness, mousePower) {
@@ -476,7 +496,7 @@ function batteryChanged() {
 
 /**
  * Returns effectiveness of current power type against a mouse.
- * @param mouseName
+ * @param {string} mouseName
  * @returns {number}
  */
 function findEff(mouseName) {
@@ -593,7 +613,7 @@ function charmChangeCommon(newCharmName) {
 
 /**
  * Populates global variables with charm data
- * @param selectedCharm Name of charm
+ * @param {string} selectedCharm Name of charm
  */
 function populateCharmData(selectedCharm) {
   var charmsArrayN = charmsArray[selectedCharm] || DEFAULT_STATS;
@@ -606,7 +626,7 @@ function populateCharmData(selectedCharm) {
 
 /**
  * Populates the global variables for the weapon
- * @param armedWeapon the name of the weapon
+ * @param {string} armedWeapon the name of the weapon
  */
 function populateWeaponData(armedWeapon) {
   var weaponsArrayN = weaponsArray[armedWeapon] || DEFAULT_STATS;
@@ -789,7 +809,7 @@ function checkToxicParam() {
  *    - All items with the css class display-location are hidden
  *    - Items wih the location-specific custom class is shown (eg. location-fiery-warpath, location-labyrinth) are shown
  *    - If a custom setup is used only location specific items inside the .comments block will be shown
- * @param custom Is a custom setup being used
+ * @param {boolean} custom Is a custom setup being used
  */
 function showHideWidgets(custom) {
   $("#toxicRow").hide();
