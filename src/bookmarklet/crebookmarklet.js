@@ -75,7 +75,11 @@
     } else if (userLocation === "Fort Rox") {
       var fortRoxQuest = userQuests["QuestFortRox"];
       var tmpPhase = fortRoxQuest["current_phase"];
-      if (tmpPhase === "night") {
+      if (tmpPhase === "day") {
+        return "Day";
+      } else if (tmpPhase === "dawn") {
+        return "Dawn";
+      } else if (tmpPhase === "night") {
         var stage = fortRoxQuest["current_stage"];
         var stages = {
           stage_one: "Twilight",
