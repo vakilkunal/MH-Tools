@@ -2852,7 +2852,8 @@ var powersArray = {
   "Wealthy Werewarrior": [18900, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
   "Werehauler": [17000, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
   "Wereminer": [29001, 100, 0, 0, 0, 0, 0, 150, 0, 0, 0],
-  "Chronomaster" : [1000*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
+  // Bristle Woods Rift
+  "Chronomaster" : [1000*3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 300], // medium confidence
   "Epoch Golem" : [1250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
   "Chamber Cleaver" : [1400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
   "Skeletal Champion" : [1550, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
@@ -2862,16 +2863,16 @@ var powersArray = {
   "Record Keeper" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
   "Clockwork Timespinner" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
   "Dread Knight" : [2450, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
-  "Harbinger of Death" : [2125*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
-  "Absolute Acolyte" : [2160*3.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325], // unconfirmed eff
-  "Timelost Thaumaturge" : [2350*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
-  "Vigilant Ward" : [2500*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
-  "Carrion Medium" : [2667*2.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 250], // unconfirmed eff
-  "Shackled Servant" : [2900*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
-  "Timeless Lich" : [3168*2.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 225], // unconfirmed eff
-  "Timeslither Pythoness" : [4400*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // unconfirmed eff
+  "Harbinger of Death" : [4590, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216], // low-med confidence
+  "Absolute Acolyte" : [2160*7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 700], // low-med confidence
+  "Timelost Thaumaturge" : [2350*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // medium confidence
+  "Vigilant Ward" : [2500*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // med-high confidence
+  "Carrion Medium" : [8400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 315], // low-med confidence
+  "Shackled Servant" : [2900*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // medium confidence
+  "Timeless Lich" : [9500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 300], // low-med confidence
+  "Timeslither Pythoness" : [4400*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // medium confidence
   "Portal Paladin" : [8000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
-  "Portal Pursuer" : [10000*0.75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75], // unconfirmed eff
+  "Portal Pursuer" : [10000*0.75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75], // low confidence
   // Moussu Picchu
   "Breeze Borrower": [3500, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
   "Cloud Collector": [2400, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
@@ -2881,22 +2882,23 @@ var powersArray = {
   "Rainwater Purifier": [3500, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
   "Spore Salesman": [2200, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
   "Windy Farmer": [2400, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
-  "Wind Watcher": [4100, 150, 50, 0, 0, 0, 0, 100, 0, 0, 0],
-  "Charming Chimer": [5100, 150, 50, 0, 0, 0, 0, 100, 0, 0, 0],
-  "Fluttering Flutist": [8000, 150, 50, 0, 0, 0, 0, 100, 0, 0, 0],
-  "Cycloness": [10800, 150, 50, 0, 0, 0, 0, 100, 0, 0, 0],
-  "Wind Warrior": [21200, 150, 50, 0, 0, 0, 0, 100, 0, 0, 0],
-  "Rain Collector": [2400, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
-  "Rain Wallower": [3800, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
-  "Rain Summoner": [7000, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
-  "Monsoon Maker": [9500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
-  "Rainmancer": [18500, 100, 50, 0, 0, 0, 0, 150, 0, 0, 0],
+  "Wind Watcher": [4100, 185, 50, 0, 0, 0, 0, 100, 0, 0, 0], // medium confidence
+  "Charming Chimer": [5100, 185, 50, 0, 0, 0, 0, 100, 0, 0, 0], // medium confidence
+  "Fluttering Flutist": [8000, 185, 50, 0, 0, 0, 0, 100, 0, 0, 0], // medium confidence
+  "Cycloness": [10800, 185, 50, 0, 0, 0, 0, 100, 0, 0, 0], // medium confidence
+  "Wind Warrior": [21200, 185, 50, 0, 0, 0, 0, 100, 0, 0, 0], // medium confidence
+  "Rain Collector": [2400, 100, 50, 0, 0, 0, 0, 185, 0, 0, 0], // medium confidence
+  "Rain Wallower": [3800, 100, 50, 0, 0, 0, 0, 185, 0, 0, 0], // medium confidence
+  "Rain Summoner": [7000, 100, 50, 0, 0, 0, 0, 185, 0, 0, 0], // medium confidence
+  "Monsoon Maker": [9500, 100, 50, 0, 0, 0, 0, 185, 0, 0, 0], // medium confidence
+  "Rainmancer": [18500, 100, 50, 0, 0, 0, 0, 185, 0, 0, 0], // medium confidence
   "Thunder Strike": [1650, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
-  "Violet Stormchild": [2500, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
-  "Thunderlord": [4500*2.25, 0, 225, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
-  "Thundering Watcher": [5500*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
-  "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
-  "Ful'Mina, The Mountain Queen": [8667*30, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed eff
+  "Violet Stormchild": [2000, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
+  "Thunderlord": [4500*3, 0, 300, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
+  "Thundering Watcher": [5500*3, 0, 300, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
+  "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
+  "Ful'Mina, The Mountain Queen": [260000, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // medium confidence
+  // Mountain
   "Craggy Ore": [1200, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
   "Slope Swimmer": [1200, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
   "Mountain": [1900, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
