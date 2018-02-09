@@ -260,6 +260,7 @@ function calculateTrapSetup(skipDisp) {
     if (user === CRE_USER && !skipDisp) {
       showPop(2);
       showTrapSetup();
+      formatSampleSize(); // showTrapSetup creates the necessary sampleSize <td>
     }
   } else {
     showTrapSetup(0);

@@ -718,8 +718,6 @@ function showPop(type) {
 
         resultsHTML += "<tr align='right'>" + mouseRow + "</tr>";
       }
-
-      formatSampleSize();
     }
 
     if (
