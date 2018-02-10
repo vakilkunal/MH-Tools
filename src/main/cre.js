@@ -187,15 +187,25 @@ function checkLoadState() {
   }
 
   function calculateBonusLuck() {
+    // Called by initial checkLoadState only
+    // Skip if location/weapon/base/charm fails b/c invalid trapLuck
+
     var totalLuck = getURLParameter("totalluck");
-    if (totalLuck) {
-      calculateTrapSetup();
-    }
-    var bonusLuckParameter =
-      parseInt(getURLParameter("bonusLuck")) || parseInt(totalLuck) - trapLuck;
-    if (bonusLuckParameter >= 0) {
-      document.getElementById("bonusLuck").value = bonusLuckParameter;
-      bonusLuckChanged();
+    if (totalLuck) calculateTrapSetup();
+
+    var bonusLuckParameter = 0;
+    var locationIndex = document.getElementById("location").selectedIndex;
+    var weaponIndex = document.getElementById("weapon").selectedIndex;
+    var baseIndex = document.getElementById("base").selectedIndex;
+    var charmIndex = document.getElementById("charm").selectedIndex;
+    if (locationIndex && weaponIndex && baseIndex && charmIndex) {
+      bonusLuckParameter =
+        parseInt(getURLParameter("bonusLuck")) ||
+        parseInt(totalLuck) - trapLuck;
+      if (bonusLuckParameter > 0) {
+        document.getElementById("bonusLuck").value = bonusLuckParameter;
+        bonusLuckChanged();
+      }
     }
   }
 }
