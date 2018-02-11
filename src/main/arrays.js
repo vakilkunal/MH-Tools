@@ -228,59 +228,107 @@ var deltaAmp = {
 
 // prettier-ignore
 var baselineAttArray = {
-  "Grilled": 0.976,
-  "SB+": 0.9995,
-  "Magical String": 0.9995,
-  "Fusion Fondue": 0.9995,
-  "Gouda": 0.8333,
-  "Brie": 0.8,
-  "Brie String": 0.8,
-  "Swiss": 0.75,
-  "Swiss String": 0.75,
-  "White Cheddar": 0.5,
-  "Marble": 0.6666,
-  "Marble String": 0.6666,
-  "Mozzarella": 0.6666,
-  "Cheddar": 0.5,
-  "Candy Corn": 0.95,
-  "Ghoulgonzola": 0.95,
-  "Snowball Bocconcini": 0.95,
-  "Festive Feta": 0.95,
-  "Gingerbread": 0.8,
-  "Seasoned Gouda": 0.8333,
-  "Runny": 0.875,
-  "Rancid Radioactive Blue": 0.95,
-  "Riftiago": 0.96,
-  "Resonator": 0.99,
-  "Marshmallow Monterey": 0.96,
-  "Rockforth": 0.95,
-  "Fishy Fromage": 0.99,
-  "Glowing Gruyere": 0.99,
-  "Mineral": 0.99,
-  "Gemstone": 0.99,
-  "Diamond": 0.99,
-  "Combat": 0.985,
-  "Susheese": 0.985,
-  "Glutter": 0.985,
-  "Terre Ricotta": 0.96,
-  "Polluted Parmesan": 0.93,
-  "Galleon Gouda": 0.95,
-  "Lactrodectus Lancashire": 0.9995,
-  "Magical String + Brie String": 0.9, // Fused
-  "Maki String": 0.99, // Below are estimates
-  "Rift Susheese": 0.985,
-  "Rift Combat": 0.985,
-  "Rift Glutter": 0.985,
-  "Master Fusion": 0.985,
-  "Rift Rumble": 0.988,
-  "Null Onyx Gorgonzola": 0.99,
-  "Ascended": 0.99,
-  "Crescent": 0.85, // Slightly higher than Gouda?
-  "Moon": 0.9995,
-  "Runic String": 0.99, //Guesstimate
-  "Ancient String": 0.99, //Guesstimate
-  "Chedd-Ore": 0.9, //Guesstimate
-  "Abominable Asiago": 0.95, //Guesstimate
+  // 11 Feb 2018: 98/105 cheeses
+  // Runny, Marshmallow Monterey, Rockforth entries all have null attraction_bonus
+  // Dumpling, Nian Gao'da and [Extra Sweet] Cupcake Colby do not have IDs in DB
+  "Abominable Asiago": 0.9800, // Guesstimate | Calculated: 0.9819, Sample: 65 (Very Low)
+  "Ancient": 0.9451, // Sample: 3164 (High)
+  "Ancient String": 0.9870, // Sample: 9451 (High)
+  "Arctic Asiago": 0.8542, // Sample: 11428 (Very High)
+  "Ascended": 0.9656, // Sample: 603 (Medium)
+  "Brie": 0.8036, // Sample: 25466 (Excellent)
+  "Brie String": 0.7992, // Sample: 80560 (Excellent)
+  "Candy Corn": 0.9181, // Sample: 905 (Medium)
+  "Checkmate": 0.9899, // Sample: 624 (Medium)
+  "Chedd-Ore": 0.9975, // Sample: 1603 (High)
+  "Cheddar": 0.5000, // Guesstimate | Calculated: 0.5136, Sample: 145 (Low)
+  "Cherry": 0.8800, // Guesstimate | Calculated: 0.8821, Sample: 152 (Low)
+  "Combat": 0.9900, // Guesstimate | Calculated: 0.9728, Sample: 627 (Medium)
+  "Creamy Havarti": 0.9850, // Guesstimate | Calculated: 0.9698, Sample: 78 (Very Low)
+  "Crescent": 0.8854, // Sample: 9230 (High)
+  "Crunchy": 0.9900, // Guesstimate | Calculated: 0.9945, Sample: 1315 (High)
+  "Crunchy Havarti": 0.9850, // Guesstimate | Calculated: 0.9873, Sample: 93 (Very Low)
+  "Dewthief Camembert": 0.9315, // Sample: 4138 (High)
+  "Diamond": 0.9950, // Guesstimate | Calculated: 1.0000, Sample: 266 (Low)
+  "Dragonvine": 0.9993, // Sample: 21259 (Very High)
+  "Duskshade Camembert": 0.9463, // Sample: 5357 (High)
+  "Festive Feta": 0.8476, // Sample: 4188 (High)
+  "Fishy Fromage": 0.9848, // Sample: 3901 (High)
+  "Fusion Fondue": 0.9950, // Guesstimate | Calculated: 1.0000, Sample: 28 (Ultra Low)
+  "Galleon Gouda": 0.9250, // Guesstimate | Calculated: 0.9217, Sample: 73 (Very Low)
+  "Gauntlet Tier 2": 0.9455, // Sample: 791 (Medium)
+  "Gauntlet Tier 3": 0.9672, // Sample: 1448 (High)
+  "Gauntlet Tier 4": 0.9818, // Sample: 733 (Medium)
+  "Gauntlet Tier 5": 0.9790, // Sample: 468 (Medium)
+  "Gauntlet Tier 6": 0.9792, // Sample: 472 (Medium)
+  "Gauntlet Tier 7": 0.9825, // Guesstimate | Calculated: 0.9874, Sample: 113 (Low)
+  "Gauntlet Tier 8": 0.9850, // Guesstimate | Calculated: 0.9853, Sample: 80 (Very Low)
+  "Gemstone": 0.9908, // Sample: 1930 (High)
+  "Ghastly Galleon Gouda": 0.9979, // Sample: 26521 (Excellent)
+  "Ghoulgonzola": 0.8986, // Sample: 700 (Medium)
+  "Gilded": 0.8464, // Sample: 3517 (High)
+  "Gingerbread": 0.6962, // Sample: 3380 (High)
+  "Glowing Gruyere": 0.9891, // Sample: 59776 (Excellent)
+  "Glutter": 0.9900, // Guesstimate | Calculated: 0.9960, Sample: 619 (Medium)
+  "Gnarled": 0.9344, // Sample: 1560 (High)
+  "Gouda": 0.8479, // Sample: 130498 (Excellent)
+  "Graveblossom Camembert": 0.9431, // Sample: 8642 (High)
+  "Grilled": 0.9950, // Guesstimate | Calculated: 1.0000, Sample: 230 (Low)
+  "Gumbo": 0.9900, // Guesstimate | Calculated: 0.9905, Sample: 1056 (High)
+  "Inferno Havarti": 0.9917, // Sample: 1175 (High)
+  "Lactrodectus Lancashire": 0.9995, // Guesstimate | Calculated: 1.0000, Sample: 147 (Low)
+  "Limelight": 0.9515, // Sample: 2750 (High)
+  "Lockbox Limburger": 0.9946, // Sample: 4452 (High)
+  "Lunaria Camembert": 0.9872, // Sample: 1999 (High)
+  "Magical Havarti": 0.9850, // Guesstimate | Calculated: 0.9864, Sample: 184 (Low)
+  "Magical Rancid Radioactive Blue": 0.9991, // Sample: 1395 (High)
+  "Magical String": 0.9996, // Sample: 13096 (Very High)
+  "Maki": 0.9703, // Sample: 545 (Medium)
+  "Maki String": 0.9991, // Sample: 8219 (High)
+  "Marble": 0.6500, // Guesstimate | Calculated: 0.6571, Sample: 86 (Very Low)
+  "Marble String": 0.5897, // Sample: 473 (Medium)
+  "Master Fusion": 0.9577, // Sample: 4802 (High)
+  "Mineral": 0.9880, // Sample: 1952 (High)
+  "Moon": 0.9978, // Sample: 5161 (High)
+  "Mozzarella": 0.6000, // Guesstimate | Calculated: 0.5967, Sample: 82 (Very Low)
+  "Null Onyx Gorgonzola": 0.9995, // Guesstimate | Calculated: 1.0000, Sample: 3030 (High)
+  "Nutmeg": 0.9950, // Guesstimate | Calculated: 1.0000, Sample: 451 (Medium)
+  "Onyx Gorgonzola": 0.9869, // Sample: 2268 (High)
+  "Pecan Pecorino": 0.9999, // Sample: 159180 (Excellent)
+  "Polluted Parmesan": 0.9584, // Sample: 4432 (High)
+  "Pungent Havarti": 0.9850, // Guesstimate | Calculated: 0.9902, Sample: 120 (Low)
+  "Radioactive Blue": 0.9419, // Sample: 3969 (High)
+  "Rainy": 0.9996, // Sample: 13844 (Very High)
+  "Rancid Radioactive Blue": 0.9491, // Sample: 9652 (High)
+  "Resonator": 0.9913, // Sample: 912 (Medium)
+  "Rift Combat": 0.9600, // Guesstimate | Calculated: 0.9566, Sample: 1420 (High)
+  "Rift Glutter": 0.9600, // Guesstimate | Calculated: 0.9614, Sample: 1163 (High)
+  "Rift Rumble": 0.9871, // Sample: 5693 (High)
+  "Rift Susheese": 0.9600, // Guesstimate | Calculated: 0.9577, Sample: 1243 (High)
+  "Riftiago": 0.9540, // Sample: 2280 (High)
+  "Rumble": 0.9893, // Sample: 4375 (High)
+  "Runic": 0.9542, // Sample: 3080 (High)
+  "Runic String": 0.9997, // Sample: 50917 (Excellent)
+  "SB+": 0.9980, // Sample: 53943 (Excellent)
+  "Seasoned Gouda": 0.8557, // Sample: 2757 (High)
+  "Shell": 0.9900, // Guesstimate | Calculated: 0.9829, Sample: 1104 (High)
+  "Snowball Bocconcini": 0.8638, // Sample: 3085 (High)
+  "Spicy Havarti": 0.9850, // Guesstimate | Calculated: 1.0000, Sample: 57 (Very Low)
+  "Sunrise": 0.9950, // Guesstimate | Calculated: 1.0000, Sample: 26 (Ultra Low)
+  "Susheese": 0.9900, // Guesstimate | Calculated: 0.9917, Sample: 554 (Medium)
+  "Sweet Havarti": 0.9850, // Guesstimate | Calculated: 0.9919, Sample: 155 (Low)
+  "Swiss": 0.7547, // Sample: 1113 (High)
+  "Swiss String": 0.7780, // Sample: 1906 (High)
+  "Terre Ricotta": 0.9511, // Sample: 4354 (High)
+  "Toxic Brie": 0.8047, // Sample: 339 (Medium)
+  "Toxic SB+": 0.9980, // Guesstimate | Calculated: 1.0000, Sample: 1067 (High)
+  "Undead Emmental": 0.9834, // Sample: 440 (Medium)
+  "Undead String Emmental": 0.9950, // Guesstimate | Calculated: 1.0000, Sample: 88 (Very Low)
+  "Vanilla Stilton": 0.9294, // Sample: 726 (Medium)
+  "Vengeful Vanilla Stilton": 0.9891, // Sample: 678 (Medium)
+  "White Cheddar": 0.5842, // Sample: 505 (Medium)
+  "Wicked Gnarly": 0.9870, // Sample: 1116 (High)
+  "Windy": 0.9992 // Sample: 14793 (Very High)
 };
 
 /* Its okay using strings as keys here, JS will convert it */

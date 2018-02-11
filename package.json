@@ -14,9 +14,8 @@
     "update:population:iceberg": "node tools/icebergpop.js > data/pop-iceberg.csv",
     "update:population": "npm-run-all update:population:*",
     "population": "node build/processPopulation.js",
-    "baselines": "node build/processBaselines.js",
     "wisdom": "node build/processWisdom.js",
-    "build": "npm-run-all --parallel bookmarklet population baselines wisdom"
+    "build": "npm-run-all --parallel bookmarklet population wisdom"
   },
   "repository": {
     "type": "git",

@@ -145,7 +145,7 @@ function updateCustomSetup() {
 }
 
 function checkLoadState() {
-  var loadPercentage = (popLoaded + baselineLoaded + wisdomLoaded) / 3 * 100;
+  var loadPercentage = (popLoaded + wisdomLoaded) / 2 * 100;
   var status = document.getElementById("status");
   status.innerHTML = "<td>Loaded " + loadPercentage + "%...</td>";
 

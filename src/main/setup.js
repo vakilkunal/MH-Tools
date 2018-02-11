@@ -124,7 +124,7 @@ $(window).load(function() {
 
 function checkLoadState() {
   var batteryParameter;
-  var loadPercentage = (popLoaded + baselineLoaded + wisdomLoaded) / 3 * 100;
+  var loadPercentage = (popLoaded + wisdomLoaded) / 2 * 100;
   var status = document.querySelector("#status");
   status.innerHTML = "<td>Loaded " + loadPercentage + "%...</td>";
 
@@ -566,15 +566,15 @@ function charmChanged(customValue) {
 }
 
 function showPop() {
-  var results = document.querySelector("#results");
-  var selectedCharm = $("#charm").val();
-  var population = getPopulation(selectedCharm);
-
   if (!locationName || !cheeseName) {
-    results.innerHTML = "";
+    document.querySelector("#results").innerHTML = "";
+    $("#pleaseWaitMessage").hide();
+    return;
   } else {
     charmChanged();
     $("#pleaseWaitMessage").show();
+    var selectedCharm = $("#charm").val();
+    var population = getPopulation(selectedCharm);
     printCombinations(population, getHeader(population));
   }
 
@@ -732,20 +732,17 @@ function printCombinations(micePopulation, headerHtml) {
     });
   });
 
-  handleSort();
-  function handleSort() {
-    var resort = true;
-    var callback = function() {
-      var header = $("#overallHeader");
-      if (header.hasClass("tablesorter-headerAsc")) {
-        header.click();
-        header.click();
-      } else if (header.hasClass("tablesorter-headerUnSorted")) {
-        header.click();
-      }
-    };
-    $("#results").trigger("updateAll", [resort, callback]);
-  }
+  var resort = true;
+  var callback = function() {
+    var header = $("#overallHeader");
+    if (header.hasClass("tablesorter-headerAsc")) {
+      header.click();
+      header.click();
+    } else if (header.hasClass("tablesorter-headerUnSorted")) {
+      header.click();
+    }
+  };
+  $("#results").trigger("updateAll", [resort, callback]);
 
   /**
    * Get <td> jQuery element for the CRE link
@@ -987,21 +984,15 @@ function printCharmCombinations(micePopulation, headerHTML) {
     );
   });
 
-  handleSort();
-
-  function handleSort() {
-    var resort = true;
-
-    $("#results").trigger("updateAll", [resort, callback]);
-
-    function callback() {
-      var header = $("#overallHeader");
-      if (
-        header.hasClass("tablesorter-headerAsc") ||
-        header.hasClass("tablesorter-headerUnSorted")
-      ) {
-        $("#overallHeader").click();
-      }
+  var resort = true;
+  var callback = function() {
+    var header = $("#overallHeader");
+    if (
+      header.hasClass("tablesorter-headerAsc") ||
+      header.hasClass("tablesorter-headerUnSorted")
+    ) {
+      header.click();
     }
-  }
+  };
+  $("#results").trigger("updateAll", [resort, callback]);
 }

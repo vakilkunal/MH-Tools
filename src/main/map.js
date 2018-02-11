@@ -216,7 +216,7 @@ String.prototype.capitalise = function() {
 };
 
 function checkLoadState() {
-  if (popLoaded && baselineLoaded) {
+  if (popLoaded) {
     loadMouseDropdown();
     loadMiceFromUrlOrCookie();
   }
@@ -392,14 +392,14 @@ function processMap(mapText) {
                     0,
                     cheeseName.indexOf("/")
                   );
-                  var baseline = findBaseline(locationName, trimmedCheese);
+                  var baseline = findBaseline(trimmedCheese);
                   weightedBLA[locationPhaseCheeseCharm] =
                     attractionRate *
                     (baseline +
                       attractionBonus / 100 -
                       attractionBonus / 100 * baseline);
                 } else {
-                  var baseline = findBaseline(locationName, cheeseName);
+                  var baseline = findBaseline(cheeseName);
                   weightedBLA[locationPhaseCheeseCharm] =
                     attractionRate *
                     (baseline +
@@ -413,14 +413,14 @@ function processMap(mapText) {
                     0,
                     cheeseName.indexOf("/")
                   );
-                  var baseline = findBaseline(locationName, trimmedCheese);
+                  var baseline = findBaseline(trimmedCheese);
                   weightedBLA[locationPhaseCheeseCharm] +=
                     attractionRate *
                     (baseline +
                       attractionBonus / 100 -
                       attractionBonus / 100 * baseline);
                 } else {
-                  var baseline = findBaseline(locationName, cheeseName);
+                  var baseline = findBaseline(cheeseName);
                   weightedBLA[locationPhaseCheeseCharm] +=
                     attractionRate *
                     (baseline +
@@ -578,10 +578,8 @@ function printBestLocation(sortedLocation, mouseLocationArray) {
   $("#bestLocation").trigger("updateAll", [resort, callback]);
 }
 
-function findBaseline(location, cheese) {
-  var baselineAtt =
-    baselineAttArray[cheese] || baselineArray[location + " (" + cheese + ")"];
-  return baselineAtt;
+function findBaseline(cheese) {
+  return baselineAttArray[cheese];
 }
 
 function getMouseListFromURL(parameters) {

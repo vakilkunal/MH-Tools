@@ -1,13 +1,10 @@
 "use strict";
 
-var BASELINES_URL = "data/baselines.json";
 var WISDOM_URL = "data/mouse-wisdom.json";
 // var POPULATIONS_URL = "https://tsitu.github.io/MH-Tools/data/populations.csv";
-// var BASELINES_URL = "https://tsitu.github.io/MH-Tools/data/baselines.txt";
 // Uncomment above during local testing to bypass Cross-Origin on Chrome
 
 var popLoaded = 0,
-  baselineLoaded = 0,
   wisdomLoaded = 0;
 
 /**
@@ -17,34 +14,21 @@ var popLoaded = 0,
 var popArray = {};
 
 /**
- * Cheese baseline attractions
- * @type {{string: float}}
- */
-var baselineArray = {};
-
-/**
  * Mouse wisdom parsed from JSON
  * @type {{mouse: String, wisdom: number}}
  */
 var mouseWisdom = {};
 
 /**
- * Start population and baseline loading
+ * Start population loading
  */
 function startPopulationLoad(populationJsonUrl) {
   $.getJSON(populationJsonUrl, setPopulation);
-  $.getJSON(BASELINES_URL, setBaseline);
   $.getJSON(WISDOM_URL, setWisdom);
 
   function setPopulation(jsonData) {
     popArray = jsonData;
     popLoaded = true;
-    checkLoadState();
-  }
-
-  function setBaseline(jsonData) {
-    baselineArray = jsonData;
-    baselineLoaded = true;
     checkLoadState();
   }
 
