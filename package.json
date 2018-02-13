@@ -31,11 +31,13 @@
   "homepage": "https://tsitu.github.io/MH-Tools",
   "license": "Apache-2.0",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "combined-stream": "^1.0.5",
     "csvtojson": "^1.1.7",
     "delayed-stream": "^1.0.0",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.0.2",
+    "request": "^2.83.0",
     "uglify-js": "^3.0.25"
   },
   "devDependencies": {

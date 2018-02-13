@@ -1,59 +1,47 @@
 (function() {
-  const { exec } = require("child_process");
-  const fs = require("fs");
+  const request = require("request");
+  const cheerio = require("cheerio");
+
   const fileUtils = require("./modules/fileUtils");
+  const bookmarkletList = [
+    "analyzer",
+    "loader",
+    "cre",
+    "crown",
+    "map",
+    "setup"
+  ];
 
-  const gitLogCmd = "git log -n 1 --pretty=format:%at -- src/bookmarklet/";
-  const bookmarkletList = {
-    "analyzerbookmarklet.js": "analyzer",
-    "crebookmarklet.js": "cre",
-    "crownbookmarklet.js": "crown",
-    "mapbookmarklet.js": "map",
-    "setupbookmarklet.js": "setup",
-    "bookmarkletloader.js": "loader"
-  };
-
-  getAllTimestamps().then(res => {
-    fileUtils.saveJsonFile("data/bookmarklet-timestamps.json", res);
+  fetchTimestamps(
+    "https://github.com/tsitu/MH-Tools/tree/master/src/bookmarklet"
+  ).then(res => {
+    console.log(res[0]);
+    const bookmarkletJson = {};
+    for (let i = 0; i < bookmarkletList.length; i++) {
+      bookmarkletJson[bookmarkletList[i]] = res[i];
+    }
+    fileUtils.saveJsonFile("data/bookmarklet-timestamps.json", bookmarkletJson);
   });
 
-  function getAllTimestamps() {
-    return new Promise(function(resolve, reject) {
-      const out = {};
-      const promiseArr = [];
-      Object.keys(bookmarkletList).forEach(el => {
-        promiseArr.push(
-          getTimestampAsync(gitLogCmd + el).then(res => {
-            out[bookmarkletList[el]] = res;
-          })
-        );
-      });
-      Promise.all(promiseArr).then(res => resolve(out));
-    });
-  }
-
   /**
-   * Asynchronously execute command and return stringified UTC timestamp
-   * @param {string} cmd
-   * @return {Promise}
+   * Parses datetime data from master/src/bookmarklet HTML
+   * @param {string} url
    */
-  function getTimestampAsync(cmd) {
-    return new Promise(function(resolve, reject) {
-      exec(cmd, (err, stdout, stderr) => {
-        if (err) return reject(err); // node couldn't execute the command
-        resolve(time(Number(stdout)));
+  function fetchTimestamps(url) {
+    return new Promise((resolve, reject) => {
+      request(url, (error, response, body) => {
+        if (error) {
+          reject(Error(error));
+        } else if (response.statusCode !== 200) {
+          reject(Error(response.statusCode));
+        } else {
+          const $ = cheerio.load(body);
+          const result = $(".css-truncate-target [datetime]")
+            .map((i, el) => $(el).text())
+            .get();
+          resolve(result);
+        }
       });
     });
-  }
-
-  /**
-   * Convert seconds to time string
-   * @param {number} s UNIX timestamp
-   * @return {string}
-   */
-  function time(s) {
-    const t = new Date(s * 1e3).toISOString();
-    const o = `${t.slice(0, 10)} ${t.slice(-13, -5)} UTC`;
-    return o;
   }
 })();
