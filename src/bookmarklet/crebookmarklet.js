@@ -55,7 +55,7 @@
       var tide = userViewingAtts["tide"];
       if (tide === "low") {
         return "Low Tide";
-      } else if (tide === "medium") {
+      } else if (tide === "med") {
         return "Mid Tide";
       } else if (tide === "high") {
         return "High Tide";
@@ -271,10 +271,12 @@
       }
     } else if (userLocation === "Bristle Woods Rift") {
       var chamber = userQuests["QuestRiftBristleWoods"]["chamber_name"];
-      if (userQuests["QuestRiftBristleWoods"]["status_effects"]["ng"] === 'active') {
+      if (
+        userQuests["QuestRiftBristleWoods"]["status_effects"]["ng"] === "active"
+      ) {
         return chamber + " (Paladin's Bane)";
       }
-      return chamber
+      return chamber;
     } else if (userLocation === "Zugzwang's Tower") {
       var mystic = userViewingAtts["zzt_mage_progress"];
       var tech = userViewingAtts["zzt_tech_progress"];
