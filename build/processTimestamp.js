@@ -35,8 +35,7 @@
           reject(Error(response.statusCode));
         } else {
           const $ = cheerio.load(body);
-          // prettier-ignore
-          const result = $('.css-truncate-target [datetime]')
+          const result = $(".css-truncate-target [datetime]")
             .map((i, el) => $(el).text())
             .get();
           resolve(result);
