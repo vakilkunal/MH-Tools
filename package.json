@@ -15,7 +15,8 @@
     "update:population": "npm-run-all update:population:*",
     "population": "node build/processPopulation.js",
     "wisdom": "node build/processWisdom.js",
-    "build": "npm-run-all --parallel bookmarklet population wisdom"
+    "timestamp": "node build/processTimestamp.js",
+    "build": "npm-run-all --parallel bookmarklet population wisdom timestamp"
   },
   "repository": {
     "type": "git",
