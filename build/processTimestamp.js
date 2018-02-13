@@ -15,7 +15,6 @@
   fetchTimestamps(
     "https://github.com/tsitu/MH-Tools/tree/master/src/bookmarklet"
   ).then(res => {
-    console.log(res[0]);
     const bookmarkletJson = {};
     for (let i = 0; i < bookmarkletList.length; i++) {
       bookmarkletJson[bookmarkletList[i]] = res[i];
@@ -36,7 +35,8 @@
           reject(Error(response.statusCode));
         } else {
           const $ = cheerio.load(body);
-          const result = $(".css-truncate-target [datetime]")
+          // prettier-ignore
+          const result = $('.css-truncate-target [datetime]')
             .map((i, el) => $(el).text())
             .get();
           resolve(result);
