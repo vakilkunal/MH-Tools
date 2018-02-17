@@ -1,75 +1,145 @@
 (function() {
-  var mainDiv = document.createElement("div");
-  mainDiv.id = "mht-bookmarklet-loader";
-  // var rateLimitString = '';
+  init();
 
-  var closeButton = document.createElement("button", { id: "close-button" });
-  closeButton.textContent = "x";
-  closeButton.onclick = function() {
-    document.body.removeChild(mainDiv);
-  };
+  function init() {
+    var jsonTimestamp = new Promise(function(resolve, reject) {
+      getLatestSHA().then(function(response) {
+        var sha = JSON.parse(response)[0].sha;
+        var cdn =
+          "https://cdn.rawgit.com/tsitu/MH-Tools/" +
+          sha +
+          "/data/bookmarklet-timestamps.json";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", cdn);
+        xhr.onload = function() {
+          resolve(xhr.responseText);
+        };
+        xhr.onerror = function() {
+          reject(xhr.statusText);
+        };
+        xhr.send();
+      });
+    });
 
-  var titleSpan = document.createElement("span");
-  titleSpan.style.fontSize = "15px";
-  titleSpan.style.fontWeight = "bold";
-  titleSpan.appendChild(document.createTextNode("MH Tools Bookmarklets"));
+    jsonTimestamp.then(function(response) {
+      buildUI(JSON.parse(response));
+    });
+  }
 
-  var descriptionSpan = document.createElement("span");
-  descriptionSpan.innerHTML =
-    "Version 1.0 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
+  function buildUI(timestamps) {
+    var mainDiv = document.createElement("div");
+    mainDiv.id = "mht-bookmarklet-loader";
+    var loaderTimestamp = "Last updated: " + timestamps["loader"];
+    var creTimestamp = "Last updated: " + timestamps["cre"];
+    var mapTimestamp = "Last updated: " + timestamps["map"];
+    var setupTimestamp = "Last updated: " + timestamps["setup"];
+    var analyzerTimestamp = "Last updated: " + timestamps["analyzer"];
+    var crownTimestamp = "Last updated: " + timestamps["crown"];
 
-  var creButton = document.createElement("button", { id: "cre-button" });
-  creButton.textContent = "Catch Rate Estimator";
-  creButton.onclick = function() {
-    loadBookmarklet("cre");
-  };
+    var closeButton = document.createElement("button", { id: "close-button" });
+    closeButton.textContent = "x";
+    closeButton.onclick = function() {
+      document.body.removeChild(mainDiv);
+    };
 
-  var mapButton = document.createElement("button", { id: "map-button" });
-  mapButton.textContent = "Map Solver";
-  mapButton.onclick = function() {
-    loadBookmarklet("map");
-  };
+    var titleSpan = document.createElement("span");
+    titleSpan.style.fontSize = "15px";
+    titleSpan.style.fontWeight = "bold";
+    titleSpan.appendChild(document.createTextNode("MH Tools Bookmarklets"));
 
-  var setupButton = document.createElement("button", { id: "setup-button" });
-  setupButton.textContent = "Best Setup";
-  setupButton.onclick = function() {
-    loadBookmarklet("setup");
-  };
+    var descriptionSpan = document.createElement("span");
+    descriptionSpan.innerHTML =
+      "Version 1.1 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
+    var loaderSpanTimestamp = document.createElement("span");
+    loaderSpanTimestamp.style.fontSize = "10px";
+    loaderSpanTimestamp.style.fontStyle = "italic";
+    loaderSpanTimestamp.innerHTML = loaderTimestamp;
 
-  var analyzerButton = document.createElement("button", {
-    id: "analyzer-button"
-  });
-  analyzerButton.textContent = "Marketplace Analyzer";
-  analyzerButton.onclick = function() {
-    loadBookmarklet("analyzer");
-  };
+    var creButton = document.createElement("button", { id: "cre-button" });
+    creButton.textContent = "Catch Rate Estimator";
+    creButton.onclick = function() {
+      loadBookmarklet("cre");
+    };
+    var creSpanTimestamp = document.createElement("span");
+    creSpanTimestamp.style.fontSize = "10px";
+    creSpanTimestamp.style.fontStyle = "italic";
+    creSpanTimestamp.innerHTML = creTimestamp;
 
-  var crownButton = document.createElement("button", { id: "crown-button" });
-  crownButton.textContent = "Silver Crown Solver";
-  crownButton.onclick = function() {
-    loadBookmarklet("crown");
-  };
+    var mapButton = document.createElement("button", { id: "map-button" });
+    mapButton.textContent = "Map Solver";
+    mapButton.onclick = function() {
+      loadBookmarklet("map");
+    };
+    var mapSpanTimestamp = document.createElement("span");
+    mapSpanTimestamp.style.fontSize = "10px";
+    mapSpanTimestamp.style.fontStyle = "italic";
+    mapSpanTimestamp.innerHTML = mapTimestamp;
 
-  // getRateLimit();
-  function buildUI() {
+    var setupButton = document.createElement("button", { id: "setup-button" });
+    setupButton.textContent = "Best Setup";
+    setupButton.onclick = function() {
+      loadBookmarklet("setup");
+    };
+    var setupSpanTimestamp = document.createElement("span");
+    setupSpanTimestamp.style.fontSize = "10px";
+    setupSpanTimestamp.style.fontStyle = "italic";
+    setupSpanTimestamp.innerHTML = setupTimestamp;
+
+    var analyzerButton = document.createElement("button", {
+      id: "analyzer-button"
+    });
+    analyzerButton.textContent = "Marketplace Analyzer";
+    analyzerButton.onclick = function() {
+      loadBookmarklet("analyzer");
+    };
+    var analyzerSpanTimestamp = document.createElement("span");
+    analyzerSpanTimestamp.style.fontSize = "10px";
+    analyzerSpanTimestamp.style.fontStyle = "italic";
+    analyzerSpanTimestamp.innerHTML = analyzerTimestamp;
+
+    var crownButton = document.createElement("button", { id: "crown-button" });
+    crownButton.textContent = "Silver Crown Solver";
+    crownButton.onclick = function() {
+      loadBookmarklet("crown");
+    };
+    var crownSpanTimestamp = document.createElement("span");
+    crownSpanTimestamp.style.fontSize = "10px";
+    crownSpanTimestamp.style.fontStyle = "italic";
+    crownSpanTimestamp.innerHTML = crownTimestamp;
+
     mainDiv.appendChild(closeButton);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(titleSpan);
     mainDiv.appendChild(document.createElement("br"));
-    // mainDiv.appendChild(document.createTextNode(rateLimitString));
     mainDiv.appendChild(descriptionSpan);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(loaderSpanTimestamp);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(creButton);
     mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(creSpanTimestamp);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(mapButton);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(mapSpanTimestamp);
+    mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(setupButton);
     mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(setupSpanTimestamp);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(analyzerButton);
     mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(analyzerSpanTimestamp);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(crownButton);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(crownSpanTimestamp);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createTextNode("(Drag me around on a PC)"));
@@ -86,37 +156,10 @@
     document.body.appendChild(mainDiv);
     dragElement(document.getElementById("mht-bookmarklet-loader"));
   }
-  buildUI();
 
-  // Web API has a 60 request per hour rate limit - bookmarklet seems immune
-  // function getRateLimit() {
-  //   var jsonApi = new Promise(function(resolve, reject) {
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.open('GET', 'https://api.github.com/rate_limit');
-  //     xhr.onload = function() {
-  //       resolve(xhr.responseText);
-  //     }
-  //     xhr.onerror = function() {
-  //       reject(xhr.statusText);
-  //     }
-  //     xhr.send();
-  //   });
-
-  //   jsonApi.then(function(response) {
-  //     var parse = JSON.parse(response);
-  //     var remain = parse.rate.remaining;
-  //     var reset = parse.rate.reset;
-  //     reset -= (Date.now() / 1000);
-  //     reset /= 60;
-  //     reset = reset.toFixed();
-  //     rateLimitString = 'Requests remaining: ' + remain + ' / Resets in: ' + reset + ' minutes';
-  //     buildUI();
-  //   });
-  // }
-
-  function loadBookmarklet(type) {
+  function getLatestSHA() {
     // Fetch latest gh-pages commit SHA to use with RawGit CDN since it caches URLs permanently
-    var jsonApi = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "GET",
@@ -130,8 +173,10 @@
       };
       xhr.send();
     });
+  }
 
-    jsonApi.then(function(response) {
+  function loadBookmarklet(type) {
+    getLatestSHA().then(function(response) {
       var sha = JSON.parse(response)[0].sha;
       var el = document.createElement("script");
       var cdn = "https://cdn.rawgit.com/tsitu/MH-Tools/";
