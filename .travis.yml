@@ -1,6 +1,18 @@
+os:
+ - linux
+
+dist: trusty
+
+env:
+ - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+addons:
+  chrome: beta
+
 language: node_js
 
 script:
+ - npm run puppeteer
  - npm run build
 
 before_install:

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Assorted Mousehunt Tools",
   "scripts": {
+    "puppeteer": "npm i -S puppeteer",
     "bookmarklet:cre": "uglifyjs src/bookmarklet/crebookmarklet.js -cmo src/bookmarklet/crebookmarklet.min.js",
     "bookmarklet:setup": "uglifyjs src/bookmarklet/setupbookmarklet.js -cmo src/bookmarklet/setupbookmarklet.min.js",
     "bookmarklet:map": "uglifyjs src/bookmarklet/mapbookmarklet.js -cmo src/bookmarklet/mapbookmarklet.min.js",
@@ -42,6 +43,11 @@
   },
   "devDependencies": {
     "bluebird": "^3.5.1",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "jacksmhtools-client": "0.0.1",
     "js-combinatorics": "^0.5.2",
     "json2csv": "^3.11.5",
