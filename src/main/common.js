@@ -900,3 +900,19 @@ function updateInputFromParameter(category, callback) {
     callback();
   }
 }
+
+function getSliderValue() {
+  var amplifierParameter = parseInt(getURLParameter("amplifier"));
+  if (amplifierParameter >= 0 && amplifierParameter <= 175) {
+    $("#ampSlider").slider("option", "value", amplifierParameter);
+    var myColor = getColor(amplifierParameter);
+    $("#ampSlider .ui-slider-range").css("background-color", myColor);
+    $("#ampSlider .ui-state-default, .ui-widget-content .ui-state-default").css(
+      "background-color",
+      myColor
+    );
+    $("#ampValue").val(amplifierParameter);
+    ztAmp = amplifierParameter;
+    calculateTrapSetup();
+  }
+}

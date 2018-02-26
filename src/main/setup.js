@@ -131,6 +131,7 @@ function checkLoadState() {
   if (loadPercentage === 100) {
     loadLocationDropdown();
     checkToxicParam();
+    getSliderValue();
 
     batteryParameter = getURLParameter("battery");
     if (batteryParameter != NULL_URL_PARAM) {
@@ -521,7 +522,8 @@ function updateLink() {
     riftstalker: riftStalkerCodex,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
-    rank: rank
+    rank: rank,
+    amplifier: ztAmp
   };
 
   var urlString = buildURL("setup.html", urlParams);
@@ -537,8 +539,6 @@ function weaponChanged() {
 
 function cheeseChanged() {
   cheeseName = document.querySelector("#cheese").value;
-  ga("send", "event", "cheese", "changed", cheeseName);
-
   updateLink();
   checkToxicWidget();
   loadCharmDropdown(locationName, phaseName, cheeseName);
@@ -810,7 +810,8 @@ function getCRELinkElement() {
       riftstalker: riftStalkerCodex,
       ballistaLevel: fortRox.ballistaLevel,
       cannonLevel: fortRox.cannonLevel,
-      rank: rank
+      rank: rank,
+      amplifier: ztAmp
     };
     var urlString = buildURL("cre.html", urlParams);
     urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
