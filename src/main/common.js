@@ -408,7 +408,7 @@ function calculateTrapSetup(skipDisp) {
       1 + (setupPowerBonus + specialBonus + cheeseBonus + braceBonus) / 100;
     var totalPourBonus = 1 + pourBonus / 100 * (1 + setupPowerBonus / 100);
 
-    return Math.round(totalPower * totalBonus * totalPourBonus * getAmpBonus());
+    return Math.ceil(totalPower * totalBonus * totalPourBonus * getAmpBonus());
   }
 
   function getAmpBonus() {

@@ -1024,14 +1024,14 @@ function getMouseCatches(
     }
   } else if (locationName === "Fort Rox") {
     if (
-      (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 2) ||
-      (contains(cosmicCritters, mouseName) && fortRox.cannonLevel >= 2)
+      (contains(wereMice, mouse) && fortRox.ballistaLevel >= 2) ||
+      (contains(cosmicCritters, mouse) && fortRox.cannonLevel >= 2)
     ) {
       catchRate += (1 - catchRate) / 2;
     }
     if (
-      (fortRox.cannonLevel >= 3 && mouseName === "Nightfire") ||
-      (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
+      (fortRox.cannonLevel >= 3 && mouse === "Nightfire") ||
+      (fortRox.ballistaLevel >= 3 && mouse === "Nightmancer")
     ) {
       catchRate = 1;
     }
