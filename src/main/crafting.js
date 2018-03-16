@@ -56,7 +56,7 @@ window.onload = function() {
   });
 
   // Populate global recipes object
-  $.getJSON("../../data/all-recipes.json", json => {
+  $.getJSON("data/all-recipes.json", json => {
     ALL_RECIPES = json;
   });
 
