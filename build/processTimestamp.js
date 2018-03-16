@@ -6,6 +6,7 @@
   const bookmarkletList = [
     "analyzer",
     "loader",
+    "crafting",
     "cre",
     "crown",
     "map",
