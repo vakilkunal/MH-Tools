@@ -40,7 +40,7 @@ We recommend installing Jack's extension ([Chrome](https://chrome.google.com/web
 
 ### :bookmark: Bookmarklets
 
-Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 6 different bookmarklets (CRE, Setup, Map, Analyzer, Crown, and the all-in-one Loader), each located underneath the title of its corresponding tool's page. 
+Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 7 different bookmarklets (CRE, Setup, Map, Analyzer, Crown, Crafting and the all-in-one Loader), each located underneath the title of its corresponding tool's page. 
 
 Using the Auto-Loader is recommended, as it automatically grabs the latest version of each bookmarklet without having to manually update.
 
@@ -53,6 +53,7 @@ Setup | Gradually loads your owned weapons, bases, and charms into Best Setup by
 Analyzer | Gradually loads in your entire Marketplace transaction history via URL over multiple redirects
 Map | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map
 Crown | Automatically fills in the Crown Solver's `textarea` with the 30 Bronze mice on your 'King's Crowns' page that are closest to reaching Silver status (100 catches). The rest of the Bronze mice are copied to your clipboard for pasting if desired (this may or may not work depending on your browser)
+Crafting | Generates a pop-up dialog that contains a `textarea` with your crafting materials data to be copied
 Loader | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
