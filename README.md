@@ -46,6 +46,8 @@ Using the Auto-Loader is recommended, as it automatically grabs the latest versi
 
 You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.com/) website for our bookmarklets to work. This is because the Facebook version loads MouseHunt in an `<iframe>` which (along with CORS restrictions) prevents access to DOM elements as well as the custom `user` JavaScript object. You must also be using the FreshCoat Layout.
 
+:iphone: *Note:* The process of using a bookmarklet may vary in mobile browsers. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
+
 Bookmarklet | Functionality
 :--: | --
 CRE | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, charm, and more

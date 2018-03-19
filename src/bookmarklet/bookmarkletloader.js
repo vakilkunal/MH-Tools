@@ -50,7 +50,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.2 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
+      "Version 1.2.1 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
@@ -163,9 +163,9 @@
     mainDiv.appendChild(document.createTextNode("(Drag me around on a PC)"));
 
     mainDiv.style.backgroundColor = "#F5F5F5";
-    mainDiv.style.position = "absolute";
+    mainDiv.style.position = "fixed";
     mainDiv.style.zIndex = "9999";
-    mainDiv.style.left = "25%";
+    mainDiv.style.left = "80%";
     mainDiv.style.top = "25px";
     mainDiv.style.border = "solid 3px #696969";
     mainDiv.style.borderRadius = "20px";
