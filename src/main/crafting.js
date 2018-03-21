@@ -3,6 +3,12 @@ var ALL_RECIPES = {};
 var USER_INVENTORY = {};
 
 window.onload = function() {
+  // Check window.name for bookmarklet data
+  if (window.name) {
+    document.getElementById("crafting-input-area").value = window.name;
+    window.name = ""; // Reset name after capturing data
+  }
+
   loadBookmarkletFromJS(
     BOOKMARKLET_LOADER_URL,
     "bookmarkletLoader",

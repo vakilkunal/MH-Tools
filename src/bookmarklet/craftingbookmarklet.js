@@ -31,65 +31,8 @@
     itemObj[element.name] = element.quantity;
   });
 
-  // Output stringified JSON to copy-paste over
-  var mainDiv = document.createElement("div");
-  mainDiv.id = "mht-crafting";
-
-  var closeButton = document.createElement("button");
-  closeButton.textContent = "x";
-  closeButton.onclick = function() {
-    document.body.removeChild(mainDiv);
-  };
-
-  var selectAllButton = document.createElement("button");
-  selectAllButton.textContent = "Select All";
-  selectAllButton.onclick = function() {
-    var textarea = document.getElementById("crafting-output-textarea");
-    textarea.focus();
-    textarea.setSelectionRange(0, 99999);
-  };
-
-  var copyButton = document.createElement("button");
-  copyButton.textContent = "Copy";
-  copyButton.onclick = function() {
-    document.execCommand("copy");
-  };
-
-  var titleSpan = document.createElement("span");
-  titleSpan.style.fontSize = "15px";
-  titleSpan.style.fontWeight = "bold";
-  titleSpan.appendChild(document.createTextNode("Crafting Inventory"));
-
-  var descriptionSpan = document.createElement("span");
-  descriptionSpan.innerHTML =
-    "Copy the text below and paste it into the Crafting Wizard";
-
-  var outputArea = document.createElement("textarea");
-  outputArea.id = "crafting-output-textarea";
-  outputArea.innerText = JSON.stringify(itemObj);
-
-  mainDiv.appendChild(closeButton);
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(selectAllButton);
-  mainDiv.appendChild(copyButton);
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(titleSpan);
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(descriptionSpan);
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(document.createElement("br"));
-  mainDiv.appendChild(outputArea);
-
-  mainDiv.style.backgroundColor = "#F5F5F5";
-  mainDiv.style.position = "absolute";
-  mainDiv.style.zIndex = "9999";
-  mainDiv.style.left = "25%";
-  mainDiv.style.top = "25px";
-  mainDiv.style.border = "solid 3px #696969";
-  mainDiv.style.borderRadius = "20px";
-  mainDiv.style.padding = "10px";
-  mainDiv.style.textAlign = "center";
-  document.body.appendChild(mainDiv);
+  var newWindow = window.open("");
+  newWindow.location = "http://localhost:8000/crafting.html";
+  // 200 IQ method to transfer stringified data across origins
+  newWindow.name = JSON.stringify(itemObj);
 })();

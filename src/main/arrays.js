@@ -2922,7 +2922,7 @@ var powersArray = {
   "Clockwork Timespinner" : [2300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
   "Dread Knight" : [2450, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
   "Harbinger of Death" : [4590, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216], // low-med confidence
-  "Absolute Acolyte" : [2160*7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 700], // low-med confidence
+  "Absolute Acolyte" : [2160*25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2500], // low-med confidence
   "Timelost Thaumaturge" : [2350*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // medium confidence
   "Vigilant Ward" : [2500*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // med-high confidence
   "Carrion Medium" : [8400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 315], // low-med confidence
@@ -2930,7 +2930,7 @@ var powersArray = {
   "Timeless Lich" : [9500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 300], // low-med confidence
   "Timeslither Pythoness" : [4400*2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200], // medium confidence
   "Portal Paladin" : [8000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
-  "Portal Pursuer" : [10000*0.75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75], // low confidence
+  "Portal Pursuer" : [5000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50], // low confidence
   // Moussu Picchu
   "Breeze Borrower": [3500, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
   "Cloud Collector": [2400, 100, 100, 0, 0, 0, 0, 100, 0, 0, 0],
@@ -2954,7 +2954,7 @@ var powersArray = {
   "Violet Stormchild": [2000, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0], // unconfirmed power
   "Thunderlord": [4500*3, 0, 300, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
   "Thundering Watcher": [5500*3, 0, 300, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
-  "Dragoon": [9600*2, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
+  "Dragoon": [9600*4, 0, 400, 0, 0, 0, 0, 0, 0, 0, 0], // low-med confidence
   "Ful'Mina, The Mountain Queen": [260000, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0], // medium confidence
   // Mountain
   "Craggy Ore": [1200, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
