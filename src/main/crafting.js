@@ -3,17 +3,12 @@ var ALL_RECIPES = {};
 var USER_INVENTORY = {};
 
 window.onload = function() {
-  // Check window.name for bookmarklet data
-  if (window.name) {
-    document.getElementById("crafting-input-area").value = window.name;
-    window.name = ""; // Reset name after capturing data
-  }
-
   loadBookmarkletFromJS(
     BOOKMARKLET_LOADER_URL,
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
+
   loadBookmarkletFromJS(
     CRAFTING_BOOKMARKLET_URL,
     "craftingBookmarklet",
@@ -64,39 +59,65 @@ window.onload = function() {
   // Populate global recipes object
   $.getJSON("data/all-recipes.json", json => {
     ALL_RECIPES = json;
+
+    // Check window.name for valid inventory data from bookmarklet
+    if (window.name) {
+      loadInventory(window.name);
+    }
+
+    // Check localStorage for saved data
+    const storedData = localStorage.getItem("crafting-wizard-items");
+    if (storedData) {
+      try {
+        const parsedData = JSON.parse(storedData);
+        if (validateJsonData(parsedData)) {
+          // Assign JSON.parse()'d object to USER_INVENTORY global
+          USER_INVENTORY = parsedData;
+          calculateRecipes();
+          showInventory();
+        }
+      } catch (e) {
+        console.log("(Error in localStorage parsing) - " + e);
+      }
+    }
   });
-
-  // TODO: Store USER_INVENTORY JSON in localStorage?
-
-  // Populate button event listeners
-  document
-    .getElementById("crafting-data-button")
-    .addEventListener("click", loadInventory);
-  document
-    .getElementById("crafting-calc-button")
-    .addEventListener("click", checkInventory);
 };
 
 /**
- * Grab user input from <textarea> and validate it as JSON
- * Then, assign JSON.parse()'d object to USER_INVENTORY global
+ * Checks if crafting materials JSON is in the form { string: number }
+ * @param {obj} jsonObj
+ * @return {boolean}
  */
-function loadInventory() {
-  const inputText = document.getElementById("crafting-input-area").value;
+function validateJsonData(jsonObj) {
+  let returnBool = true;
+  const jsonKeys = Object.keys(jsonObj);
+  for (let i = 0; i < jsonKeys.length; i++) {
+    if (
+      typeof jsonKeys[i] !== "string" ||
+      typeof jsonObj[jsonKeys[i]] !== "number"
+    ) {
+      returnBool = false;
+      break;
+    }
+  }
+  return returnBool;
+}
+
+/**
+ * Grab window.name data and validate it as JSON
+ * Cache to localStorage and reset window.name
+ */
+function loadInventory(inputText) {
   try {
     const inputObj = JSON.parse(inputText);
-    const ioKeys = Object.keys(inputObj);
-    ioKeys.forEach(key => {
-      if (typeof key !== "string") {
-        throw new TypeError();
-      } else if (typeof inputObj[key] !== "number") {
-        throw new TypeError();
-      }
-    });
-    USER_INVENTORY = inputObj;
-    showInventory();
+    if (validateJsonData(inputObj)) {
+      localStorage.setItem("crafting-wizard-items", inputText);
+      window.name = ""; // Reset name after capturing data
+    } else {
+      throw new TypeError("JSON format invalid or corrupted");
+    }
   } catch (e) {
-    console.log(`(Input textarea parsing error) - ${e}`);
+    console.log(`(Error in window.name) - ${e}`);
   }
 }
 
@@ -116,7 +137,7 @@ function showInventory() {
  * Iterate through USER_INVENTORY and calculate [un]craftable recipes
  * Build string that is then assigned to innerHTML of #crafting-recipes <table>
  */
-function checkInventory() {
+function calculateRecipes() {
   let craftingHTML =
     "<caption>Recipes</caption><thead><tr><th>Type</th><th>Name</th><th id='crafting-total-qty'>Total Craftable Qty</th><th>Required Materials</th><th>Missing Materials</th></tr></thead><tbody>";
 
