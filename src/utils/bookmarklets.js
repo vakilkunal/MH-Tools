@@ -19,16 +19,12 @@ function makeBookmarkletString(content) {
  * @param {string} url
  * @param {string} storageKey
  * @param {string} linkSelector
- * @param {function(string)} [callback] Callback function that takes the ajax response data as parameter
  */
-function loadBookmarkletFromJS(url, storageKey, linkSelector, callback) {
+function loadBookmarkletFromJS(url, storageKey, linkSelector) {
   $.get(
     url,
     function(data) {
       checkBookmarklet(makeBookmarkletString(data), storageKey);
-      if (callback) {
-        callback(data);
-      }
     },
     "text"
   );
