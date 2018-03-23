@@ -1937,7 +1937,7 @@ var charmsArray = {
   "Flamebane Charm": [0, 0, 0, 0, "No Effect"],
   "Forgotten Charm": [0, 0, 0, 0, "No Effect"],
   "Freshness Charm": [0, 0, 0, 0, "Very Fresh"],
-  "Gargantua Guarantee Charm": [250, 5, 0, 0, "No Effect"],
+  "Gargantua Charm": [250, 5, 0, 0, "No Effect"],
   "Gemstone Boost Charm": [0, 0, 0, 0, "No Effect"],
   "Gift Wrapped Charm": [0, 0, 0, 2, "No Effect"],
   "Gilded Charm": [360, 3, 20, 3, "Extremely Fresh"],
