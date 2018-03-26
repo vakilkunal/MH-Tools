@@ -70,11 +70,6 @@
       "ga"
     );
 
-    //Google Analytics for haoala
-    ga("create", "UA-31924811-5", "dropboxusercontent.com");
-    ga("send", "pageview");
-
-    //Google Analytics for me
     ga("create", "UA-61581935-1", { name: "auto" });
     ga("auto.send", "pageview");
   }
