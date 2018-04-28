@@ -351,6 +351,14 @@ function processMap(mapText) {
   var interpretedAsText = "<b>Invalid:<br></b><span class='invalid'>";
   var mouseListText =
     "<thead><tr><th align='center'>Mouse</th><th align='center' id='locationAR'>Location (Raw AR)</th></tr></thead><tbody>";
+  var hyphenEdgeCases = {
+    "Exo-tech": "Exo-Tech",
+    "Itty-bitty Burroughs": "Itty-Bitty Burroughs",
+    "Over-prepared": "Over-Prepared",
+    "Red-eyed Watcher Owl": "Red-Eyed Watcher Owl",
+    "Rr-8": "RR-8",
+    "Titanic Brain-taker": "Titanic Brain-Taker"
+  };
 
   var bestLocationArray = [];
   var weightedBLA = [];
@@ -367,6 +375,11 @@ function processMap(mapText) {
     var indexOfMouse = mouseName.indexOf(" Mouse");
     if (indexOfMouse >= 0) {
       mouseName = mouseName.slice(0, indexOfMouse);
+    }
+
+    // Hyphenated mouse name edge cases
+    if (hyphenEdgeCases.hasOwnProperty(mouseName)) {
+      mouseName = hyphenEdgeCases[mouseName];
     }
 
     if (popArray[mouseName] == undefined) {
