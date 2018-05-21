@@ -3278,7 +3278,7 @@ var miceArray = {
   "Incompetent Ice Climber": [1150, 3850],
   "Polar Bear": [900, 4225],
   "Snow Soldier": [1200, 3995],
-  "Wolfskie": [1100, 4850],
+  "Wolfskie": [1100, 8250],
   "Chipper": [1235, 4525],
   "Snow Bowler": [3845, 11650],
   "Snow Slinger": [2450, 7825],

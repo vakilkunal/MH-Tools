@@ -140,6 +140,7 @@ Core Sample,260
 Corridor Bruiser,7500
 Corrupt,1250
 Corrupt Commodore,60
+Costumed Dog,0
 Costumed Dragon,342
 Costumed Horse,450
 Costumed Monkey,450
@@ -246,7 +247,7 @@ Egg Painter,975
 Egg Scrambler,500
 Eggscavator,975
 Eggsplosive Scientist,930
-Eggsquisite Entertainer,0
+Eggsquisite Entertainer,330
 El Flamenco,750
 Elder,1141
 Elf,1985
@@ -431,6 +432,7 @@ Lovely Sports,300
 Lucky,78
 Lumahead,6400
 Lumberjack,2325
+Lunar Red Candle Maker,0
 Lycan,925
 Lycanoid,6600
 M400,120000
@@ -529,11 +531,13 @@ Mystic Rook,9900
 Mystic Scholar,12120
 Narrator,90
 Naturalist,20000
+Naughty Nougat,0
 Necromancer,1700
 Nerg Chieftain,1255
 Nerg Lich,4015
 New Year's,220
 Nibbler,110
+Nice Knitting,0
 Night Shift Materials Manager,5000
 Night Watcher,4500
 Nightfire,1150
@@ -588,7 +592,7 @@ Polar Bear,1015
 Portable Generator,5000
 Portal Paladin,4000
 Portal Plunderer,7000
-Portal Pursuer,0
+Portal Pursuer,4000
 Present,135
 Primal,1645
 Princess Fist,3450
@@ -615,6 +619,7 @@ Rainwater Purifier,4800
 Rancid Bog Beast,10000
 Ravenous Zombie,540
 Raw Diamond,12000
+Reality Restitch,1200
 Realm Ripper,450
 Reanimated Carver,13500
 Reaper,870
@@ -711,6 +716,8 @@ Snooty,2
 Snow Boulder,1050
 Snow Bowler,1750
 Snow Fort,4800
+Snow Golem Architect,0
+Snow Golem Jockey,0
 Snow Scavenger,675
 Snow Slinger,1175
 Snow Sniper,1400
@@ -748,7 +755,8 @@ Sporeticus,2400
 Sporty Ski Instructor,1890
 Spotted,40
 Spring Familiar,1361
-Sprinkly Sweet Cupcake Cook,0
+Spring Sprig,800
+Sprinkly Sweet Cupcake Cook,650
 Spud,50
 Squeaken,553
 Squeaker Claws,4268
@@ -822,6 +830,9 @@ Thundering Watcher,20000
 Thunderlord,18000
 Tidal Fisher,1470
 Tiger,550
+Time Punk,500
+Time Tailor,1000
+Time Thief,0
 Timeless Lich,25000
 Timelost Thaumaturge,9000
 Timeslither Pythoness,15000
