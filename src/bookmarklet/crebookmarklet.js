@@ -8,7 +8,6 @@
     if (userLocation === "Furoma Rift") {
       var chargeLevel = userQuests["QuestRiftFuroma"]["droid"]["charge_level"];
       if (chargeLevel !== "") {
-        /*Replaced if-else with dictionary lookup -- less code*/
         var levels = {
           charge_level_one: 1,
           charge_level_two: 2,
@@ -216,7 +215,8 @@
         knight: "Knight"
       };
 
-      //TODO: Investigate possibility of using nextStatus and rising/falling to determine this instead of looping over titles
+      // TODO: Investigate possibility of using nextStatus and rising/falling
+      // to determine this instead of looping over titles
       for (var key in titles) {
         if (titles.hasOwnProperty(key) && titles[key].active) {
           sublocation = spillSublocationMap[key];
@@ -241,7 +241,6 @@
       var district_type = quest.clue_name;
       var district_tier = quest.district_tier;
 
-      //TODO: Check cluename/cluetype of Lair to improve this
       if (contains(districtname, "Minotaur")) {
         return "Lair of the Minotaur";
       } else {
@@ -401,6 +400,11 @@
     urlParams["cheese"] = userCheese;
   }
 
+  // Weapon edge cases
+  if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
+    urlParams["weapon"] = "Timesplit Dissonance Weapon";
+  }
+
   if (userSublocation !== "N/A") {
     urlParams["phase"] = userSublocation;
   }
@@ -409,7 +413,6 @@
 
   function sendData(parameters) {
     var url = "https://tsitu.github.io/MH-Tools/cre.html?";
-    //url = "http://localhost:63342/MH-Tools/cre.html?";
 
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);
