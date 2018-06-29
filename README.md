@@ -51,11 +51,11 @@ You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.co
 Bookmarklet | Functionality
 :--: | --
 CRE | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, charm, and more
-Setup | Gradually loads your owned weapons, bases, and charms into Best Setup by passing them in via URL over multiple redirects
+Setup | Automatically loads your owned weapons, bases, and charms into Best Setup
 Analyzer | Gradually loads in your entire Marketplace transaction history via URL over multiple redirects
 Map | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map
-Crown | Automatically fills in the Crown Solver's `textarea` with the 30 Bronze mice on your 'King's Crowns' page that are closest to reaching Silver status (100 catches). The rest of the Bronze mice are copied to your clipboard for pasting if desired (this may or may not work depending on your browser)
-Crafting | Generates a pop-up dialog that contains a `textarea` with your crafting materials data to be copied
+Crown | Automatically fills in the Crown Solver's `textarea` with the 50 Bronze Crown mice on your 'King's Crowns' page that are closest to reaching Silver status (100 catches). Note that favorited Bronze mice will be included regardless of catches.
+Crafting | Automatically loads your 'Crafting Table' materials into Crafting Wizard
 Loader | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
@@ -161,13 +161,11 @@ Event _(not included)_ | Cupcake Colby, Dumpling, Extra Sweet Cupcake Colby, Mar
 
 > Calculates the best weapon and base setup to use for a particular location, sublocation, and cheese.
 
-**Bookmarklet:** Execute the default `Best Setup` bookmarklet on your Camp page. Try the `Slower` or `Even Slower` bookmarklets if your items are not all loading in.
+**Bookmarklet:** Execute the `Best Setup` bookmarklet on your Camp page. Items will be automatically loaded, ticked, and cached on the Best Setup page.
 
-To check whether your items have properly loaded, you may want to open up the [JavaScript console](https://webmasters.stackexchange.com/a/77337) in your browser, both on your MH Camp page and on the Best Setup page (after it has finished processing). You will then want to compare `Number of bases/weapons/charms: __` values for the former with `Bases/Weapons/Charms loaded: __` for the latter.
+To check whether your items have properly loaded, you may want to open up the [JavaScript console](https://webmasters.stackexchange.com/a/77337) in your browser, both on your MH Camp page and on the Best Setup page. You will then want to compare `Number of bases/weapons/charms: # detected` values from the former with `Bases/Weapons/Charms: # owned / # total` from the latter.
 
 'Number of rows to display' is set at 50 by default, with options for 100, 500, 1000, or All rows. When running calculations with close to the maximum number of weapons and bases selected, keep the number of rows low to avoid excessive CPU/RAM usage.
-
-_Note:_ This tool will be receiving optimizations in the near future to store owned items more effectively.
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
@@ -195,7 +193,7 @@ Tariffs | 10% calculated on total amount  = Amount ÷ 1.1 (slightly inaccurate)
 
 > Calculates the best locations to hunt to progress towards achieving 100 catches of mouse breeds.
 
-**Bookmarklet:** Execute the `Crown` bookmarklet from Hunter's Profile -> King's Crowns to automatically populate the 30 mice closest to Silver Crown status. The rest of your bronze crown mice should be copied to the clipboard for pasting, but this behavior may not work on certain browsers.
+**Bookmarklet:** Execute the `Crown` bookmarklet from Hunter's Profile -> King's Crowns to automatically populate the 50 Bronze Crown mice that are closest to reaching Silver status (100 catches)
 
 This spin-off of the Map Solver by vsong factors in the difference between 100 and the number of catches you currently have for a breed (e.g. all else being equal, a mouse at 99 catches is weighted more heavily than one at 80 catches).
 
@@ -212,7 +210,7 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 ### :hammer: [Crafting Wizard](https://tsitu.github.io/MH-Tools/crafting.html)
 > Calculates the total craftable quantity for recipes based on your inventory data, as well as missing materials for uncraftable recipes.
 
-**Bookmarklet:** Execute the `Crafting` bookmarklet from Inventory -> Crafting -> [Crafting Table](https://www.mousehuntgame.com/inventory.php?tab=crafting&subtab=crafting_table). A dialog should appear at the top of the page. Click `Select All`, then `Copy` (or manually copy the `<textarea>` contents to your clipboard) and paste the contents over to the Crafting Wizard tool. Click `Load Data`, then `Calculate` to populate the `Inventory` and `Recipes` tables, with the latter being sortable and filterable.
+**Bookmarklet:** Execute the `Crafting` bookmarklet from Inventory -> Crafting -> [Crafting Table](https://www.mousehuntgame.com/inventory.php?tab=crafting&subtab=crafting_table). The `Recipes` and `Inventory` tables should be automatically populated, with the former being sortable and filterable. Crafting materials are cached in localStorage.
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 

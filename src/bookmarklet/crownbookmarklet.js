@@ -15,7 +15,45 @@
     .parent()
     .find("img")
     .map(function() {
-      return $(this).attr("title");
+      var mouseName = $(this).attr("title");
+
+      // Apostrophe mice: [Record] Keeper's Assistant, Ful'Mina, New Year's
+      // Thunderlord has lightning emojis surrounding its name
+      if (mouseName === "Ful") {
+        mouseName = "Ful'Mina, The Mountain Queen";
+      } else if (mouseName === "Keeper") {
+        if (
+          $(this)
+            .parent()
+            .parent()
+            .find(".name")
+            .text() === "Keeper's As..."
+        ) {
+          mouseName = "Keeper's Assistant";
+        }
+      } else if (mouseName === "Record Keeper") {
+        if (
+          $(this)
+            .parent()
+            .parent()
+            .find(".name")
+            .text() === "Record Keep..."
+        ) {
+          mouseName = "Record Keeper's Assistant";
+        }
+      } else if (mouseName === "New Year") {
+        mouseName = "New Year's";
+      } else if (mouseName.indexOf("Thunderlord") >= 0) {
+        mouseName = "Thunderlord";
+      }
+
+      // Search for index of ' Mouse' and trim up to it
+      var index = mouseName.indexOf(" Mouse");
+      if (index > 0) mouseName = mouseName.slice(0, index);
+
+      // Dread Pirate Mousert edge case
+      if (mouseName === "Dread Pirate") mouseName = "Dread Pirate Mousert";
+      return mouseName;
     })
     .get();
   var miceCatches = $(".bronze")
@@ -24,29 +62,13 @@
     })
     .get();
 
-  /**
-   * Copy full list to clipboard
-   */
-  var combinedString = "";
+  // Cast to object and pass to window.name
+  var nameCatchesObj = {};
   for (var i = 0; i < miceNames.length; i++) {
-    combinedString += miceNames[i] + "\n" + miceCatches[i] + "\n";
+    nameCatchesObj[miceNames[i]] = +miceCatches[i];
   }
-  var copyListener = function(event) {
-    document.removeEventListener("copy", copyListener, true);
-    event.preventDefault();
-    var clipboardData = event.clipboardData;
-    clipboardData.clearData();
-    clipboardData.setData("text/plain", combinedString);
-  };
-  document.addEventListener("copy", copyListener, true);
-  document.execCommand("copy");
 
-  /**
-   * Auto-populate top 30 mice
-   */
-  var url = "https://tsitu.github.io/MH-Tools/crown.html";
-  url += "?mice=" + encodeURIComponent(miceNames.splice(0, 30).join("/"));
-  url += "?catches=" + encodeURIComponent(miceCatches.splice(0, 30).join("/"));
-  var newWindow = window.open("", "mhcrownsolver");
-  newWindow.location = url;
+  var newWindow = window.open("");
+  newWindow.location = "https://tsitu.github.io/MH-Tools/crown.html";
+  newWindow.name = JSON.stringify(nameCatchesObj);
 })();
