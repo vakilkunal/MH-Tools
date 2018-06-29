@@ -7,12 +7,12 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
-    <script type="text/javascript" src="src/utils/bookmarklets.js"></script>
-    <script type="text/javascript" src="src/main/analyzer.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="lib/js-cookie.js"></script>
     <script type="text/javascript" src="lib/jquery.tablesorter.combined.min.js"></script>
     <script type="text/javascript" src="lib/widget-pager.min.js"></script>
+    <script type="text/javascript" src="src/utils/bookmarklets.js"></script>
+    <script type="text/javascript" src="src/main/analyzer.js"></script>
     <link rel="stylesheet" href="resources/css/style.css" type="text/css" media="print, projection, screen" />
     <link rel="icon" type="image/x-icon" href="resources/img/favicon.ico">
 
@@ -21,31 +21,38 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: Verdana;
             font-size: 12px;
             line-height: 18px;
         }
+
         h1 {
             font-size: 24px;
             padding-bottom: 10px;
         }
+
         .container {
             margin: 0 auto;
             padding: 20px;
             position: absolute;
         }
+
         .header {
         	font-size: 11px;
             width: 250px;
         }
+
         #main {
             float: left;
             width: 1000px;
         }
+
         #almostDone {
             clear: both;
         }
+
         #tableContainer {
             clear: both;
             padding-top: 2ex;
@@ -62,40 +69,50 @@
       ga('create', 'UA-61581935-1', 'auto');
       ga('send', 'pageview');
     </script>
-    <!--###################################################################################-->
 </head>
 
 <body>
 <div class="container">
-
     <div id="main">
-        <a href="index.html"><- All Tools</a><br><br>
+      <a href="index.html">
+        <- All Tools</a>
+          <br>
+          <br>
         <h1>Marketplace Analyzer</h1>
     </div>
     
     <div class="header">
-        <a href="https://github.com/tsitu/MH-Tools/blob/master/README.md#chart_with_upwards_trend-marketplace-analyzer"
-            target="_blank" rel="noopener">Instructions</a> |
+      <a href="https://github.com/tsitu/MH-Tools/blob/master/README.md#chart_with_upwards_trend-marketplace-analyzer" target="_blank"
+        rel="noopener">Instructions</a> |
         <a id="bookmarkletloader" href="#">Auto-Loader</a> |
         <a id="bookmarklet" href="#">Analyzer</a>
     </div>
 
     <div id="almostDone" style="display: none">
-        <br><h2>Almost there...</h2>
+      <br>
+      <h2>Almost there...</h2>
     </div>
 
     <div id="tableContainer" style="display: none">
-        <br><h2>Marketplace Data &nbsp;&nbsp;<button id="resetButton">Reset</button></h2>
-        <p><small><i>Hint:</i> Hold 'Shift' to sort multiple columns!</small></p>
-        <p><a href="#itemSummaryContainer">Item Summary</a></p><br>
+      <br>
+      <h2>Marketplace Data &nbsp;&nbsp;
+        <button id="resetButton">Reset</button>
+      </h2>
+      <p>
+        <small>
+          <i>Hint:</i> Hold 'Shift' to sort multiple columns!</small>
+      </p>
+      <p>
+        <a href="#itemSummaryContainer">Item Summary</a>
+      </p>
+      <br>
         <div class="dataPager">
             <form>
             <img src="resources/img/first.png" class="first" />
             <img src="resources/img/prev.png" class="prev" />
             <span class="pagedisplay"></span>
             <img src="resources/img/next.png" class="next" />
-            <img src="resources/img/last.png" class="last" />
-            &nbsp;&nbsp; Page size:
+          <img src="resources/img/last.png" class="last" /> &nbsp;&nbsp; Page size:
             <select class="pagesize">
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -110,20 +127,26 @@
             <select class="gotoPage"></select>
             </form>
         </div>
-        <table id="table" class="tablesorter"><thead></thead><tbody></tbody></table>
+      <table id="table" class="tablesorter">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </div>
 
     <div id="itemSummaryContainer" style="display: none">
-        <br><h2>Item Summary</h2>
-        <p><a href="#overallSummaryContainer">Overall Summary</a></p><br>
+      <br>
+      <h2>Item Summary</h2>
+      <p>
+        <a href="#overallSummaryContainer">Overall Summary</a>
+      </p>
+      <br>
         <div class="itemPager">
             <form>
             <img src="resources/img/first.png" class="first" />
             <img src="resources/img/prev.png" class="prev" />
             <span class="pagedisplay"></span>
             <img src="resources/img/next.png" class="next" />
-            <img src="resources/img/last.png" class="last" />
-            &nbsp;&nbsp; Page size:
+          <img src="resources/img/last.png" class="last" /> &nbsp;&nbsp; Page size:
             <select class="pagesize">
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -138,15 +161,24 @@
             <select class="gotoPage"></select>
             </form>
         </div>
-        <table id="itemSummaryTable" class="tablesorter"><thead></thead><tbody></tbody></table>
+      <table id="itemSummaryTable" class="tablesorter">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </div>
 
     <div id="overallSummaryContainer" style="display: none">
-        <br><h2>Overall Summary</h2>
-        <p><a href="#top">Top</a></p><br>
-        <table id="overallSummaryTable" class="tablesorter"><thead></thead><tbody></tbody></table>
+      <br>
+      <h2>Overall Summary</h2>
+      <p>
+        <a href="#top">Top</a>
+      </p>
+      <br>
+      <table id="overallSummaryTable" class="tablesorter">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </div>
-
 </div>
 </body>
 
