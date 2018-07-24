@@ -145,7 +145,7 @@ You can `Apply` filters to the first column, `Reset` filters on the table, or `C
 
 Filter Category | Cheeses
 -- | --
-Magic Essence | SB+, Moon, Maki, Maki String, Magical String (Toxic SB+ and Magical Rancid Radioactive Blue currently not in population data)
+Magic Essence | SB+, Moon, Maki, Maki String, Magical String (Empowered SB+ and Magical Rancid Radioactive Blue currently not in population data)
 Common | Brie, Brie String, Cheddar, Gouda, Marble, Marble String, Swiss, Swiss String
 Marketplace | Crescent, Magical String, Maki, Maki String, Moon, Rancid Radioactive Blue, SB+
 Shoppe | All four Camemberts, Fishy Fromage, Grilled, Sunrise (separate niche from common)

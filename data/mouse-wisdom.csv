@@ -400,7 +400,7 @@ Ignis,449
 Impersonator,18
 Incompetent Ice Climber,785
 Industrious Digger,351
-"Inferna, The Engulfed",0
+"Inferna, The Engulfed",25000
 Inferno Mage,4240
 Infiltrator,2370
 Itty Bitty Rifty Burroughs,7100
@@ -536,7 +536,7 @@ Mystic Queen,11040
 Mystic Rook,9900
 Mystic Scholar,12120
 Nachore Golem,6000
-"Nachous, The Molten",0
+"Nachous, The Molten",30000
 Narrator,90
 Naturalist,20000
 Naughty Nougat,0
@@ -758,8 +758,8 @@ Spellbinder,320
 Spice Farmer,4500
 Spice Finder,6900
 Spice Merchant,1650
-Spice Raider,0
-Spice Reaper,0
+Spice Raider,7500
+Spice Reaper,9330
 Spice Seer,3000
 Spice Sovereign,6000
 Spider,520

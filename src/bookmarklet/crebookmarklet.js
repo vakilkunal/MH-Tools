@@ -382,9 +382,9 @@
   // Cheese edge cases
   var userCheese = user["bait_name"];
   if (userCheese) {
-    if (contains(userCheese, "Toxic")) {
+    if (contains(userCheese, "Empowered")) {
       userCheese = userCheese.slice(6, userCheese.length);
-      urlParams["toxic"] = "Yes";
+      urlParams["empowered"] = "Yes";
     }
 
     if (userCheese.indexOf("SUPER|brie+") >= 0) {

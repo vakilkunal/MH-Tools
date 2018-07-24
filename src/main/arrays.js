@@ -326,8 +326,8 @@ var baselineAttArray = {
   "Swiss": 0.7457, // Sample: 2853 (High)
   "Swiss String": 0.7637, // Sample: 5617 (High)
   "Terre Ricotta": 0.9501, // Sample: 8905 (High)
-  "Toxic Brie": 0.7688, // Sample: 1350 (High)
-  "Toxic SB+": 0.9996, // Sample: 3443 (High)
+  "Empowered Brie": 0.7688, // Sample: 1350 (High)
+  "Empowered SB+": 0.9996, // Sample: 3443 (High)
   "Undead Emmental": 0.9852, // Sample: 1881 (High)
   "Undead String Emmental": 0.9911, // Sample: 1266 (High)
   "Vanilla Stilton": 0.9344, // Sample: 3693 (High)
@@ -1646,6 +1646,8 @@ var basesArray = {
   "Cupcake Birthday Base": [300, 7, 7, 7, "Extremely Fresh"],
   "Deep Freeze Base": [35, 0, 0, 0, "Uber Fresh"],
   "Dehydration Base": [225, 0, 5, 4, "Insanely Fresh"],
+  "Denture Base": [100, 10, 0, 0, "No Effect"],
+  "Denture Base (Toothlet Charged)": [1500, 25, 25, 20, "No Effect"],
   "Depth Charge Base": [450, 10, 0, 10, "No Effect"],
   "Dog Jade Base": [375, 12, 10, 10, "Stale"],
   "Dragon Jade Base": [300, 10, 0, 10, "No Effect"],
@@ -1749,6 +1751,7 @@ var weaponsArray = {
   "Chrome Phantasmic Oasis Trap": ["Hydro", 6200, 20, 15, 28, "Very Fresh"],
   "Chrome RhinoBot": ["Physical", 6000, 10, 0, 27, "Ultimately Stale"],
   "Chrome Sphynx Wrath": ["Tactical", 6500, 15, 10, 28, "Very Fresh"],
+  "Chrome Storm Wrought Ballista Trap": ["Draconic", 6200, 18, 15, 20, "Stale"],
   "Chrome Tacky Glue Trap": ["Physical", 70, 0, 30, 20, "Stale"],
   "Chrome Temporal Turbine": ["Shadow", 6000, 25, 5, 28, "No Effect"],
   "Clockapult of Time": ["Shadow", 2275, 10, 5, 10, "Extremely Fresh"],
@@ -1827,6 +1830,7 @@ var weaponsArray = {
   "Obelisk of Slumber": ["Arcane", 2100, 0, 10, 0, "Extremely Fresh"],
   "Obvious Ambush Trap": ["Tactical", 3000, 15, 0, 12, "Very Stale"],
   "Onyx Mallet": ["Physical", 3800, 12, 0, 6, "Stale"],
+  "Paradise Falls Trap": ["Hydro", 4000, 25, 25, 22, "Very Stale"],
   "PartyBot": ["Physical", 2850, 15, 15, 25, "Stale"],
   "Phantasmic Oasis Trap": ["Hydro", 5850, 15, 20, 26, "No Effect"],
   "Pneumatic Tube Trap": ["Physical", 2300, 20, 5, 18, "No Effect"],
@@ -1876,6 +1880,7 @@ var weaponsArray = {
   "Venus Mouse Trap": ["Tactical", 1900, 0, 5, 5, "Extremely Fresh"],
   "Warden Slayer Trap": ["Physical", 6000, 15, 15, 17, "No Effect"],
   "Warpath Thrasher": ["Physical", 4500, 10, 5, 6, "Stale"],
+  "Well of Wisdom Trap": ["Tactical", 4000, 3, 25, 22, "Insanely Fresh"],
   "Wrapped Gift Trap": ["Physical", 1100, 5, 10, 5, "No Effect"],
   "Zugzwang's First Move": ["Tactical", 3660, 15, 0, 17, "Very Fresh"],
   "Zugzwang's Last Move": ["Tactical", 2200, 15, 0, 7, "Fresh"],
@@ -2041,11 +2046,14 @@ var charmsArray = {
   "Super Attraction Charm": [0, 0, 20, 0, "No Effect"],
   "Super Brain Charm": [100, 10, 10, 1, "Insanely Fresh"],
   "Super Cactus Charm": [500, 3, 5, 3, "Stale"],
+  "Super Dragonbane Charm": [0, 0, 0, 0, "No Effect"],
   "Super Enerchi Charm": [500, 5, 0, 0, "Fresh"],
+  "Super Lantern Oil Charm": [300, 5, 5, 3, "Very Fresh"],
   "Super Luck Charm": [0, 0, 0, 3, "No Effect"],
   "Super Nightshade Farming Charm": [300, 3, 2, 1, "Fresh"],
   "Super Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Super Power Charm": [360, 3, 0, 0, "No Effect"],
+  "Super Queso Pump Charm": [50, 5, 5, 5, "Very Fresh"],
   "Super Regal Charm": [1500, 0, 50, 7, "No Effect"],
   "Super Rift Vacuum Charm": [100, 0, 0, 0, "No Effect"],
   "Super Rotten Charm": [200, 2, 0, 0, "Insanely Stale"],

@@ -29,7 +29,7 @@ var gsLuck = 7,
   bonusLuck = 0,
   pourBonus = 0,
   pourLuck = 0,
-  isToxic = "",
+  isEmpowered = "",
   batteryPower = 0,
   lanternStatus = "";
 var trapPower = 0,
@@ -575,22 +575,25 @@ function rankChange() {
   genericOnChange();
 }
 
-function checkToxicWidget(custom) {
+function checkEmpoweredWidget(custom) {
   if (!custom) {
     if (cheeseName === "Brie" || cheeseName === "SB+") {
-      $("#toxicRow").show(500);
+      $("#empoweredRow").show(500);
     } else {
-      $("#toxicRow").hide();
+      $("#empoweredRow").hide();
     }
-    updateToxicValue();
+    updateEmpoweredValue();
   }
 }
 
-function updateToxicValue() {
-  var select = document.getElementById("toxic");
-  isToxic = select.value;
+function updateEmpoweredValue() {
+  var select = document.getElementById("empowered");
+  isEmpowered = select.value;
 
-  if (isToxic === "Yes" && (cheeseName === "Brie" || cheeseName === "SB+")) {
+  if (
+    isEmpowered === "Yes" &&
+    (cheeseName === "Brie" || cheeseName === "SB+")
+  ) {
     cheeseBonus = 20;
   } else {
     cheeseBonus = 0;
@@ -599,8 +602,8 @@ function updateToxicValue() {
   updateLink();
 }
 
-function toxicChanged() {
-  updateToxicValue();
+function empoweredChanged() {
+  updateEmpoweredValue();
   calculateTrapSetup();
 }
 
@@ -799,12 +802,12 @@ function bonusLuckChanged() {
   calculateTrapSetup();
 }
 
-function checkToxicParam() {
-  var toxicParameter = getURLParameter("toxic");
-  if (toxicParameter !== NULL_URL_PARAM) {
-    var select = document.getElementById("toxic");
-    select.value = toxicParameter;
-    toxicChanged();
+function checkEmpoweredParam() {
+  var empoweredParameter = getURLParameter("empowered");
+  if (empoweredParameter !== NULL_URL_PARAM) {
+    var select = document.getElementById("empowered");
+    select.value = empoweredParameter;
+    empoweredChanged();
   }
 }
 
@@ -816,8 +819,8 @@ function checkToxicParam() {
  * @param {boolean} custom Is a custom setup being used
  */
 function showHideWidgets(custom) {
-  $("#toxicRow").hide();
-  $("#toxic").val("No");
+  $("#empoweredRow").hide();
+  $("#empowered").val("No");
   $("#battery").val(0);
   $("#ampSlider").slider("option", "value", 100);
 
@@ -832,7 +835,7 @@ function showHideWidgets(custom) {
   if (!custom) {
     $(locationNameClass).show(500);
   }
-  checkToxicWidget(custom);
+  checkEmpoweredWidget(custom);
 }
 
 function clearResults() {

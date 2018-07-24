@@ -69,7 +69,7 @@ window.onload = function() {
   document.getElementById("phase").onchange = phaseChanged;
   document.getElementById("cheese").onchange = cheeseChanged;
   document.getElementById("oil").onchange = oilChanged;
-  document.getElementById("toxic").onchange = toxicChanged;
+  document.getElementById("empowered").onchange = empoweredChanged;
   document.getElementById("battery").onchange = batteryChanged;
   document.getElementById("weapon").onchange = weaponChanged;
   document.getElementById("base").onchange = baseChanged;
@@ -138,7 +138,7 @@ function checkLoadState() {
     updateInputFromParameter("oil", oilChanged);
     riftstalkerParamCheck();
     fortRoxParamCheck();
-    checkToxicParam();
+    checkEmpoweredParam();
 
     updateInputFromParameter("battery", batteryChanged);
     rankParamCheck();
@@ -420,6 +420,15 @@ function showPop(type) {
           charmBonus -= 300;
           calculateTrapSetup(true);
         } else if (
+          charmName === "Super Dragonbane Charm" &&
+          contains(dragons, mouseName)
+        ) {
+          charmBonus += 600;
+          calculateTrapSetup(true); // not "cre" or else infinite loop
+          catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+          charmBonus -= 600;
+          calculateTrapSetup(true);
+        } else if (
           charmName === "Taunting Charm" &&
           contains(tauntings, mouseName)
         ) {
@@ -695,7 +704,10 @@ function showPop(type) {
         } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
           var mouseClues = labyrinthMiceClues[mouseName];
           if (lanternStatus == "On" && mouseClues != 0) mouseClues++;
-          if (charmName == "Lantern Oil Charm" && mouseClues != 0) mouseClues++;
+          if (charmName === "Lantern Oil Charm" && mouseClues != 0)
+            mouseClues += 1;
+          if (charmName === "Super Lantern Oil Charm" && mouseClues != 0)
+            mouseClues += 2;
           avgLanternClues += mouseClues * catches / 100;
           mouseRow += "<td>" + mouseClues + "</td><td></td>";
         }
@@ -1014,7 +1026,7 @@ function updateLink() {
     gs: !gsLuck,
     cheese: cheeseName,
     oil: lanternStatus,
-    toxic: isToxic,
+    empowered: isEmpowered,
     battery: batteryPower,
     weapon: weaponName,
     base: baseName,
@@ -1041,8 +1053,8 @@ function cheeseChanged() {
   cheeseCost = standardCheeseCost[cheeseName] || 0;
   costElement.value = cheeseCost;
 
-  // Toxic check
-  checkToxicWidget(document.getElementById("toggleCustom").checked);
+  // Empowered check
+  checkEmpoweredWidget(document.getElementById("toggleCustom").checked);
 
   showPop();
   selectCharm();

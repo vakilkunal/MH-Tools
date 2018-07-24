@@ -41,7 +41,7 @@ $(window).load(function() {
   document.querySelector("#phase").onchange = phaseChanged;
   document.querySelector("#cheese").onchange = cheeseChanged;
   document.querySelector("#charm").onchange = charmChanged;
-  document.querySelector("#toxic").onchange = toxicChanged;
+  document.querySelector("#empowered").onchange = empoweredChanged;
   document.querySelector("#battery").onchange = batteryChanged;
   document.querySelector("#gs").onchange = gsChanged;
   document.querySelector("#bonusLuck").onchange = bonusLuckChanged;
@@ -136,7 +136,7 @@ function checkLoadState() {
 
   if (loadPercentage === 100) {
     loadLocationDropdown();
-    checkToxicParam();
+    checkEmpoweredParam();
     getSliderValue();
 
     batteryParameter = getURLParameter("battery");
@@ -469,7 +469,7 @@ function updateLink() {
     phase: phaseName,
     cheese: cheeseName,
     charm: selectedCharm,
-    toxic: isToxic,
+    empowered: isEmpowered,
     battery: batteryPower,
     gs: !gsLuck,
     bonusLuck: bonusLuck,
@@ -495,7 +495,7 @@ function weaponChanged() {
 function cheeseChanged() {
   cheeseName = document.querySelector("#cheese").value;
   updateLink();
-  checkToxicWidget();
+  checkEmpoweredWidget();
   loadCharmDropdown(locationName, phaseName, cheeseName);
 }
 
@@ -857,7 +857,7 @@ function getCRELinkElement() {
       bonusLuck: bonusLuck,
       weapon: weaponName,
       base: baseName,
-      toxic: isToxic,
+      empowered: isEmpowered,
       battery: batteryPower,
       riftstalker: riftStalkerCodex,
       ballistaLevel: fortRox.ballistaLevel,
@@ -904,6 +904,9 @@ function getMouseACR(
   }
   if (contains(dragons, mouseName) && charmName === "Dragonbane Charm") {
     charmBonus += 300;
+  }
+  if (contains(dragons, mouseName) && charmName === "Super Dragonbane Charm") {
+    charmBonus += 600;
   }
 
   if (locationName === "Fiery Warpath") {
