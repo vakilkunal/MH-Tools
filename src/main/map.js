@@ -295,6 +295,12 @@ window.onload = function() {
     var mapText = document.getElementById("map").value;
     processMap(mapText);
   });
+
+  document.getElementById("resetMouseList").onclick = function() {
+    // Empty out the textarea
+    document.getElementById("map").value = "";
+    processMap("");
+  };
 };
 
 String.prototype.capitalise = function() {
