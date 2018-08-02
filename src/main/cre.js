@@ -64,7 +64,6 @@ window.onload = function() {
   document.getElementById("trapLuckValue").onchange = updateCustomSetup;
   document.getElementById("trapAttractionValue").onchange = updateCustomSetup;
   document.getElementById("trapEffect").onchange = updateCustomSetup;
-
   document.getElementById("location").onchange = locationChanged;
   document.getElementById("phase").onchange = phaseChanged;
   document.getElementById("cheese").onchange = cheeseChanged;
@@ -77,17 +76,18 @@ window.onload = function() {
   document.getElementById("gs").onchange = gsChanged;
   document.getElementById("bonusLuck").onchange = bonusLuckChanged;
   document.getElementById("tourney").onchange = tourneyChanged;
-
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
+  document.getElementById("rank").onchange = rankChange;
+  document.getElementById("chromeAura").onchange = chromeAuraChange;
+  document.getElementById("slayerAura").onchange = slayerAuraChange;
+  document.getElementById("lightningAura").onchange = lightningAuraChange;
 
   document.getElementById("cheeseCost").onchange = function() {
     cheeseCost = parseInt(document.getElementById("cheeseCost").value);
     showPop(2);
   };
-
-  document.getElementById("rank").onchange = rankChange;
 
   // Send clicked link to setup to Google Analytics
   document.getElementById("link").onclick = function() {
@@ -139,6 +139,10 @@ function checkLoadState() {
     riftstalkerParamCheck();
     fortRoxParamCheck();
     checkEmpoweredParam();
+
+    chromeAuraParamCheck();
+    slayerAuraParamCheck();
+    lightningAuraParamCheck();
 
     updateInputFromParameter("battery", batteryChanged);
     rankParamCheck();
@@ -1034,6 +1038,9 @@ function updateLink() {
     bonusLuck: bonusLuck,
     tourney: tournamentName,
     riftstalker: riftStalkerCodex,
+    chromeAura: chromeAuraStatus,
+    slayerAura: slayerAuraStatus,
+    lightningAura: lightningAuraStatus,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
     rank: rank,

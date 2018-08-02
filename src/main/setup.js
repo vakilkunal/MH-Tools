@@ -26,6 +26,9 @@ $(window).load(function() {
   $("#main").show();
   gsParamCheck();
   riftstalkerParamCheck();
+  chromeAuraParamCheck();
+  slayerAuraParamCheck();
+  lightningAuraParamCheck();
   fortRoxParamCheck();
   rankParamCheck();
 
@@ -49,6 +52,9 @@ $(window).load(function() {
   document.querySelector("#cannonLevel").onchange = genericOnChange;
   document.querySelector("#riftstalker").onchange = riftstalkerChange;
   document.querySelector("#rank").onchange = rankChange;
+  document.getElementById("chromeAura").onchange = chromeAuraChange;
+  document.getElementById("slayerAura").onchange = slayerAuraChange;
+  document.getElementById("lightningAura").onchange = lightningAuraChange;
 
   $("#save_setup_button").click(saveSetupStorage);
 
@@ -473,8 +479,10 @@ function updateLink() {
     battery: batteryPower,
     gs: !gsLuck,
     bonusLuck: bonusLuck,
-    tourney: tournamentName,
     riftstalker: riftStalkerCodex,
+    chromeAura: chromeAuraStatus,
+    slayerAura: slayerAuraStatus,
+    lightningAura: lightningAuraStatus,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
     rank: rank,
@@ -853,13 +861,16 @@ function getCRELinkElement() {
       phase: phaseName,
       cheese: cheeseName,
       charm: charmName,
-      gs: !gsLuck,
-      bonusLuck: bonusLuck,
-      weapon: weaponName,
-      base: baseName,
       empowered: isEmpowered,
       battery: batteryPower,
+      gs: !gsLuck,
+      bonusLuck: bonusLuck,
       riftstalker: riftStalkerCodex,
+      chromeAura: chromeAuraStatus,
+      slayerAura: slayerAuraStatus,
+      lightningAura: lightningAuraStatus,
+      weapon: weaponName,
+      base: baseName,
       ballistaLevel: fortRox.ballistaLevel,
       cannonLevel: fortRox.cannonLevel,
       rank: rank,

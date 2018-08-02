@@ -46,6 +46,7 @@ var baseName = "",
   phaseName = "";
 var cheeseBonus = 0;
 var riftStalkerCodex;
+var chromeAuraStatus, slayerAuraStatus, lightningAuraStatus;
 var rank = "";
 
 /**
@@ -228,9 +229,18 @@ function calculateTrapSetup(skipDisp) {
 
     determineRiftBonus(riftStalkerCodex);
 
-    /*
-     * Battery Levels
-     */
+    // Aura bonuses
+    if (chromeAuraStatus) {
+      specialLuck += 5;
+    }
+    if (slayerAuraStatus) {
+      specialLuck += 5;
+    }
+    if (lightningAuraStatus) {
+      specialBonus += 25;
+    }
+
+    // Battery Levels
     checkBatteryLevel();
     trapType = getPowerType(charmName, weaponName);
     trapPower = getTotalTrapPower();
@@ -532,6 +542,68 @@ function gsParamCheck() {
   }
 }
 
+// Aura handling
+function getChromeAuraKey() {
+  return "chromeAura-" + user;
+}
+
+function chromeAuraParamCheck() {
+  var key = getChromeAuraKey();
+  var chromeAuraParam = getURLParameter("chromeAura") !== NULL_URL_PARAM;
+  var chromeAuraChecked =
+    chromeAuraParam || localStorage.getItem(key) === "true";
+  $("#chromeAura").prop("checked", chromeAuraChecked);
+  chromeAuraChange();
+}
+
+function chromeAuraChange() {
+  var key = getChromeAuraKey();
+  chromeAuraStatus = $("#chromeAura").prop("checked");
+  localStorage.setItem(key, chromeAuraStatus);
+  genericOnChange();
+}
+
+function getSlayerAuraKey() {
+  return "slayerAura-" + user;
+}
+
+function slayerAuraParamCheck() {
+  var key = getSlayerAuraKey();
+  var slayerAuraParam = getURLParameter("slayerAura") !== NULL_URL_PARAM;
+  var slayerAuraChecked =
+    slayerAuraParam || localStorage.getItem(key) === "true";
+  $("#slayerAura").prop("checked", slayerAuraChecked);
+  slayerAuraChange();
+}
+
+function slayerAuraChange() {
+  var key = getSlayerAuraKey();
+  slayerAuraStatus = $("#slayerAura").prop("checked");
+  localStorage.setItem(key, slayerAuraStatus);
+  genericOnChange();
+}
+
+function getLightningAuraKey() {
+  return "lightningAura-" + user;
+}
+
+function lightningAuraParamCheck() {
+  var key = getLightningAuraKey();
+  var lightningAuraParam = getURLParameter("lightningAura") !== NULL_URL_PARAM;
+  var lightningAuraChecked =
+    lightningAuraParam || localStorage.getItem(key) === "true";
+  $("#lightningAura").prop("checked", lightningAuraChecked);
+  lightningAuraChange();
+}
+
+function lightningAuraChange() {
+  var key = getLightningAuraKey();
+  lightningAuraStatus = $("#lightningAura").prop("checked");
+  localStorage.setItem(key, lightningAuraStatus);
+  genericOnChange();
+}
+
+// Riftstalker effect handling
 function getRiftstalkerKey() {
   return "riftstalker-" + user;
 }
