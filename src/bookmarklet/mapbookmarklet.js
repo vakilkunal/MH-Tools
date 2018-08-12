@@ -10,6 +10,14 @@
 
   var mice = $(".treasureMapPopup-mice-group-mouse:not(.caught)")
     .map(function() {
+      // Thunderlord lightning emoji edge case
+      if (
+        $(this)
+          .data("name")
+          .indexOf("Thunderlord") >= 0
+      ) {
+        return "Thunderlord";
+      }
       return $(this).data("name");
     })
     .toArray();
