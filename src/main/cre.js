@@ -168,7 +168,7 @@ function checkLoadState() {
     var weaponIndex = document.getElementById("weapon").selectedIndex;
     var baseIndex = document.getElementById("base").selectedIndex;
     var charmIndex = document.getElementById("charm").selectedIndex;
-    if (locationIndex && weaponIndex && baseIndex && charmIndex) {
+    if (locationIndex && weaponIndex && baseIndex) {
       bonusLuckParameter =
         parseInt(getURLParameter("bonusLuck")) ||
         parseInt(totalLuck) - trapLuck;
