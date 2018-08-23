@@ -44,6 +44,8 @@ window.onload = function() {
       $("#trapAttractionValue").val(trapAtt);
       $("#trapEffect").val(trapEff);
 
+      $("#bonusPower").val("0");
+      bonusPower = 0;
       $("#bonusLuck").val("0");
       bonusLuck = 0;
       batteryPower = 0;
@@ -74,15 +76,13 @@ window.onload = function() {
   document.getElementById("base").onchange = baseChanged;
   document.getElementById("charm").onchange = charmChanged;
   document.getElementById("gs").onchange = gsChanged;
+  document.getElementById("bonusPower").onchange = bonusPowerChanged;
   document.getElementById("bonusLuck").onchange = bonusLuckChanged;
   document.getElementById("tourney").onchange = tourneyChanged;
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
   document.getElementById("rank").onchange = rankChange;
-  document.getElementById("chromeAura").onchange = chromeAuraChange;
-  document.getElementById("slayerAura").onchange = slayerAuraChange;
-  document.getElementById("lightningAura").onchange = lightningAuraChange;
 
   document.getElementById("cheeseCost").onchange = function() {
     cheeseCost = parseInt(document.getElementById("cheeseCost").value);
@@ -134,20 +134,17 @@ function checkLoadState() {
     loadLocationDropdown();
     loadTourneyDropdown();
 
-    gsParamCheck();
+    updateInputFromParameter("battery", batteryChanged);
     updateInputFromParameter("oil", oilChanged);
+
+    gsParamCheck();
     riftstalkerParamCheck();
     fortRoxParamCheck();
-    checkEmpoweredParam();
-
-    chromeAuraParamCheck();
-    slayerAuraParamCheck();
-    lightningAuraParamCheck();
-
-    updateInputFromParameter("battery", batteryChanged);
+    empoweredParamCheck();
     rankParamCheck();
 
     getSliderValue();
+    calculateBonusPower();
     calculateBonusLuck();
 
     status.innerHTML = "<td>All set!</td>";
@@ -156,18 +153,39 @@ function checkLoadState() {
     }, 3000);
   }
 
+  function calculateBonusPower() {
+    // Called by initial checkLoadState only
+    // Skip if location/weapon/base fails b/c invalid trapPower
+
+    var powerBonus = getURLParameter("power_bonus");
+    if (powerBonus) calculateTrapSetup();
+
+    var bonusPowerParameter = 0;
+    var locationIndex = document.getElementById("location").selectedIndex;
+    var weaponIndex = document.getElementById("weapon").selectedIndex;
+    var baseIndex = document.getElementById("base").selectedIndex;
+    if (locationIndex && weaponIndex && baseIndex) {
+      bonusPowerParameter =
+        parseInt(getURLParameter("bonusPower")) ||
+        parseInt(powerBonus) - subtotalPowerBonus;
+      if (bonusPowerParameter > 0) {
+        document.getElementById("bonusPower").value = bonusPowerParameter;
+        bonusPowerChanged();
+      }
+    }
+  }
+
   function calculateBonusLuck() {
     // Called by initial checkLoadState only
-    // Skip if location/weapon/base/charm fails b/c invalid trapLuck
+    // Skip if location/weapon/base fails b/c invalid trapLuck
 
-    var totalLuck = getURLParameter("totalluck");
+    var totalLuck = getURLParameter("total_luck");
     if (totalLuck) calculateTrapSetup();
 
     var bonusLuckParameter = 0;
     var locationIndex = document.getElementById("location").selectedIndex;
     var weaponIndex = document.getElementById("weapon").selectedIndex;
     var baseIndex = document.getElementById("base").selectedIndex;
-    var charmIndex = document.getElementById("charm").selectedIndex;
     if (locationIndex && weaponIndex && baseIndex) {
       bonusLuckParameter =
         parseInt(getURLParameter("bonusLuck")) ||
@@ -442,7 +460,7 @@ function showPop(type) {
             weaponPower *= 1 + 1 / 10 * multiplier;
           } else if (riftCount === 2) {
             weaponPower *= 1 + 1 / 10 * multiplier;
-            bonusLuck += 5 * multiplier;
+            specialLuck += 5 * multiplier;
           }
           calculateTrapSetup(true);
           catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -450,7 +468,7 @@ function showPop(type) {
             weaponPower /= 1 + 1 / 10 * multiplier;
           } else if (riftCount === 2) {
             weaponPower /= 1 + 1 / 10 * multiplier;
-            bonusLuck -= 5 * multiplier;
+            specialLuck -= 5 * multiplier;
           }
           calculateTrapSetup(true);
         } else if (locationName === "Fiery Warpath") {
@@ -1035,12 +1053,10 @@ function updateLink() {
     weapon: weaponName,
     base: baseName,
     charm: charmName,
+    bonusPower: bonusPower,
     bonusLuck: bonusLuck,
     tourney: tournamentName,
     riftstalker: riftStalkerCodex,
-    chromeAura: chromeAuraStatus,
-    slayerAura: slayerAuraStatus,
-    lightningAura: lightningAuraStatus,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
     rank: rank,

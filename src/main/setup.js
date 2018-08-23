@@ -3,7 +3,6 @@
 var POPULATION_JSON_URL = "data/populations-setup.json";
 
 $(window).load(function() {
-  var bonusLuckParameter, loaded;
   user = SETUP_USER;
 
   loadBookmarkletFromJS(
@@ -26,13 +25,16 @@ $(window).load(function() {
   $("#main").show();
   gsParamCheck();
   riftstalkerParamCheck();
-  chromeAuraParamCheck();
-  slayerAuraParamCheck();
-  lightningAuraParamCheck();
   fortRoxParamCheck();
   rankParamCheck();
 
-  bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
+  var bonusPowerParameter = parseInt(getURLParameter("bonusPower"));
+  if (bonusPowerParameter >= 0) {
+    document.querySelector("#bonusPower").value = bonusPowerParameter;
+    bonusPowerChanged();
+  }
+
+  var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
   if (bonusLuckParameter >= 0) {
     document.querySelector("#bonusLuck").value = bonusLuckParameter;
     bonusLuckChanged();
@@ -47,14 +49,12 @@ $(window).load(function() {
   document.querySelector("#empowered").onchange = empoweredChanged;
   document.querySelector("#battery").onchange = batteryChanged;
   document.querySelector("#gs").onchange = gsChanged;
+  document.querySelector("#bonusPower").onchange = bonusPowerChanged;
   document.querySelector("#bonusLuck").onchange = bonusLuckChanged;
   document.querySelector("#ballistaLevel").onchange = genericOnChange;
   document.querySelector("#cannonLevel").onchange = genericOnChange;
   document.querySelector("#riftstalker").onchange = riftstalkerChange;
   document.querySelector("#rank").onchange = rankChange;
-  document.getElementById("chromeAura").onchange = chromeAuraChange;
-  document.getElementById("slayerAura").onchange = slayerAuraChange;
-  document.getElementById("lightningAura").onchange = lightningAuraChange;
 
   $("#save_setup_button").click(saveSetupStorage);
 
@@ -142,7 +142,7 @@ function checkLoadState() {
 
   if (loadPercentage === 100) {
     loadLocationDropdown();
-    checkEmpoweredParam();
+    empoweredParamCheck();
     getSliderValue();
 
     batteryParameter = getURLParameter("battery");
@@ -478,11 +478,9 @@ function updateLink() {
     empowered: isEmpowered,
     battery: batteryPower,
     gs: !gsLuck,
+    bonusPower: bonusPower,
     bonusLuck: bonusLuck,
     riftstalker: riftStalkerCodex,
-    chromeAura: chromeAuraStatus,
-    slayerAura: slayerAuraStatus,
-    lightningAura: lightningAuraStatus,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
     rank: rank,
@@ -864,11 +862,9 @@ function getCRELinkElement() {
       empowered: isEmpowered,
       battery: batteryPower,
       gs: !gsLuck,
+      bonusPower: bonusPower,
       bonusLuck: bonusLuck,
       riftstalker: riftStalkerCodex,
-      chromeAura: chromeAuraStatus,
-      slayerAura: slayerAuraStatus,
-      lightningAura: lightningAuraStatus,
       weapon: weaponName,
       base: baseName,
       ballistaLevel: fortRox.ballistaLevel,

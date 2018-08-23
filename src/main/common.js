@@ -26,6 +26,7 @@ var charmPower = 0,
   charmLuck = 0,
   charmEff = 0;
 var gsLuck = 7,
+  bonusPower = 0,
   bonusLuck = 0,
   pourBonus = 0,
   pourLuck = 0,
@@ -44,9 +45,9 @@ var baseName = "",
   tournamentName = "",
   weaponName = "",
   phaseName = "";
-var cheeseBonus = 0;
+var cheeseBonus = 0,
+  subtotalPowerBonus = 0;
 var riftStalkerCodex;
-var chromeAuraStatus, slayerAuraStatus, lightningAuraStatus;
 var rank = "";
 
 /**
@@ -203,7 +204,8 @@ function getRiftCount(weapon, base, charm) {
 function calculateTrapSetup(skipDisp) {
   var specialPower = 0,
     specialLuck = 0,
-    specialBonus = 0,
+    shownPowerBonus = 0,
+    hiddenPowerBonus = 0,
     braceBonus = false;
 
   if (locationName && cheeseName && weaponName && baseName && phaseName) {
@@ -228,17 +230,6 @@ function calculateTrapSetup(skipDisp) {
     }
 
     determineRiftBonus(riftStalkerCodex);
-
-    // Aura bonuses
-    if (chromeAuraStatus) {
-      specialLuck += 5;
-    }
-    if (slayerAuraStatus) {
-      specialLuck += 5;
-    }
-    if (lightningAuraStatus) {
-      specialBonus += 25;
-    }
 
     // Battery Levels
     checkBatteryLevel();
@@ -275,8 +266,8 @@ function calculateTrapSetup(skipDisp) {
     showTrapSetup(0);
   }
 
-  //Only calculate if both weapon and base selected
-  //TODO: Cleanup
+  // Only calculate if both weapon and base selected
+  // TODO: Cleanup
   function locationSpecificEffects() {
     function isTribalArea(location) {
       return (
@@ -296,7 +287,7 @@ function calculateTrapSetup(skipDisp) {
       }
     } else if (locationName === "Seasonal Garden") {
       if (baseName === "Seasonal Base") {
-        specialBonus += 18;
+        shownPowerBonus += 18;
       }
       if (
         (weaponName === "Soul Harvester" ||
@@ -356,19 +347,19 @@ function calculateTrapSetup(skipDisp) {
         (locationName === "Elub Shore" && charmName === "Elub Power Charm")
       ) {
         specialPower += 600;
-        specialBonus += 5;
+        shownPowerBonus += 5;
       }
     } else if (locationName === "Fiery Warpath") {
       if (charmName === "Flamebane Charm") {
-        specialBonus += 150;
+        hiddenPowerBonus += 150;
       }
       if (phaseName === "Wave 4" && weaponName === "Warden Slayer Trap") {
         specialPower += 2500;
-        specialBonus += 2500;
+        hiddenPowerBonus += 2500;
       }
     } else if (locationName === "Toxic Spill") {
       if (baseName === "Washboard Base") {
-        specialBonus += 5;
+        shownPowerBonus += 5;
         specialLuck += 5;
       }
       if (charmName === "Soap Charm") {
@@ -383,7 +374,7 @@ function calculateTrapSetup(skipDisp) {
         specialPower += 8500;
       }
       if (charmName === "Dreaded Charm") {
-        specialBonus += 300;
+        shownPowerBonus += 300;
       }
     } else if (
       locationName === "Sunken City" &&
@@ -396,7 +387,7 @@ function calculateTrapSetup(skipDisp) {
       cheeseName === "Limelight" &&
       charmName === "Mining Charm"
     ) {
-      specialBonus += 30;
+      hiddenPowerBonus += 30;
     } else if (locationName === "Fort Rox") {
       fortRox.ballistaLevel = $("#ballistaLevel").val();
       fortRox.cannonLevel = $("#cannonLevel").val();
@@ -413,8 +404,16 @@ function calculateTrapSetup(skipDisp) {
   function getTotalTrapPower() {
     var totalPower = weaponPower + basePower + charmPower + specialPower;
     var setupPowerBonus = weaponBonus + baseBonus + charmBonus;
-    var totalBonus = 1 + (setupPowerBonus + specialBonus + cheeseBonus) / 100;
+    var totalBonus =
+      1 +
+      (setupPowerBonus +
+        shownPowerBonus +
+        hiddenPowerBonus +
+        cheeseBonus +
+        bonusPower) /
+        100;
     var totalPourBonus = 1 + pourBonus / 100 * (1 + setupPowerBonus / 100);
+    subtotalPowerBonus = setupPowerBonus + shownPowerBonus + cheeseBonus; // Bonus Power %
 
     return Math.ceil(
       totalPower * totalBonus * totalPourBonus * getAmpBonus() * getBraceBonus()
@@ -435,9 +434,9 @@ function calculateTrapSetup(skipDisp) {
     var multiplier = codex ? 2 : 1;
 
     if (riftCount === 2) {
-      specialBonus += 10 * multiplier;
+      shownPowerBonus += 10 * multiplier;
     } else if (riftCount === 3) {
-      specialBonus += 10 * multiplier;
+      shownPowerBonus += 10 * multiplier;
       specialLuck += 5 * multiplier;
     }
   }
@@ -540,67 +539,6 @@ function gsParamCheck() {
     select.value = "N";
     gsChanged();
   }
-}
-
-// Aura handling
-function getChromeAuraKey() {
-  return "chromeAura-" + user;
-}
-
-function chromeAuraParamCheck() {
-  var key = getChromeAuraKey();
-  var chromeAuraParam = getURLParameter("chromeAura") !== NULL_URL_PARAM;
-  var chromeAuraChecked =
-    chromeAuraParam || localStorage.getItem(key) === "true";
-  $("#chromeAura").prop("checked", chromeAuraChecked);
-  chromeAuraChange();
-}
-
-function chromeAuraChange() {
-  var key = getChromeAuraKey();
-  chromeAuraStatus = $("#chromeAura").prop("checked");
-  localStorage.setItem(key, chromeAuraStatus);
-  genericOnChange();
-}
-
-function getSlayerAuraKey() {
-  return "slayerAura-" + user;
-}
-
-function slayerAuraParamCheck() {
-  var key = getSlayerAuraKey();
-  var slayerAuraParam = getURLParameter("slayerAura") !== NULL_URL_PARAM;
-  var slayerAuraChecked =
-    slayerAuraParam || localStorage.getItem(key) === "true";
-  $("#slayerAura").prop("checked", slayerAuraChecked);
-  slayerAuraChange();
-}
-
-function slayerAuraChange() {
-  var key = getSlayerAuraKey();
-  slayerAuraStatus = $("#slayerAura").prop("checked");
-  localStorage.setItem(key, slayerAuraStatus);
-  genericOnChange();
-}
-
-function getLightningAuraKey() {
-  return "lightningAura-" + user;
-}
-
-function lightningAuraParamCheck() {
-  var key = getLightningAuraKey();
-  var lightningAuraParam = getURLParameter("lightningAura") !== NULL_URL_PARAM;
-  var lightningAuraChecked =
-    lightningAuraParam || localStorage.getItem(key) === "true";
-  $("#lightningAura").prop("checked", lightningAuraChecked);
-  lightningAuraChange();
-}
-
-function lightningAuraChange() {
-  var key = getLightningAuraKey();
-  lightningAuraStatus = $("#lightningAura").prop("checked");
-  localStorage.setItem(key, lightningAuraStatus);
-  genericOnChange();
 }
 
 // Riftstalker effect handling
@@ -860,6 +798,20 @@ function phaseChanged() {
   updateLink();
 }
 
+function bonusPowerChanged() {
+  var powerInput = parseInt(document.getElementById("bonusPower").value);
+
+  if (powerInput >= 0) {
+    bonusPower = powerInput;
+  } else if (powerInput < 0) {
+    document.getElementById("bonusPower").value = 0;
+    bonusPower = 0;
+  }
+
+  updateLink();
+  calculateTrapSetup();
+}
+
 function bonusLuckChanged() {
   var luckInput = parseInt(document.getElementById("bonusLuck").value);
 
@@ -874,7 +826,7 @@ function bonusLuckChanged() {
   calculateTrapSetup();
 }
 
-function checkEmpoweredParam() {
+function empoweredParamCheck() {
   var empoweredParameter = getURLParameter("empowered");
   if (empoweredParameter !== NULL_URL_PARAM) {
     var select = document.getElementById("empowered");

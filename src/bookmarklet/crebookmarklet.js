@@ -368,10 +368,13 @@
   if (!user["has_shield"]) {
     urlParams["gs"] = "No";
   }
+
+  urlParams["power_bonus"] = user["trap_power_bonus"] * 100;
+
   var luck_element = document.querySelector(
     ".campPage-trap-trapStat.luck > .value"
   );
-  urlParams["totalluck"] =
+  urlParams["total_luck"] =
     luck_element && luck_element.textContent
       ? Number(luck_element.textContent)
       : user["trap_luck"];
