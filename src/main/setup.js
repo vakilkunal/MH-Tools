@@ -14,7 +14,13 @@ $(window).load(function() {
   loadBookmarkletFromJS(
     SETUP_BOOKMARKLET_URL,
     "setupBookmarklet",
-    "#bookmarklet"
+    "#setupBookmarklet"
+  );
+
+  loadBookmarkletFromJS(
+    SETUP_FIELDS_BOOKMARKLET_URL,
+    "setupFieldsBookmarklet",
+    "#setupFieldsBookmarklet"
   );
 
   loadItemSelection(weaponKeys, "weapon");
@@ -148,6 +154,7 @@ function checkLoadState() {
     batteryParameter = getURLParameter("battery");
     if (batteryParameter != NULL_URL_PARAM) {
       document.querySelector("#battery").value = parseInt(batteryParameter);
+      batteryChanged();
     }
 
     status.innerHTML = "<td>All set!</td>";

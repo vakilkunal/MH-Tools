@@ -10,7 +10,8 @@
     "cre",
     "crown",
     "map",
-    "setup"
+    "setup",
+    "setupfields"
   ];
 
   /**

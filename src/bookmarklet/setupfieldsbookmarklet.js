@@ -8,6 +8,7 @@
     if (userLocation === "Furoma Rift") {
       var chargeLevel = userQuests["QuestRiftFuroma"]["droid"]["charge_level"];
       if (chargeLevel !== "") {
+        /*Replaced if-else with dictionary lookup -- less code*/
         var levels = {
           charge_level_one: 1,
           charge_level_two: 2,
@@ -33,16 +34,6 @@
       urlParams["cannonLevel"] = fort["c"]["level"];
     } else if (userLocation === "Zugzwang's Tower") {
       urlParams["amplifier"] = user["viewing_atts"]["zzt_amplifier"];
-    }
-  };
-
-  var getUserTournament = function() {
-    if (document.querySelector("div.tournamentStatusHud") !== null) {
-      var tourney = user["viewing_atts"]["tournament"];
-      if (tourney["status"] === "active" || tourney["status"] === "pending") {
-        /* Set url param directly instead of using temp variable */
-        return tourney["name"];
-      }
     }
   };
 
@@ -222,8 +213,7 @@
         knight: "Knight"
       };
 
-      // TODO: Investigate possibility of using nextStatus and rising/falling
-      // to determine this instead of looping over titles
+      //TODO: Investigate possibility of using nextStatus and rising/falling to determine this instead of looping over titles
       for (var key in titles) {
         if (titles.hasOwnProperty(key) && titles[key].active) {
           sublocation = spillSublocationMap[key];
@@ -248,6 +238,7 @@
       var district_type = quest.clue_name;
       var district_tier = quest.district_tier;
 
+      //TODO: Check cluename/cluetype of Lair to improve this
       if (contains(districtname, "Minotaur")) {
         return "Lair of the Minotaur";
       } else {
@@ -366,25 +357,12 @@
   var userBase = user["base_name"];
 
   urlParams["location"] = userLocation;
-  urlParams["weapon"] = user["weapon_name"];
-  urlParams["base"] = userBase;
   urlParams["charm"] = user["trinket_name"];
-  urlParams["tourney"] = getUserTournament();
   urlParams["rank"] = findUserRank();
 
   if (!user["has_shield"]) {
     urlParams["gs"] = "No";
   }
-
-  urlParams["power_bonus"] = user["trap_power_bonus"] * 100;
-
-  var luck_element = document.querySelector(
-    ".campPage-trap-trapStat.luck > .value"
-  );
-  urlParams["total_luck"] =
-    luck_element && luck_element.textContent
-      ? Number(luck_element.textContent)
-      : user["trap_luck"];
 
   var userSublocation = findSublocation(userLocation, userBase);
   setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
@@ -410,11 +388,6 @@
     urlParams["cheese"] = userCheese;
   }
 
-  // Weapon edge cases
-  if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
-    urlParams["weapon"] = "Timesplit Dissonance Weapon";
-  }
-
   if (userSublocation !== "N/A") {
     urlParams["phase"] = userSublocation;
   }
@@ -422,14 +395,14 @@
   sendData(urlParams);
 
   function sendData(parameters) {
-    var url = "https://tsitu.github.io/MH-Tools/cre.html?";
+    var url = "https://tsitu.github.io/MH-Tools/setup.html?";
 
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);
       url += key + "=" + value + "&";
     }
 
-    var newWindow = window.open("", "mhcre");
+    var newWindow = window.open("", "mhsetup");
     newWindow.location = url;
   }
 })();

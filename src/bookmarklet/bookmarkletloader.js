@@ -33,6 +33,7 @@
     var creTimestamp = "Last updated: " + timestamps["cre"];
     var mapTimestamp = "Last updated: " + timestamps["map"];
     var setupTimestamp = "Last updated: " + timestamps["setup"];
+    var setupFieldsTimestamp = "Last updated: " + timestamps["setupfields"];
     var analyzerTimestamp = "Last updated: " + timestamps["analyzer"];
     var crownTimestamp = "Last updated: " + timestamps["crown"];
     var craftingTimestamp = "Last updated: " + timestamps["crafting"];
@@ -77,7 +78,7 @@
     mapSpanTimestamp.innerHTML = mapTimestamp;
 
     var setupButton = document.createElement("button", { id: "setup-button" });
-    setupButton.textContent = "Best Setup";
+    setupButton.textContent = "Best Setup: Load Items";
     setupButton.onclick = function() {
       loadBookmarklet("setup");
     };
@@ -85,6 +86,18 @@
     setupSpanTimestamp.style.fontSize = "10px";
     setupSpanTimestamp.style.fontStyle = "italic";
     setupSpanTimestamp.innerHTML = setupTimestamp;
+
+    var setupFieldsButton = document.createElement("button", {
+      id: "setup-fields-button"
+    });
+    setupFieldsButton.textContent = "Best Setup: Fields";
+    setupFieldsButton.onclick = function() {
+      loadBookmarklet("setupfields");
+    };
+    var setupFieldsSpanTimestamp = document.createElement("span");
+    setupFieldsSpanTimestamp.style.fontSize = "10px";
+    setupFieldsSpanTimestamp.style.fontStyle = "italic";
+    setupFieldsSpanTimestamp.innerHTML = setupFieldsTimestamp;
 
     var analyzerButton = document.createElement("button", {
       id: "analyzer-button"
@@ -145,6 +158,11 @@
     mainDiv.appendChild(setupSpanTimestamp);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(setupFieldsButton);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(setupFieldsSpanTimestamp);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(analyzerButton);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(analyzerSpanTimestamp);
@@ -166,7 +184,10 @@
     mainDiv.style.position = "fixed";
     mainDiv.style.zIndex = "9999";
     // Allow customizable left position property
-    mainDiv.style.left = (typeof window.tsitu_loader_offset != 'undefined') ? window.tsitu_loader_offset.concat("%") : "80%";
+    mainDiv.style.left =
+      typeof window.tsitu_loader_offset != "undefined"
+        ? window.tsitu_loader_offset.concat("%")
+        : "80%";
     mainDiv.style.top = "25px";
     mainDiv.style.border = "solid 3px #696969";
     mainDiv.style.borderRadius = "20px";

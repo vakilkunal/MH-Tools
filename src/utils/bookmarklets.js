@@ -1,3 +1,5 @@
+var SETUP_FIELDS_BOOKMARKLET_URL =
+  "src/bookmarklet/setupfieldsbookmarklet.min.js";
 var SETUP_BOOKMARKLET_URL = "src/bookmarklet/setupbookmarklet.min.js";
 var ANALYZER_BOOKMARKLET_URL = "src/bookmarklet/analyzerbookmarklet.min.js";
 var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
@@ -43,7 +45,10 @@ function loadBookmarkletFromJS(url, storageKey, linkSelector) {
             alertString = "The Map Solver ";
             break;
           case "setupBookmarklet":
-            alertString = "The Best Setup ";
+            alertString = "The Best Setup: Load Items ";
+            break;
+          case "setupFieldsBookmarklet":
+            alertString = "The Best Setup: Fields ";
             break;
           case "analyzerBookmarklet":
             alertString = "The Marketplace Analyzer ";
