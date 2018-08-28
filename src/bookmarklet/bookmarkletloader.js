@@ -51,7 +51,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.2.2 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
+      "Version 1.2.3 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
