@@ -3,22 +3,19 @@
     alert("You are not on mousehuntgame.com! Please try again.");
     return;
   }
-  if (document.querySelector("div.treasureMapPopupContainer.hasMap") == null) {
+  if (!document.querySelector("div.treasureMapPopupContainer.viewMap")) {
     alert("Please navigate to 'Active Map'!");
     return;
   }
 
-  var mice = $(".treasureMapPopup-mice-group-mouse:not(.caught)")
+  var mice = $(".treasureMapPopup-goals-group-goal:not(.complete)")
     .map(function() {
+      var data = $(this).context.textContent;
       // Thunderlord lightning emoji edge case
-      if (
-        $(this)
-          .data("name")
-          .indexOf("Thunderlord") >= 0
-      ) {
+      if (data.indexOf("Thunderlord") >= 0) {
         return "Thunderlord";
       }
-      return $(this).data("name");
+      return data;
     })
     .toArray();
   var url = "https://tsitu.github.io/MH-Tools/map.html";
