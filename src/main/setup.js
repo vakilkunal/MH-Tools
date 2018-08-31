@@ -151,6 +151,15 @@ function checkLoadState() {
     empoweredParamCheck();
     getSliderValue();
 
+    weaponName = getURLParameter("weapon");
+    weaponChanged();
+    baseName = getURLParameter("base");
+    baseChanged();
+    charmName = getURLParameter("charm");
+    charmChanged();
+    calculateBonusPower();
+    calculateBonusLuck();
+
     batteryParameter = getURLParameter("battery");
     if (batteryParameter != NULL_URL_PARAM) {
       document.querySelector("#battery").value = parseInt(batteryParameter);
@@ -160,7 +169,47 @@ function checkLoadState() {
     status.innerHTML = "<td>All set!</td>";
     setTimeout(function() {
       status.innerHTML = "<td><br></td>";
-    }, 1420);
+    }, 1776);
+  }
+
+  function calculateBonusPower() {
+    // Called by initial checkLoadState only
+    // Skip if location/weapon/base fails b/c invalid trapPower
+
+    var powerBonus = getURLParameter("power_bonus");
+    if (powerBonus) calculateTrapSetup();
+
+    var bonusPowerParameter = 0;
+    var locationIndex = document.getElementById("location").selectedIndex;
+    if (locationIndex && weaponName && baseName) {
+      bonusPowerParameter =
+        parseInt(getURLParameter("bonusPower")) ||
+        parseInt(powerBonus) - subtotalPowerBonus;
+      if (bonusPowerParameter > 0) {
+        document.getElementById("bonusPower").value = bonusPowerParameter;
+        bonusPowerChanged();
+      }
+    }
+  }
+
+  function calculateBonusLuck() {
+    // Called by initial checkLoadState only
+    // Skip if location/weapon/base fails b/c invalid trapLuck
+
+    var totalLuck = getURLParameter("total_luck");
+    if (totalLuck) calculateTrapSetup();
+
+    var bonusLuckParameter = 0;
+    var locationIndex = document.getElementById("location").selectedIndex;
+    if (locationIndex && weaponName && baseName) {
+      bonusLuckParameter =
+        parseInt(getURLParameter("bonusLuck")) ||
+        parseInt(totalLuck) - trapLuck;
+      if (bonusLuckParameter > 0) {
+        document.getElementById("bonusLuck").value = bonusLuckParameter;
+        bonusLuckChanged();
+      }
+    }
   }
 }
 

@@ -150,7 +150,7 @@ function checkLoadState() {
     status.innerHTML = "<td>All set!</td>";
     setTimeout(function() {
       status.innerHTML = "<td><br></td>";
-    }, 3000);
+    }, 1776);
   }
 
   function calculateBonusPower() {

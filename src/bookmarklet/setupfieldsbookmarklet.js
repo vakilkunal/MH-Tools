@@ -357,12 +357,24 @@
   var userBase = user["base_name"];
 
   urlParams["location"] = userLocation;
+  urlParams["weapon"] = user["weapon_name"];
+  urlParams["base"] = userBase;
   urlParams["charm"] = user["trinket_name"];
   urlParams["rank"] = findUserRank();
 
   if (!user["has_shield"]) {
     urlParams["gs"] = "No";
   }
+
+  urlParams["power_bonus"] = user["trap_power_bonus"] * 100;
+
+  var luck_element = document.querySelector(
+    ".campPage-trap-trapStat.luck > .value"
+  );
+  urlParams["total_luck"] =
+    luck_element && luck_element.textContent
+      ? Number(luck_element.textContent)
+      : user["trap_luck"];
 
   var userSublocation = findSublocation(userLocation, userBase);
   setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
@@ -386,6 +398,11 @@
       }
     }
     urlParams["cheese"] = userCheese;
+  }
+
+  // Weapon edge cases
+  if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
+    urlParams["weapon"] = "Timesplit Dissonance Weapon";
   }
 
   if (userSublocation !== "N/A") {
