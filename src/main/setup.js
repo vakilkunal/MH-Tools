@@ -2,6 +2,19 @@
 
 var POPULATION_JSON_URL = "data/populations-setup.json";
 
+function loadCharmDropdown() {
+  loadDropdown("charm", charmKeys, charmChanged, "<option>-</option>");
+  var charmParameter = getURLParameter("charm");
+  var select = document.querySelector("#charm");
+  if (charmParameter != NULL_URL_PARAM) {
+    select.value = charmParameter;
+  }
+  if (select.selectedIndex == -1) {
+    select.selectedIndex = 0;
+  }
+  charmChanged();
+}
+
 $(window).load(function() {
   user = SETUP_USER;
 
@@ -28,6 +41,7 @@ $(window).load(function() {
   loadItemSelection(charmKeys, "charm");
 
   startPopulationLoad(POPULATION_JSON_URL);
+  loadCharmDropdown();
   $("#main").show();
   gsParamCheck();
   riftstalkerParamCheck();
@@ -155,16 +169,15 @@ function checkLoadState() {
     weaponChanged();
     baseName = getURLParameter("base");
     baseChanged();
-    charmName = getURLParameter("charm");
-    charmChanged();
-    calculateBonusPower();
-    calculateBonusLuck();
 
     batteryParameter = getURLParameter("battery");
     if (batteryParameter != NULL_URL_PARAM) {
       document.querySelector("#battery").value = parseInt(batteryParameter);
       batteryChanged();
     }
+
+    calculateBonusPower();
+    calculateBonusLuck();
 
     status.innerHTML = "<td>All set!</td>";
     setTimeout(function() {
@@ -468,60 +481,6 @@ function loadCheeseDropdown(location, phase) {
   cheeseChanged();
 }
 
-function loadCharmDropdown(location, phase, cheese) {
-  /**
-   * Population array for Location-Phase-Cheese
-   */
-  var popArrayLPC = popArray[location][phase][cheese];
-
-  function fillPopArray(searchCheese) {
-    var popArrayLP;
-    if (!popArrayLPC) {
-      popArrayLP = popArray[location][phase];
-      // Search through popArrayLP for cheese matching currently armed cheese
-      // TODO: Improve
-      for (var popcheese in popArrayLP) {
-        if (contains(popcheese, searchCheese)) {
-          popArrayLPC = popArray[location][phase][searchCheese];
-        }
-      }
-    }
-  }
-
-  function populateDropdown(items, selector) {
-    var dropdown = $(selector).html("<option>-</option>");
-    if (items) {
-      for (var i = 0; i < items.length; i++) {
-        if (items[i] != EMPTY_SELECTION) {
-          $("<option/>", {
-            text: items[i],
-            value: items[i]
-          }).appendTo(dropdown);
-        }
-      }
-    }
-  }
-
-  fillPopArray(cheese);
-
-  var charms;
-  if (popArrayLPC) {
-    charms = Object.keys(popArrayLPC);
-    charms.sort();
-  }
-  populateDropdown(charms, "#charm");
-
-  var charmParameter = getURLParameter("charm");
-  var select = document.querySelector("#charm");
-  if (charmParameter != NULL_URL_PARAM) {
-    select.value = charmParameter;
-  }
-  if (select.selectedIndex == -1) {
-    select.selectedIndex = 0;
-  }
-  charmChanged();
-}
-
 function updateLink() {
   var select = document.querySelector("#charm");
   var selectedCharm = select.value;
@@ -558,27 +517,18 @@ function cheeseChanged() {
   cheeseName = document.querySelector("#cheese").value;
   updateLink();
   checkEmpoweredWidget();
-  loadCharmDropdown(locationName, phaseName, cheeseName);
 }
 
 function baseChanged() {
-  // Bases with special effects when paired with particular charm
-  if (specialCharm[baseName]) {
-    calcSpecialCharms(charmName);
-  } else {
-    populateCharmData(charmName);
-  }
-
+  calcSpecialCharms(charmName);
   populateBaseData(baseName);
   calculateTrapSetup();
 }
 
 function charmChanged(customValue) {
-  var selectedVal = $("#charm").val();
-  if (selectedVal !== EMPTY_SELECTION) {
-    selectedVal += " Charm";
-  }
-  charmChangeCommon(customValue || selectedVal);
+  var select = document.getElementById("charm");
+  select = select.value.trim().replace(/\*$/, "");
+  charmChangeCommon(customValue || select);
   calculateTrapSetup();
 }
 
@@ -627,7 +577,8 @@ function getPopulation(selectedCharm) {
   if (!popArrayLPC) {
     popArrayLPC = checkPopArray();
   }
-  return popArrayLPC[selectedCharm];
+  var trimCharm = /^(.*?)(?:\s+Charm)?$/i.exec(selectedCharm)[1];
+  return popArrayLPC[trimCharm] ? popArrayLPC[trimCharm] : popArrayLPC["-"];
 
   /**
    * Handle cases where cheese names bundled together with '/' between

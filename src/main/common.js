@@ -59,25 +59,6 @@ var fortRox = {
 };
 
 /**
- * Contains charms which may have special interactions with certain weapons or bases
- */
-var specialCharm = {
-  "Champion Charm": 1,
-  "Bronze Tournament Base": 1,
-  "Silver Tournament Base": 1,
-  "Golden Tournament Base": 1,
-  "Growth Charm": 1,
-  "Wild Growth Charm": 1,
-  "Soiled Base": 1,
-  "Spellbook Charm": 1,
-  "Spellbook Base": 1,
-  "Snowball Charm": 1,
-  "Super Snowball Charm": 1,
-  "Extreme Snowball Charm": 1,
-  "Ultimate Snowball Charm": 1
-};
-
-/**
  * Returns the size of an object based on its length or number of keys
  * @param {object} obj
  * @return {number} Object length
@@ -622,10 +603,7 @@ function charmChangeCommon(newCharmName) {
     charmName = newCharmName;
   }
   updateLink();
-  if (specialCharm[charmName]) calcSpecialCharms(charmName);
-  else {
-    populateCharmData(charmName);
-  }
+  calcSpecialCharms(charmName);
 }
 
 /**
