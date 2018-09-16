@@ -53,6 +53,7 @@ function loadCookies() {
     $(s).prop("checked", true);
     rowLimit = x;
   }
+
   if (Cookies.get("savedCols") !== undefined) {
     var x = parseInt(Cookies.get("savedCols"));
     var s = "#col" + x;
@@ -63,6 +64,10 @@ function loadCookies() {
   if (Cookies.get("savedAttraction") !== undefined) {
     attractionBonus = parseInt(Cookies.get("savedAttraction"));
     $("#ampSlider").slider("option", "value", attractionBonus);
+  }
+
+  if (localStorage.getItem("textarea-autocomplete") === "off") {
+    $("#toggleAutocomplete").prop("checked", true);
   }
 }
 
@@ -249,6 +254,15 @@ window.onload = function() {
   initTablesorter();
   loadCookies();
 
+  // Handle autocomplete preference
+  $("#toggleAutocomplete").change(function() {
+    if ($("#toggleAutocomplete").is(":checked")) {
+      localStorage.setItem("textarea-autocomplete", "off");
+    } else {
+      localStorage.setItem("textarea-autocomplete", "on");
+    }
+  });
+
   $("#map").keyup(function(event) {
     // Checking for enter/return, backspace, and delete
     // Then finding newlines and only processing when that differs from previous value
@@ -311,7 +325,10 @@ String.prototype.capitalise = function() {
 
 function checkLoadState() {
   if (popLoaded) {
-    loadMouseDropdown();
+    var acToggle = localStorage.getItem("textarea-autocomplete");
+    if (!acToggle || acToggle === "on") {
+      loadMouseDropdown();
+    }
     loadMiceFromUrlOrCookie();
   }
 }
