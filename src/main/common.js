@@ -336,7 +336,7 @@ function calculateTrapSetup(skipDisp) {
       }
       if (phaseName === "Wave 4" && weaponName === "Warden Slayer Trap") {
         specialPower += 2500;
-        hiddenPowerBonus += 2500;
+        shownPowerBonus += 2500;
       }
     } else if (locationName === "Toxic Spill") {
       if (baseName === "Washboard Base") {
