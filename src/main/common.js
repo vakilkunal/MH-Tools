@@ -46,7 +46,8 @@ var baseName = "",
   weaponName = "",
   phaseName = "";
 var cheeseBonus = 0,
-  subtotalPowerBonus = 0;
+  subtotalPowerBonus = 0,
+  sampleSize = 0;
 var riftStalkerCodex;
 var rank = "";
 
@@ -774,6 +775,7 @@ function phaseChanged() {
   }
   loadCheeseDropdown(locationName, phaseName);
   updateLink();
+  checkSpecialCharms();
 }
 
 function bonusPowerChanged() {
@@ -889,6 +891,7 @@ function locationChanged() {
     }
   }
   genericOnChange();
+  checkSpecialCharms();
 }
 
 function genericOnChange() {
@@ -924,5 +927,100 @@ function getSliderValue() {
     $("#ampValue").val(amplifierParameter);
     ztAmp = amplifierParameter;
     calculateTrapSetup();
+  }
+}
+
+function highlightSpecialCharms(charmList) {
+  var select = document.getElementById("charm");
+  var charmsDropdownHTML = "";
+
+  var charmNames = Object.keys(charmsArray || []);
+  var nCharms = charmNames.length;
+  for (var c = 0; c < nCharms; c++) {
+    charmsDropdownHTML += "<option>" + charmNames[c] + "</option>\n";
+  }
+  select.innerHTML = "<option>No Charm</option>" + charmsDropdownHTML;
+
+  for (var i = 0; i < charmList.length; i++) {
+    for (var j = 0; j < select.children.length; j++) {
+      var child = select.children[j];
+      var charm = charmList[i] + " Charm";
+      if (child.value === charm) {
+        child.innerHTML += "*";
+        child.value = charm;
+        if (child.selected === true) {
+          charmName = child.value;
+          showPop(2);
+        }
+        select.innerHTML =
+          select.innerHTML.slice(0, 25) +
+          "<option>" +
+          child.innerHTML +
+          "</option>" +
+          select.innerHTML.slice(25);
+        break;
+      }
+    }
+  }
+  selectCharm();
+}
+
+function selectCharm() {
+  var charmParameter = getURLParameter("charm") || charmName;
+  var specialCharmParameter = charmParameter + "*";
+  if (charmParameter !== NULL_URL_PARAM) {
+    var select = document.getElementById("charm");
+    //TODO: Improve
+    for (var i = 0; i < select.children.length; i++) {
+      var child = select.children[i];
+      if (
+        child.innerHTML === charmParameter ||
+        child.innerHTML === specialCharmParameter
+      ) {
+        child.selected = true;
+        charmChanged();
+        break;
+      }
+    }
+    if (select.selectedIndex === -1) {
+      select.selectedIndex = 0;
+    }
+  }
+}
+
+/**
+ * Check for special charms and apply asterisk highlighting
+ */
+function checkSpecialCharms() {
+  if (locationName) {
+    checkPhase();
+    var popArrayLPC = popArray[locationName][phaseName][cheeseName];
+
+    // Highlight special charms
+    var specialCharmsList;
+    var specialCharms = Object.keys(popArrayLPC || []);
+    if (specialCharms.length > 1) {
+      highlightSpecialCharms(specialCharms);
+    } else if (popArrayLPC !== null && specialCharms[0] !== EMPTY_SELECTION) {
+      /**
+       * Allow pop with special charm(s) but without a "no charm" pop
+       */
+      highlightSpecialCharms(specialCharms);
+    } else {
+      loadCharmDropdown();
+    }
+
+    if (
+      specialCharmsList &&
+      specialCharmsList.indexOf(charmName.slice(0, -1)) >= 0
+    ) {
+      sampleSize = 0;
+    }
+  }
+}
+
+function checkPhase() {
+  if (!phaseName) {
+    phaseName = EMPTY_SELECTION;
   }
 }

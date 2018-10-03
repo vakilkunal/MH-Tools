@@ -1,10 +1,7 @@
 "use strict";
 
 var POPULATION_JSON_URL = "data/populations-cre.json";
-
-var cheeseCost = 0,
-  sampleSize = 0,
-  rank = "";
+var cheeseCost = 0;
 
 function loadCharmDropdown() {
   loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
@@ -238,12 +235,6 @@ function formatSampleSize(sampleSizeParam) {
   }
 }
 
-function checkPhase() {
-  if (!phaseName) {
-    phaseName = EMPTY_SELECTION;
-  }
-}
-
 // type = 2 means charms are not reset
 function showPop(type) {
   var results = document.getElementById("results");
@@ -288,25 +279,7 @@ function showPop(type) {
   ) {
     results.innerHTML = "";
   } else {
-    checkPhase();
-    var popArrayLPC = extractPopArrayLPC(locationName, phaseName, cheeseName);
-
-    // Highlight special charms
-    var specialCharmsList;
-    var specialCharms = Object.keys(popArrayLPC || []);
-    if (type !== 2) {
-      if (specialCharms.length > 1) {
-        highlightSpecialCharms(specialCharms);
-      } else if (popArrayLPC !== null && specialCharms[0] !== EMPTY_SELECTION) {
-        /**
-         * Allow pop with special charm(s) but without a "no charm" pop
-         */
-        highlightSpecialCharms(specialCharms);
-      } else {
-        loadCharmDropdown();
-      }
-    }
-
+    var popArrayLPC = popArray[locationName][phaseName][cheeseName];
     var popCharmName = /^(.*?)(?:\s+Charm)?$/i.exec(charmName)[1];
     if (popArrayLPC && popArrayLPC[popCharmName]) {
       var popArrayLC = popArrayLPC[popCharmName];
@@ -332,13 +305,6 @@ function showPop(type) {
     var overallTP = 0;
     var minLuckOverall = 0;
     var overallProgress = 0;
-
-    if (
-      specialCharmsList &&
-      specialCharmsList.indexOf(charmName.slice(0, -1)) >= 0
-    ) {
-      sampleSize = 0;
-    }
 
     var miceNames = Object.keys(popArrayLC || []);
     var noMice = miceNames.length;
@@ -894,63 +860,6 @@ function showPop(type) {
       };
     $("#results").trigger("updateAll", [resort, callback]);
   }
-
-  function extractPopArrayLPC(location, phase, cheese) {
-    var popArrayLPC = popArray[location][phase][cheese];
-
-    // For common cheeses e.g. Gouda, Brie etc.
-    if (popArrayLPC === undefined && cheese !== "Cheese") {
-      var popArrayL = popArray[location][phase];
-      var locationKeys = Object.keys(popArrayL || []);
-      var popArrayLLength = locationKeys.length;
-      for (var i = 0; i < popArrayLLength; i++) {
-        if (
-          locationKeys[i].indexOf(cheese) >= 0 &&
-          locationKeys[i].indexOf("/") >= 0
-        ) {
-          commonCheeseIndex = locationKeys[i];
-          break;
-        }
-      }
-      popArrayLPC = popArray[location][phase][commonCheeseIndex];
-    }
-    return popArrayLPC;
-  }
-}
-
-function highlightSpecialCharms(charmList) {
-  var select = document.getElementById("charm");
-  var charmsDropdownHTML = "";
-
-  var charmNames = Object.keys(charmsArray || []);
-  var nCharms = charmNames.length;
-  for (var c = 0; c < nCharms; c++) {
-    charmsDropdownHTML += "<option>" + charmNames[c] + "</option>\n";
-  }
-  select.innerHTML = "<option>No Charm</option>" + charmsDropdownHTML;
-
-  for (var i = 0; i < charmList.length; i++) {
-    for (var j = 0; j < select.children.length; j++) {
-      var child = select.children[j];
-      var charm = charmList[i] + " Charm";
-      if (child.value === charm) {
-        child.innerHTML += "*";
-        child.value = charm;
-        if (child.selected === true) {
-          charmName = child.value;
-          showPop(2);
-        }
-        select.innerHTML =
-          select.innerHTML.slice(0, 25) +
-          "<option>" +
-          child.innerHTML +
-          "</option>" +
-          select.innerHTML.slice(25);
-        break;
-      }
-    }
-  }
-  selectCharm();
 }
 
 function loadCheeseDropdown(locationName, phaseName) {
@@ -959,16 +868,7 @@ function loadCheeseDropdown(locationName, phaseName) {
     var cheeseDropdownHTML = "";
     for (var key in cheeses) {
       var option = cheeses[key];
-      if (option.indexOf("/") < 0 || contains(option, "Combat")) {
-        // TODO: Fix this master cheese thingy
-        cheeseDropdownHTML += "<option>" + option + "</option>\n";
-      } else {
-        var optionArray = option.split("/");
-        var optionArrayLength = optionArray.length;
-        for (var j = 0; j < optionArrayLength; j++) {
-          cheeseDropdownHTML += "<option>" + optionArray[j] + "</option>\n";
-        }
-      }
+      cheeseDropdownHTML += "<option>" + option + "</option>\n";
     }
     return cheeseDropdownHTML;
   }
@@ -989,29 +889,6 @@ function loadCheeseDropdown(locationName, phaseName) {
   }
   selectCharm();
   cheeseChanged();
-}
-
-function selectCharm() {
-  var charmParameter = getURLParameter("charm");
-  var specialCharmParameter = charmParameter + "*";
-  if (charmParameter !== NULL_URL_PARAM) {
-    var select = document.getElementById("charm");
-    //TODO: Improve
-    for (var i = 0; i < select.children.length; i++) {
-      var child = select.children[i];
-      if (
-        child.innerHTML === charmParameter ||
-        child.innerHTML === specialCharmParameter
-      ) {
-        child.selected = true;
-        charmChanged();
-        break;
-      }
-    }
-    if (select.selectedIndex === -1) {
-      select.selectedIndex = 0;
-    }
-  }
 }
 
 function loadTourneyDropdown() {

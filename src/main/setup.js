@@ -1,6 +1,6 @@
 "use strict";
 
-var POPULATION_JSON_URL = "data/populations-setup.json";
+var POPULATION_JSON_URL = "data/populations-cre.json";
 
 function loadCharmDropdown() {
   loadDropdown("charm", charmKeys, charmChanged, "<option>-</option>");
@@ -442,28 +442,12 @@ function loadCheeseDropdown(location, phase) {
     return cheeseDropdownHTML;
   }
 
-  function splitCheeseOption(option) {
-    var optionArray = option.split("/");
-    for (var j = 0; j < Object.size(optionArray); j++) {
-      cheeseDropdownHTML = addCheeseOption(
-        insertedCheeses,
-        optionArray[j],
-        cheeseDropdownHTML
-      );
-    }
-  }
-
   for (var cheeseOption in popArray[location][phase]) {
-    if (cheeseOption.indexOf("/") < 0 || contains(cheeseOption, "Combat")) {
-      //Todo: Fix this master cheese thingy
-      cheeseDropdownHTML = addCheeseOption(
-        insertedCheeses,
-        cheeseOption,
-        cheeseDropdownHTML
-      );
-    } else {
-      splitCheeseOption(cheeseOption);
-    }
+    cheeseDropdownHTML = addCheeseOption(
+      insertedCheeses,
+      cheeseOption,
+      cheeseDropdownHTML
+    );
   }
 
   cheeseDropdown.innerHTML = cheeseDropdownHTML;
@@ -517,6 +501,7 @@ function cheeseChanged() {
   cheeseName = document.querySelector("#cheese").value;
   updateLink();
   checkEmpoweredWidget();
+  checkSpecialCharms();
 }
 
 function baseChanged() {
@@ -528,7 +513,13 @@ function baseChanged() {
 function charmChanged(customValue) {
   var select = document.getElementById("charm");
   select = select.value.trim().replace(/\*$/, "");
-  charmChangeCommon(customValue || select);
+
+  // Workaround for Object-type 'Event' when selecting a charm
+  if (customValue && typeof customValue === "string") {
+    charmChangeCommon(customValue);
+  } else {
+    charmChangeCommon(select);
+  }
   calculateTrapSetup();
 }
 
@@ -540,6 +531,10 @@ function showPop() {
   } else {
     charmChanged();
     var selectedCharm = $("#charm").val();
+    selectedCharm =
+      selectedCharm.indexOf("*") >= 0
+        ? (selectedCharm = selectedCharm.slice(0, -7))
+        : (selectedCharm = selectedCharm.slice(0, -6));
     var population = getPopulation(selectedCharm);
     console.time("printCombinations (total)");
     printCombinations(population, getHeader(population));
@@ -574,32 +569,13 @@ function showPop() {
  */
 function getPopulation(selectedCharm) {
   var popArrayLPC = popArray[locationName][phaseName][cheeseName];
-  if (!popArrayLPC) {
-    popArrayLPC = checkPopArray();
-  }
-  var trimCharm = /^(.*?)(?:\s+Charm)?$/i.exec(selectedCharm)[1];
-  return popArrayLPC[trimCharm] ? popArrayLPC[trimCharm] : popArrayLPC["-"];
+  var retArray = popArrayLPC[selectedCharm]
+    ? popArrayLPC[selectedCharm]
+    : popArrayLPC["-"];
 
-  /**
-   * Handle cases where cheese names bundled together with '/' between
-   * @return Charm Populations
-   */
-  function checkPopArray() {
-    var popArrayL = popArray[locationName][phaseName];
-    var cheeseNameKeys = Object.keys(popArrayL);
-    var popArrayLLength = Object.size(popArray[locationName][phaseName]);
-    var commonCheeseIndex;
-    for (var i = 0; i < popArrayLLength; i++) {
-      if (
-        cheeseNameKeys[i].indexOf(cheeseName) >= 0 &&
-        cheeseNameKeys[i].indexOf("/") >= 0
-      ) {
-        commonCheeseIndex = cheeseNameKeys[i];
-        break;
-      }
-    }
-    return popArray[locationName][phaseName][commonCheeseIndex];
-  }
+  // Trim the extra "SampleSize" element
+  delete retArray["SampleSize"];
+  return retArray;
 }
 
 /**
@@ -826,14 +802,14 @@ function getLinkCell(selectedCharm, weaponName, baseName, headerHtml) {
 
   // prettier-ignore
   if (selectedCharm === EMPTY_SELECTION) {
-      cell += '<span style="float: right"><button onclick="weaponName=\''
-      + weaponName.replace(/'/g, "\\'")
-        + '\';baseName=\''
-      + baseName.replace(/'/g, "\\'")
-      + '\';weaponChanged();baseChanged();printCharmCombinations(getPopulation(EMPTY_SELECTION), \''
-        + headerHtml.replace(/'/g, "\\'")
-        + '\')">Find best charm</button></span>';
-    }
+    cell += '<span style="float: right"><button onclick="weaponName=\''
+    + weaponName.replace(/'/g, "\\'")
+    + '\';baseName=\''
+    + baseName.replace(/'/g, "\\'")
+    + '\';weaponChanged();baseChanged();printCharmCombinations(getPopulation(EMPTY_SELECTION), \''
+    + headerHtml.replace(/'/g, "\\'")
+    + '\')">Find best charm</button></span>';
+  }
 
   return cell;
 }
@@ -846,6 +822,7 @@ function getCRELinkElement() {
   var urlString = buildCRELink();
   var caption = weaponName + " / " + baseName;
   if (charmName && charmName != EMPTY_SELECTION) {
+    charmName = charmName.trim().replace(/\*$/, "");
     caption += " / " + charmName;
   }
   return (
