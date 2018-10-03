@@ -1,6 +1,6 @@
 "use strict";
 
-var POPULATION_JSON_URL = "data/populations-cre.json";
+var POPULATION_JSON_URL = "data/populations-cre-setup.json";
 
 function loadCharmDropdown() {
   loadDropdown("charm", charmKeys, charmChanged, "<option>-</option>");

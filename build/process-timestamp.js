@@ -2,7 +2,7 @@
   const cheerio = require("cheerio");
   const puppeteer = require("puppeteer");
 
-  const fileUtils = require("./modules/fileUtils");
+  const fileUtils = require("./file-utils");
   const bookmarkletList = [
     "analyzer",
     "loader",

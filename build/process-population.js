@@ -15,12 +15,11 @@
 
   const fs = require("fs");
   const csv = require("csvtojson");
-  const fileUtils = require("./modules/fileUtils");
+  const fileUtils = require("./file-utils");
   const CombinedStream = require("combined-stream");
 
   var mapPopulations = {};
-  var crePopulations = {};
-  var setupPopulations = {};
+  var creSetupPopulations = {};
 
   var csvConverter = csv({
     headers: [
@@ -51,31 +50,27 @@
 
   function lineHandler(rowJson) {
     if (rowJson.location.toLowerCase() !== "location") {
-      processCreSetupPopItem(crePopulations, rowJson, true, true);
-      processCreSetupPopItem(setupPopulations, rowJson, false, false);
+      processCreSetupPopItem(creSetupPopulations, rowJson, true, true);
       processMapPopItem(mapPopulations, rowJson);
     }
   }
 
   function saveFiles() {
-    fileUtils.saveJsonFile("data/populations-cre.json", crePopulations);
+    fileUtils.saveJsonFile(
+      "data/populations-cre-setup.json",
+      creSetupPopulations
+    );
     fileUtils.saveJsonFile("data/populations-map.json", mapPopulations);
-    fileUtils.saveJsonFile("data/populations-setup.json", setupPopulations);
 
     fileUtils.makeDirectory("data/pretty/");
     fileUtils.saveJsonFile(
-      "data/pretty/populations-cre.json",
-      crePopulations,
+      "data/pretty/populations-cre-setup.json",
+      creSetupPopulations,
       4
     );
     fileUtils.saveJsonFile(
       "data/pretty/populations-map.json",
       mapPopulations,
-      4
-    );
-    fileUtils.saveJsonFile(
-      "data/pretty/populations-setup.json",
-      setupPopulations,
       4
     );
   }

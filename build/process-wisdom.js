@@ -2,7 +2,7 @@
   const WISDOM = ["data/mouse-wisdom.csv"];
   const csv = require("csvtojson");
   const fs = require("fs");
-  const fileUtils = require("./modules/fileUtils");
+  const fileUtils = require("./file-utils");
 
   var csvConverter = csv({
     colParser: {

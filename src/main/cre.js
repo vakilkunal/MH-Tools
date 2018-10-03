@@ -1,6 +1,6 @@
 "use strict";
 
-var POPULATION_JSON_URL = "data/populations-cre.json";
+var POPULATION_JSON_URL = "data/populations-cre-setup.json";
 var cheeseCost = 0;
 
 function loadCharmDropdown() {

@@ -13,7 +13,7 @@
  */
 
 const fs = require("fs");
-const fileUtils = require("./modules/fileUtils");
+const fileUtils = require("./file-utils");
 const request = require("request");
 const puppeteer = require("puppeteer");
 
