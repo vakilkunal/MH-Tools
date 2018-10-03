@@ -164,7 +164,7 @@ const overallObj = {};
  * Parse the full population JSON file
  */
 function parseJSON() {
-  fs.readFile("data/populations-cre.json", "utf8", function(err, data) {
+  fs.readFile("data/populations-cre-setup.json", "utf8", function(err, data) {
     if (err) throw err;
     let obj = JSON.parse(data);
 
