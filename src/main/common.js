@@ -1,7 +1,8 @@
-/**
- * Functions and variables used in both CRE and Best Setup tools
- */
+"use strict";
 
+/**
+ * Shared functions and variables for both CRE and Best Setup
+ */
 var user;
 var CRE_USER = "cre";
 var SETUP_USER = "setup";
@@ -30,14 +31,14 @@ var gsLuck = 7,
   bonusLuck = 0,
   pourBonus = 0,
   pourLuck = 0,
-  isEmpowered = "",
   batteryPower = 0,
+  isEmpowered = "",
   lanternStatus = "";
 var trapPower = 0,
   trapLuck = 0,
-  trapType = "",
   trapAtt = 0,
-  trapEff = 0;
+  trapEff = 0,
+  trapType = "";
 var baseName = "",
   charmName = "",
   locationName = "",
@@ -46,8 +47,9 @@ var baseName = "",
   weaponName = "",
   phaseName = "";
 var cheeseBonus = 0,
-  subtotalPowerBonus = 0,
-  sampleSize = 0;
+  cheeseCost = 0,
+  sampleSize = 0,
+  subtotalPowerBonus = 0;
 var riftStalkerCodex;
 var rank = "";
 
@@ -1023,4 +1025,245 @@ function checkPhase() {
   if (!phaseName) {
     phaseName = EMPTY_SELECTION;
   }
+}
+
+/**
+ * Special location/weapon/charm effects on catch rate
+ * @param {number} catchRate
+ * @param {string} mouseName
+ * @param {number} eff
+ * @param {number} mousePower
+ * @return {number}
+ */
+function calcCREffects(catchRate, mouseName, eff, mousePower) {
+  if (locationName === "Zugzwang's Tower") {
+    if (contains(mouseName, "Rook") && charmName === "Rook Crumble Charm") {
+      charmBonus += 300;
+      calculateTrapSetup(true); // not "cre" or else infinite loop
+      catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+      charmBonus -= 300;
+      calculateTrapSetup(true);
+    } else if (mouseName === "Mystic Pawn") {
+      if (weaponName === "Mystic Pawn Pincher") {
+        weaponPower += 10920;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower -= 10920;
+        calculateTrapSetup(true);
+      } else if (weaponName === "Technic Pawn Pincher") {
+        weaponPower -= 59.99;
+        weaponBonus -= 5;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower += 59.99;
+        weaponBonus += 5;
+        calculateTrapSetup(true);
+      }
+    } else if (mouseName === "Technic Pawn") {
+      if (weaponName === "Mystic Pawn Pincher") {
+        weaponPower -= 59.99;
+        weaponBonus -= 5;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower += 59.99;
+        weaponBonus += 5;
+        calculateTrapSetup(true);
+      } else if (weaponName === "Technic Pawn Pincher") {
+        weaponPower += 10920;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower -= 10920;
+        calculateTrapSetup(true);
+      }
+    }
+    if (contains(mouseName, "Mystic")) {
+      if (weaponName === "Obvious Ambush Trap") {
+        weaponPower -= 2400;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower += 2400;
+        calculateTrapSetup(true);
+      } else if (weaponName === "Blackstone Pass Trap") {
+        weaponPower += 1800;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower -= 1800;
+        calculateTrapSetup(true);
+      }
+    } else if (contains(mouseName, "Technic")) {
+      if (weaponName === "Obvious Ambush Trap") {
+        weaponPower += 1800;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower -= 1800;
+        calculateTrapSetup(true);
+      } else if (weaponName === "Blackstone Pass Trap") {
+        weaponPower -= 2400;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        weaponPower += 2400;
+        calculateTrapSetup(true);
+      }
+    }
+  } else if (charmName === "Dragonbane Charm" && contains(dragons, mouseName)) {
+    charmBonus += 300;
+    calculateTrapSetup(true); // not "cre" or else infinite loop
+    catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+    charmBonus -= 300;
+    calculateTrapSetup(true);
+  } else if (
+    charmName === "Super Dragonbane Charm" &&
+    contains(dragons, mouseName)
+  ) {
+    charmBonus += 600;
+    calculateTrapSetup(true); // not "cre" or else infinite loop
+    catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+    charmBonus -= 600;
+    calculateTrapSetup(true);
+  } else if (charmName === "Taunting Charm" && contains(tauntings, mouseName)) {
+    var riftCount = getRiftCount(weaponName, baseName, charmName);
+    var multiplier = riftStalkerCodex ? 2 : 1;
+    if (riftCount === 1) {
+      weaponPower *= 1 + 1 / 10 * multiplier;
+    } else if (riftCount === 2) {
+      weaponPower *= 1 + 1 / 10 * multiplier;
+      specialLuck += 5 * multiplier;
+    }
+    calculateTrapSetup(true);
+    catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+    if (riftCount === 1) {
+      weaponPower /= 1 + 1 / 10 * multiplier;
+    } else if (riftCount === 2) {
+      weaponPower /= 1 + 1 / 10 * multiplier;
+      specialLuck -= 5 * multiplier;
+    }
+    calculateTrapSetup(true);
+  } else if (locationName === "Fiery Warpath") {
+    if (charmName.indexOf("Super Warpath Archer Charm") >= 0) {
+      var warpathArcher = ["Desert Archer", "Flame Archer", "Crimson Ranger"];
+      if (contains(warpathArcher, mouseName)) {
+        charmBonus += 50;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        charmBonus -= 50;
+        calculateTrapSetup(true);
+      }
+    } else if (charmName.indexOf("Super Warpath Warrior Charm") >= 0) {
+      var warpathWarrior = ["Desert Soldier", "Flame Warrior", "Crimson Titan"];
+      if (contains(warpathWarrior, mouseName)) {
+        charmBonus += 50;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        charmBonus -= 50;
+        calculateTrapSetup(true);
+      }
+    } else if (charmName.indexOf("Super Warpath Scout Charm") >= 0) {
+      var warpathScout = ["Vanguard", "Sentinel", "Crimson Watch"];
+      if (contains(warpathScout, mouseName)) {
+        charmBonus += 50;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        charmBonus -= 50;
+        calculateTrapSetup(true);
+      }
+    } else if (charmName.indexOf("Super Warpath Cavalry Charm") >= 0) {
+      var warpathCavalry = ["Sand Cavalry", "Sandwing Cavalry"];
+      if (contains(warpathCavalry, mouseName)) {
+        charmBonus += 50;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        charmBonus -= 50;
+        calculateTrapSetup(true);
+      }
+    } else if (charmName.indexOf("Super Warpath Mage Charm") >= 0) {
+      var warpathMage = ["Inferno Mage", "Magmarage"];
+      if (contains(warpathMage, mouseName)) {
+        charmBonus += 50;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        charmBonus -= 50;
+        calculateTrapSetup(true);
+      }
+    } else if (charmName.indexOf("Super Warpath Commander's Charm") >= 0) {
+      if (mouseName === "Crimson Commander") {
+        charmBonus += 50;
+        calculateTrapSetup(true);
+        catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
+        charmBonus -= 50;
+        calculateTrapSetup(true);
+      }
+    }
+  }
+
+  return catchRate;
+}
+
+/**
+ * Final modifications to catch rate
+ * @param {number} catchRate
+ * @param {string} mouseName
+ * @return {number}
+ */
+function calcCRMods(catchRate, mouseName) {
+  if (
+    locationName === "Zugzwang's Tower" ||
+    locationName === "Seasonal Garden"
+  ) {
+    if (ztAmp > 0 && weaponName === "Zugzwang's Ultimate Move") {
+      // 50% increased CR for ZUM in ZT/SG
+      catchRate += (1 - catchRate) / 2;
+    }
+  } else if (locationName === "Fort Rox") {
+    if (
+      (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 2) ||
+      (contains(cosmicCritters, mouseName) && fortRox.cannonLevel >= 2)
+    ) {
+      // 50% increased CR for Ballista/Cannon 2 in FR
+      catchRate += (1 - catchRate) / 2;
+    }
+
+    if (
+      (fortRox.cannonLevel >= 3 && mouseName === "Nightfire") ||
+      (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
+    ) {
+      catchRate = 1;
+      minLuckValue = 0;
+    }
+  }
+
+  // String.prototype.startsWith polyfill for IE
+  if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+      position = position || 0;
+      return this.indexOf(searchString, position) === position;
+    };
+  }
+
+  if (weaponName.startsWith("Anniversary")) {
+    // 10% increased CR for 10th Anniversary traps
+    catchRate += (1 - catchRate) / 10;
+  }
+
+  // Miscellaneous modifications
+  if (charmName === "Ultimate Charm") {
+    catchRate = 1;
+  } else if (
+    locationName === "Sunken City" &&
+    charmName === "Ultimate Anchor Charm" &&
+    phaseName !== "Docked"
+  ) {
+    catchRate = 1;
+  } else if (
+    mouseName === "Bounty Hunter" &&
+    charmName === "Sheriff's Badge Charm"
+  ) {
+    catchRate = 1;
+  } else if (
+    mouseName === "Zurreal the Eternal" &&
+    weaponName !== "Zurreal's Folly"
+  ) {
+    catchRate = 0;
+  }
+
+  return catchRate;
 }

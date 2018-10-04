@@ -1,20 +1,5 @@
 "use strict";
 
-var POPULATION_JSON_URL = "data/populations-cre-setup.json";
-
-function loadCharmDropdown() {
-  loadDropdown("charm", charmKeys, charmChanged, "<option>-</option>");
-  var charmParameter = getURLParameter("charm");
-  var select = document.querySelector("#charm");
-  if (charmParameter != NULL_URL_PARAM) {
-    select.value = charmParameter;
-  }
-  if (select.selectedIndex == -1) {
-    select.selectedIndex = 0;
-  }
-  charmChanged();
-}
-
 $(window).load(function() {
   user = SETUP_USER;
 
@@ -40,7 +25,7 @@ $(window).load(function() {
   loadItemSelection(baseKeys, "base");
   loadItemSelection(charmKeys, "charm");
 
-  startPopulationLoad(POPULATION_JSON_URL);
+  startPopulationLoad("data/populations-cre-setup.json");
   loadCharmDropdown();
   $("#main").show();
   gsParamCheck();
@@ -153,6 +138,19 @@ $(window).load(function() {
     checkStorage();
   }
 });
+
+function loadCharmDropdown() {
+  loadDropdown("charm", charmKeys, charmChanged, "<option>-</option>");
+  var charmParameter = getURLParameter("charm");
+  var select = document.querySelector("#charm");
+  if (charmParameter != NULL_URL_PARAM) {
+    select.value = charmParameter;
+  }
+  if (select.selectedIndex == -1) {
+    select.selectedIndex = 0;
+  }
+  charmChanged();
+}
 
 function checkLoadState() {
   var batteryParameter;
@@ -882,9 +880,6 @@ function getMouseACR(
   var mousePower = powersArray[mouseName];
   var trapEffectiveness = effectivenessArray[mouseName];
 
-  if (contains(mouseName, "Rook") && charmName === "Rook Crumble Charm") {
-    charmBonus += 300;
-  }
   if (locationName === "Fort Rox") {
     if (
       (contains(wereMice, mouseName) && fortRox.ballistaLevel >= 1) ||
@@ -893,49 +888,15 @@ function getMouseACR(
       mousePower /= 2;
     }
   }
-  if (contains(dragons, mouseName) && charmName === "Dragonbane Charm") {
-    charmBonus += 300;
-  }
-  if (contains(dragons, mouseName) && charmName === "Super Dragonbane Charm") {
-    charmBonus += 600;
-  }
-
-  if (locationName === "Fiery Warpath") {
-    if (charmName.indexOf("Super Warpath Archer Charm") >= 0) {
-      var warpathArcher = ["Desert Archer", "Flame Archer", "Crimson Ranger"];
-      if (contains(warpathArcher, mouseName)) {
-        charmBonus += 50;
-      }
-    } else if (charmName.indexOf("Super Warpath Warrior Charm") >= 0) {
-      var warpathWarrior = ["Desert Soldier", "Flame Warrior", "Crimson Titan"];
-      if (contains(warpathWarrior, mouseName)) {
-        charmBonus += 50;
-      }
-    } else if (charmName.indexOf("Super Warpath Scout Charm") >= 0) {
-      var warpathScout = ["Vanguard", "Sentinel", "Crimson Watch"];
-      if (contains(warpathScout, mouseName)) {
-        charmBonus += 50;
-      }
-    } else if (charmName.indexOf("Super Warpath Cavalry Charm") >= 0) {
-      var warpathCavalry = ["Sand Cavalry", "Sandwing Cavalry"];
-      if (contains(warpathCavalry, mouseName)) {
-        charmBonus += 50;
-      }
-    } else if (charmName.indexOf("Super Warpath Mage Charm") >= 0) {
-      var warpathMage = ["Inferno Mage", "Magmarage"];
-      if (contains(warpathMage, mouseName)) {
-        charmBonus += 50;
-      }
-    } else if (charmName.indexOf("Super Warpath Commander's Charm") >= 0) {
-      if (mouseName === "Crimson Commander") {
-        charmBonus += 50;
-      }
-    }
-  }
 
   calculateTrapSetup();
   var catchRate = calcCR(trapEffectiveness, trapPower, trapLuck, mousePower);
-  return { attractions: attractions, catchRate: catchRate };
+  return {
+    attractions: attractions,
+    catchRate: catchRate,
+    eff: trapEffectiveness,
+    mousePower: mousePower
+  };
 }
 
 /**
@@ -963,48 +924,13 @@ function getMouseCatches(
   );
   var attractions = mouseACDetails.attractions;
   var catchRate = mouseACDetails.catchRate;
-
-  // Exceptions and final modifications to catch rates
-  if (charmName == "Ultimate Charm") {
-    catchRate = 1;
-  } else if (
-    locationName == "Sunken City" &&
-    charmName == "Ultimate Anchor Charm" &&
-    phaseName != "Docked"
-  ) {
-    catchRate = 1;
-  } else if (mouse == "Bounty Hunter" && charmName == "Sheriff's Badge Charm") {
-    catchRate = 1;
-  } else if (
-    mouse == "Zurreal the Eternal" &&
-    weaponName != "Zurreal's Folly"
-  ) {
-    catchRate = 0;
-  } else if (
-    locationName === "Zugzwang's Tower" ||
-    locationName === "Seasonal Garden"
-  ) {
-    if (ztAmp > 0 && weaponName === "Zugzwang's Ultimate Move") {
-      catchRate += (1 - catchRate) / 2;
-    }
-  } else if (locationName === "Fort Rox") {
-    if (
-      (contains(wereMice, mouse) && fortRox.ballistaLevel >= 2) ||
-      (contains(cosmicCritters, mouse) && fortRox.cannonLevel >= 2)
-    ) {
-      catchRate += (1 - catchRate) / 2;
-    }
-    if (
-      (fortRox.cannonLevel >= 3 && mouse === "Nightfire") ||
-      (fortRox.ballistaLevel >= 3 && mouse === "Nightmancer")
-    ) {
-      catchRate = 1;
-    }
-  }
-
-  if (weaponName.startsWith("Anniversary")) {
-    catchRate += (1 - catchRate) / 10;
-  }
+  catchRate = calcCREffects(
+    catchRate,
+    mouse,
+    mouseACDetails.eff,
+    mouseACDetails.mousePower
+  );
+  catchRate = calcCRMods(catchRate, mouse);
 
   return attractions * catchRate;
 }
