@@ -1366,17 +1366,24 @@ function formatSampleScore() {
   var colored = "";
   var scoreDescriptor = "";
 
-  var phaseCheeseCharm = phaseName;
-  phaseCheeseCharm += ", " + cheeseName;
-  if (charmName === "No Charm") {
-    phaseCheeseCharm += ", " + "-";
-  } else {
-    phaseCheeseCharm += ", " + charmName.slice(0, -6);
-  }
-
   var sampleScoreParam = null;
   var sampleSize = null;
   var sampleCount = null;
+  var isSpecial = false;
+
+  var phaseCheeseCharm = phaseName;
+  phaseCheeseCharm += ", " + cheeseName;
+  if (
+    $("#charm option:selected")
+      .text()
+      .indexOf("*") < 0
+  ) {
+    phaseCheeseCharm += ", " + "-";
+  } else {
+    phaseCheeseCharm += ", " + charmName.slice(0, -6);
+    isSpecial = true;
+  }
+
   if (locationName) {
     var sampleScore = sampleSummary[locationName][phaseCheeseCharm];
     if (sampleScore) {
@@ -1418,7 +1425,8 @@ function formatSampleScore() {
   if (sampleScoreParam !== null) {
     scoreDescriptor = sampleScoreParam + "/100 (" + colored + ")";
     scoreDescriptor +=
-      " [Sample Size: " + sampleSize + ", Mouse Count: " + sampleCount + "]";
+      " [Sample Size: " + sampleSize + ", Mouse Count: " + sampleCount + ", ";
+    scoreDescriptor += isSpecial ? "Special Charm]" : "Common Charm]";
   }
 
   var ss = document.getElementById("sampleScore");
