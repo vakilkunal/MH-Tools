@@ -140,7 +140,7 @@ $(window).load(function() {
 });
 
 function loadCharmDropdown() {
-  loadDropdown("charm", charmKeys, charmChanged, "<option>-</option>");
+  loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
   var charmParameter = getURLParameter("charm");
   var select = document.querySelector("#charm");
   if (charmParameter != NULL_URL_PARAM) {
@@ -799,7 +799,7 @@ function getLinkCell(selectedCharm, weaponName, baseName, headerHtml) {
   var cell = "</td><td>" + getCRELinkElement();
 
   // prettier-ignore
-  if (selectedCharm === EMPTY_SELECTION) {
+  if (selectedCharm === "No Charm") {
     cell += '<span style="float: right"><button onclick="weaponName=\''
     + weaponName.replace(/'/g, "\\'")
     + '\';baseName=\''
@@ -819,7 +819,7 @@ function getLinkCell(selectedCharm, weaponName, baseName, headerHtml) {
 function getCRELinkElement() {
   var urlString = buildCRELink();
   var caption = weaponName + " / " + baseName;
-  if (charmName && charmName != EMPTY_SELECTION) {
+  if (charmName && charmName !== "No Charm") {
     charmName = charmName.trim().replace(/\*$/, "");
     caption += " / " + charmName;
   }
