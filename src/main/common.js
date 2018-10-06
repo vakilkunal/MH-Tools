@@ -81,9 +81,9 @@ function contains(arrayOrString, searchElement) {
 }
 
 function calcSpecialCharms(charmName) {
-  populateCharmData(charmName); //Resets charm globals
+  populateCharmData(charmName); // Resets charm globals
   if (charmName === "Champion Charm") {
-    //Check if GTB used. If so +4 luck
+    // Check if GTB used. If so +4 luck
     if (baseName === "Golden Tournament Base") {
       charmLuck += 4;
     } else if (baseName === "Silver Tournament Base") {
@@ -184,10 +184,10 @@ function getRiftCount(weapon, base, charm) {
  * @param {boolean} skipDisp
  */
 function calculateTrapSetup(skipDisp) {
-  var specialPower = 0,
-    specialLuck = 0,
-    shownPowerBonus = 0,
-    hiddenPowerBonus = 0,
+  var specialPower = 0, // bonus flat power
+    specialLuck = 0, // bonus flat luck
+    shownPowerBonus = 0, // able to be parsed from user.trap_power_bonus
+    hiddenPowerBonus = 0, // implicit, unable to be parsed
     braceBonus = false;
 
   if (locationName && cheeseName && weaponName && baseName && phaseName) {
@@ -372,6 +372,24 @@ function calculateTrapSetup(skipDisp) {
     } else if (locationName === "Fort Rox") {
       fortRox.ballistaLevel = $("#ballistaLevel").val();
       fortRox.cannonLevel = $("#cannonLevel").val();
+
+      if (charmName === "Nightlight Charm") {
+        if (phaseName === "Day") {
+          shownPowerBonus += 1;
+        } else if (phaseName === "Twilight") {
+          shownPowerBonus += 3;
+        } else if (phaseName === "Midnight") {
+          shownPowerBonus += 5;
+        } else if (phaseName === "Pitch") {
+          shownPowerBonus += 7;
+        } else if (phaseName === "Utter Darkness") {
+          shownPowerBonus += 9;
+        } else if (phaseName === "First Light") {
+          shownPowerBonus += 12;
+        } else if (phaseName === "Dawn") {
+          shownPowerBonus += 15;
+        }
+      }
     }
 
     if (
