@@ -325,6 +325,16 @@
           return "Chess Master";
         }
       }
+    } else if (userLocation === "Claw Shot City") {
+      // TODO: Separate Bounty hunter attracted/not once new data rolls in
+      var poster_active = userQuests["QuestClawShotCity"]["map_active"];
+      var has_wanted_poster =
+        userQuests["QuestClawShotCity"]["has_wanted_poster"];
+      if (!poster_active) {
+        return "No Wanted Poster Open";
+      } else if (poster_active && !has_wanted_poster) {
+        return "Crew";
+      }
     }
     return "N/A";
   };
