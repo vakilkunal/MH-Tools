@@ -9,47 +9,59 @@ var SETUP_USER = "setup";
 var DEFAULT_STATS = [0, 0, 0, 0, "No Effect"];
 var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
+var riftStalkerCodex;
 
+// Weapon stats
 var weaponPower = 0,
   weaponBonus = 0,
   weaponLuck = 0,
   weaponAtt = 0,
   weaponEff = 0;
+
+// Base stats
 var basePower = 0,
   baseBonus = 0,
   baseLuck = 0,
   baseAtt = 0,
   baseEff = 0;
+
+// Charm stats
 var charmPower = 0,
   charmBonus = 0,
   charmAtt = 0,
   charmLuck = 0,
   charmEff = 0;
+
+// Misc bonuses
 var gsLuck = 7,
   bonusPower = 0,
   bonusLuck = 0,
   pourBonus = 0,
   pourLuck = 0,
   batteryPower = 0,
-  isEmpowered = "",
-  lanternStatus = "";
+  cheeseBonus = 0,
+  cheeseCost = 0,
+  subtotalPowerBonus = 0;
+
+// Total trap stats
 var trapPower = 0,
   trapLuck = 0,
   trapAtt = 0,
   trapEff = 0,
   trapType = "";
+
+// Various strings
 var baseName = "",
   charmName = "",
   locationName = "",
   cheeseName = "",
   tournamentName = "",
   weaponName = "",
-  phaseName = "";
-var cheeseBonus = 0,
-  cheeseCost = 0,
-  subtotalPowerBonus = 0;
-var riftStalkerCodex;
-var rank = "";
+  phaseName = "",
+  isEmpowered = "",
+  lanternStatus = "",
+  rank = "",
+  recentCharm = "";
 
 /**
  * Initialize Fort Rox ballista and cannon levels
@@ -675,13 +687,19 @@ function populateBaseData(armedBase) {
 function loadDropdown(category, array, callback, initialHtml) {
   var inputElement = document.getElementById(category);
   var dropdownHtml = initialHtml || "";
+
   for (var key in array) {
     dropdownHtml += "<option>" + array[key] + "</option>\n";
   }
 
   inputElement.innerHTML = dropdownHtml;
 
-  inputElement.value = getURLParameter(category);
+  if (category === "charm" && recentCharm) {
+    inputElement.value = recentCharm;
+  } else {
+    inputElement.value = getURLParameter(category);
+  }
+
   if (inputElement.selectedIndex === -1) {
     inputElement.selectedIndex = 0;
   }
@@ -976,11 +994,11 @@ function highlightSpecialCharms(charmList) {
 }
 
 function selectCharm() {
-  var charmParameter = getURLParameter("charm") || charmName;
+  var charmParameter = recentCharm || getURLParameter("charm");
   var specialCharmParameter = charmParameter + "*";
   if (charmParameter !== NULL_URL_PARAM) {
     var select = document.getElementById("charm");
-    //TODO: Improve
+    // TODO: Improve
     for (var i = 0; i < select.children.length; i++) {
       var child = select.children[i];
       if (

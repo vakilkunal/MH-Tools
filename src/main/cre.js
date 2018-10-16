@@ -644,6 +644,7 @@ function baseChanged() {
 function charmChanged() {
   var select = document.getElementById("charm");
   charmName = select.value.trim().replace(/\*$/, "");
+  recentCharm = charmName;
   charmChangeCommon();
   calculateTrapSetup();
   formatSampleScore();
