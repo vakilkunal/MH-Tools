@@ -135,7 +135,7 @@ $(window).load(function() {
 
 function loadCharmDropdown() {
   loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
-  var charmParameter = getURLParameter("charm");
+  var charmParameter = recentCharm || getURLParameter("charm");
   var select = document.querySelector("#charm");
   if (charmParameter != NULL_URL_PARAM) {
     select.value = charmParameter;
@@ -433,6 +433,7 @@ function baseChanged() {
 function charmChanged(customValue) {
   var select = document.getElementById("charm");
   select = select.value.trim().replace(/\*$/, "");
+  recentCharm = select;
 
   // Workaround for Object-type 'Event' when selecting a charm
   if (customValue && typeof customValue === "string") {
