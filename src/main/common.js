@@ -61,7 +61,8 @@ var baseName = "",
   isEmpowered = "",
   lanternStatus = "",
   rank = "",
-  recentCharm = "";
+  recentCharm = "",
+  recentCheese = "";
 
 /**
  * Initialize Fort Rox ballista and cannon levels

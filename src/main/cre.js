@@ -452,7 +452,7 @@ function loadCheeseDropdown(locationName, phaseName) {
     cheeseDropdown.innerHTML = getCheeseDropdownHTML(locationName, phaseName);
   }
 
-  var cheeseParameter = getURLParameter("cheese");
+  var cheeseParameter = recentCheese || getURLParameter("cheese");
   if (cheeseParameter !== NULL_URL_PARAM) {
     var select = document.getElementById("cheese");
     select.value = cheeseParameter;
@@ -519,6 +519,7 @@ function updateLink() {
 
 function cheeseChanged() {
   cheeseName = document.getElementById("cheese").value;
+  recentCheese = cheeseName;
   updateLink();
 
   // Basic cheese costs

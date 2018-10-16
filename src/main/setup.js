@@ -374,7 +374,7 @@ function loadCheeseDropdown(location, phase) {
   cheeseDropdown.selectedIndex = 0;
 
   var select = document.querySelector("#cheese");
-  var cheeseParameter = getURLParameter("cheese");
+  var cheeseParameter = recentCheese || getURLParameter("cheese");
   if (cheeseParameter !== NULL_URL_PARAM) {
     select.value = cheeseParameter;
   }
@@ -419,6 +419,7 @@ function weaponChanged() {
 
 function cheeseChanged() {
   cheeseName = document.querySelector("#cheese").value;
+  recentCheese = cheeseName;
   updateLink();
   checkEmpoweredWidget();
   checkSpecialCharms();
