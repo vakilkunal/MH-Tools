@@ -6,7 +6,7 @@
       getLatestSHA().then(function(response) {
         var sha = JSON.parse(response)[0].sha;
         var cdn =
-          "https://cdn.rawgit.com/tsitu/MH-Tools/" +
+          "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@" +
           sha +
           "/data/bookmarklet-timestamps.json";
         var xhr = new XMLHttpRequest();
@@ -51,7 +51,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.2.3 / Using <a href='https://rawgit.com' target='blank'>RawGit</a>";
+      "Version 1.3.3 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
@@ -198,7 +198,7 @@
   }
 
   function getLatestSHA() {
-    // Fetch latest gh-pages commit SHA to use with RawGit CDN since it caches URLs permanently
+    // Fetch latest gh-pages commit SHA to use with jsDelivr CDN since it caches URLs permanently
     return new Promise(function(resolve, reject) {
       var xhr = new XMLHttpRequest();
       xhr.open(
@@ -219,7 +219,7 @@
     getLatestSHA().then(function(response) {
       var sha = JSON.parse(response)[0].sha;
       var el = document.createElement("script");
-      var cdn = "https://cdn.rawgit.com/tsitu/MH-Tools/";
+      var cdn = "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@";
       cdn += sha + "/src/bookmarklet/" + type + "bookmarklet.min.js";
       el.src = cdn;
       document.body.appendChild(el);
