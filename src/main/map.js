@@ -399,6 +399,11 @@ function processMap(mapText) {
       mouseName = mouseName.slice(0, indexOfMouse);
     }
 
+    // DPM edge case
+    if (mouseName === "Dread Pirate") {
+      mouseName = "Dread Pirate Mousert";
+    }
+
     // Hyphenated mouse name edge cases
     if (hyphenEdgeCases.hasOwnProperty(mouseName)) {
       mouseName = hyphenEdgeCases[mouseName];
