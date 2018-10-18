@@ -45,11 +45,6 @@
         return;
       }
 
-      if (data.treasure_map.map_class != "treasure") {
-        alert("This map class is not yet supported");
-        return;
-      }
-
       var mice = getMapMice(data, true);
       var url = "https://tsitu.github.io/MH-Tools/map.html";
       url += "?mice=" + encodeURIComponent(mice.join("/"));
