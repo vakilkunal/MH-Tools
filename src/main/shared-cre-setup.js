@@ -127,6 +127,10 @@ function calcSpecialCharms(charmName) {
     if (contains(festiveTraps, weaponName)) {
       charmBonus += 20;
     }
+  } else if (charmName.indexOf("Spooky Charm") >= 0) {
+    if (contains(halloweenTraps, weaponName)) {
+      charmBonus += 20;
+    }
   }
 
   if (user === CRE_USER) {

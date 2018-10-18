@@ -76,7 +76,7 @@ var riftCharms = [
   "Stagnant Charm",
   "Super Enerchi Charm",
   "Timesplit Charm",
-  "Extra Spooky Charm"
+  "Super Spooky Charm"
 ];
 
 // prettier-ignore
@@ -1645,6 +1645,7 @@ var basesArray = {
   "Clockwork Base": [800, 20, 5, 13, "No Effect"],
   "Crushed Birthday Cake Base": [185, 3, 15, 5, "Uber Stale"],
   "Cupcake Birthday Base": [300, 7, 7, 7, "Extremely Fresh"],
+  "Deadwood Base": [350, 10, 5, 10, "No Effect"],
   "Deep Freeze Base": [35, 0, 0, 0, "Uber Fresh"],
   "Dehydration Base": [225, 0, 5, 4, "Insanely Fresh"],
   "Denture Base": [100, 10, 0, 0, "No Effect"],
@@ -1715,6 +1716,7 @@ var weaponsArray = {
   "2010 Blastoff Trap": ["Tactical", 2600, 15, 0, 25, "Very Stale"],
   "2012 Big Boom Trap": ["Tactical", 2500, 15, 20, 25, "Extremely Stale"],
   "500 Pound Spiked Crusher": ["Physical", 250, 10, 0, 1, "No Effect"],
+  "Admiral's Galleon Trap": ["Shadow", 2500, 25, 0, 15, "No Effect"],
   "Ambrosial Portal": ["Shadow", 1025, 0, 5, 0, "Fresh"],
   "Ambush": ["Tactical", 3000, 5, 0, 12, "Fresh"],
   "Ancient Box Trap": ["Forgotten", 4300, 10, 0, 4, "No Effect"],
@@ -1759,6 +1761,7 @@ var weaponsArray = {
   "Clockapult of Time": ["Shadow", 2275, 10, 5, 10, "Extremely Fresh"],
   "Clockapult of Winter Past": ["Shadow", 2275, 10, 5, 10, "Extremely Fresh"],
   "Clockwork Portal Trap": ["Shadow", 3900, 12, 10, 20, "No Effect"],
+  "Creepy Coffin Trap": ["Shadow", 1800, 5, 5, 7, "Extremely Stale"],
   "Crystal Crucible Trap": ["Forgotten", 7800, 10, 2, 8, "Very Fresh"],
   "Crystal Mineral Crusher Trap": ["Forgotten", 8000, 10, 5, 5, "Fresh"],
   "Crystal Tower": ["Rift", 900, 0, 0, 0, "No Effect"],
@@ -1938,7 +1941,6 @@ var charmsArray = {
   "EMP400 Charm": [0, 0, 0, 0, "Stale"],
   "Empowered Anchor Charm": [300, 4, 0, 0, "No Effect"],
   "Enerchi Charm": [100, 1, 0, 0, "No Effect"],
-  "Extra Spooky Charm": [500, 3, 0, 0, "No Effect"],
   "Extra Sweet Cupcake Charm": [0, 0, 8, 8, "Fresh"],
   "Extreme Ancient Charm": [800, 7, 7, 7, "Insanely Fresh"],
   "Extreme Attraction Charm": [0, 0, 50, 0, "No Effect"],
@@ -1947,6 +1949,7 @@ var charmsArray = {
   "Extreme Power Charm": [600, 5, 0, 0, "No Effect"],
   "Extreme Regal Charm": [2000, 0, 75, 8, "No Effect"],
   "Extreme Snowball Charm": [400, 4, 4, 8, "No Effect"],
+  "Extreme Spooky Charm": [400, 4, 4, 8, "No Effect"],
   "Extreme Wealth Charm": [0, 0, 0, 0, "No Effect"],
   "Festive Anchor Charm": [300, 4, 0, 0, "No Effect"],
   "Festive Ultimate Luck Charm": [0, 0, 0, 20, "No Effect"],
@@ -1970,7 +1973,6 @@ var charmsArray = {
   "Grub Scent Charm": [0, 0, 0, 0, "No Effect"],
   "Grubling Bonanza Charm": [0, 0, 0, 0, "No Effect"],
   "Grubling Chow Charm": [0, 0, 0, 0, "No Effect"],
-  "Haunted Ultimate Luck Charm": [0, 0, 0, 20, "No Effect"],
   "Horsepower Charm": [0, 0, 0, 0, "No Effect"],
   "Hunter's Horn Rewind Charm": [0, 0, 0, 0, "No Effect"],
   "Hydro Charm": [0, 0, 0, 0, "No Effect"],
@@ -1992,6 +1994,7 @@ var charmsArray = {
   "Nitropop Charm": [0, 4, 0, 0, "No Effect"],
   "Oxygen Burst Charm": [0, 0, 0, 0, "No Effect"],
   "Party Charm": [0, 3, 0, 3, "No Effect"],
+  "Pointy Charm": [0, 0, 0, 0, "No Effect"],
   "Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Power Charm": [120, 1, 0, 0, "No Effect"],
   "Prospector's Charm": [200, 1, 0, 0, "No Effect"],
@@ -2038,7 +2041,7 @@ var charmsArray = {
   "Spellbook Charm": [0, 0, 0, 0, "No Effect"],
   "Spiked Anchor Charm": [900, 12, 0, 0, "Very Stale"],
   "Sponge Charm": [0, 0, 0, 0, "No Effect"],
-  "Spooky Charm": [300, 1, 0, 0, "No Effect"],
+  "Spooky Charm": [100, 1, 1, 2, "No Effect"],
   "Spore Charm": [400, 3, 2, 3, "Stale"],
   "Sprinkly Sweet Cupcake Charm": [0, 0, 9, 9, "Fresh"],
   "Stagnant Charm": [250, 0, 5, 2, "No Effect"],
@@ -2062,6 +2065,7 @@ var charmsArray = {
   "Super Salt Charm": [0, 0, 0, 0, "No Effect"],
   "Super Snowball Charm": [200, 2, 2, 4, "No Effect"],
   "Super Soap Charm": [25, 10, 0, 0, "No Effect"],
+  "Super Spooky Charm": [200, 2, 2, 4, "No Effect"],
   "Super Spore Charm": [500, 5, 5, 5, "Very Stale"],
   "Super Warpath Archer Charm": [0, 0, 0, 0, "No Effect"],
   "Super Warpath Cavalry Charm": [0, 0, 0, 0, "No Effect"],
@@ -2085,6 +2089,7 @@ var charmsArray = {
   "Ultimate Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Ultimate Power Charm": [2400, 20, 0, 0, "No Effect"],
   "Ultimate Snowball Charm": [800, 8, 8, 20, "No Effect"],
+  "Ultimate Spooky Charm": [800, 8, 8, 20, "No Effect"],
   "Ultimate Spore Charm": [1200, 10, 10, 10, "Extremely Stale"],
   "Ultimate Wealth Charm": [0, 0, 0, 0, "No Effect"],
   "Uncharged Scholar Charm": [0, 0, 0, 0, "No Effect"],
@@ -2128,7 +2133,7 @@ Mouse power & power type effectiveness
 10 =>  Rift (%)
  */
 
-//TODO: Put this in an external file (CSV/JSON) and add it to CI build
+// TODO: Put this in an external file (CSV/JSON) and add it to CI build
 // prettier-ignore
 var powersArray = {
   "Swabbie":      [570, 0, 0, 0, 175, 0, 100, 0, 100, 0, 0],
@@ -3009,6 +3014,10 @@ var powersArray = {
   "Grampa Golem": [2815, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0],
   "Fiery Crusher": [5095, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0],
   "Nachous, The Molten": [5335*5, 0, 0, 0, 0, 0, 0, 500, 0, 0, 0],
+  // Temporary event mice placeholders
+  "Black Diamond Racer": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+  "Rainbow Racer": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+  "Gentleman Caller": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
    // "Mouse name": [Power, Arcane, Draconic, Forgotten, Hydro, Parental, Physical, Shadow, Tactical, Law, Rift],
 };
 
@@ -3016,7 +3025,7 @@ var powersArray = {
 // prettier-ignore
 var miceArray = {
   "Abominable Snow": [5000, 5000],
-  "Bionic": [550, 300],
+  "Bionic": [550, 550],
   "Black Widow": [10, 480],
   "Brown": [150, 115],
   "Burglar": [1250, 1420],
@@ -3031,13 +3040,13 @@ var miceArray = {
   "Longtail": [900, 1000],
   "Master Burglar": [2500, 4260],
   "Mole": [500, 550],
-  "Monster": [9100, 9100],
-  "Mutated Grey": [475, 275],
-  "Mutated White": [475, 250],
+  "Monster": [3500, 3500],
+  "Mutated Grey": [500, 500],
+  "Mutated White": [475, 450],
   "Nibbler": [899, 1100],
   "Steel": [500, 270],
   "White": [100, 70],
-  "Zombie": [2700, 2700],
+  "Zombie": [1900, 2000],
   "Cowardly": [300, 190],
   "Farmhand": [1400, 1000],
   "Speedy": [900, 950],
@@ -3054,7 +3063,7 @@ var miceArray = {
   "Spotted": [175, 175],
   "Crown Collector": [1000, 1000],
   "Relic Hunter": [935, 650],
-  "Mutated Brown": [700, 525],
+  "Mutated Brown": [700, 700],
   "Captain Croissant": [1000, 1000],
   "Aquos": [1000, 6750],
   "Bandit": [180, 300],
@@ -3114,14 +3123,14 @@ var miceArray = {
   "Wiggler": [150, 100],
   "Cherry": [3000, 6000],
   "Goldleaf": [2450, 5500],
-  "Bat": [3000, 3375],
-  "Ghost": [3590, 3590],
+  "Bat": [3000, 3000],
+  "Ghost": [3500, 3250],
   "Giant Snail": [550, 5750],
   "Lycan": [5500, 9250],
-  "Mummy": [3750, 4725],
-  "Ravenous Zombie": [5400, 5400],
-  "Vampire": [900, 2700],
-  "Gluttonous Zombie": [3000, 1750],
+  "Mummy": [3750, 3500],
+  "Ravenous Zombie": [4000, 3000],
+  "Vampire": [900, 1400],
+  "Gluttonous Zombie": [2500, 1500],
   "Big Bad Burroughs": [24500, 22700],
   "Core Sample": [1000, 2600],
   "Demolitions": [1900, 4700],
@@ -3682,7 +3691,7 @@ var miceArray = {
   "Eggsplosive Scientist": [800, 6200],
   "Hare Razer": [3200, 7000],
   "Grave Robber": [1200, 2000],
-  "Mousevina von Vermin": [900, 27000],
+  "Mousevina von Vermin": [9000, 5000],
   "Cobweb": [700, 500],
   "Pumpkin Hoarder": [1000, 1800],
   "Destructoy": [400, 1000],
@@ -3710,7 +3719,7 @@ var miceArray = {
   "Ribbon": [750, 600],
   "Ridiculous Sweater": [750, 1500],
   "Snowblower": [750, 1800],
-  "Snowglobe": [750, 900],
+  "Snowglobe": [2000, 12600],
   "Triple Lutz": [750, 300],
   "Costumed Snake": [5888, 2888],
   "Totally Not Bitter": [450, 1850],
@@ -3725,10 +3734,10 @@ var miceArray = {
   "Hardboiled": [125, 3200],
   "Titanic Brain-Taker": [2750, 32500],
   "Sugar Rush": [2000, 2600],
-  "S.N.O.W. Golem": [1200, 10000],
-  "Snow Boulder": [600, 3000],
-  "Snow Sorceress": [400, 5000],
-  "Reinbo": [500, 4000],
+  "S.N.O.W. Golem": [18000, 60000],
+  "Snow Boulder": [900, 7000],
+  "Snow Sorceress": [3000, 16000],
+  "Reinbo": [1000, 15000],
   "Snowball Hoarder": [900, 2000],
   "Costumed Horse": [5888, 2888],
   "Lovely Sports": [450, 1850],
@@ -3915,6 +3924,17 @@ var miceArray = {
   "Grampa Golem": [10000, 54500],
   "Fiery Crusher": [13200, 70000],
   "Nachous, The Molten": [35000, 90000],
+  // Laboleum Rework
+  "Coffin Zombie": [3000, 2200],
+  "Clumsy Chemist": [700, 525],
+  "Mutated Mole": [6000, 3000],
+  "Sludge Scientist": [525, 465],
+  "Squeaker Bot": [650, 400],
+  // Misc event mice
+  "Black Diamond Racer": [2000, 18000],
+  "Rainbow Racer": [4745, 21340],
+  "Snow Golem Architect": [5000, 20000],
+  "Sporty Ski Instructor": [2000, 12600]
   // "Mouse name": [Gold, Points],
 };
 
@@ -3937,6 +3957,14 @@ var festiveTraps = [
   "Snow Barrage",
   "Snowglobe Trap",
   "Wrapped Gift Trap"
+];
+
+// No bonus: Haunted Shipwreck, Pumpkin Pummeler
+// Needs verification: [Maniacal] Brain Extractor, Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
+var halloweenTraps = [
+  "Admiral's Galleon Trap",
+  "Candy Crusher Trap",
+  "Sandcastle Shard Trap"
 ];
 
 var wereMice = [
