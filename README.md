@@ -1,4 +1,4 @@
-# :mouse: [MH Tools](https://tsitu.github.io/MH-Tools/) &middot; [![Build Status](https://travis-ci.org/tsitu/MH-Tools.svg?branch=master)](https://travis-ci.org/tsitu/MH-Tools)
+# :mouse: [MH Tools](https://tsitu.github.io/MH-Tools/) &middot; [![Build Status](https://travis-ci.org/tsitu/MH-Tools.svg?branch=master)](https://travis-ci.org/tsitu/MH-Tools) [![](https://data.jsdelivr.com/v1/package/gh/tsitu/MH-Tools/badge)](https://www.jsdelivr.com/package/gh/tsitu/MH-Tools)
 
 Suite of JavaScript tools for the browser game [MouseHunt](https://www.mousehuntgame.com/).
 
