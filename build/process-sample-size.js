@@ -239,7 +239,7 @@ function parseJSON() {
     overallObj["score"] = overallSummaryAvg;
 
     // Next function called to calculate diffs from current data
-    calculateDiffs();
+    // calculateDiffs();
   });
 }
 
