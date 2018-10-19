@@ -396,9 +396,14 @@ async function calculateDiffs() {
  * Write detailed, concise, and overallObj to respective JSON files
  */
 function outputJSON() {
-  fileUtils.saveJsonFile("data/sample-summary-detailed.json", detailedObj);
-  fileUtils.saveJsonFile("data/sample-summary-concise.json", conciseObj, 4);
-  fileUtils.saveJsonFile("data/sample-summary-overall.json", overallObj);
+  fileUtils.makeDirectory("data/json");
+  fileUtils.saveJsonFile("data/json/sample-summary-detailed.json", detailedObj);
+  fileUtils.saveJsonFile(
+    "data/json/sample-summary-concise.json",
+    conciseObj,
+    4
+  );
+  fileUtils.saveJsonFile("data/json/sample-summary-overall.json", overallObj);
 }
 
 /**
