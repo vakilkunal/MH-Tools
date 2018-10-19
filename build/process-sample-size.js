@@ -240,6 +240,7 @@ function parseJSON() {
 
     // Next function called to calculate diffs from current data
     // calculateDiffs();
+    outputJSON();
   });
 }
 
