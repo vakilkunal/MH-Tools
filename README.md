@@ -134,7 +134,7 @@ Previously, the tool displayed a flat sample size number with a rating assigned 
 
 ### :earth_americas: [Map Solver and Mouse Finder](https://tsitu.github.io/MH-Tools/map.html)
 
-> Calculates ideal specific locations to hunt for any given list of mice. Based on Chad's and <a href="http://olf.github.io/mhmapsolver/" target="_blank" rel="noopener">Olaf's</a> solvers.
+> Calculates ideal specific locations to hunt for a given list of mice. Based on Chad's and <a href="http://olf.github.io/mhmapsolver/" target="_blank" rel="noopener">Olaf's</a> solvers.
 
 **Bookmarklet:** Run the `Map` bookmarklet from the "Active Map - Mice" section of the UI.
 
@@ -168,7 +168,7 @@ Event _(not included)_ | Cupcake Colby, Dumpling, Extra Sweet Cupcake Colby, Mar
 
 ### :trophy: [Best Setup](https://tsitu.github.io/MH-Tools/setup.html)
 
-> Calculates the best weapon and base setup to use for a particular location, sublocation, and cheese.
+> Calculates the best trap setup to use for a particular location, sublocation, cheese and/or charm.
 
 **Bookmarklet(s):** Run the `Setup: Load Items` bookmarklet on the Camp page and your items will be automatically loaded, ticked, and cached on the Best Setup page. Run the `Setup: Fields` bookmarklet on basically any page on the MH website and your hunting setup will be automatically loaded into the tool.
 
@@ -182,7 +182,7 @@ To check whether all of your items have properly loaded, you may want to open up
 
 ### :chart_with_upwards_trend: [Marketplace Analyzer](https://tsitu.github.io/MH-Tools/analyzer.html)
 
-> Provides a record of every marketplace transaction as well as summary tables with useful aggregations.
+> Displays all of your marketplace transactions along with some useful aggregations.
 
 **Bookmarklet:** Run the `Analyzer` bookmarklet from Marketplace -> My History, on the tab you would like data to start from (default = 1).
 
@@ -200,7 +200,7 @@ Tariffs | 10% calculated on total amount  = Amount ÷ 1.1 (slightly inaccurate)
 
 ### :crown: [Crown Solver](https://tsitu.github.io/MH-Tools/crown.html)
 
-> Calculates the best locations to hunt to progress towards achieving 100 catches of mouse breeds.
+> Calculates the best locations to achieve 10/100/500 catches of mouse breeds (Bronze and Gold coming soon).
 
 **Bookmarklet:** Run the `Crown` bookmarklet from Hunter's Profile -> King's Crowns to automatically populate the 50 Bronze Crown mice that are closest to reaching Silver status (100 catches)
 
@@ -217,7 +217,7 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 ---
 
 ### :hammer: [Crafting Wizard](https://tsitu.github.io/MH-Tools/crafting.html)
-> Calculates the total craftable quantity for recipes based on your inventory data, as well as missing materials for uncraftable recipes.
+> Calculates craftable quantities and missing materials for recipes based on your inventory data.
 
 **Bookmarklet:** Run the `Crafting` bookmarklet from Inventory -> Crafting -> [Crafting Table](https://www.mousehuntgame.com/inventory.php?tab=crafting&subtab=crafting_table). The `Recipes` and `Inventory` tables should be automatically populated, with the former being sortable and filterable. Crafting materials are cached in localStorage.
 
