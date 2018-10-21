@@ -382,7 +382,8 @@
     urlParams["gs"] = "No";
   }
 
-  urlParams["power_bonus"] = user["trap_power_bonus"] * 100;
+  // Rounded because of IEEE 754 floating point precision
+  urlParams["power_bonus"] = Math.round(user["trap_power_bonus"] * 100);
 
   var luck_element = document.querySelector(
     ".campPage-trap-trapStat.luck > .value"
