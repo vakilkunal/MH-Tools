@@ -22,7 +22,7 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
   - [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
   - [Crown Solver](#crown-crown-solver)
   - [Crafting Wizard](#hammer-crafting-wizard)
-  - [CRE Tabbed Demo](#bookmark_tabs-cre-tabbed-demo)
+  - [CRE Tabs](#bookmark_tabs-cre-tabs)
 - [Developers](#developers)
   - [Build and Run](#construction_worker-build-and-run)
   - [Coding Style](#barber-coding-style)
@@ -225,7 +225,7 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 
 ---
 
-### :bookmark_tabs: [CRE Tabbed Demo](https://tsitu.github.io/MH-Tools/tabs.html)
+### :bookmark_tabs: [CRE Tabs](https://tsitu.github.io/MH-Tools/tabs.html)
 
 > Provides a convenient way to spin up multiple independent instances of the CRE tool. Each instance is located in its own `<iframe>` and setups are easily copy-pasted between tabs. Great for quickly comparing setups that are mostly identical.
 

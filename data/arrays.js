@@ -58,12 +58,12 @@ var riftWeapons = [
 ];
 
 var riftBases = [
+  "Attuned Enerchi Induction Base",
+  "Clockwork Base",
+  "Enerchi Induction Base",
   "Fissure Base",
   "Fracture Base",
-  "Rift Base",
-  "Enerchi Induction Base",
-  "Attuned Enerchi Induction Base",
-  "Clockwork Base"
+  "Rift Base"
 ];
 
 /**
@@ -75,8 +75,8 @@ var riftCharms = [
   "Gnarled Charm",
   "Stagnant Charm",
   "Super Enerchi Charm",
-  "Timesplit Charm",
-  "Super Spooky Charm"
+  "Super Spooky Charm",
+  "Timesplit Charm"
 ];
 
 // prettier-ignore
