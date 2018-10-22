@@ -314,7 +314,7 @@ var basesArray = {
   "Clockwork Base": [800, 20, 5, 13, "No Effect"],
   "Crushed Birthday Cake Base": [185, 3, 15, 5, "Uber Stale"],
   "Cupcake Birthday Base": [300, 7, 7, 7, "Extremely Fresh"],
-  "Deadwood Base": [350, 10, 5, 10, "No Effect"],
+  "Deadwood Plank Base": [350, 10, 5, 10, "No Effect"],
   "Deep Freeze Base": [35, 0, 0, 0, "Uber Fresh"],
   "Dehydration Base": [225, 0, 5, 4, "Insanely Fresh"],
   "Denture Base": [100, 10, 0, 0, "No Effect"],

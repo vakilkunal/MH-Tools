@@ -288,13 +288,13 @@ function checkStorage() {
 
     if (ownedWeapons && ownedWeapons.length > 0) {
       // Edge cases
-      if (ownedWeapons.indexOf("Isle Idol Trap") > 0) {
+      if (ownedWeapons.indexOf("Isle Idol Trap") > -1) {
         ownedWeapons.push("Isle Idol Hydroplane Skin");
         ownedWeapons.push("Isle Idol Stakeshooter Skin");
-      } else if (ownedWeapons.indexOf("Gemstone Trap") > 0) {
+      } else if (ownedWeapons.indexOf("Gemstone Trap") > -1) {
         ownedWeapons[ownedWeapons.indexOf("Gemstone Trap")] =
           "Crystal Crucible Trap";
-      } else if (ownedWeapons.indexOf("Mouse Mary O\\'Nette") > 0) {
+      } else if (ownedWeapons.indexOf("Mouse Mary O\\'Nette") > -1) {
         ownedWeapons[ownedWeapons.indexOf("Mouse Mary O\\'Nette")] =
           "Mouse Mary O'Nette";
       }
@@ -455,7 +455,7 @@ function showPop() {
     charmChanged();
     var selectedCharm = $("#charm").val();
     selectedCharm =
-      selectedCharm.indexOf("*") >= 0
+      selectedCharm.indexOf("*") > -1
         ? (selectedCharm = selectedCharm.slice(0, -7))
         : (selectedCharm = selectedCharm.slice(0, -6));
     var population = getPopulation(selectedCharm);

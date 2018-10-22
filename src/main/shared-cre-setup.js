@@ -210,7 +210,10 @@ function calculateTrapSetup(skipDisp) {
   if (locationName && cheeseName && weaponName && baseName && phaseName) {
     locationSpecificEffects();
 
-    if (trapType === "Physical" && baseName === "Physical Brace Base") {
+    if (
+      weaponsArray[weaponName][0] === "Physical" &&
+      baseName === "Physical Brace Base"
+    ) {
       braceBonus = true;
     } else if (
       (baseName === "Polluted Base" ||
@@ -1425,7 +1428,7 @@ function formatSampleScore() {
     isSpecial = true;
   }
 
-  if (locationName) {
+  if (locationName && sampleSummary[locationName]) {
     var sampleScore = sampleSummary[locationName][phaseCheeseCharm];
     if (sampleScore) {
       sampleScoreParam = sampleScore.score;
