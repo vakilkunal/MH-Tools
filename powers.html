@@ -7,10 +7,10 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://tsitu.github.io/MH-Tools/powers.html">
   <meta property="og:title" content="Trap Setup Powers">
-  <meta property="og:description" content="Calculates the weapon/base/charm that match a specified power type and value">
+  <meta property="og:description" content="Shows the weapons, bases, and charms that match a specified power range and type">
   <meta property="og:image" content="https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@30fb31004ae976aaf29652c435629dcca926d169/lib/img/cheese.jpg">
   <meta property="og:image:secure_url" content="https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@30fb31004ae976aaf29652c435629dcca926d169/lib/img/cheese.jpg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1000">
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
 
@@ -166,10 +166,10 @@
           <- All Tools</a> <br><br>
             <h1>Trap Setup Powers</h1>
       </div>
-      <!-- <a href="https://github.com/tsitu/MH-Tools/blob/master/README.md#hammer-crafting-wizard" target="_blank" rel="noopener">Instructions</a>
-      |
+      <a href="https://github.com/tsitu/MH-Tools/blob/master/README.md#mag-trap-setup-powers" target="_blank" rel="noopener">Instructions</a>
+      <!-- |
       <a id="bookmarkletloader" href="#">Auto-Loader</a> -->
-      Instructions (coming soon)<br><br>
+      <br><br>
     </div>
     <div class="bottom">
       <table>
@@ -194,53 +194,48 @@
           </tr>
 
           <tr>
-            <td>Desired Power (min)</td>
+            <td>Power Range (min/max)</td>
             <td>
-              <input type="number" id="desired-power-min" min="0" max="999999" value="2000" />
+              <input type="number" id="desired-power-min" min="0" max="999999" value="2000" />&nbsp;<input type="number"
+                id="desired-power-max" min="0" max="999999" value="3000" />
             </td>
           </tr>
 
           <tr>
-            <td>Desired Power (max)</td>
-            <td>
-              <input type="number" id="desired-power-max" min="0" max="999999" value="3000" />
-            </td>
-          </tr>
-
-          <tr>
-            <td>(Aura) Power Bonus (%)</td>
+            <td>[Aura] Power Bonus (%)</td>
             <td>
               <input type="number" id="power-bonus" min="0" max="999" value="0" />
             </td>
           </tr>
 
           <tr>
-            <td>Rift Bonus</td>
+            <td>Rift Set Bonus</td>
             <td>
-              <input type="radio" id="no-rift-bonus" name="rift-bonus" value="0" checked /> None
-              <input type="radio" id="walker-rift-bonus" name="rift-bonus" value="1" /> Walker
-              <input type="radio" id="stalker-rift-bonus" name="rift-bonus" value="2" /> Stalker
+              <input type="radio" id="no-rift-bonus" name="rift-bonus" value="0" checked /> None&nbsp;
+              <input type="radio" id="walker-rift-bonus" name="rift-bonus" value="1" /> Walker&nbsp;
+              <input type="radio" id="stalker-rift-bonus" name="rift-bonus" value="2" /> Stalker&nbsp;
             </td>
           </tr>
 
           <tr>
-            <td>Furoma Rift Battery</td>
+            <td>Battery (Furoma Rift)</td>
             <td>
               <input type="number" id="battery" min="0" max="10" value="0" />
             </td>
           </tr>
 
           <tr>
-            <td>Tower Amplifier</td>
+            <td>Amp (Zugzwang's Tower)</td>
             <td>
               <input type="number" id="amp-bonus" min="0" max="175" value="100" />
             </td>
           </tr>
 
           <tr>
-            <td>Empowered Brie/SB+</td>
+            <td>Misc Bonuses</td>
             <td>
-              <input type="checkbox" id="empowered-cheese" />
+              <input type="checkbox" id="empowered-cheese" /> Empowered Brie/SB+<br>
+              <input type="checkbox" id="tg-pour" /> Poured (Twisted Garden)
             </td>
           </tr>
 
@@ -252,18 +247,28 @@
           </tr>
 
           <tr>
-            <td>Max Total Results</td>
+            <td>Total Results (max)</td>
             <td>
               <input type="number" id="max-results" min="1" max="9999" value="100" />
             </td>
           </tr>
 
           <tr>
-            <td>Buttons</td>
+            <td>Items Used</td>
             <td>
-              <button id='reset-button' style="font-size: 12px"><b>&nbsp;Reset&nbsp;</b></button>
-              <button id='calculate-button' style="font-size: 18px"><b>&nbsp;Calculate&nbsp;</b></button>
-              <button id='save-button' style="font-size: 12px"><b>&nbsp;Save&nbsp;</b></button>
+              <input type="radio" id="all-items" name="items-used" value="all" checked /> All&nbsp;
+              <input type="radio" id="owned-items" name="items-used" value="owned" /> Owned
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <button id='reset-button' style="font-size: 18px"><b>&nbsp;Reset&nbsp;</b></button>&nbsp;
+              <button id='save-button' style="font-size: 18px"><b>&nbsp;Save&nbsp;</b></button>&nbsp;
+              <button id='load-button' style="font-size: 18px"><b>&nbsp;Load&nbsp;</b></button>
+            </td>
+            <td>
+              <button id='calculate-button' style="font-size: 20px"><b>&nbsp;Calculate&nbsp;</b></button>
             </td>
           </tr>
         </tbody>

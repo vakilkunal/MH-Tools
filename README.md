@@ -22,6 +22,7 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
   - [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
   - [Crown Solver](#crown-crown-solver)
   - [Crafting Wizard](#hammer-crafting-wizard)
+  - [Trap Setup Powers](#mag-trap-setup-powers)
   - [CRE Tabs](#bookmark_tabs-cre-tabs)
 - [Developers](#developers)
   - [Build and Run](#construction_worker-build-and-run)
@@ -220,6 +221,19 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 > Calculates craftable quantities and missing materials for recipes based on your inventory data.
 
 **Bookmarklet:** Run the `Crafting` bookmarklet from Inventory -> Crafting -> [Crafting Table](https://www.mousehuntgame.com/inventory.php?tab=crafting&subtab=crafting_table). The `Recipes` and `Inventory` tables should be automatically populated, with the former being sortable and filterable. Crafting materials are cached in localStorage.
+
+<div align="right"><a href="#book-table-of-contents">Top</a></div>
+
+---
+
+### :mag: [Trap Setup Powers](https://tsitu.github.io/MH-Tools/powers.html)
+> Shows the weapons, bases, and charms that match a specified power range and type.
+
+TODO
+- Intro on mouse powers and their role in determining Min Luck
+- Summarize Kristian's tutorial
+- Describe tool functions and parameters
+- Synergizes with 'Best Setup: Load Items' bookmarklet to use only items you own
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 

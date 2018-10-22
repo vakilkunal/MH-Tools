@@ -1,3 +1,12 @@
+let ownedItems = {};
+
+const alterCharms = [
+  "Forgotten Charm",
+  "Hydro Charm",
+  "Nanny Charm",
+  "Shadow Charm"
+];
+
 const riftItems = [
   // Weapons
   "Biomolecular Re-atomizer Trap",
@@ -38,6 +47,27 @@ const battery = {
   10: 300000
 };
 
+function loadPreferences() {
+  const prefString = localStorage.getItem("powers-tool-prefs");
+  if (prefString) {
+    const prefs = JSON.parse(prefString);
+    $("#power-type").val(prefs["power-type"]);
+    $("#desired-power-min").val(prefs["desired-power-min"]);
+    $("#desired-power-max").val(prefs["desired-power-max"]);
+    $("#power-bonus").val(prefs["power-bonus"]);
+    const riftPref = "#" + prefs["rift-bonus"];
+    $(riftPref).prop("checked", true);
+    $("#battery").val(prefs["battery"]);
+    $("#amp-bonus").val(prefs["amp-bonus"]);
+    $("#empowered-cheese").prop("checked", prefs["empowered-cheese"]);
+    $("#tg-pour").prop("checked", prefs["tg-pour"]);
+    $("#per-power").val(prefs["per-power"]);
+    $("#max-results").val(prefs["max-results"]);
+    const itemPref = "#" + prefs["items-used"];
+    $(itemPref).prop("checked", true);
+  }
+}
+
 /**
  * Calculates the total power of a given trap setup, after bonuses and special effects
  * @param {string} weapon Weapon name
@@ -52,15 +82,20 @@ function calcPower(weapon, base, charm, bonusObj) {
     basesArray[base][0] +
     charmsArray[charm][0] +
     bonusObj["battery"];
-  const setupPowerBonus =
-    weaponsArray[weapon][2] +
-    basesArray[base][1] +
-    charmsArray[charm][1] +
-    bonusObj["power"];
-  const totalBonus =
-    1 + (setupPowerBonus + bonusObj["rift"] + bonusObj["cheese"]) / 100;
+  const rawPowerBonus =
+    weaponsArray[weapon][2] + basesArray[base][1] + charmsArray[charm][1];
+  const pourBonus = 1 + bonusObj["pour"] / 100 * (1 + rawPowerBonus / 100);
+  const totalPowerBonus =
+    1 +
+    (rawPowerBonus +
+      bonusObj["power"] +
+      bonusObj["rift"] +
+      bonusObj["cheese"]) /
+      100;
 
-  return Math.ceil(rawPower * totalBonus * bonusObj["amp"] * bonusObj["brace"]);
+  return Math.ceil(
+    rawPower * totalPowerBonus * pourBonus * bonusObj["amp"] * bonusObj["brace"]
+  );
 }
 
 /**
@@ -138,6 +173,9 @@ function generateResults() {
   // Empowered cheese check
   bonusObj["cheese"] = $("#empowered-cheese").prop("checked") ? 20 : 0;
 
+  // Poured check
+  bonusObj["pour"] = $("#tg-pour").prop("checked") ? 5 : 0;
+
   // Per power bounds check
   let perPower = parseInt($("#per-power").val());
   if (perPower < 1) {
@@ -158,19 +196,58 @@ function generateResults() {
     $("#max-results").val(9999);
   }
 
-  for (let weapon in weaponsArray) {
+  // Convert item names into array format
+  // Use owned items if selected
+  const useOwned = $("input[name=items-used]:checked").val();
+  const isOwnedEmpty = $.isEmptyObject(ownedItems);
+  let loopWeapons = [];
+  let loopBases = [];
+  let loopCharms = [];
+  if (!isOwnedEmpty && useOwned === "owned") {
+    loopWeapons = ownedItems["weapons"];
+    loopBases = ownedItems["bases"];
+    loopCharms = ownedItems["charms"];
+  } else {
+    loopWeapons = Object.keys(weaponsArray);
+    loopBases = Object.keys(basesArray);
+    loopCharms = Object.keys(charmsArray);
+  }
+
+  // Edge cases for importing from best-setup-items
+  if (!isOwnedEmpty && useOwned === "owned") {
+    if (loopWeapons.indexOf("Isle Idol Trap") > -1) {
+      loopWeapons.push("Isle Idol Hydroplane Skin");
+      loopWeapons.push("Isle Idol Stakeshooter Skin");
+    } else if (loopWeapons.indexOf("Gemstone Trap") > -1) {
+      loopWeapons[loopWeapons.indexOf("Gemstone Trap")] =
+        "Crystal Crucible Trap";
+    } else if (loopWeapons.indexOf("Mouse Mary O\\'Nette") > -1) {
+      loopWeapons[loopWeapons.indexOf("Mouse Mary O\\'Nette")] =
+        "Mouse Mary O'Nette";
+    }
+  }
+
+  // Main iteration loop
+  for (let weapon of loopWeapons) {
     // Only dive into inner loops if power type matches
     if (weaponsArray[weapon][0] === powerType) {
-      for (let base in basesArray) {
+      for (let base of loopBases) {
         // Physical Brace Base check
         bonusObj["brace"] =
           weaponsArray[weapon][0] === "Physical" &&
           base === "Physical Brace Base"
             ? 1.25
             : 1;
-        for (let charm in charmsArray) {
-          if (countMax >= maxResults) break; // Break out if max total results is exceeded
-          bonusObj["rift"] = 0; // Resets to 0 every iteration
+        for (let charm of loopCharms) {
+          // Break out if max total results is exceeded
+          if (countMax >= maxResults) break;
+
+          // Skip if altering charm is encountered and handle it later
+          if (alterCharms.indexOf(charm) > -1) continue;
+
+          // Reset rift bonus to 0 every iteration
+          bonusObj["rift"] = 0;
+
           if (riftMultiplier >= 1) {
             // Rift Bonus count
             const riftCount =
@@ -182,9 +259,13 @@ function generateResults() {
               bonusObj["rift"] = 10 * riftMultiplier;
             }
           }
+
           const totalPower = calcPower(weapon, base, charm, bonusObj);
           const cPer = countPer[totalPower];
-          if (cPer && cPer >= perPower) continue; // Skip if max results per power is exceeded
+
+          // Skip if max results per power is exceeded
+          if (cPer && cPer >= perPower) continue;
+
           if (totalPower >= powerMin && totalPower <= powerMax) {
             resultsHTML += `<tr><td>${totalPower}</td><td>${weapon}</td><td>${base}</td><td>${charm}</td></tr>`;
             if (typeof countPer[totalPower] === "undefined") {
@@ -199,11 +280,77 @@ function generateResults() {
     }
   }
 
+  // Secondary loop for Forgotten/Hydro/Nanny/Shadow charms
+  for (let charm of alterCharms) {
+    if (loopCharms.indexOf(charm) > -1) {
+      if (
+        (charm === "Forgotten Charm" && powerType === "Forgotten") ||
+        (charm === "Hydro Charm" && powerType === "Hydro") ||
+        (charm === "Nanny Charm" && powerType === "Parental") ||
+        (charm === "Shadow Charm" && powerType === "Shadow")
+      ) {
+        for (let weapon of loopWeapons) {
+          for (let base of loopBases) {
+            // Physical Brace Base check
+            bonusObj["brace"] =
+              weaponsArray[weapon][0] === "Physical" &&
+              base === "Physical Brace Base"
+                ? 1.25
+                : 1;
+
+            // Break out if max total results is exceeded
+            if (countMax >= maxResults) break;
+
+            // Reset rift bonus to 0 every iteration
+            bonusObj["rift"] = 0;
+
+            if (riftMultiplier >= 1) {
+              // Rift Bonus count
+              const riftCount =
+                +(riftItems.indexOf(weapon) > -1) +
+                +(riftItems.indexOf(base) > -1) +
+                +(riftItems.indexOf(charm) > -1 || charm.indexOf("Rift") > -1);
+              if (riftCount >= 2) {
+                // 2 or 3 triggers the power bonus of Rift set
+                bonusObj["rift"] = 10 * riftMultiplier;
+              }
+            }
+
+            const totalPower = calcPower(weapon, base, charm, bonusObj);
+            const cPer = countPer[totalPower];
+
+            // Skip if max results per power is exceeded
+            if (cPer && cPer >= perPower) continue;
+
+            if (totalPower >= powerMin && totalPower <= powerMax) {
+              resultsHTML += `<tr><td>${totalPower}</td><td>${weapon}</td><td>${base}</td><td>${charm}</td></tr>`;
+              if (typeof countPer[totalPower] === "undefined") {
+                countPer[totalPower] = 1;
+              } else {
+                countPer[totalPower] += 1;
+              }
+              countMax++;
+            }
+          }
+        }
+      }
+    }
+  }
+
   resultsHTML += "</tbody>";
   return resultsHTML;
 }
 
 window.onload = function() {
+  // Process best-setup-items
+  const setupItems = localStorage.getItem("best-setup-items");
+  if (setupItems) {
+    ownedItems = JSON.parse(setupItems)["owned-items"];
+  }
+
+  // Load saved preferences
+  loadPreferences();
+
   // Initialize tablesorter
   $.tablesorter.defaults.sortInitialOrder = "desc";
   $("#trap-setups").tablesorter({
@@ -267,17 +414,38 @@ window.onload = function() {
   });
 
   $("#reset-button").click(function() {
+    // Not reset: Power type, Rift set, Items used
     $("#desired-power-min").val(2000);
     $("#desired-power-max").val(3000);
     $("#power-bonus").val(0);
     $("#battery").val(0);
     $("#amp-bonus").val(100);
+    $("#empowered-cheese").prop("checked", false);
+    $("#tg-pour").prop("checked", false);
     $("#per-power").val(1);
     $("#max-results").val(100);
   });
 
   $("#save-button").click(function() {
-    // TODO: localStorage.setItem
-    alert("Coming Soon");
+    const saveObj = {};
+    saveObj["power-type"] = $("#power-type")
+      .find(":selected")
+      .text();
+    saveObj["desired-power-min"] = parseInt($("#desired-power-min").val());
+    saveObj["desired-power-max"] = parseInt($("#desired-power-max").val());
+    saveObj["power-bonus"] = parseInt($("#power-bonus").val());
+    saveObj["rift-bonus"] = $("input[name=rift-bonus]:checked").attr("id");
+    saveObj["battery"] = parseInt($("#battery").val());
+    saveObj["amp-bonus"] = parseInt($("#amp-bonus").val());
+    saveObj["empowered-cheese"] = $("#empowered-cheese").is(":checked");
+    saveObj["tg-pour"] = $("#tg-pour").is(":checked");
+    saveObj["per-power"] = parseInt($("#per-power").val());
+    saveObj["max-results"] = parseInt($("#max-results").val());
+    saveObj["items-used"] = $("input[name=items-used]:checked").attr("id");
+    localStorage.setItem("powers-tool-prefs", JSON.stringify(saveObj));
+  });
+
+  $("#load-button").click(function() {
+    loadPreferences();
   });
 };
