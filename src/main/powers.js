@@ -342,6 +342,13 @@ function generateResults() {
 }
 
 window.onload = function() {
+  // Load in Auto-Loader bookmarklet
+  loadBookmarkletFromJS(
+    BOOKMARKLET_LOADER_URL,
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
+
   // Process best-setup-items
   const setupItems = localStorage.getItem("best-setup-items");
   if (setupItems) {

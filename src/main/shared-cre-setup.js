@@ -41,7 +41,8 @@ var gsLuck = 7,
   batteryPower = 0,
   cheeseBonus = 0,
   cheeseCost = 0,
-  subtotalPowerBonus = 0;
+  subtotalPowerBonus = 0,
+  tauntLuck = 0;
 
 // Total trap stats
 var trapPower = 0,
@@ -246,7 +247,8 @@ function calculateTrapSetup(skipDisp) {
       charmLuck +
       bonusLuck +
       pourLuck +
-      specialLuck;
+      specialLuck +
+      tauntLuck;
     trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
     trapAtt = weaponAtt + baseAtt + charmAtt;
     if (trapAtt > 100) {
@@ -1154,7 +1156,7 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
       weaponPower *= 1 + 1 / 10 * multiplier;
     } else if (riftCount === 2) {
       weaponPower *= 1 + 1 / 10 * multiplier;
-      specialLuck += 5 * multiplier;
+      tauntLuck += 5 * multiplier;
     }
     calculateTrapSetup(true);
     catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
@@ -1162,7 +1164,7 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
       weaponPower /= 1 + 1 / 10 * multiplier;
     } else if (riftCount === 2) {
       weaponPower /= 1 + 1 / 10 * multiplier;
-      specialLuck -= 5 * multiplier;
+      tauntLuck -= 5 * multiplier;
     }
     calculateTrapSetup(true);
   } else if (locationName === "Fiery Warpath") {

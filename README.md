@@ -41,13 +41,13 @@ We recommend installing Jack's extension ([Chrome](https://chrome.google.com/web
 
 ### :bookmark: Bookmarklets
 
-Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 8 different bookmarklets (CRE, Map, Setup: Load Items, Setup: Fields, Analyzer, Silver Crown, Crafting and the all-in-one Loader), each located underneath the title of its corresponding tool's page.
+Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 8 different bookmarklets (CRE, Map, Setup: Load Items, Setup: Fields, Analyzer, Silver Crown, Crafting and the all-in-one Loader), each located on their corresponding tool's page.
 
-Using the Auto-Loader is recommended, as it automatically grabs the latest version of each bookmarklet without having to manually update.
+Using the Auto-Loader is recommended because it automatically grabs the latest version of each bookmarklet without having to manually update.
 
-You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.com/) website for our bookmarklets to work. This is because the Facebook version loads MouseHunt in an `<iframe>` which (along with CORS restrictions) prevents access to DOM elements as well as the custom `user` JavaScript object. You must also be using the FreshCoat Layout.
+You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.com/) website for these bookmarklets to work. This is because the Facebook version loads MouseHunt in an `<iframe>` which (along with CORS restrictions) prevents access to DOM elements as well as the custom `user` JavaScript object. You must also be using the FreshCoat Layout.
 
-:iphone: *Note:* The process of using a bookmarklet may vary in mobile browsers. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
+*Note for* :iphone:*:* The process of using a bookmarklet in mobile browsers can vary. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
 
 Bookmarklet | Functionality
 :--: | --
@@ -227,13 +227,17 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 ---
 
 ### :mag: [Trap Setup Powers](https://tsitu.github.io/MH-Tools/powers.html)
-> Shows the weapons, bases, and charms that match a specified power range and type.
+> Shows the weapons, bases, and charms that match a specified power range and type. Synergizes with the 'Best Setup: Load Items' bookmarklet to use only items you own.
 
-TODO
-- Intro on mouse powers and their role in determining Min Luck
-- Summarize Kristian's tutorial
-- Describe tool functions and parameters
-- Synergizes with 'Best Setup: Load Items' bookmarklet to use only items you own
+To understand why this tool exists, we need to take a crash course (or a peek behind the curtain if you will) on MouseHunt's game mechanics.
+
+The best formula we have for calculating catch rate and minimum luck was [derived in 2011](https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/). As you can see, it takes into account several variables: trap type effectiveness, trap power, trap luck, and mouse power. It turns out that total trap power and luck are easy to calculate, since item and effect stats are present in-game. However, neither mouse powers nor exact type effectiveness values are as easily obtained.
+
+Given the unknowns, you may wonder how folks have determined these hidden mouse power numbers with such precision in the past. Kristian G wrote an [essential guide](https://www.mousehuntgame.com/forum/showthread.php?106764-how-do-people-find-mouse-power-values&p=1166955&viewfull=1#post1166955) on this trial and error process a few years back - please read it. The TL;DR gist is that we equip different weapons, bases, and charms to attain a specific total trap power. Then, we look at the description page of the mouse we're targeting and note its 'Difficulty' rating. Depending on what that label says and what boundary is targeted (i.e. Challenging/Difficult, Easy/Moderate), we can deduce upper/lower bounds for the mouse's power. Kristian's post goes into much more detail and provides several examples.
+
+With that explained, you may also wonder whether there are tools out there that make this process less tedious. No matter what, we have to manually tweak trap setups in-game and refresh mouse pages to glean information from their 'Difficulty' ratings. But, it would be helpful if we could at least specify a range of total trap powers, and have a tool spit out setups that match. From what I can gather, HornTracker's [Trap Combinations](http://horntracker.com/trapsetups.php?minpower=6466&maxpower=7075&ptype=4&tabs=1) was the most popular tool for this purpose, along with tehhowch's GetPower sheet on [MH Reference](https://drive.google.com/file/d/0B38esHSXteUJZTRhMDNjMzItMmU4My00YWU0LThiODctMDk0OWRjOGFkMDE4/view?hl=en). Unfortunately, both tools have not been updated in some time. As such, they don't include the latest items or effects.
+
+This is where I hope my new 'Trap Setup Powers' tool comes in. As of 22 Oct 2018, you can specify a variety of power-altering parameters as well as whether to use owned or all items. In order to take advantage of using owned items, run the 'Best Setup: Load Items' bookmarklet before returning to the Powers tool.
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
