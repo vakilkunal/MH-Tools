@@ -188,12 +188,12 @@ function generateResults() {
     loopCharms = Object.keys(charmsArray);
   }
 
-  // Filter out 0/0 charms (including alterCharms)
+  // Filter out 0/0 charms (except alterCharms)
   loopCharms = loopCharms.filter(el => {
     if (charmsArray[el][0] > 0 || charmsArray[el][1] > 0) {
-      if (el !== "Nanny Charm") {
-        return el;
-      }
+      return el;
+    } else if (alterCharms.indexOf(el) > -1) {
+      return el;
     }
   });
 
@@ -228,6 +228,9 @@ function generateResults() {
         for (let charm of loopCharms) {
           // Break out if max total results is exceeded
           if (countMax >= maxResults) break;
+
+          // Skip if altering charm is encountered and handle it later
+          if (alterCharms.indexOf(charm) > -1) continue;
 
           // Reset rift bonus to 0 every iteration
           bonusObj["rift"] = 0;
