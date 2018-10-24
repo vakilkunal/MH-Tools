@@ -660,7 +660,7 @@ var charmsArray = {
   "Nerg Power Charm": [0, 0, 0, 0, "No Effect"],
   "Nightlight Charm": [120, 0, 0, 2, "No Effect"],
   "Nightshade Farming Charm": [50, 3, 2, 0, "No Effect"],
-  "Nitropop Charm": [0, 4, 0, 0, "No Effect"],
+  "Nitropop Charm": [120, 4, 0, 1, "No Effect"],
   "Oxygen Burst Charm": [0, 0, 0, 0, "No Effect"],
   "Party Charm": [0, 3, 0, 3, "No Effect"],
   "Pointy Charm": [0, 0, 0, 0, "No Effect"],
