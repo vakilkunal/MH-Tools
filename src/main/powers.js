@@ -197,8 +197,9 @@ function generateResults() {
     }
   });
 
-  // Push in a single 0/0 charm
+  // Push in an empty charm and a RVC
   loopCharms.push("No Charm");
+  loopCharms.push("Rift Vacuum Charm");
 
   // Edge cases for importing from best-setup-items
   if (!isOwnedEmpty && useOwned === "owned") {
