@@ -808,8 +808,8 @@ var festiveTraps = [
   "Wrapped Gift Trap"
 ];
 
-// No bonus: Haunted Shipwreck, Pumpkin Pummeler
-// Needs verification: [Maniacal] Brain Extractor, Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
+// No bonus: Haunted Shipwreck, Pumpkin Pummeler, [Maniacal] Brain Extractor
+// Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
 var halloweenTraps = [
   "Admiral's Galleon Trap",
   "Candy Crusher Trap",

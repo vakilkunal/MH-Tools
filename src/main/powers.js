@@ -7,32 +7,6 @@ const alterCharms = [
   "Shadow Charm"
 ];
 
-const riftItems = [
-  // Weapons
-  "Biomolecular Re-atomizer Trap",
-  "Christmas Crystalabra Trap",
-  "Crystal Tower",
-  "Focused Crystal Laser",
-  "Multi-Crystal Laser",
-  "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes",
-  "Timesplit Dissonance Weapon",
-  // Bases
-  "Attuned Enerchi Induction Base",
-  "Clockwork Base",
-  "Enerchi Induction Base",
-  "Fissure Base",
-  "Fracture Base",
-  "Rift Base",
-  // Charms
-  "Cherry Charm",
-  "Enerchi Charm",
-  "Gnarled Charm",
-  "Stagnant Charm",
-  "Super Enerchi Charm",
-  "Super Spooky Charm",
-  "Timesplit Charm"
-];
-
 const battery = {
   0: 0,
   1: 90,
@@ -77,13 +51,14 @@ function loadPreferences() {
  * @return {number} Integer rounded up
  */
 function calcPower(weapon, base, charm, bonusObj) {
-  const rawPower =
-    weaponsArray[weapon][1] +
-    basesArray[base][0] +
-    charmsArray[charm][0] +
-    bonusObj["battery"];
-  const rawPowerBonus =
-    weaponsArray[weapon][2] + basesArray[base][1] + charmsArray[charm][1];
+  let rawPower = charmsArray[charm] ? charmsArray[charm][0] : 0;
+  rawPower +=
+    weaponsArray[weapon][1] + basesArray[base][0] + bonusObj["battery"];
+
+  let rawPowerBonus = charmsArray[charm] ? charmsArray[charm][1] : 0;
+  rawPowerBonus +=
+    weaponsArray[weapon][2] + basesArray[base][1] + bonusObj["charm"];
+
   const pourBonus = 1 + bonusObj["pour"] / 100 * (1 + rawPowerBonus / 100);
   const totalPowerBonus =
     1 +
@@ -213,6 +188,18 @@ function generateResults() {
     loopCharms = Object.keys(charmsArray);
   }
 
+  // Filter out 0/0 charms (including alterCharms)
+  loopCharms = loopCharms.filter(el => {
+    if (charmsArray[el][0] > 0 || charmsArray[el][1] > 0) {
+      if (el !== "Nanny Charm") {
+        return el;
+      }
+    }
+  });
+
+  // Push in a single 0/0 charm
+  loopCharms.push("No Charm");
+
   // Edge cases for importing from best-setup-items
   if (!isOwnedEmpty && useOwned === "owned") {
     if (loopWeapons.indexOf("Isle Idol Trap") > -1) {
@@ -242,23 +229,29 @@ function generateResults() {
           // Break out if max total results is exceeded
           if (countMax >= maxResults) break;
 
-          // Skip if altering charm is encountered and handle it later
-          if (alterCharms.indexOf(charm) > -1) continue;
-
           // Reset rift bonus to 0 every iteration
           bonusObj["rift"] = 0;
 
           if (riftMultiplier >= 1) {
             // Rift Bonus count
             const riftCount =
-              +(riftItems.indexOf(weapon) > -1) +
-              +(riftItems.indexOf(base) > -1) +
-              +(riftItems.indexOf(charm) > -1 || charm.indexOf("Rift") > -1);
+              +(riftWeapons.indexOf(weapon) > -1) +
+              +(riftBases.indexOf(base) > -1) +
+              +(riftCharms.indexOf(charm) > -1 || charm.indexOf("Rift") > -1);
             if (riftCount >= 2) {
               // 2 or 3 triggers the power bonus of Rift set
               bonusObj["rift"] = 10 * riftMultiplier;
             }
           }
+
+          // Festive & Halloween bonus check
+          bonusObj["charm"] =
+            (charm.indexOf("Snowball Charm") > -1 &&
+              festiveTraps.indexOf(weapon) > -1) ||
+            (charm.indexOf("Spooky Charm") > -1 &&
+              halloweenTraps.indexOf(weapon) > -1)
+              ? 20
+              : 0;
 
           const totalPower = calcPower(weapon, base, charm, bonusObj);
           const cPer = countPer[totalPower];
@@ -307,9 +300,9 @@ function generateResults() {
             if (riftMultiplier >= 1) {
               // Rift Bonus count
               const riftCount =
-                +(riftItems.indexOf(weapon) > -1) +
-                +(riftItems.indexOf(base) > -1) +
-                +(riftItems.indexOf(charm) > -1 || charm.indexOf("Rift") > -1);
+                +(riftWeapons.indexOf(weapon) > -1) +
+                +(riftBases.indexOf(base) > -1) +
+                +(riftCharms.indexOf(charm) > -1 || charm.indexOf("Rift") > -1);
               if (riftCount >= 2) {
                 // 2 or 3 triggers the power bonus of Rift set
                 bonusObj["rift"] = 10 * riftMultiplier;
