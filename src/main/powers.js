@@ -190,9 +190,11 @@ function generateResults() {
 
   // Filter out 0/0 charms (except alterCharms)
   loopCharms = loopCharms.filter(el => {
-    if (charmsArray[el][0] > 0 || charmsArray[el][1] > 0) {
-      return el;
-    } else if (alterCharms.indexOf(el) > -1) {
+    if (
+      charmsArray[el][0] > 0 ||
+      charmsArray[el][1] > 0 ||
+      alterCharms.indexOf(el) > -1
+    ) {
       return el;
     }
   });

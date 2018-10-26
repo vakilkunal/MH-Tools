@@ -173,8 +173,10 @@ function parseJSON() {
 
     let overallSummaryScore = 0;
     for (let location in obj) {
-      detailedObj[location] = {};
+      // Exclude Event mice which have no sample data
+      if (location === "Event") continue;
 
+      detailedObj[location] = {};
       for (let phase in obj[location]) {
         for (let cheese in obj[location][phase]) {
           for (let charm in obj[location][phase][cheese]) {
@@ -182,6 +184,7 @@ function parseJSON() {
             const sampleSize = point["SampleSize"];
             let rawScore = 0;
             let score = 0;
+
             if (sampleSize) {
               delete point["SampleSize"];
               rawScore = (
