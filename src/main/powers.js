@@ -57,7 +57,7 @@ function calcPower(weapon, base, charm, bonusObj) {
 
   let rawPowerBonus = charmsArray[charm] ? charmsArray[charm][1] : 0;
   rawPowerBonus +=
-    weaponsArray[weapon][2] + basesArray[base][1] + bonusObj["charm"];
+    weaponsArray[weapon][2] + basesArray[base][1] + bonusObj["event"];
 
   const pourBonus = 1 + bonusObj["pour"] / 100 * (1 + rawPowerBonus / 100);
   const totalPowerBonus =
@@ -251,7 +251,7 @@ function generateResults() {
           }
 
           // Festive & Halloween bonus check
-          bonusObj["charm"] =
+          bonusObj["event"] =
             (charm.indexOf("Snowball Charm") > -1 &&
               festiveTraps.indexOf(weapon) > -1) ||
             (charm.indexOf("Spooky Charm") > -1 &&
@@ -400,11 +400,12 @@ window.onload = function() {
   });
 
   $("#calculate-button").click(function() {
-    console.time("Main loop duration");
+    console.group("Duration");
+    console.time("Main loop");
     let resultsHTML = generateResults();
-    console.timeEnd("Main loop duration");
+    console.timeEnd("Main loop");
 
-    console.time("Tablesorter duration");
+    console.time("Tablesorter");
     document.getElementById("trap-setups").innerHTML = resultsHTML;
     const resort = true,
       callback = function() {
@@ -415,8 +416,8 @@ window.onload = function() {
         }
       };
     $("#trap-setups").trigger("updateAll", [resort, callback]);
-    console.timeEnd("Tablesorter duration");
-    console.log("------------------------------");
+    console.timeEnd("Tablesorter");
+    console.groupEnd();
   });
 
   $("#reset-button").click(function() {

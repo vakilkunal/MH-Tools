@@ -277,10 +277,11 @@ function checkStorage() {
     var ownedWeapons = storedData["owned-items"]["weapons"];
     var ownedCharms = storedData["owned-items"]["charms"];
 
-    console.log("Items: owned / total");
+    console.group("Items: Owned / Total");
     console.log("Bases: " + ownedBases.length + " / " + baseKeys.length);
     console.log("Weapons: " + ownedWeapons.length + " / " + weaponKeys.length);
     console.log("Charms: " + ownedCharms.length + " / " + charmKeys.length);
+    console.groupEnd();
 
     if (ownedBases && ownedBases.length > 0) {
       processStorageArray(baseKeys, ownedBases, "base");
@@ -459,10 +460,9 @@ function showPop() {
         ? (selectedCharm = selectedCharm.slice(0, -7))
         : (selectedCharm = selectedCharm.slice(0, -6));
     var population = getPopulation(selectedCharm);
-    console.time("printCombinations (total)");
+    console.group("Calculation Details");
     printCombinations(population, getHeader(population));
-    console.timeEnd("printCombinations (total)");
-    console.log("------------------------------");
+    console.groupEnd();
   }
 
   /**
