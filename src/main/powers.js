@@ -188,21 +188,6 @@ function generateResults() {
     loopCharms = Object.keys(charmsArray);
   }
 
-  // Filter out 0/0 charms (except alterCharms)
-  loopCharms = loopCharms.filter(el => {
-    if (
-      charmsArray[el][0] > 0 ||
-      charmsArray[el][1] > 0 ||
-      alterCharms.indexOf(el) > -1
-    ) {
-      return el;
-    }
-  });
-
-  // Push in an empty charm and a RVC
-  loopCharms.push("No Charm");
-  loopCharms.push("Rift Vacuum Charm");
-
   // Edge cases for importing from best-setup-items
   if (!isOwnedEmpty && useOwned === "owned") {
     if (loopWeapons.indexOf("Isle Idol Trap") > -1) {
@@ -232,13 +217,28 @@ function generateResults() {
     }
   }
   for (let charm of loopCharms) {
-    if (!charmsArray[charm] && charm !== "No Charm") {
+    if (!charmsArray[charm]) {
       noInvalids = false;
       console.log(`[Error] Invalid Charm: ${charm}`);
     }
   }
 
   if (noInvalids) {
+    // Filter out 0/0 charms (except alterCharms)
+    loopCharms = loopCharms.filter(el => {
+      if (
+        charmsArray[el][0] > 0 ||
+        charmsArray[el][1] > 0 ||
+        alterCharms.indexOf(el) > -1
+      ) {
+        return el;
+      }
+    });
+
+    // Push in an empty charm and a RVC
+    loopCharms.push("No Charm");
+    loopCharms.push("Rift Vacuum Charm");
+
     // Main loop
     for (let weapon of loopWeapons) {
       // Only dive into inner loops if power type matches
