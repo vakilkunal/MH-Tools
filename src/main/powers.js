@@ -217,88 +217,45 @@ function generateResults() {
     }
   }
 
-  // Main iteration loop
+  // Check for invalid weapons/bases/charms
+  let noInvalids = true;
   for (let weapon of loopWeapons) {
-    // Only dive into inner loops if power type matches
-    if (weaponsArray[weapon][0] === powerType) {
-      for (let base of loopBases) {
-        // Physical Brace Base check
-        bonusObj["brace"] =
-          weaponsArray[weapon][0] === "Physical" &&
-          base === "Physical Brace Base"
-            ? 1.25
-            : 1;
-        for (let charm of loopCharms) {
-          // Break out if max total results is exceeded
-          if (countMax >= maxResults) break;
-
-          // Skip if altering charm is encountered and handle it later
-          if (alterCharms.indexOf(charm) > -1) continue;
-
-          // Reset rift bonus to 0 every iteration
-          bonusObj["rift"] = 0;
-
-          if (riftMultiplier >= 1) {
-            // Rift Bonus count
-            const riftCount =
-              +(riftWeapons.indexOf(weapon) > -1) +
-              +(riftBases.indexOf(base) > -1) +
-              +(riftCharms.indexOf(charm) > -1 || charm.indexOf("Rift") > -1);
-            if (riftCount >= 2) {
-              // 2 or 3 triggers the power bonus of Rift set
-              bonusObj["rift"] = 10 * riftMultiplier;
-            }
-          }
-
-          // Festive & Halloween bonus check
-          bonusObj["event"] =
-            (charm.indexOf("Snowball Charm") > -1 &&
-              festiveTraps.indexOf(weapon) > -1) ||
-            (charm.indexOf("Spooky Charm") > -1 &&
-              halloweenTraps.indexOf(weapon) > -1)
-              ? 20
-              : 0;
-
-          const totalPower = calcPower(weapon, base, charm, bonusObj);
-          const cPer = countPer[totalPower];
-
-          // Skip if max results per power is exceeded
-          if (cPer && cPer >= perPower) continue;
-
-          if (totalPower >= powerMin && totalPower <= powerMax) {
-            resultsHTML += `<tr><td>${totalPower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td></tr>`;
-            if (typeof countPer[totalPower] === "undefined") {
-              countPer[totalPower] = 1;
-            } else {
-              countPer[totalPower] += 1;
-            }
-            countMax++;
-          }
-        }
-      }
+    if (!weaponsArray[weapon]) {
+      noInvalids = false;
+      console.log(`[Error] Invalid Weapon: ${weapon}`);
+    }
+  }
+  for (let base of loopBases) {
+    if (!basesArray[base]) {
+      noInvalids = false;
+      console.log(`[Error] Invalid Base: ${base}`);
+    }
+  }
+  for (let charm of loopCharms) {
+    if (!charmsArray[charm] && charm !== "No Charm") {
+      noInvalids = false;
+      console.log(`[Error] Invalid Charm: ${charm}`);
     }
   }
 
-  // Secondary loop for Forgotten/Hydro/Nanny/Shadow charms
-  for (let charm of alterCharms) {
-    if (loopCharms.indexOf(charm) > -1) {
-      if (
-        (charm === "Forgotten Charm" && powerType === "Forgotten") ||
-        (charm === "Hydro Charm" && powerType === "Hydro") ||
-        (charm === "Nanny Charm" && powerType === "Parental") ||
-        (charm === "Shadow Charm" && powerType === "Shadow")
-      ) {
-        for (let weapon of loopWeapons) {
-          for (let base of loopBases) {
-            // Physical Brace Base check
-            bonusObj["brace"] =
-              weaponsArray[weapon][0] === "Physical" &&
-              base === "Physical Brace Base"
-                ? 1.25
-                : 1;
-
+  if (noInvalids) {
+    // Main loop
+    for (let weapon of loopWeapons) {
+      // Only dive into inner loops if power type matches
+      if (weaponsArray[weapon][0] === powerType) {
+        for (let base of loopBases) {
+          // Physical Brace Base check
+          bonusObj["brace"] =
+            weaponsArray[weapon][0] === "Physical" &&
+            base === "Physical Brace Base"
+              ? 1.25
+              : 1;
+          for (let charm of loopCharms) {
             // Break out if max total results is exceeded
             if (countMax >= maxResults) break;
+
+            // Skip if altering charm is encountered and handle it later
+            if (alterCharms.indexOf(charm) > -1) continue;
 
             // Reset rift bonus to 0 every iteration
             bonusObj["rift"] = 0;
@@ -315,6 +272,15 @@ function generateResults() {
               }
             }
 
+            // Festive & Halloween bonus check
+            bonusObj["event"] =
+              (charm.indexOf("Snowball Charm") > -1 &&
+                festiveTraps.indexOf(weapon) > -1) ||
+              (charm.indexOf("Spooky Charm") > -1 &&
+                halloweenTraps.indexOf(weapon) > -1)
+                ? 20
+                : 0;
+
             const totalPower = calcPower(weapon, base, charm, bonusObj);
             const cPer = countPer[totalPower];
 
@@ -329,6 +295,65 @@ function generateResults() {
                 countPer[totalPower] += 1;
               }
               countMax++;
+            }
+          }
+        }
+      }
+    }
+
+    // Secondary loop for Forgotten/Hydro/Nanny/Shadow charms
+    for (let charm of alterCharms) {
+      if (loopCharms.indexOf(charm) > -1) {
+        if (
+          (charm === "Forgotten Charm" && powerType === "Forgotten") ||
+          (charm === "Hydro Charm" && powerType === "Hydro") ||
+          (charm === "Nanny Charm" && powerType === "Parental") ||
+          (charm === "Shadow Charm" && powerType === "Shadow")
+        ) {
+          for (let weapon of loopWeapons) {
+            for (let base of loopBases) {
+              // Physical Brace Base check
+              bonusObj["brace"] =
+                weaponsArray[weapon][0] === "Physical" &&
+                base === "Physical Brace Base"
+                  ? 1.25
+                  : 1;
+
+              // Break out if max total results is exceeded
+              if (countMax >= maxResults) break;
+
+              // Reset rift bonus to 0 every iteration
+              bonusObj["rift"] = 0;
+
+              if (riftMultiplier >= 1) {
+                // Rift Bonus count
+                const riftCount =
+                  +(riftWeapons.indexOf(weapon) > -1) +
+                  +(riftBases.indexOf(base) > -1) +
+                  +(
+                    riftCharms.indexOf(charm) > -1 || charm.indexOf("Rift") > -1
+                  );
+                if (riftCount >= 2) {
+                  // 2 or 3 triggers the power bonus of Rift set
+                  bonusObj["rift"] = 10 * riftMultiplier;
+                }
+              }
+
+              const totalPower = calcPower(weapon, base, charm, bonusObj);
+              const cPer = countPer[totalPower];
+
+              // Skip if max results per power is exceeded
+              if (cPer && cPer >= perPower) continue;
+
+              if (totalPower >= powerMin && totalPower <= powerMax) {
+                resultsHTML += `<tr><td>${totalPower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td></tr>`;
+                if (typeof countPer[totalPower] === "undefined") {
+                  countPer[totalPower] = 1;
+                } else {
+                  countPer[totalPower] += 1;
+                }
+                countMax++;
+              }
             }
           }
         }
