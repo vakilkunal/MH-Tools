@@ -85,7 +85,7 @@ function generateResults() {
   const powerType = $("#power-type").val();
   const riftMultiplier = parseInt($("input[name=rift-bonus]:checked").val());
   let resultsHTML =
-    "<caption>Results</caption><thead><tr><th id='power'>Power</th><th id='weapon'>Weapon</th><th id='base'>Base</th><th id='charm'>Charm</th></tr></thead><tbody>";
+    "<caption>Results</caption><thead><tr><th id='power'>Power</th><th id='base'>Base</th><th id='weapon'>Weapon</th><th id='charm'>Charm</th></tr></thead><tbody>";
 
   // Desired power bounds checks
   let powerMin = parseInt($("#desired-power-min").val());
@@ -266,7 +266,7 @@ function generateResults() {
           if (cPer && cPer >= perPower) continue;
 
           if (totalPower >= powerMin && totalPower <= powerMax) {
-            resultsHTML += `<tr><td>${totalPower}</td><td>${weapon}</td><td>${base}</td><td>${charm}</td></tr>`;
+            resultsHTML += `<tr><td>${totalPower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td></tr>`;
             if (typeof countPer[totalPower] === "undefined") {
               countPer[totalPower] = 1;
             } else {
@@ -322,7 +322,7 @@ function generateResults() {
             if (cPer && cPer >= perPower) continue;
 
             if (totalPower >= powerMin && totalPower <= powerMax) {
-              resultsHTML += `<tr><td>${totalPower}</td><td>${weapon}</td><td>${base}</td><td>${charm}</td></tr>`;
+              resultsHTML += `<tr><td>${totalPower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td></tr>`;
               if (typeof countPer[totalPower] === "undefined") {
                 countPer[totalPower] = 1;
               } else {
