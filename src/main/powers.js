@@ -48,7 +48,7 @@ function loadPreferences() {
  * @param {string} base Base name
  * @param {string} charm Charm name
  * @param {object} bonusObj All calculated power bonuses
- * @return {number} Integer rounded up
+ * @return {float} Float precise up to 8 decimal places
  */
 function calcPower(weapon, base, charm, bonusObj) {
   let rawPower = charmsArray[charm] ? charmsArray[charm][0] : 0;
@@ -68,8 +68,14 @@ function calcPower(weapon, base, charm, bonusObj) {
       bonusObj["cheese"]) /
       100;
 
-  return Math.ceil(
-    rawPower * totalPowerBonus * pourBonus * bonusObj["amp"] * bonusObj["brace"]
+  return parseFloat(
+    (
+      rawPower *
+      totalPowerBonus *
+      pourBonus *
+      bonusObj["amp"] *
+      bonusObj["brace"]
+    ).toFixed(8)
   );
 }
 
@@ -85,10 +91,10 @@ function generateResults() {
   const powerType = $("#power-type").val();
   const riftMultiplier = parseInt($("input[name=rift-bonus]:checked").val());
   let resultsHTML =
-    "<caption>Results</caption><thead><tr><th id='power'>Power</th><th id='base'>Base</th><th id='weapon'>Weapon</th><th id='charm'>Charm</th></tr></thead><tbody>";
+    "<caption>Results</caption><thead><tr><th id='precisePower'>Power<br>(Precise)</th><th id='base'>Base</th><th id='weapon'>Weapon</th><th id='charm'>Charm</th><th id='roundedPower'>Power<br>(Rounded)</th></tr></thead><tbody>";
 
   // Desired power bounds checks
-  let powerMin = parseInt($("#desired-power-min").val());
+  let powerMin = parseFloat($("#desired-power-min").val());
   if (powerMin > 9999999) {
     powerMin = 9999999;
     $("#desired-power-min").val(9999999);
@@ -97,7 +103,7 @@ function generateResults() {
     $("#desired-power-min").val(0);
   }
 
-  let powerMax = parseInt($("#desired-power-max").val());
+  let powerMax = parseFloat($("#desired-power-max").val());
   if (powerMax > 9999999) {
     powerMax = 9999999;
     $("#desired-power-max").val(9999999);
@@ -281,18 +287,19 @@ function generateResults() {
                 ? 20
                 : 0;
 
-            const totalPower = calcPower(weapon, base, charm, bonusObj);
-            const cPer = countPer[totalPower];
+            const precisePower = calcPower(weapon, base, charm, bonusObj);
+            const cPer = countPer[precisePower];
 
             // Skip if max results per power is exceeded
             if (cPer && cPer >= perPower) continue;
 
-            if (totalPower >= powerMin && totalPower <= powerMax) {
-              resultsHTML += `<tr><td>${totalPower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td></tr>`;
-              if (typeof countPer[totalPower] === "undefined") {
-                countPer[totalPower] = 1;
+            if (precisePower >= powerMin && precisePower <= powerMax) {
+              const roundedPower = Math.ceil(precisePower);
+              resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${roundedPower}</td></tr>`;
+              if (typeof countPer[precisePower] === "undefined") {
+                countPer[precisePower] = 1;
               } else {
-                countPer[totalPower] += 1;
+                countPer[precisePower] += 1;
               }
               countMax++;
             }
@@ -339,18 +346,19 @@ function generateResults() {
                 }
               }
 
-              const totalPower = calcPower(weapon, base, charm, bonusObj);
-              const cPer = countPer[totalPower];
+              const precisePower = calcPower(weapon, base, charm, bonusObj);
+              const cPer = countPer[precisePower];
 
               // Skip if max results per power is exceeded
               if (cPer && cPer >= perPower) continue;
 
-              if (totalPower >= powerMin && totalPower <= powerMax) {
-                resultsHTML += `<tr><td>${totalPower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td></tr>`;
-                if (typeof countPer[totalPower] === "undefined") {
-                  countPer[totalPower] = 1;
+              if (precisePower >= powerMin && precisePower <= powerMax) {
+                const roundedPower = Math.ceil(precisePower);
+                resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${roundedPower}</td></tr>`;
+                if (typeof countPer[precisePower] === "undefined") {
+                  countPer[precisePower] = 1;
                 } else {
-                  countPer[totalPower] += 1;
+                  countPer[precisePower] += 1;
                 }
                 countMax++;
               }
@@ -434,7 +442,7 @@ window.onload = function() {
     document.getElementById("trap-setups").innerHTML = resultsHTML;
     const resort = true,
       callback = function() {
-        const header = $("#power");
+        const header = $("#precisePower");
         if (header.hasClass("tablesorter-headerUnSorted")) {
           header.click();
           header.click();
@@ -463,8 +471,8 @@ window.onload = function() {
     saveObj["power-type"] = $("#power-type")
       .find(":selected")
       .text();
-    saveObj["desired-power-min"] = parseInt($("#desired-power-min").val());
-    saveObj["desired-power-max"] = parseInt($("#desired-power-max").val());
+    saveObj["desired-power-min"] = parseFloat($("#desired-power-min").val());
+    saveObj["desired-power-max"] = parseFloat($("#desired-power-max").val());
     saveObj["power-bonus"] = parseInt($("#power-bonus").val());
     saveObj["rift-bonus"] = $("input[name=rift-bonus]:checked").attr("id");
     saveObj["battery"] = parseInt($("#battery").val());
