@@ -483,6 +483,7 @@ function processMap(mapText, toolType) {
     if (mouseName.length == 0) continue;
     mouseName = mouseName.capitalise();
     mouseName = mouseName.trim();
+    mouseName = mouseName.replace(/’/g, "'");
     var indexOfMouse = mouseName.indexOf(" Mouse");
     if (indexOfMouse >= 0) {
       mouseName = mouseName.slice(0, indexOfMouse);
