@@ -3,6 +3,8 @@
   const puppeteer = require("puppeteer");
 
   const fileUtils = require("./file-utils");
+
+  // Order matters (tree/master/src/bookmarklet)
   const bookmarkletList = [
     "analyzer",
     "loader",
@@ -10,9 +12,9 @@
     "cre",
     "crown",
     "map",
+    "powers",
     "setup",
-    "setupfields",
-    "powers"
+    "setupfields"
   ];
 
   /**
