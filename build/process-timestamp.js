@@ -11,7 +11,8 @@
     "crown",
     "map",
     "setup",
-    "setupfields"
+    "setupfields",
+    "powers"
   ];
 
   /**

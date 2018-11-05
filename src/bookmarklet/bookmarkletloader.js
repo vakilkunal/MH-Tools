@@ -37,6 +37,7 @@
     var analyzerTimestamp = "Last updated: " + timestamps["analyzer"];
     var crownTimestamp = "Last updated: " + timestamps["crown"];
     var craftingTimestamp = "Last updated: " + timestamps["crafting"];
+    var powersTimestamp = "Last updated: " + timestamps["powers"];
 
     var closeButton = document.createElement("button", { id: "close-button" });
     closeButton.textContent = "x";
@@ -133,6 +134,18 @@
     craftingSpanTimestamp.style.fontStyle = "italic";
     craftingSpanTimestamp.innerHTML = craftingTimestamp;
 
+    var powersButton = document.createElement("button", {
+      id: "powers-button"
+    });
+    powersButton.textContent = "Powers: Worksheet";
+    powersButton.onclick = function() {
+      loadBookmarklet("powers");
+    };
+    var powersSpanTimestamp = document.createElement("span");
+    powersSpanTimestamp.style.fontSize = "10px";
+    powersSpanTimestamp.style.fontStyle = "italic";
+    powersSpanTimestamp.innerHTML = powersTimestamp;
+
     mainDiv.appendChild(closeButton);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
@@ -176,6 +189,11 @@
     mainDiv.appendChild(craftingButton);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(craftingSpanTimestamp);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(powersButton);
+    mainDiv.appendChild(document.createElement("br"));
+    mainDiv.appendChild(powersSpanTimestamp);
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createElement("br"));
     mainDiv.appendChild(document.createTextNode("(Drag me around on a PC)"));
