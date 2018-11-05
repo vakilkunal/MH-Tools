@@ -11,11 +11,11 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
 - [Instructions](#instructions)
   - [General Tips](#thought_balloon-general-tips)
   - [Bookmarklets](#bookmark-bookmarklets)
-    - [Browser Installation Tips](#Browser-Tips)
-    - [Chrome](#Chrome)
-    - [Firefox](#Firefox)
-    - [Edge / IE](#Edge)
-    - [Safari](#Safari)
+    - [Browser Installation Tips](#user-content-Browser-Tips)
+    - [Chrome](#user-content-Chrome)
+    - [Firefox](#user-content-Firefox)
+    - [Edge / IE](#user-content-Edge)
+    - [Safari](#user-content-Safari)
   - [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
   - [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
   - [Best Setup](#trophy-best-setup)
@@ -23,6 +23,7 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
   - [Crown Solver](#crown-crown-solver)
   - [Crafting Wizard](#hammer-crafting-wizard)
   - [Trap Setup Powers](#mag-trap-setup-powers)
+    - [Worksheet](#user-content-Powers-Worksheet)
   - [CRE Tabs](#bookmark_tabs-cre-tabs)
 - [Developers](#developers)
   - [Build and Run](#construction_worker-build-and-run)
@@ -222,7 +223,7 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 ### :hammer: [Crafting Wizard](https://tsitu.github.io/MH-Tools/crafting.html)
 > Calculates craftable quantities and missing materials for recipes based on your inventory data.
 
-**Bookmarklet:** Run the `Crafting` bookmarklet from Inventory -> Crafting -> [Crafting Table](https://www.mousehuntgame.com/inventory.php?tab=crafting&subtab=crafting_table). The `Recipes` and `Inventory` tables should be automatically populated, with the former being sortable and filterable. Crafting materials are cached in localStorage.
+**Bookmarklet:** Run the `Crafting` bookmarklet from Inventory -> Crafting -> [Crafting Table](https://www.mousehuntgame.com/inventory.php?tab=crafting&subtab=crafting_table). The `Recipes` and `Inventory` tables should be automatically populated, with the former being sortable and filterable. Crafting materials are saved in localStorage.
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
@@ -233,13 +234,19 @@ Weighted | Same as Total CP, but with baseline cheese attraction rates factored 
 
 To understand why this tool exists, we need to take a crash course (or a peek behind the curtain if you will) on MouseHunt's game mechanics.
 
-The best formula we have for calculating catch rate and minimum luck was [derived in 2011](https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/). As you can see, it takes into account several variables: trap type effectiveness, trap power, trap luck, and mouse power. It turns out that total trap power and luck are easy to calculate, since item and effect stats are present in-game. However, neither mouse powers nor exact type effectiveness values are as easily obtained.
+The best formula we have for calculating catch rate and minimum luck was [derived in 2011](https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/). As you can see, it takes into account several variables: power type effectiveness, trap power, trap luck, and mouse power. It turns out that total trap power and luck are easy to calculate, since item and effect stats are present in-game. However, neither mouse powers nor exact type effectiveness values are as easily obtained.
 
 Given the unknowns, you may wonder how folks have determined these hidden mouse power numbers with such precision in the past. Kristian G wrote an [essential guide](https://www.mousehuntgame.com/forum/showthread.php?106764-how-do-people-find-mouse-power-values&p=1166955&viewfull=1#post1166955) on this trial and error process a few years back - please read it. The TL;DR gist is that we equip different weapons, bases, and charms to attain a specific total trap power. Then, we look at the description page of the mouse we're targeting and note its 'Difficulty' rating. Depending on what that label says and what boundary is targeted (i.e. Challenging/Difficult, Easy/Moderate), we can deduce upper/lower bounds for the mouse's power. Kristian's post goes into much more detail and provides several examples.
 
 With that explained, you may also wonder whether there are tools out there that make this process less tedious. No matter what, we have to manually tweak trap setups in-game and refresh mouse pages to glean information from their 'Difficulty' ratings. But, it would be helpful if we could at least specify a range of total trap powers, and have a tool spit out setups that match. From what I can gather, HornTracker's [Trap Combinations](http://horntracker.com/trapsetups.php?minpower=6466&maxpower=7075&ptype=4&tabs=1) was the most popular tool for this purpose, along with tehhowch's GetPower sheet on [MH Reference](https://drive.google.com/file/d/0B38esHSXteUJZTRhMDNjMzItMmU4My00YWU0LThiODctMDk0OWRjOGFkMDE4/view?hl=en). Unfortunately, both tools have not been updated in some time. As such, they don't include the latest items or effects.
 
 This is where I hope my new 'Trap Setup Powers' tool comes in. As of 22 Oct 2018, you can specify a variety of power-altering parameters as well as whether to use owned or all items. In order to take advantage of using owned items, run the 'Best Setup: Load Items' bookmarklet before returning to the Powers tool.
+
+<b id="Powers-Worksheet">Worksheet:</b> This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers' a.k.a. 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
+
+There are several options to refine the 'Mouse Powers' table view. You can tick the checkboxes for the power types you'd like to be shown, select the mouse group/subgroup/name you'd like to filter down to, and then click 'Reload Table' to apply your preferences. 'Save Preferences' stores your settings in localStorage for future sessions. 'Reset Data' clears all worksheet data. It may be prudent to reset data if performance starts to take a noticeable hit, or if some unexpected data corruption occurs.
+
+The recommended way to use this tool is to focus on a couple groups of mice and narrow down each mouse's min/max power ranges using a variety of setups generated by the main Powers tool. Once you're satisfied, copy/paste the entire 'Mouse Powers' table into Google Sheets (it should copy over very cleanly!) for further manual refinement, allowing you to reset the worksheet data.
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
