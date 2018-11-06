@@ -120,9 +120,10 @@ window.onload = function() {
 
   $("#save-button").click(function() {
     const saveObj = {};
-    saveObj["power-type"] = $("#power-type")
-      .find(":selected")
-      .text();
+    saveObj["power-type"] = [];
+    $(".power-type:checked").each(function() {
+      saveObj["power-type"].push($(this).val());
+    });
     saveObj["desired-power-min"] = parseFloat($("#desired-power-min").val());
     saveObj["desired-power-max"] = parseFloat($("#desired-power-max").val());
     saveObj["power-bonus"] = parseInt($("#power-bonus").val());
@@ -140,13 +141,31 @@ window.onload = function() {
   $("#load-button").click(function() {
     loadPreferences();
   });
+
+  $("#type-select-all").click(function() {
+    if ($(".power-type:checked").length === 10) {
+      $(".power-type:checkbox").each(function() {
+        $(this).prop("checked", false);
+      });
+    } else {
+      $(".power-type:checkbox").each(function() {
+        $(this).prop("checked", true);
+      });
+    }
+  });
 };
 
 function loadPreferences() {
   const prefString = localStorage.getItem("powers-tool-prefs");
   if (prefString) {
     const prefs = JSON.parse(prefString);
-    $("#power-type").val(prefs["power-type"]);
+    $(".power-type:checkbox").each(function() {
+      if (prefs["power-type"].indexOf($(this).val()) > -1) {
+        $(this).prop("checked", true);
+      } else {
+        $(this).prop("checked", false);
+      }
+    });
     $("#desired-power-min").val(prefs["desired-power-min"]);
     $("#desired-power-max").val(prefs["desired-power-max"]);
     $("#power-bonus").val(prefs["power-bonus"]);
@@ -209,10 +228,19 @@ function generateResults() {
   const bonusObj = {}; // Store all calculated bonuses
   let countPer = {}; // Memoize occurrences of each power value
   let countMax = 0; // Count towards max total results
-  const powerType = $("#power-type").val();
+  const powerTypes = [];
+  $(".power-type:checked").each(function() {
+    powerTypes.push($(this).val());
+  });
   const riftMultiplier = parseInt($("input[name=rift-bonus]:checked").val());
   let resultsHTML =
-    "<caption>Results</caption><thead><tr><th id='precisePower'>Power<br>(Precise)</th><th id='base'>Base</th><th id='weapon'>Weapon</th><th id='charm'>Charm</th><th id='roundedPower'>Power<br>(Displayed)</th></tr></thead><tbody>";
+    "<caption>Results</caption><thead><tr><th id='precisePower'>Power<br>(Precise)</th><th id='base'>Base</th><th id='weapon'>Weapon</th><th id='charm'>Charm</th><th id='type'>Type</th><th id='roundedPower'>Power<br>(Displayed)</th></tr></thead><tbody>";
+
+  // Power types default to Physical if empty
+  if (powerTypes.length === 0) {
+    $(".power-type[value='Physical']").prop("checked", true);
+    powerTypes.push("Physical");
+  }
 
   // Desired power bounds checks
   let powerMin = parseFloat($("#desired-power-min").val());
@@ -372,15 +400,15 @@ function generateResults() {
     loopCharms.push("No Charm");
     loopCharms.push("Rift Vacuum Charm");
 
-    // Main loop
+    // Primary loop
     for (let weapon of loopWeapons) {
       // Only dive into inner loops if power type matches
-      if (weaponsArray[weapon][0] === powerType) {
+      const powerType = weaponsArray[weapon][0];
+      if (powerTypes.indexOf(powerType) > -1) {
         for (let base of loopBases) {
           // Physical Brace Base check
           bonusObj["brace"] =
-            weaponsArray[weapon][0] === "Physical" &&
-            base === "Physical Brace Base"
+            powerType === "Physical" && base === "Physical Brace Base"
               ? 1.25
               : 1;
           for (let charm of loopCharms) {
@@ -422,7 +450,7 @@ function generateResults() {
 
             if (precisePower >= powerMin && precisePower <= powerMax) {
               const roundedPower = Math.ceil(precisePower);
-              resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${roundedPower}</td></tr>`;
+              resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${powerType}</td><td>${roundedPower}</td></tr>`;
               if (typeof countPer[precisePower] === "undefined") {
                 countPer[precisePower] = 1;
               } else {
@@ -439,10 +467,11 @@ function generateResults() {
     for (let charm of alterCharms) {
       if (loopCharms.indexOf(charm) > -1) {
         if (
-          (charm === "Forgotten Charm" && powerType === "Forgotten") ||
-          (charm === "Hydro Charm" && powerType === "Hydro") ||
-          (charm === "Nanny Charm" && powerType === "Parental") ||
-          (charm === "Shadow Charm" && powerType === "Shadow")
+          (charm === "Forgotten Charm" &&
+            powerTypes.indexOf("Forgotten") > -1) ||
+          (charm === "Hydro Charm" && powerTypes.indexOf("Hydro") > -1) ||
+          (charm === "Nanny Charm" && powerTypes.indexOf("Parental") > -1) ||
+          (charm === "Shadow Charm" && powerTypes.indexOf("Shadow") > -1)
         ) {
           for (let weapon of loopWeapons) {
             for (let base of loopBases) {
@@ -481,7 +510,8 @@ function generateResults() {
 
               if (precisePower >= powerMin && precisePower <= powerMax) {
                 const roundedPower = Math.ceil(precisePower);
-                resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${roundedPower}</td></tr>`;
+                const powerType = charm.slice(0, charm.indexOf(" Charm"));
+                resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${powerType}</td><td>${roundedPower}</td></tr>`;
                 if (typeof countPer[precisePower] === "undefined") {
                   countPer[precisePower] = 1;
                 } else {

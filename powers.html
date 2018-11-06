@@ -97,7 +97,7 @@
     td,
     th {
       border: 1px solid rgb(190, 190, 190);
-      padding: 10px 15px;
+      padding: 10px 12px;
     }
 
     th {
@@ -170,7 +170,8 @@
       <a href="https://github.com/tsitu/MH-Tools/blob/master/README.md#mag-trap-setup-powers" target="_blank" rel="noopener">Instructions</a>
       |
       <a id="bookmarkletloader" href="#">Auto-Loader</a> |
-      <a id="bookmarklet" href="#">Powers</a>
+      <a id="bookmarklet" href="#">Powers</a> |
+      <a href="https://tsitu.github.io/MH-Tools/powers-worksheet.html" target="_blank" rel="noopener">Supplementary Worksheet</a>
       <br><br>
     </div>
     <div class="bottom">
@@ -178,20 +179,19 @@
         <caption>Parameters</caption>
         <tbody>
           <tr>
-            <td>Power Type</td>
+            <td>Power Type(s)</td>
             <td>
-              <select id="power-type">
-                <option>Arcane</option>
-                <option>Draconic</option>
-                <option>Forgotten</option>
-                <option>Hydro</option>
-                <option>Parental</option>
-                <option>Physical</option>
-                <option>Shadow</option>
-                <option>Tactical</option>
-                <option>Law</option>
-                <option>Rift</option>
-              </select>
+              <input type="checkbox" class="power-type" value="Arcane" /> Arcane&nbsp;
+              <input type="checkbox" class="power-type" value="Draconic" /> Draconic&nbsp;
+              <input type="checkbox" class="power-type" value="Forgotten" /> Forgotten&nbsp;<br>
+              <input type="checkbox" class="power-type" value="Hydro" /> Hydro&nbsp;
+              <input type="checkbox" class="power-type" value="Parental" /> Parental&nbsp;
+              <input type="checkbox" class="power-type" checked="checked" value="Physical" /> Physical&nbsp;<br>
+              <input type="checkbox" class="power-type" value="Shadow" /> Shadow&nbsp;
+              <input type="checkbox" class="power-type" value="Tactical" /> Tactical&nbsp;
+              <input type="checkbox" class="power-type" value="Law" /> Law&nbsp;
+              <input type="checkbox" class="power-type" value="Rift" /> Rift
+              <br><br><button id="type-select-all" style="font-size: 14px">&nbsp;Select / Deselect All&nbsp;</button>
             </td>
           </tr>
 
@@ -265,12 +265,12 @@
 
           <tr>
             <td>
-              <button id='reset-button' style="font-size: 18px"><b>&nbsp;Reset&nbsp;</b></button>&nbsp;
-              <button id='save-button' style="font-size: 18px"><b>&nbsp;Save&nbsp;</b></button>&nbsp;
-              <button id='load-button' style="font-size: 18px"><b>&nbsp;Load&nbsp;</b></button>
+              <button id="reset-button" style="font-size: 18px"><b>&nbsp;Reset&nbsp;</b></button>&nbsp;
+              <button id="save-button" style="font-size: 18px"><b>&nbsp;Save&nbsp;</b></button>&nbsp;
+              <button id="load-button" style="font-size: 18px"><b>&nbsp;Load&nbsp;</b></button>
             </td>
             <td>
-              <button id='calculate-button' style="font-size: 20px"><b>&nbsp;Calculate&nbsp;</b></button>
+              <button id="calculate-button" style="font-size: 20px"><b>&nbsp;Calculate&nbsp;</b></button>
             </td>
           </tr>
         </tbody>
