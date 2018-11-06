@@ -510,7 +510,10 @@ function generateResults() {
 
               if (precisePower >= powerMin && precisePower <= powerMax) {
                 const roundedPower = Math.ceil(precisePower);
-                const powerType = charm.slice(0, charm.indexOf(" Charm"));
+                let powerType = charm.slice(0, charm.indexOf(" Charm"));
+                if (powerType === "Nanny") {
+                  powerType = "Parental";
+                }
                 resultsHTML += `<tr><td>${precisePower}</td><td>${base}</td><td>${weapon}</td><td>${charm}</td><td>${powerType}</td><td>${roundedPower}</td></tr>`;
                 if (typeof countPer[precisePower] === "undefined") {
                   countPer[precisePower] = 1;
