@@ -1256,7 +1256,6 @@ function calcCRMods(catchRate, mouseName) {
       (fortRox.ballistaLevel >= 3 && mouseName === "Nightmancer")
     ) {
       catchRate = 1;
-      minLuckValue = 0;
     }
   }
 
