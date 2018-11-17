@@ -8,7 +8,7 @@ var stages = [
   "Baron/Baroness",
   "Count/Countess",
   "Duke/Duchess",
-  "Grand Duke/Duchess", // rename to Grand Duke/Grand Duchess
+  "Grand Duke/Duchess",
   "Archduke/Archduchess"
 ];
 
@@ -66,5 +66,15 @@ module.exports = {
       ],
       phases: utils.genVarField("stage", stages)
     }
-  ]
+  ],
+  postProcess: function(data) {
+    return data.map(function(item) {
+      // Rename to Grand Duke/Grand Duchess
+      var stage =
+        item.stage === "Grand Duke/Duchess"
+          ? "Grand Duke/Grand Duchess"
+          : item.stage;
+      return Object.assign(item, { stage: stage });
+    });
+  }
 };

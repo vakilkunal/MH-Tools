@@ -40,5 +40,5 @@ Promise
   .then(utils.toCsv.bind(utils, utils.POP_FIELDS))
   .then(console.log.bind(console))
   .catch(function(error) {
-    console.log(error)
+    console.log(error.stack)
   });

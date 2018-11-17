@@ -26,6 +26,7 @@ exports.toCsv = function toCsv(fields, rows) {
   return Promise.resolve(rows)
     .then(Promise.all.bind(Promise))
     .then(function(rows) {
+      console.error("");
       return json2csv({
         data: rows,
         fields: fields,
