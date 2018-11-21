@@ -23,7 +23,7 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
   - [Crown Solver](#crown-crown-solver)
   - [Crafting Wizard](#hammer-crafting-wizard)
   - [Trap Setup Powers](#mag-trap-setup-powers)
-    - [Worksheet](#user-content-Powers-Worksheet)
+    - [Worksheet](#user-content-powers-worksheet)
   - [CRE Tabs](#bookmark_tabs-cre-tabs)
 - [Developers](#developers)
   - [Build and Run](#construction_worker-build-and-run)
@@ -41,11 +41,11 @@ Several tools make use of mottie's [tablesorter](https://mottie.github.io/tables
 
 We recommend installing Jack's extension ([Chrome](https://chrome.google.com/webstore/detail/jacks-mousehunt-helper/ghfmjkamilolkalibpmokjigalmncfek), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/jacks-mousehunt-helper/)) if you have not already. It records valuable information from **active hunts** only. Most of the data in support of recent updates has been sourced from Jack's [publicly accessible database backups](https://keybase.pub/devjacksmith/mh_backups/). With your help, we will be able to implement new areas and features sooner with higher accuracy! :rocket:
 
-*Note:* Newer tools like 'Crafting Wizard' and 'Trap Setup Powers' may be incompatible with outdated or feature-constrained browsers such as Internet Explorer, Opera Mini, Samsung Internet, and Blackberry Browser.
+*Note:* Newer tools like 'Crafting Wizard' and 'Trap Setup Powers' may be incompatible with outdated or feature-constrained browsers such as Internet Explorer, Opera Mini, Samsung Internet, and Blackberry Browser. Older tools may also become incompatible with these browsers at any point.
 
 ### :bookmark: Bookmarklets
 
-Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 8 different bookmarklets (CRE, Map, Setup: Load Items, Setup: Fields, Analyzer, Silver Crown, Crafting and the all-in-one Loader), each located on their corresponding tool's page.
+Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 9 different bookmarklets (CRE, Map, Setup: Load Items, Setup: Fields, Analyzer, Silver Crown, Crafting, Powers: Worksheet and the all-in-one Loader), each located on their corresponding tool's page.
 
 Using the Auto-Loader is recommended because it automatically grabs the latest version of each bookmarklet without having to manually update.
 
@@ -58,10 +58,11 @@ Bookmarklet | Functionality
 CRE | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, and more
 Setup: Load Items | Automatically loads your owned weapons, bases, and charms into Best Setup
 Setup: Fields | Automatically fills in Best Setup with your location, sublocation, cheese, charm, and more
-Analyzer | Gradually (over multiple redirects) loads in your entire Marketplace transaction history via URL
+Analyzer | Generates a pop-up dialog that allows you to download your entire Marketplace transaction history and send it to the tool
 Map | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map
 Crown | Automatically fills in the Crown Solver's `textarea` with the 50 Bronze Crown mice on your 'King's Crowns' page that are closest to reaching Silver status (100 catches)<br><br>*Note:* Favorited Bronze mice will be included regardless of catches
 Crafting | Automatically loads your 'Crafting Table' materials into Crafting Wizard
+Powers: Worksheet | Generates a pop-up dialog that allows you to select a mouse group/subgroup to target with your current trap setup
 Loader | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
@@ -189,15 +190,15 @@ To check whether all of your items have properly loaded, you may want to open up
 
 > Displays all of your marketplace transactions along with some useful aggregations.
 
-**Bookmarklet:** Run the `Analyzer` bookmarklet from Marketplace -> My History, on the tab you would like data to start from (default = 1).
+**Bookmarklet:** Run the `Analyzer` bookmarklet, and click 'Send to Tool' once you have gathered enough transactions using 'Fetch'.
 
 Type | Description
 :--: | --
 Transaction | Gold spent or received in a single trade
-Amount | Total spent or received for a single item and action, including tariffs
-Price | Amount ÷ Quantity
-Unit Price | Gold spent on a single unit in a transaction
-Tariffs | 10% calculated on total amount  = Amount ÷ 1.1 (slightly inaccurate)
+Amount | Total spent or received for an item or action (includes tariffs)
+Price | Amount ÷ Quantity (includes tariffs)
+Unit Price | Gold spent on a single unit in a transaction (excludes tariffs)
+Tariffs | 10% of 'Buy' actions (`Amount - (Math.floor(Amount ÷ 1.1))`)
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
@@ -243,7 +244,7 @@ With that explained, you may also wonder whether there are tools out there that 
 
 This is where I hope 'Trap Setup Powers' comes in. With this new tool, you can: [1] hone in on one power type at a time, or include all 10 at once (be aware that a large number of power types ticked with a narrow power range will slow down processing by a significant amount), [2] specify a variety of power-altering parameters, and [3] choose whether to use owned or all items. In order to take advantage of showing only items you own, run the 'Best Setup: Load Items' bookmarklet before returning to the Powers tool.
 
-<b id="Powers-Worksheet">Worksheet:</b> This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers' a.k.a. 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, and [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
+<b id="powers-worksheet">Worksheet:</b> This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers' a.k.a. 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, and [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
 
 There are several options to refine the 'Mouse Powers' table view. You can tick the checkboxes for the power types you'd like to be shown, select the mouse group/subgroup/name you'd like to filter down to, and then click 'Reload Table' to apply your preferences. 'Save Preferences' stores your settings in localStorage for future sessions. 'Reset Data' clears all worksheet data. It may be prudent to reset data if performance starts to take a noticeable hit, or if some unexpected data corruption occurs.
 
