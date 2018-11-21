@@ -24,15 +24,17 @@
 
     baseButton.click();
     var bases = getItemList();
-    console.log("Number of bases: " + bases.length);
+    console.group("Items Owned");
+    console.log("Bases: " + bases.length);
 
     weaponButton.click();
     var weapons = getItemList();
-    console.log("Number of weapons: " + weapons.length);
+    console.log("Weapons: " + weapons.length);
 
     charmButton.click();
     var charms = getItemList();
-    console.log("Number of charms: " + charms.length);
+    console.log("Charms: " + charms.length);
+    console.groupEnd();
 
     var closeButton = document.querySelector(
       "a.campPage-trap-blueprint-closeButton"
