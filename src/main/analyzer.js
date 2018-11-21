@@ -12,6 +12,43 @@ window.onload = function() {
     "#bookmarklet"
   );
 
+  // Process window.name data
+  if (window.name) {
+    try {
+      const inputObj = JSON.parse(window.name);
+      if (validateJsonData(inputObj)) {
+        // Convert into 'classic' item-name-as-key format
+        const classicObj = {};
+        const inputArr = inputObj["data"];
+        for (let el of inputArr) {
+          const time = el[0];
+          const action = el[1];
+          const name = el[2];
+          if (!classicObj.hasOwnProperty(name)) {
+            classicObj[name] = {};
+          }
+          if (!classicObj[name].hasOwnProperty(action)) {
+            classicObj[name][action] = {};
+          }
+          if (!classicObj[name][action].hasOwnProperty(time)) {
+            classicObj[name][action][time] = [];
+          }
+          classicObj[name][action][time].push(el[3]);
+          classicObj[name][action][time].push(el[4]);
+          classicObj[name][action][time].push(el[5]);
+        }
+        classicObj["DATA_VERSION"] = "2.0";
+
+        localStorage.setItem("marketplaceData", JSON.stringify(classicObj));
+        window.name = ""; // Reset name after capturing data
+      } else {
+        throw new TypeError("JSON format invalid or corrupted");
+      }
+    } catch (e) {
+      console.error(`(Error in window.name) - ${e.stack}`);
+    }
+  }
+
   // Initialize tablesorter, bind to table
   $.tablesorter.defaults.sortInitialOrder = "desc";
   $("#table")
@@ -94,7 +131,7 @@ window.onload = function() {
       e,
       c
     ) {
-      var p = c.pager, // NEW with the widget... it returns config, instead of config.pager
+      let p = c.pager, // NEW with the widget... it returns config, instead of config.pager
         msg =
           '"</span> event triggered, ' +
           (e.type === "pagerChange" ? "going to" : "now on") +
@@ -189,7 +226,7 @@ window.onload = function() {
       e,
       c
     ) {
-      var p = c.pager, // NEW with the widget... it returns config, instead of config.pager
+      let p = c.pager, // NEW with the widget... it returns config, instead of config.pager
         msg =
           '"</span> event triggered, ' +
           (e.type === "pagerChange" ? "going to" : "now on") +
@@ -211,133 +248,70 @@ window.onload = function() {
   });
 
   $("#resetButton").click(function() {
-    var reset = confirm("Are you sure you want to reset marketplace data?");
-    if (reset == true) {
-      var storedData = localStorage.getItem("marketplaceData");
-      if (storedData != null) {
+    const reset = confirm(
+      "Are you sure you want to reset the data in this tool?"
+    );
+    if (reset) {
+      const storedData = localStorage.getItem("marketplaceData");
+      if (storedData) {
         localStorage.removeItem("marketplaceData");
       }
       location.reload();
     }
   });
 
-  var dataObject = {};
-  var rawDataArray = getDataFromURL(
+  // Check for old URL parameters and alert if present
+  const rawDataArray = getDataFromURL(
     window.location.search.match(/data=([^&]*)/)
   );
-  var isDone = getDataFromURL(window.location.search.match(/isDone=([^&]*)/));
+  const isDone = getDataFromURL(window.location.search.match(/isDone=([^&]*)/));
+  if (rawDataArray.length > 0 && isDone.length > 0) {
+    alert("Please upgrade to the new (and much-improved) bookmarklet!");
+  }
 
-  if (rawDataArray.length == 0) {
-    var storedData = localStorage.getItem("marketplaceData");
-    if (storedData != null) {
-      dataObject = JSON.parse(storedData);
-      // console.log(dataObject);
-      showTable(dataObject);
-      showItemSummary(dataObject);
-      showOverallSummary(dataObject);
+  // Check for old data format
+  const storedData = localStorage.getItem("marketplaceData");
+  if (storedData) {
+    const parsedData = JSON.parse(storedData);
+    if (!parsedData.hasOwnProperty("DATA_VERSION")) {
+      alert(
+        "Old data format detected!\nPlease upgrade to the new bookmarklet and re-import your data.\nSorry for the inconvenience."
+      );
+    } else if (parsedData["DATA_VERSION"] === "2.0") {
+      showTable(parsedData);
+      showItemSummary(parsedData);
+      showOverallSummary(parsedData);
     }
   } else {
-    $("#almostDone").show();
-    processRawData(rawDataArray, isDone);
+    alert("No data detected. Please run the bookmarklet to import some in!");
   }
 };
 
-function processRawData(rawDataArray, isDone) {
-  var dataObject = {};
-  var storedData = localStorage.getItem("marketplaceData");
-  if (storedData != null) {
-    dataObject = JSON.parse(storedData);
-  }
-
-  var dataLen = rawDataArray.split("\n").length - 1;
-  var dataSplit = rawDataArray.split("\n");
-  for (var i = 0; i < dataLen; i++) {
-    var rowSplit = dataSplit[i].split(" ");
-    var wordCount = parseInt(rowSplit[3]);
-    var word = "";
-    for (var j = 1; j < wordCount; j++) {
-      word += rowSplit[j + 3] + " ";
-    }
-    word += rowSplit[wordCount + 3];
-
-    if (dataObject[word] == undefined) {
-      dataObject[word] = {};
-    }
-    if (dataObject[word][rowSplit[0]] == undefined) {
-      dataObject[word][rowSplit[0]] = {};
-    }
-    if (
-      dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]] ==
-      undefined
-    ) {
-      dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]] = [];
-    }
-    dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]].push(
-      rowSplit[wordCount + 4]
-    );
-    dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]].push(
-      rowSplit[wordCount + 5]
-    );
-    dataObject[word][rowSplit[0]][rowSplit[1] + " " + rowSplit[2]].push(
-      rowSplit[wordCount + 6]
-    );
-  }
-
-  // console.log(dataObject);
-
-  //Store data in local storage
-  var analyzerURL = "https://tsitu.github.io/MH-Tools/analyzer.html";
-  if (Object.size(dataObject) > 0) {
-    localStorage.setItem("marketplaceData", JSON.stringify(dataObject));
-
-    var isDoneSplit = isDone.split("\n");
-    isDone = isDoneSplit[0];
-
-    if (isDone == "false") {
-      window.location.replace(
-        "https://tsitu.github.io/MH-Tools/analyzerwaiting.html"
-      );
-    } else if (isDone == "true") {
-      window.location.replace(analyzerURL);
-    } else {
-      alert("Missing isDone flag! Please report this in the forums.");
-      window.location.replace(analyzerURL);
-    }
-  } else {
-    alert("Raw data processing failed! Please report this in the forums.");
-    window.location.replace(analyzerURL);
-  }
-}
-
 function showTable(dataObject) {
-  $("#almostDone").hide();
   $("#tableContainer").show(500);
-  var table = document.getElementById("table");
+  const table = document.getElementById("table");
   table.innerHTML = "";
-  var tableHTML =
-    "<thead><tr><th id='dateClosed'>Date Closed</th><th>Item Name</th><th data-filter='false'>Action</th><th data-filter='false'>Quantity</th><th data-filter='false'>Unit Price</th><th data-filter='false'>Total</th></tr></thead><tbody>";
-  for (var itemName in dataObject) {
-    for (var action in dataObject[itemName]) {
-      for (var date in dataObject[itemName][action]) {
-        for (
-          var i = 0;
-          i < dataObject[itemName][action][date].length / 3;
-          i++
-        ) {
-          tableHTML +=
-            "<tr><td>" +
-            date +
-            "</td><td>" +
-            itemName +
-            "</td><td>" +
-            action +
-            "</td><td>" +
-            dataObject[itemName][action][date][i * 3] +
-            "</td><td>" +
-            dataObject[itemName][action][date][i * 3 + 1] +
-            "</td><td>" +
-            dataObject[itemName][action][date][i * 3 + 2] +
-            "</td></tr>";
+  let tableHTML =
+    "<thead><tr><th id='dateClosed'>Date Closed</th><th>Item Name</th><th data-filter='false'>Action</th><th data-filter='false'>Quantity</th><th data-filter='false'>Unit Price</th><th data-filter='false'>Tariff</th><th data-filter='false'>Total</th></tr></thead><tbody>";
+
+  for (let name in dataObject) {
+    if (name === "DATA_VERSION") continue;
+    for (let action in dataObject[name]) {
+      for (let time in dataObject[name][action]) {
+        const arr = dataObject[name][action][time];
+        for (let i = 0; i < arr.length; i += 3) {
+          const qty = arr[i];
+          const unit = arr[i + 1];
+          const total = arr[i + 2];
+          let tariff = 0;
+          if (action === "Buy") {
+            tariff = total - qty * unit;
+          }
+          tableHTML += `<tr><td>${time}</td><td>${name}</td><td>${action}</td><td>${commafy(
+            qty
+          )}</td><td>${commafy(unit)}</td><td>${commafy(
+            tariff
+          )}</td><td>${commafy(total)}</td></tr>`;
         }
       }
     }
@@ -345,9 +319,9 @@ function showTable(dataObject) {
   tableHTML += "</tbody>";
   table.innerHTML = tableHTML;
 
-  var resort = true,
+  const resort = true,
     callback = function() {
-      var header = $("#dateClosed");
+      const header = $("#dateClosed");
       if (header.hasClass("tablesorter-headerAsc")) {
         header.click();
         header.click();
@@ -360,31 +334,34 @@ function showTable(dataObject) {
 
 function showItemSummary(dataObject) {
   $("#itemSummaryContainer").show(500);
-  var table = document.getElementById("itemSummaryTable");
+  const table = document.getElementById("itemSummaryTable");
   table.innerHTML = "";
-  var tableHTML =
+  let tableHTML =
     "<thead><tr><th>Item Name</th><th data-filter='false'>Action</th><th data-filter='false'>Transactions</th><th data-filter='false'>Quantity</th><th data-filter='false'>Transaction (Avg)</th><th data-filter='false'>Price (Avg)</th><th data-filter='false'>Unit Price (Low)</th><th data-filter='false'>Unit Price (High)</th><th data-filter='false'>Unit Price (Avg)</th><th id='itemSummaryAction' data-filter='false'>Amount</th><th data-filter='false'>Tariffs</th></tr></thead><tbody>";
-  for (var itemName in dataObject) {
-    var totalSellQuantity = 0,
+
+  for (let name in dataObject) {
+    if (name === "DATA_VERSION") continue;
+    let totalSellQuantity = 0,
       totalBuyQuantity = 0;
-    var sellCounter = 0,
+    let sellCounter = 0,
       buyCounter = 0;
-    var totalSellUnitPrice = 0,
+    let totalSellUnitPrice = 0,
       totalBuyUnitPrice = 0;
-    var totalSellAmt = 0,
+    let totalSellAmt = 0,
       totalBuyAmt = 0;
-    var lowSellUnitPrice = 0,
+    let lowSellUnitPrice = 0,
       lowBuyUnitPrice = 0;
-    var highSellUnitPrice = 0,
+    let highSellUnitPrice = 0,
       highBuyUnitPrice = 0;
-    for (var action in dataObject[itemName]) {
-      for (var date in dataObject[itemName][action]) {
-        var currentData = dataObject[itemName][action][date];
-        for (var i = 0; i < currentData.length / 3; i++) {
-          var quantity = parseInt(currentData[i * 3].replace(/,/g, ""));
-          var unitPrice = parseInt(currentData[i * 3 + 1].replace(/,/g, ""));
-          var totalAmt = parseInt(currentData[i * 3 + 2].replace(/,/g, ""));
-          if (action == "Sell") {
+    let totalTariffs = 0;
+    for (let action in dataObject[name]) {
+      for (let time in dataObject[name][action]) {
+        const arr = dataObject[name][action][time];
+        for (let i = 0; i < arr.length; i += 3) {
+          const quantity = arr[i];
+          const unitPrice = arr[i + 1];
+          const totalAmt = arr[i + 2];
+          if (action === "Sell") {
             sellCounter++;
             totalSellQuantity += quantity;
             totalSellUnitPrice += unitPrice;
@@ -395,7 +372,7 @@ function showItemSummary(dataObject) {
             if (unitPrice > highSellUnitPrice) {
               highSellUnitPrice = unitPrice;
             }
-          } else if (action == "Buy") {
+          } else if (action === "Buy") {
             buyCounter++;
             totalBuyQuantity += quantity;
             totalBuyUnitPrice += unitPrice;
@@ -406,69 +383,47 @@ function showItemSummary(dataObject) {
             if (unitPrice > highBuyUnitPrice) {
               highBuyUnitPrice = unitPrice;
             }
+            totalTariffs += totalAmt - quantity * unitPrice;
           }
         }
       }
     }
-    var avgTxSell = totalSellAmt / sellCounter;
-    var avgTxBuy = totalBuyAmt / buyCounter;
-    var avgSellPrice = totalSellAmt / totalSellQuantity;
-    var avgBuyPrice = totalBuyAmt / totalBuyQuantity;
-    var avgSellUnitPrice = totalSellUnitPrice / sellCounter;
-    var avgBuyUnitPrice = totalBuyUnitPrice / buyCounter;
-    var totalTariffs = totalBuyAmt / 11;
+    const avgTxSell = totalSellAmt / sellCounter;
+    const avgTxBuy = totalBuyAmt / buyCounter;
+    const avgSellPrice = totalSellAmt / totalSellQuantity;
+    const avgBuyPrice = totalBuyAmt / totalBuyQuantity;
+    const avgSellUnitPrice = totalSellUnitPrice / sellCounter;
+    const avgBuyUnitPrice = totalBuyUnitPrice / buyCounter;
 
-    if (sellCounter > 0)
-      tableHTML +=
-        "<tr><td>" +
-        itemName +
-        "</td><td>Sell</td><td>" +
-        sellCounter +
-        "</td><td>" +
-        commafy(totalSellQuantity) +
-        "</td><td>" +
-        commafy(avgTxSell.toFixed(2)) +
-        "</td><td>" +
-        commafy(avgSellPrice.toFixed(2)) +
-        "</td><td>" +
-        commafy(lowSellUnitPrice) +
-        "</td><td>" +
-        commafy(highSellUnitPrice) +
-        "</td><td>" +
-        commafy(avgSellUnitPrice.toFixed(2)) +
-        "</td><td>" +
-        commafy(totalSellAmt) +
-        "</td><td>0</td></tr>";
-    if (buyCounter > 0)
-      tableHTML +=
-        "<tr><td>" +
-        itemName +
-        "</td><td>Buy</td><td>" +
-        buyCounter +
-        "</td><td>" +
-        commafy(totalBuyQuantity) +
-        "</td><td>" +
-        commafy(avgTxBuy.toFixed(2)) +
-        "</td><td>" +
-        commafy(avgBuyPrice.toFixed(2)) +
-        "</td><td>" +
-        commafy(lowBuyUnitPrice) +
-        "</td><td>" +
-        commafy(highBuyUnitPrice) +
-        "</td><td>" +
-        commafy(avgBuyUnitPrice.toFixed(2)) +
-        "</td><td>" +
-        commafy(totalBuyAmt) +
-        "</td><td>" +
-        commafy(totalTariffs.toFixed(2)) +
-        "</td></tr>";
+    if (sellCounter > 0) {
+      tableHTML += `<tr><td>${name}</td><td>Sell</td><td>${sellCounter}</td><td>${commafy(
+        totalSellQuantity
+      )}</td><td>${commafy(avgTxSell.toFixed(2))}</td><td>${commafy(
+        avgSellPrice.toFixed(2)
+      )}</td><td>${commafy(lowSellUnitPrice)}</td><td>${commafy(
+        highSellUnitPrice
+      )}</td><td>${commafy(avgSellUnitPrice.toFixed(2))}</td><td>${commafy(
+        totalSellAmt
+      )}</td><td>0</td></tr>`;
+    }
+    if (buyCounter > 0) {
+      tableHTML += `<tr><td>${name}</td><td>Buy</td><td>${buyCounter}</td><td>${commafy(
+        totalBuyQuantity
+      )}</td><td>${commafy(avgTxBuy.toFixed(2))}</td><td>${commafy(
+        avgBuyPrice.toFixed(2)
+      )}</td><td>${commafy(lowBuyUnitPrice)}</td><td>${commafy(
+        highBuyUnitPrice
+      )}</td><td>${commafy(avgBuyUnitPrice.toFixed(2))}</td><td>${commafy(
+        totalBuyAmt
+      )}</td><td>${commafy(totalTariffs)}</td></tr>`;
+    }
   }
   tableHTML += "</tbody>";
   table.innerHTML = tableHTML;
 
-  var resort = true,
+  const resort = true,
     callback = function() {
-      var header = $("#itemSummaryAction");
+      const header = $("#itemSummaryAction");
       if (header.hasClass("tablesorter-headerAsc")) {
         header.click();
         header.click();
@@ -481,107 +436,89 @@ function showItemSummary(dataObject) {
 
 function showOverallSummary(dataObject) {
   $("#overallSummaryContainer").show(500);
-  var totalSellQuantity = 0,
+  let totalSellQuantity = 0,
     totalBuyQuantity = 0;
-  var sellCounter = 0,
+  let sellCounter = 0,
     buyCounter = 0;
-  var totalSellUnitPrice = 0,
+  let totalSellUnitPrice = 0,
     totalBuyUnitPrice = 0;
-  var totalSellAmt = 0,
+  let totalSellAmt = 0,
     totalBuyAmt = 0;
-  var table = document.getElementById("overallSummaryTable");
+  let totalTariffs = 0;
+
+  const table = document.getElementById("overallSummaryTable");
   table.innerHTML = "";
-  var tableHTML =
+  let tableHTML =
     "<thead><tr><th id='overallSummaryAction'>Action</th><th>Transactions</th><th>Quantity</th><th>Transaction (Avg)</th><th>Price (Avg)</th><th>Unit Price (Avg)</th><th>Amount</th><th>Tariffs</th></tr></thead><tbody>";
-  for (var itemName in dataObject) {
-    for (var action in dataObject[itemName]) {
-      for (var date in dataObject[itemName][action]) {
-        var currentData = dataObject[itemName][action][date];
-        for (var i = 0; i < currentData.length / 3; i++) {
-          var quantity = parseInt(currentData[i * 3].replace(/,/g, ""));
-          var unitPrice = parseInt(currentData[i * 3 + 1].replace(/,/g, ""));
-          var totalAmt = parseInt(currentData[i * 3 + 2].replace(/,/g, ""));
-          if (action == "Sell") {
+
+  for (let name in dataObject) {
+    for (let action in dataObject[name]) {
+      for (let time in dataObject[name][action]) {
+        const arr = dataObject[name][action][time];
+        for (let i = 0; i < arr.length; i += 3) {
+          const quantity = arr[i];
+          const unitPrice = arr[i + 1];
+          const totalAmt = arr[i + 2];
+          if (action === "Sell") {
             sellCounter++;
             totalSellQuantity += quantity;
             totalSellUnitPrice += unitPrice;
             totalSellAmt += totalAmt;
-          } else if (action == "Buy") {
+          } else if (action === "Buy") {
             buyCounter++;
             totalBuyQuantity += quantity;
             totalBuyUnitPrice += unitPrice;
             totalBuyAmt += totalAmt;
+            totalTariffs += totalAmt - quantity * unitPrice;
           }
         }
       }
     }
   }
 
-  var avgTxSell = totalSellAmt / sellCounter;
-  var avgTxBuy = totalBuyAmt / buyCounter;
-  var avgSellPrice = totalSellAmt / totalSellQuantity;
-  var avgBuyPrice = totalBuyAmt / totalBuyQuantity;
-  var avgSellUnitPrice = totalSellUnitPrice / sellCounter;
-  var avgBuyUnitPrice = totalBuyUnitPrice / buyCounter;
-  var totalTariffs = totalBuyAmt / 11;
-  tableHTML +=
-    "<tr><td>Sell</td><td>" +
-    sellCounter +
-    "</td><td>" +
-    commafy(totalSellQuantity) +
-    "</td><td>" +
-    commafy(avgTxSell.toFixed(2)) +
-    "</td><td>" +
-    commafy(avgSellPrice.toFixed(2)) +
-    "</td><td>" +
-    commafy(avgSellUnitPrice.toFixed(2)) +
-    "</td><td>" +
-    commafy(totalSellAmt) +
-    "</td><td>0</td></tr>";
-  tableHTML +=
-    "<tr><td>Buy</td><td>" +
-    buyCounter +
-    "</td><td>" +
-    commafy(totalBuyQuantity) +
-    "</td><td>" +
-    commafy(avgTxBuy.toFixed(2)) +
-    "</td><td>" +
-    commafy(avgBuyPrice.toFixed(2)) +
-    "</td><td>" +
-    commafy(avgBuyUnitPrice.toFixed(2)) +
-    "</td><td>" +
-    commafy(totalBuyAmt) +
-    "</td><td>" +
-    commafy(totalTariffs.toFixed(2)) +
-    "</td></tr>";
+  const avgTxSell = totalSellAmt / sellCounter;
+  const avgTxBuy = totalBuyAmt / buyCounter;
+  const avgSellPrice = totalSellAmt / totalSellQuantity;
+  const avgBuyPrice = totalBuyAmt / totalBuyQuantity;
+  const avgSellUnitPrice = totalSellUnitPrice / sellCounter;
+  const avgBuyUnitPrice = totalBuyUnitPrice / buyCounter;
 
-  var avgTxAll = (totalSellAmt + totalBuyAmt) / (sellCounter + buyCounter);
-  var avgAllPrice =
+  tableHTML += `<tr><td>Sell</td><td>${sellCounter}</td><td>${commafy(
+    totalSellQuantity
+  )}</td><td>${commafy(avgTxSell.toFixed(2))}</td><td>${commafy(
+    avgSellPrice.toFixed(2)
+  )}</td><td>${commafy(avgSellUnitPrice.toFixed(2))}</td><td>${commafy(
+    totalSellAmt
+  )}</td><td>0</td></tr>`;
+
+  tableHTML += `<tr><td>Buy</td><td>${buyCounter}</td><td>${commafy(
+    totalBuyQuantity
+  )}</td><td>${commafy(avgTxBuy.toFixed(2))}</td><td>${commafy(
+    avgBuyPrice.toFixed(2)
+  )}</td><td>${commafy(avgBuyUnitPrice.toFixed(2))}</td><td>${commafy(
+    totalBuyAmt
+  )}</td><td>${commafy(totalTariffs)}</td></tr>`;
+
+  const avgTxAll = (totalSellAmt + totalBuyAmt) / (sellCounter + buyCounter);
+  const avgAllPrice =
     (totalSellAmt + totalBuyAmt) / (totalSellQuantity + totalBuyQuantity);
-  var avgAllUnitPrice =
+  const avgAllUnitPrice =
     (totalSellUnitPrice + totalBuyUnitPrice) / (sellCounter + buyCounter);
-  tableHTML +=
-    "<tr><td>All</td><td>" +
-    (sellCounter + buyCounter) +
-    "</td><td>" +
-    commafy(totalSellQuantity + totalBuyQuantity) +
-    "</td><td>" +
-    commafy(avgTxAll.toFixed(2)) +
-    "</td><td>" +
-    commafy(avgAllPrice.toFixed(2)) +
-    "</td><td>" +
-    commafy(avgAllUnitPrice.toFixed(2)) +
-    "</td><td>" +
-    commafy(totalSellAmt + totalBuyAmt) +
-    "</td><td>" +
-    commafy(totalTariffs.toFixed(2)) +
-    "</td></tr></tbody>";
+
+  tableHTML += `<tr><td>All</td><td>${sellCounter +
+    buyCounter}</td><td>${commafy(
+    totalSellQuantity + totalBuyQuantity
+  )}</td><td>${commafy(avgTxAll.toFixed(2))}</td><td>${commafy(
+    avgAllPrice.toFixed(2)
+  )}</td><td>${commafy(avgAllUnitPrice.toFixed(2))}</td><td>${commafy(
+    totalSellAmt + totalBuyAmt
+  )}</td><td>${commafy(totalTariffs)}</td></tr></tbody>`;
 
   table.innerHTML = tableHTML;
 
-  var resort = true,
+  const resort = true,
     callback = function() {
-      var header = $("#overallSummaryAction");
+      const header = $("#overallSummaryAction");
       if (header.hasClass("tablesorter-headerAsc")) {
         header.click();
         header.click();
@@ -595,6 +532,14 @@ function showOverallSummary(dataObject) {
 /*
  * Utilities
  */
+function validateJsonData(inputObj) {
+  let returnBool = false;
+  if (inputObj["data"].length > 0 && inputObj["data"][0].length === 6) {
+    returnBool = true;
+  }
+  return returnBool;
+}
+
 function getDataFromURL(parameters) {
   if (parameters) {
     parameters = decodeURI(parameters[1]);
@@ -606,15 +551,16 @@ function getDataFromURL(parameters) {
 }
 
 Object.size = function(obj) {
-  var size = 0;
-  for (var key in obj) {
+  let size = 0;
+  for (let key in obj) {
     if (obj.hasOwnProperty(key)) size++;
   }
   return size;
 };
 
 function commafy(num) {
-  var str = num.toString().split(".");
+  // $1 is a non-standard static prop of RegExp for substring match
+  let str = num.toString().split(".");
   if (str[0].length >= 4) {
     str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, "$1,");
   }

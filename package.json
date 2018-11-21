@@ -21,7 +21,7 @@
     "!pop:warpath": "node data/tools/pop warpath > data/location-pop/fiery-warpath.csv",
     "pop": "npm-run-all --parallel pop:*",
     "\n-- MINIFICATION --": "",
-    "minify:bookmarklet": "uglifyjs-folder src/bookmarklet -eo src/bookmarklet -p **/*.js,!**/*min.js",
+    "minify:bookmarklet": "uglifyjs-folder src/bookmarklet -yeo src/bookmarklet -p **/*.js,!**/*min.js",
     "minify:main": "uglifyjs-folder src/main -eo src/main/min -p **/*.js,!**/*min.js",
     "minify:utils": "uglifyjs-folder src/utils -eo src/utils/min -p **/*.js,!**/*min.js",
     "minify": "npm-run-all --parallel minify:*",
@@ -55,6 +55,7 @@
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.0.2",
     "request": "^2.83.0",
+    "uglify-es": "^3.3.9",
     "uglify-js": "^3.0.25",
     "uglifyjs-folder": "^1.5.0"
   },
