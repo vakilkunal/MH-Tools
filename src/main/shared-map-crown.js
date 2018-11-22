@@ -141,21 +141,21 @@ function findLoadedMice(param, toolType) {
 }
 
 function loadCookies() {
-  if (Cookies.get("savedRows") !== undefined) {
+  if (Cookies.get("savedRows")) {
     var x = parseInt(Cookies.get("savedRows"));
     var s = "#row" + x;
     $(s).prop("checked", true);
     rowLimit = x;
   }
 
-  if (Cookies.get("savedCols") !== undefined) {
+  if (Cookies.get("savedCols")) {
     var x = parseInt(Cookies.get("savedCols"));
     var s = "#col" + x;
     $(s).prop("checked", true);
     columnLimit = x;
   }
 
-  if (Cookies.get("savedAttraction") !== undefined) {
+  if (Cookies.get("savedAttraction")) {
     attractionBonus = parseInt(Cookies.get("savedAttraction"));
     $("#ampSlider").slider("option", "value", attractionBonus);
   }
@@ -168,7 +168,6 @@ function loadCookies() {
 function initTablesorter() {
   $.tablesorter.defaults.sortInitialOrder = "desc";
   $("#bestLocation").tablesorter({
-    // sortForce: [[noMice,1]],
     sortReset: true,
     widthFixed: true,
     ignoreCase: false,
@@ -209,7 +208,6 @@ function initTablesorter() {
   });
 
   $("#mouseList").tablesorter({
-    // sortForce: [[noMice,1]],
     sortReset: true,
     widthFixed: true,
     ignoreCase: false,
@@ -375,7 +373,7 @@ function loadMiceFromUrlOrCookie(toolType) {
       cookieName = "crownSavedMice";
     }
     var cookie = Cookies.get(cookieName);
-    if (cookie !== undefined) {
+    if (cookie) {
       findLoadedMice(cookie, toolType);
     }
   } else {
@@ -489,9 +487,11 @@ function processMap(mapText, toolType) {
       mouseName = mouseName.slice(0, indexOfMouse);
     }
 
-    // DPM edge case
+    // Mouse name edge cases
     if (mouseName === "Dread Pirate") {
       mouseName = "Dread Pirate Mousert";
+    } else if (mouseName === "Ful'mina, The Mountain Queen") {
+      mouseName = "Ful'Mina, The Mountain Queen";
     }
 
     // Hyphenated mouse name edge cases
@@ -499,7 +499,7 @@ function processMap(mapText, toolType) {
       mouseName = hyphenEdgeCases[mouseName];
     }
 
-    if (popArray[mouseName] == undefined) {
+    if (!popArray[mouseName]) {
       // Mouse name not recognised
       interpretedAsText += mouseName + "<br>";
       notRecognized = true;
@@ -513,7 +513,8 @@ function processMap(mapText, toolType) {
       var mouseLocationCheese = new Array();
 
       // Generating tag for min luck data
-      var titleText = "Min Luck: " + mouseName + "&#10;&#10;";
+      var titleText =
+        "Min Luck: " + mouseName.replace(/'/g, "&#39;") + "&#10;&#10;";
       var mlArr = getMinLuckArray(mouseName);
       for (var k = 0; k < 10; k++) {
         if (mlArr[k][1] === Infinity) {
@@ -618,7 +619,7 @@ function processMap(mapText, toolType) {
               }
 
               // Populate mouse location array
-              if (mouseLocationArray[locationPhaseCheeseCharm] == undefined) {
+              if (!mouseLocationArray[locationPhaseCheeseCharm]) {
                 mouseLocationArray[locationPhaseCheeseCharm] = [];
               }
               mouseLocationArray[locationPhaseCheeseCharm].push([
@@ -626,7 +627,7 @@ function processMap(mapText, toolType) {
                 attractionRate
               ]);
 
-              if (bestLocationArray[locationPhaseCheeseCharm] == undefined) {
+              if (!bestLocationArray[locationPhaseCheeseCharm]) {
                 bestLocationArray[locationPhaseCheeseCharm] = attractionRate;
                 if (cheeseName.indexOf("/") > 0) {
                   var trimmedCheese = cheeseName.slice(
@@ -732,10 +733,9 @@ function sortBestLocation(bestLocationArray, weightedBLA) {
   var bLALength = Object.size(bestLocationArray);
   var bLAKeys = Object.keys(bestLocationArray);
 
-  if (typeof weightedBLA == "undefined") {
+  if (typeof weightedBLA === "undefined") {
     for (var i = 0; i < bLALength; i++) {
       var locationCheese = bLAKeys[i];
-      // sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
       sortedLocation.push([locationCheese, bestLocationArray[locationCheese]]);
     }
 
@@ -745,7 +745,6 @@ function sortBestLocation(bestLocationArray, weightedBLA) {
   } else {
     for (var i = 0; i < bLALength; i++) {
       var locationCheese = bLAKeys[i];
-      // sortedLocation[bestLocationArray[locationCheese]] = locationCheese;
       sortedLocation.push([
         locationCheese,
         bestLocationArray[locationCheese],
@@ -794,7 +793,8 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
         }
 
         // Generating tag for min luck data
-        var titleText = "Min Luck: " + mouseName + "&#10;&#10;";
+        var titleText =
+          "Min Luck: " + mouseName.replace(/'/g, "&#39;") + "&#10;&#10;";
         for (var k = 0; k < 10; k++) {
           if (mlCache[mouseName][k][1] === Infinity) {
             break;
