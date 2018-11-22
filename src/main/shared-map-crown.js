@@ -516,6 +516,9 @@ function processMap(mapText, toolType) {
       var titleText = "Min Luck: " + mouseName + "&#10;&#10;";
       var mlArr = getMinLuckArray(mouseName);
       for (var k = 0; k < 10; k++) {
+        if (mlArr[k][1] === Infinity) {
+          break;
+        }
         titleText += mlArr[k][0] + ": " + mlArr[k][1] + "&#10;";
       }
 
@@ -793,6 +796,9 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
         // Generating tag for min luck data
         var titleText = "Min Luck: " + mouseName + "&#10;&#10;";
         for (var k = 0; k < 10; k++) {
+          if (mlCache[mouseName][k][1] === Infinity) {
+            break;
+          }
           titleText +=
             mlCache[mouseName][k][0] +
             ": " +
