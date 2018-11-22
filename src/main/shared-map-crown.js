@@ -342,7 +342,7 @@ String.prototype.capitalise = function() {
 };
 
 function checkLoadState(toolType) {
-  if (popLoaded) {
+  if (popLoaded && peLoaded) {
     var acToggle = localStorage.getItem("textarea-autocomplete");
     if (!acToggle || acToggle === "on") {
       loadMouseDropdown();
@@ -512,10 +512,21 @@ function processMap(mapText, toolType) {
 
       var mouseLocationCheese = new Array();
 
+      // Generating tag for min luck data
+      var titleText = "Min Luck: " + mouseName + "&#10;&#10;";
+      var mlArr = getMinLuckArray(mouseName);
+      for (var k = 0; k < 10; k++) {
+        titleText += mlArr[k][0] + ": " + mlArr[k][1] + "&#10;";
+      }
+
       mouseListText +=
-        "<tr><td style='font-size: 12px; padding: 10px'><b>" +
+        "<tr><td style='font-size: 12px; padding: 10px'>" +
+        "<span title='" +
+        titleText +
+        "' class='ml-tip'>" +
+        "<b>" +
         mouseName +
-        "</b></td>";
+        "</b></span></td>";
       remainingMice++;
 
       var mouseLocation = Object.keys(popArray[mouseName]);
@@ -771,13 +782,32 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
     // Checking mouse location
     var mouseLocationHTML = "";
     var lpcc = sortedLocation[i][0];
+    var mlCache = {};
     if (mouseLocationArray[lpcc]) {
       for (var j = 0; j < Object.size(mouseLocationArray[lpcc]); j++) {
+        var mouseName = mouseLocationArray[lpcc][j][0];
+        if (!mlCache[mouseName]) {
+          mlCache[mouseName] = getMinLuckArray(mouseName); // Initialize
+        }
+
+        // Generating tag for min luck data
+        var titleText = "Min Luck: " + mouseName + "&#10;&#10;";
+        for (var k = 0; k < 10; k++) {
+          titleText +=
+            mlCache[mouseName][k][0] +
+            ": " +
+            mlCache[mouseName][k][1] +
+            "&#10;";
+        }
+
         mouseLocationHTML +=
-          mouseLocationArray[lpcc][j][0] +
+          "<span title='" +
+          titleText +
+          "' class='ml-tip'>" +
+          mouseName +
           " (" +
-          mouseLocationArray[lpcc][j][1] +
-          "%)<br>";
+          mouseLocationArray[lpcc][j][1] + // Raw AR
+          "%)</span><br>";
       }
     } else {
       mouseLocationHTML = "N/A";
@@ -809,6 +839,60 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
       }
     };
   $("#bestLocation").trigger("updateAll", [resort, callback]);
+
+  $(".ml-tip").click(function() {
+    var titleClass = $(this).find(".title");
+    if (!titleClass.length) {
+      $(this).append(
+        "<p class='title'>" +
+          $(this)
+            .attr("title")
+            .replace(/\n/g, "<br>") +
+          "</p>"
+      );
+    } else {
+      titleClass.remove();
+    }
+  });
+}
+
+function getMinLuckArray(mouse) {
+  function minLuck(effectiveness, mousePower) {
+    var finalEffectiveness = Math.min(effectiveness, 2);
+    var minLuckSquared =
+      mousePower / (3 - finalEffectiveness) / Math.pow(finalEffectiveness, 2);
+    return Math.ceil(Math.sqrt(minLuckSquared));
+  }
+
+  var retArr = [
+    ["Arcane", "N/A"],
+    ["Draconic", "N/A"],
+    ["Forgotten", "N/A"],
+    ["Hydro", "N/A"],
+    ["Parental", "N/A"],
+    ["Physical", "N/A"],
+    ["Shadow", "N/A"],
+    ["Tactical", "N/A"],
+    ["Law", "N/A"],
+    ["Rift", "N/A"]
+  ];
+
+  if (!powersArray[mouse]) {
+    return retArr;
+  } else {
+    var power = powersArray[mouse][0];
+    for (var i = 1; i < 11; i++) {
+      var eff = powersArray[mouse][i] / 100;
+      retArr[i - 1][1] = minLuck(eff, power);
+    }
+
+    // Sort by lowest min luck
+    retArr.sort(function(a, b) {
+      return a[1] - b[1];
+    });
+
+    return retArr;
+  }
 }
 
 function findBaseline(cheese) {

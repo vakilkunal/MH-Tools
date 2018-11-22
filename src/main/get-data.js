@@ -45,13 +45,18 @@ var powersArray = {};
  * Start population loading
  */
 function startPopulationLoad(populationJsonUrl, type) {
-  $.getJSON(populationJsonUrl, setPopulation);
   if (type === "cre" || type === "setup") {
     $.getJSON(WISDOM_URL, setWisdom);
     $.getJSON(SAMPLE_URL, setSample);
     $.getJSON(GP_URL, setGoldPoints);
     $.getJSON(PE_URL, setPowerEffs);
   }
+
+  if (type === "map" || type === "crown") {
+    $.getJSON(PE_URL, setPowerEffs);
+  }
+
+  $.getJSON(populationJsonUrl, setPopulation);
 
   function setPopulation(jsonData) {
     popArray = jsonData;
