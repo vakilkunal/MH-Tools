@@ -481,7 +481,7 @@ function processMap(mapText, toolType) {
     if (mouseName.length == 0) continue;
     mouseName = mouseName.capitalise();
     mouseName = mouseName.trim();
-    mouseName = mouseName.replace(/’/g, "'");
+    mouseName = mouseName.replace(/’/g, "'"); // iOS right apostrophe
     var indexOfMouse = mouseName.indexOf(" Mouse");
     if (indexOfMouse >= 0) {
       mouseName = mouseName.slice(0, indexOfMouse);
@@ -513,9 +513,12 @@ function processMap(mapText, toolType) {
       var mouseLocationCheese = new Array();
 
       // Generating tag for min luck data
+      var formatName = mouseName.replace(/ Of /g, " of ");
+      // Except Mina, Nachous, Inferna (negative lookbehind <3)
+      formatName = formatName.replace(/(?<!,) The /g, " the ");
       var titleText =
-        "Min Luck: " + mouseName.replace(/'/g, "&#39;") + "&#10;&#10;";
-      var mlArr = getMinLuckArray(mouseName);
+        "Min Luck: " + formatName.replace(/'/g, "&#39;") + "&#10;&#10;";
+      var mlArr = getMinLuckArray(formatName);
       for (var k = 0; k < 10; k++) {
         if (mlArr[k][1] === Infinity) {
           break;
@@ -529,7 +532,7 @@ function processMap(mapText, toolType) {
         titleText +
         "' class='ml-tip'>" +
         "<b>" +
-        mouseName +
+        formatName +
         "</b></span></td>";
       remainingMice++;
 
@@ -788,21 +791,25 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
     if (mouseLocationArray[lpcc]) {
       for (var j = 0; j < Object.size(mouseLocationArray[lpcc]); j++) {
         var mouseName = mouseLocationArray[lpcc][j][0];
-        if (!mlCache[mouseName]) {
-          mlCache[mouseName] = getMinLuckArray(mouseName); // Initialize
+        var formatName = mouseName.replace(/ Of /g, " of ");
+        // Except Mina, Nachous, Inferna (negative lookbehind <3)
+        formatName = formatName.replace(/(?<!,) The /g, " the ");
+
+        if (!mlCache[formatName]) {
+          mlCache[formatName] = getMinLuckArray(formatName); // Initialize
         }
 
         // Generating tag for min luck data
         var titleText =
-          "Min Luck: " + mouseName.replace(/'/g, "&#39;") + "&#10;&#10;";
+          "Min Luck: " + formatName.replace(/'/g, "&#39;") + "&#10;&#10;";
         for (var k = 0; k < 10; k++) {
-          if (mlCache[mouseName][k][1] === Infinity) {
+          if (mlCache[formatName][k][1] === Infinity) {
             break;
           }
           titleText +=
-            mlCache[mouseName][k][0] +
+            mlCache[formatName][k][0] +
             ": " +
-            mlCache[mouseName][k][1] +
+            mlCache[formatName][k][1] +
             "&#10;";
         }
 
@@ -810,7 +817,7 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
           "<span title='" +
           titleText +
           "' class='ml-tip'>" +
-          mouseName +
+          formatName +
           " (" +
           mouseLocationArray[lpcc][j][1] + // Raw AR
           "%)</span><br>";
