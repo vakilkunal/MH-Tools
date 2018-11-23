@@ -103,13 +103,7 @@
   }
 
   function processMapPopItem(populationObject, row) {
-    function capitalise(str) {
-      return str.replace(/(?:^|\s)\S/g, function(a) {
-        return a.toUpperCase();
-      });
-    }
-
-    var mouseName = capitalise(row.mouse);
+    var mouseName = row.mouse;
     var cheese = row.cheese;
     var attractionRate = row.attraction;
 

@@ -15,6 +15,7 @@ var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
 var POPULATION_JSON_URL = "data/json/populations-map.json";
 var FILTERED_CHEESES = [];
+var NAME_MAP = {};
 
 var autoCompleteSettings = {
   delimiters: "\n",
@@ -333,34 +334,24 @@ function initTablesorter() {
   });
 }
 
-String.prototype.capitalise = function() {
-  return this.replace(/(?:^|\s)\S/g, function(a) {
-    return a.toUpperCase();
-  });
-};
-
-/**
- * Reverts capitalization of "Of" and "The"
- * @param {string} name
- */
-function revertName(name) {
-  name = name.replace(/ Of /g, " of ");
-  // name = name.replace(/(?<!,) The /g, " the "); // (negative lookbehind </3)
-  // Except Ful'Mina, Nachous, Inferna
-  name = name.replace(/[^,] The /g, function(match) {
-    return match[0] + " the ";
-  });
-
-  return name;
-}
-
 function checkLoadState(toolType) {
   if (popLoaded && peLoaded) {
+    generateNameMap();
     var acToggle = localStorage.getItem("textarea-autocomplete");
     if (!acToggle || acToggle === "on") {
       loadMouseDropdown();
     }
     loadMiceFromUrlOrCookie(toolType);
+  }
+}
+
+/**
+ * Generate mapping of lower-cased mouse names to properly cased ones
+ */
+function generateNameMap() {
+  var nameKeys = Object.keys(powersArray);
+  for (var i = 0; i < nameKeys.length; i++) {
+    NAME_MAP[nameKeys[i].toLowerCase()] = nameKeys[i];
   }
 }
 
@@ -472,14 +463,6 @@ function processMap(mapText, toolType) {
       "<thead><tr><th align='center'>Mouse</th><th align='center' id='locationAR'>Location (Raw CP)</th></tr></thead><tbody>";
   }
 
-  var hyphenEdgeCases = {
-    "Exo-tech": "Exo-Tech",
-    "Itty-bitty Burroughs": "Itty-Bitty Burroughs",
-    "Over-prepared": "Over-Prepared",
-    "Red-eyed Watcher Owl": "Red-Eyed Watcher Owl",
-    "Rr-8": "RR-8",
-    "Titanic Brain-taker": "Titanic Brain-Taker"
-  };
   var bestLocationArray = [];
   var weightedBLA = [];
   var mouseLocationArray = [];
@@ -492,26 +475,25 @@ function processMap(mapText, toolType) {
     if (toolType === "crown") {
       catchesFromSilver = 100 - numCatchesArray[i];
     }
+
     var mouseName = mouseArray[i];
-    if (mouseName.length == 0) continue;
-    mouseName = mouseName.capitalise();
+    if (mouseName.length === 0) continue;
     mouseName = mouseName.trim();
     mouseName = mouseName.replace(/’/g, "'"); // iOS right apostrophe
-    var indexOfMouse = mouseName.indexOf(" Mouse");
+    var indexOfMouse = mouseName.indexOf(" Mouse"); // Make this more robust?
     if (indexOfMouse >= 0) {
       mouseName = mouseName.slice(0, indexOfMouse);
     }
 
-    // Mouse name edge cases
-    if (mouseName === "Dread Pirate") {
-      mouseName = "Dread Pirate Mousert";
-    } else if (mouseName === "Ful'mina, The Mountain Queen") {
-      mouseName = "Ful'Mina, The Mountain Queen";
-    }
-
-    // Hyphenated mouse name edge cases
-    if (hyphenEdgeCases.hasOwnProperty(mouseName)) {
-      mouseName = hyphenEdgeCases[mouseName];
+    var origName = mouseName;
+    mouseName = NAME_MAP[mouseName.toLowerCase()];
+    if (!mouseName) {
+      // Mouse name edge cases
+      if (origName.toLowerCase() === "dread pirate") {
+        mouseName = "Dread Pirate Mousert";
+      } else {
+        mouseName = origName;
+      }
     }
 
     if (!popArray[mouseName]) {
@@ -528,10 +510,9 @@ function processMap(mapText, toolType) {
       var mouseLocationCheese = new Array();
 
       // Generating tag for min luck data
-      var formatName = revertName(mouseName);
       var titleText =
-        "Min Luck: " + formatName.replace(/'/g, "&#39;") + "&#10;&#10;";
-      var mlArr = getMinLuckArray(formatName);
+        "Min Luck: " + mouseName.replace(/'/g, "&#39;") + "&#10;&#10;";
+      var mlArr = getMinLuckArray(mouseName);
       for (var k = 0; k < 10; k++) {
         if (mlArr[k][1] === Infinity) {
           break;
@@ -545,7 +526,7 @@ function processMap(mapText, toolType) {
         titleText +
         "' class='ml-tip'>" +
         "<b>" +
-        formatName +
+        mouseName +
         "</b></span></td>";
       remainingMice++;
 
@@ -804,23 +785,22 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
     if (mouseLocationArray[lpcc]) {
       for (var j = 0; j < Object.size(mouseLocationArray[lpcc]); j++) {
         var mouseName = mouseLocationArray[lpcc][j][0];
-        var formatName = revertName(mouseName);
 
-        if (!mlCache[formatName]) {
-          mlCache[formatName] = getMinLuckArray(formatName); // Initialize
+        if (!mlCache[mouseName]) {
+          mlCache[mouseName] = getMinLuckArray(mouseName); // Initialize
         }
 
         // Generating tag for min luck data
         var titleText =
-          "Min Luck: " + formatName.replace(/'/g, "&#39;") + "&#10;&#10;";
+          "Min Luck: " + mouseName.replace(/'/g, "&#39;") + "&#10;&#10;";
         for (var k = 0; k < 10; k++) {
-          if (mlCache[formatName][k][1] === Infinity) {
+          if (mlCache[mouseName][k][1] === Infinity) {
             break;
           }
           titleText +=
-            mlCache[formatName][k][0] +
+            mlCache[mouseName][k][0] +
             ": " +
-            mlCache[formatName][k][1] +
+            mlCache[mouseName][k][1] +
             "&#10;";
         }
 
@@ -828,7 +808,7 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
           "<span title='" +
           titleText +
           "' class='ml-tip'>" +
-          formatName +
+          mouseName +
           " (" +
           mouseLocationArray[lpcc][j][1] + // Raw AR
           "%)</span><br>";
