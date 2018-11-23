@@ -339,6 +339,21 @@ String.prototype.capitalise = function() {
   });
 };
 
+/**
+ * Reverts capitalization of "Of" and "The"
+ * @param {string} name
+ */
+function revertName(name) {
+  name = name.replace(/ Of /g, " of ");
+  // name = name.replace(/(?<!,) The /g, " the "); // (negative lookbehind </3)
+  // Except Ful'Mina, Nachous, Inferna
+  name = name.replace(/[^,] The /g, function(match) {
+    return match[0] + " the ";
+  });
+
+  return name;
+}
+
 function checkLoadState(toolType) {
   if (popLoaded && peLoaded) {
     var acToggle = localStorage.getItem("textarea-autocomplete");
@@ -513,9 +528,7 @@ function processMap(mapText, toolType) {
       var mouseLocationCheese = new Array();
 
       // Generating tag for min luck data
-      var formatName = mouseName.replace(/ Of /g, " of ");
-      // Except Mina, Nachous, Inferna (negative lookbehind <3)
-      formatName = formatName.replace(/(?<!,) The /g, " the ");
+      var formatName = revertName(mouseName);
       var titleText =
         "Min Luck: " + formatName.replace(/'/g, "&#39;") + "&#10;&#10;";
       var mlArr = getMinLuckArray(formatName);
@@ -791,9 +804,7 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
     if (mouseLocationArray[lpcc]) {
       for (var j = 0; j < Object.size(mouseLocationArray[lpcc]); j++) {
         var mouseName = mouseLocationArray[lpcc][j][0];
-        var formatName = mouseName.replace(/ Of /g, " of ");
-        // Except Mina, Nachous, Inferna (negative lookbehind <3)
-        formatName = formatName.replace(/(?<!,) The /g, " the ");
+        var formatName = revertName(mouseName);
 
         if (!mlCache[formatName]) {
           mlCache[formatName] = getMinLuckArray(formatName); // Initialize
