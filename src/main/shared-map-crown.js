@@ -106,8 +106,10 @@ function initPageLoad(toolType) {
 
   document.getElementById("resetMouseList").onclick = function() {
     // Empty out the textarea
-    document.getElementById("map").value = "";
-    processMap("", toolType);
+    if (window.confirm("Are you sure?")) {
+      document.getElementById("map").value = "";
+      processMap("", toolType);
+    }
   };
 
   // Check Crown Solver's window.name for bookmarklet data
@@ -442,6 +444,9 @@ function processMap(mapText, toolType) {
   var numCatchesArray; // Crown
   if (toolType === "map") {
     mouseArray = mapText.split("\n");
+    var url = "https://tsitu.github.io/MH-Tools/map.html";
+    url += "?mice=" + encodeURIComponent(mouseArray.join("/"));
+    $("#mapLink").attr("href", url);
   } else if (toolType === "crown") {
     mouseArray = mapText.match(/^[A-Za-z].*/gm);
     numCatchesArray = mapText.match(/^[0-9]{1,2}$/gm);
