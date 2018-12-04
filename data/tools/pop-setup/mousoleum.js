@@ -52,6 +52,25 @@ module.exports = {
     },
     {
       cheese: utils.genVarField("cheese", vampCheeses),
+      stage: utils.genVarField("stage", "No Wall"),
+      config: [
+        {
+          opts: {
+            exclude: [
+              "Bat",
+              "Vampire",
+              "Mummy",
+              "Ghost",
+              "Giant Snail",
+              "Monster",
+              "Mousevina von Vermin"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      cheese: utils.genVarField("cheese", vampCheeses),
       stage: utils.genVarField("stage", "Has Wall")
     },
     {
