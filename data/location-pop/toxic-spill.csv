@@ -1,10 +1,10 @@
 "Location","Phase","Cheese","Charm","Attraction Rate","Mouse","Sample Size"
-"Toxic Spill","Hero","Rancid Radioactive Blue","-","20.52%","Sludge",1623
-"Toxic Spill","Hero","Rancid Radioactive Blue","-","20.09%","Mutated Siblings",1623
-"Toxic Spill","Hero","Rancid Radioactive Blue","-","19.90%","Swamp Runner",1623
-"Toxic Spill","Hero","Rancid Radioactive Blue","-","17.25%","Spore",1623
-"Toxic Spill","Hero","Rancid Radioactive Blue","-","16.94%","Monster Tail",1623
-"Toxic Spill","Hero","Rancid Radioactive Blue","-","5.30%","Bog Beast",1623
+"Toxic Spill","Hero","Rancid Radioactive Blue","-","21.00%","Sludge",1705
+"Toxic Spill","Hero","Rancid Radioactive Blue","-","19.94%","Mutated Siblings",1705
+"Toxic Spill","Hero","Rancid Radioactive Blue","-","19.94%","Swamp Runner",1705
+"Toxic Spill","Hero","Rancid Radioactive Blue","-","17.01%","Spore",1705
+"Toxic Spill","Hero","Rancid Radioactive Blue","-","16.83%","Monster Tail",1705
+"Toxic Spill","Hero","Rancid Radioactive Blue","-","5.28%","Bog Beast",1705
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","11.88%","Monster Tail",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","9.38%","Scrap Metal Monster",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","9.38%","Gelatinous Octahedron",320
@@ -12,8 +12,8 @@
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","7.50%","Sludge Soaker",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","6.88%","Spore",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","5.00%","Plague Hag",320
-"Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","4.69%","Mutant Mongrel",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","4.69%","Telekinetic Mutant",320
+"Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","4.69%","Mutant Mongrel",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","4.38%","Bog Beast",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","4.06%","Mutant Ninja",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","3.75%","Tentacle",320
@@ -25,492 +25,513 @@
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","1.88%","Swamp Runner",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","1.56%","The Menace",320
 "Toxic Spill","Hero","Magical Rancid Radioactive Blue","-","1.25%","Sludge Swimmer",320
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","29.83%","Spore",1542
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","29.18%","Monster Tail",1542
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","12.91%","Sludge",1542
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","11.41%","Gelatinous Octahedron",1542
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","6.23%","Bog Beast",1542
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","5.32%","Mutated Siblings",1542
-"Toxic Spill","Knight","Rancid Radioactive Blue","-","5.12%","Swamp Runner",1542
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","15.29%","Gelatinous Octahedron",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","7.65%","Spore",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","7.34%","Plague Hag",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","7.03%","Sludge Soaker",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.81%","Scrap Metal Monster",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.50%","Biohazard",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.50%","Telekinetic Mutant",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.20%","Toxic Warrior",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.89%","Outbreak Assassin",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.89%","Slimefist",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.59%","Mutant Mongrel",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.59%","Tentacle",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.98%","Mutant Ninja",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.67%","Monster Tail",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.06%","Sludge Swimmer",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.06%","The Menace",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","2.45%","Sludge",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","2.45%","Mutated Siblings",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","1.53%","Bog Beast",327
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","1.53%","Swamp Runner",327
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","19.94%","Sludge",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","16.95%","Gelatinous Octahedron",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","14.01%","Spore",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","12.36%","Monster Tail",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","10.56%","Sludge Soaker",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","10.51%","Plague Hag",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","6.70%","Scrap Metal Monster",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","3.86%","Bog Beast",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","2.73%","Swamp Runner",1941
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","2.37%","Mutated Siblings",1941
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","14.09%","Sludge Soaker",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","10.74%","Plague Hag",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","8.95%","Biohazard",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","8.05%","Toxic Warrior",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","6.94%","Scrap Metal Monster",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","6.94%","Telekinetic Mutant",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","6.04%","Tentacle",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.82%","Mutant Ninja",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.37%","Sludge Swimmer",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.37%","Mutant Mongrel",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","4.92%","The Menace",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","4.92%","Slimefist",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","3.58%","Outbreak Assassin",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","2.46%","Sludge",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","1.57%","Mutated Siblings",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","1.12%","Swamp Runner",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.89%","Gelatinous Octahedron",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.89%","Monster Tail",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.89%","Bog Beast",447
-"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.45%","Spore",447
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","27.75%","Plague Hag",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","24.33%","Sludge Soaker",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","21.34%","Gelatinous Octahedron",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","6.02%","Scrap Metal Monster",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","5.97%","Monster Tail",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","4.24%","Spore",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","4.03%","Bog Beast",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","3.64%","Mutated Siblings",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","1.43%","Sludge",2310
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","1.26%","Swamp Runner",2310
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","16.67%","Plague Hag",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","9.68%","Toxic Warrior",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","7.53%","Slimefist",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","7.53%","Outbreak Assassin",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","7.26%","Sludge Soaker",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","7.26%","Mutant Ninja",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","6.99%","Sludge Swimmer",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","5.91%","The Menace",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","5.91%","Biohazard",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.84%","Scrap Metal Monster",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.84%","Telekinetic Mutant",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.57%","Mutant Mongrel",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.03%","Tentacle",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","1.88%","Monster Tail",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","1.08%","Spore",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","1.08%","Sludge",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","1.08%","Swamp Runner",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.81%","Gelatinous Octahedron",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.54%","Bog Beast",372
-"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.54%","Mutated Siblings",372
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","15.36%","Plague Hag",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","13.99%","Sludge Soaker",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","13.86%","Biohazard",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","12.24%","Tentacle",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","12.24%","Telekinetic Mutant",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","8.53%","Mutant Ninja",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","7.50%","Gelatinous Octahedron",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","6.50%","Scrap Metal Monster",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","2.51%","Bog Beast",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","2.01%","Monster Tail",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.78%","Mutated Siblings",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.34%","Swamp Runner",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.12%","Spore",3587
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.03%","Sludge",3587
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","16.06%","Telekinetic Mutant",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","14.65%","Tentacle",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","11.83%","The Menace",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","9.30%","Biohazard",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","7.89%","Mutant Ninja",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","7.04%","Slimefist",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","6.76%","Outbreak Assassin",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","6.48%","Mutant Mongrel",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","5.35%","Sludge Swimmer",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","5.35%","Toxic Warrior",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.69%","Swamp Runner",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.41%","Scrap Metal Monster",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.13%","Gelatinous Octahedron",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.13%","Sludge Soaker",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.85%","Mutated Siblings",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.85%","Sludge",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.85%","Bog Beast",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.56%","Plague Hag",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.56%","Monster Tail",355
-"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.28%","Spore",355
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","17.06%","Toxic Warrior",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","13.71%","Slimefist",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","13.48%","Mutant Mongrel",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","12.99%","Outbreak Assassin",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","9.66%","Telekinetic Mutant",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","6.83%","Plague Hag",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","6.31%","Biohazard",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","5.48%","Tentacle",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","2.15%","Gelatinous Octahedron",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","2.09%","Sludge Soaker",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.92%","Scrap Metal Monster",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.81%","Mutant Ninja",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.35%","Bog Beast",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.29%","Mutated Siblings",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.03%","Spore",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","0.98%","Sludge",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","0.95%","Monster Tail",3487
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","0.92%","Swamp Runner",3487
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","18.31%","Slimefist",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","15.99%","Sludge Swimmer",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","15.70%","Mutant Mongrel",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","11.63%","Outbreak Assassin",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","11.34%","The Menace",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","9.30%","Toxic Warrior",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","2.91%","Sludge",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","2.03%","Plague Hag",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.74%","Biohazard",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.74%","Telekinetic Mutant",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.45%","Spore",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.16%","Mutant Ninja",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.16%","Mutated Siblings",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.16%","Swamp Runner",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.87%","Scrap Metal Monster",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.87%","Sludge Soaker",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.87%","Tentacle",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.58%","Glitchpaw",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.58%","Monster Tail",344
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.58%","Bog Beast",344
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","11.17%","Mutant Mongrel",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","9.40%","Slimefist",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.99%","Outbreak Assassin",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.96%","Toxic Warrior",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.64%","Mutant Ninja",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.62%","Sludge Swimmer",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.51%","Telekinetic Mutant",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.36%","The Menace",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","6.71%","Sludge Soaker",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","5.54%","Plague Hag",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","5.43%","Biohazard",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","5.31%","Tentacle",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","4.35%","Scrap Metal Monster",5381
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","18.31%","The Menace",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","15.89%","Sludge Swimmer",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","14.73%","Outbreak Assassin",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","14.34%","Mutant Mongrel",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","14.15%","Slimefist",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","13.57%","Toxic Warrior",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.65%","Tentacle",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.55%","Plague Hag",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.55%","Telekinetic Mutant",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.36%","Biohazard",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.07%","Sludge Soaker",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","0.87%","Mutant Ninja",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","0.87%","Scrap Metal Monster",1032
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","0.10%","Glitchpaw",1032
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","13.12%","Mutant Mongrel",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","11.07%","Slimefist",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.79%","Mutated Behemoth",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.27%","Outbreak Assassin",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.14%","Telekinetic Mutant",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","9.82%","The Menace",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","8.22%","Toxic Warrior",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","7.97%","Sludge Swimmer",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","5.75%","Biohazard",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","5.45%","Tentacle",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","3.15%","Mutant Ninja",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","2.05%","Scrap Metal Monster",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","1.12%","Plague Hag",4002
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","1.07%","Sludge Soaker",4002
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","21.83%","Mutated Behemoth",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","15.25%","Sludge Swimmer",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","14.77%","The Menace",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","11.42%","Toxic Warrior",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","11.00%","Slimefist",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","10.77%","Outbreak Assassin",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","7.78%","Mutant Mongrel",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.38%","Plague Hag",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.08%","Tentacle",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.08%","Biohazard",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","0.96%","Sludge Soaker",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","0.90%","Mutant Ninja",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","0.90%","Scrap Metal Monster",1672
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","0.90%","Telekinetic Mutant",1672
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","19.70%","Swamp Runner",462
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","19.26%","Mutated Siblings",462
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","15.80%","Lab Technician",462
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","15.58%","Monster Tail",462
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","13.85%","Spore",462
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","12.99%","Sludge",462
-"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","2.81%","Bog Beast",462
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","26.09%","Spore",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","24.38%","Monster Tail",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","17.19%","Lab Technician",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","11.56%","Gelatinous Octahedron",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","9.22%","Sludge",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","4.06%","Mutated Siblings",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","3.91%","Swamp Runner",640
-"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","3.59%","Bog Beast",640
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","16.08%","Sludge",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","15.83%","Lab Technician",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","14.82%","Gelatinous Octahedron",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","12.19%","Spore",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","11.18%","Monster Tail",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","9.67%","Plague Hag",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","9.30%","Sludge Soaker",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","4.15%","Scrap Metal Monster",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","3.89%","Bog Beast",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","1.88%","Swamp Runner",796
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","1.01%","Mutated Siblings",796
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","24.02%","Sludge Soaker",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","21.18%","Plague Hag",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","17.79%","Gelatinous Octahedron",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","14.74%","Lab Technician",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","5.79%","Scrap Metal Monster",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","4.59%","Monster Tail",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","4.37%","Spore",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","2.73%","Bog Beast",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","2.40%","Mutated Siblings",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","1.42%","Swamp Runner",916
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","0.98%","Sludge",916
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","16.09%","Lab Technician",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","13.48%","Sludge Soaker",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","12.09%","Biohazard",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","11.11%","Plague Hag",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","10.05%","Telekinetic Mutant",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","9.40%","Tentacle",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","6.86%","Mutant Ninja",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","6.78%","Gelatinous Octahedron",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","5.96%","Scrap Metal Monster",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","2.12%","Bog Beast",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","2.12%","Monster Tail",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","1.14%","Sludge",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","1.06%","Swamp Runner",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","0.90%","Spore",1224
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","0.82%","Mutated Siblings",1224
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","12.99%","Toxic Warrior",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","12.87%","Outbreak Assassin",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","12.62%","Lab Technician",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","11.89%","Slimefist",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","11.40%","Mutant Mongrel",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","8.70%","Telekinetic Mutant",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","5.64%","Biohazard",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","5.39%","Plague Hag",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","4.78%","Tentacle",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.96%","Scrap Metal Monster",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.96%","Sludge Soaker",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.84%","Mutant Ninja",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.72%","Gelatinous Octahedron",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.35%","Mutated Siblings",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.23%","Bog Beast",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.98%","Sludge",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.98%","Spore",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.98%","Swamp Runner",816
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.74%","Monster Tail",816
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","11.93%","Lab Technician",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","9.19%","The Menace",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.42%","Toxic Warrior",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.42%","Sludge Swimmer",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.21%","Mutant Ninja",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.10%","Mutant Mongrel",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","7.88%","Slimefist",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","7.66%","Sludge Soaker",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","6.67%","Telekinetic Mutant",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","5.58%","Outbreak Assassin",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","5.25%","Plague Hag",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","4.60%","Biohazard",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","4.38%","Tentacle",914
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","3.72%","Scrap Metal Monster",914
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","11.95%","Mutated Behemoth",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","11.37%","Slimefist",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","11.08%","Mutant Mongrel",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","9.33%","The Menace",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","8.45%","Lab Technician",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","8.45%","Toxic Warrior",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","8.16%","Outbreak Assassin",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","7.29%","Sludge Swimmer",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","6.71%","Telekinetic Mutant",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","6.12%","Biohazard",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","3.50%","Tentacle",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","2.92%","Mutant Ninja",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","1.75%","Sludge Soaker",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","1.75%","Scrap Metal Monster",343
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","1.17%","Plague Hag",343
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","17.20%","Sludge",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","17.20%","Swamp Runner",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","16.76%","Mutated Siblings",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","16.03%","Hazmat",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","11.37%","Spore",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","11.08%","Monster Tail",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","6.71%","Lab Technician",686
-"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","3.64%","Bog Beast",686
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","25.43%","Spore",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","22.37%","Monster Tail",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","12.71%","Sludge",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","10.64%","Hazmat",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","9.90%","Gelatinous Octahedron",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","6.11%","Lab Technician",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","5.26%","Bog Beast",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","4.65%","Swamp Runner",818
-"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","2.93%","Mutated Siblings",818
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","14.52%","Hazmat",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","12.10%","Gelatinous Octahedron",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","10.48%","Scrap Metal Monster",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","6.45%","Sludge Soaker",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","6.45%","Spore",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","6.45%","Lab Technician",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","5.65%","Tentacle",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.84%","Slimefist",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.84%","Plague Hag",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.03%","Biohazard",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.03%","Telekinetic Mutant",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","3.23%","Toxic Warrior",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","3.23%","Sludge Swimmer",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","2.42%","Sludge",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","2.42%","Mutant Ninja",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.61%","Mutant Mongrel",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.61%","Monster Tail",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.61%","Outbreak Assassin",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.61%","The Menace",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","0.81%","Mutated Siblings",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","0.81%","Bog Beast",124
-"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","0.81%","Swamp Runner",124
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","15.89%","Sludge",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","13.33%","Hazmat",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","13.24%","Spore",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","12.69%","Gelatinous Octahedron",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","9.59%","Monster Tail",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","8.22%","Sludge Soaker",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","8.22%","Plague Hag",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","6.85%","Lab Technician",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","5.75%","Scrap Metal Monster",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","2.47%","Bog Beast",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","1.92%","Swamp Runner",1095
-"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","1.83%","Mutated Siblings",1095
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","22.82%","Plague Hag",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","22.23%","Sludge Soaker",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","15.55%","Gelatinous Octahedron",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","12.76%","Hazmat",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","5.83%","Lab Technician",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","4.90%","Monster Tail",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","4.65%","Scrap Metal Monster",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","3.04%","Mutated Siblings",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","2.96%","Spore",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","2.87%","Bog Beast",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","1.52%","Sludge",1183
-"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","0.85%","Swamp Runner",1183
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","13.59%","Hazmat",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","12.18%","Sludge Soaker",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","11.64%","Plague Hag",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","10.99%","Biohazard",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","10.61%","Telekinetic Mutant",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","9.75%","Tentacle",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","6.88%","Mutant Ninja",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","5.90%","Lab Technician",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","5.31%","Gelatinous Octahedron",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","5.14%","Scrap Metal Monster",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","2.22%","Monster Tail",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","1.46%","Bog Beast",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","1.41%","Mutated Siblings",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","1.25%","Swamp Runner",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","0.92%","Spore",1847
-"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","0.76%","Sludge",1847
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","14.19%","Toxic Warrior",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","12.96%","Hazmat",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","12.67%","Slimefist",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","11.15%","Mutant Mongrel",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","10.57%","Outbreak Assassin",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","6.60%","Telekinetic Mutant",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","5.37%","Plague Hag",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","4.90%","Biohazard",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","4.90%","Tentacle",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","4.61%","Lab Technician",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","2.34%","Mutant Ninja",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.93%","Scrap Metal Monster",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.46%","Gelatinous Octahedron",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.40%","Sludge Soaker",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.99%","Sludge",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.99%","Bog Beast",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.93%","Swamp Runner",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.76%","Monster Tail",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.64%","Mutated Siblings",1713
-"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.64%","Spore",1713
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","15.67%","Mutant Mongrel",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","14.18%","The Menace",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","12.69%","Hazmat",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","11.94%","Sludge Swimmer",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","9.70%","Slimefist",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","8.21%","Outbreak Assassin",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","6.72%","Toxic Warrior",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","3.73%","Lab Technician",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.24%","Monster Tail",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.24%","Biohazard",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.24%","Scrap Metal Monster",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.24%","Swamp Runner",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.24%","Sludge",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","1.49%","Telekinetic Mutant",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.75%","Bog Beast",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.75%","Gelatinous Octahedron",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.75%","Sludge Soaker",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.75%","Mutant Ninja",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.75%","Plague Hag",134
-"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.75%","Spore",134
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","14.11%","Hazmat",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.80%","Mutant Ninja",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.74%","Mutant Mongrel",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.30%","Telekinetic Mutant",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.30%","Outbreak Assassin",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.18%","Toxic Warrior",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.18%","Slimefist",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","6.68%","Biohazard",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","6.68%","Sludge Swimmer",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","6.30%","The Menace",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","5.31%","Plague Hag",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","5.12%","Sludge Soaker",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","4.06%","Tentacle",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","3.68%","Scrap Metal Monster",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","3.56%","Lab Technician",1602
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","20.00%","The Menace",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","14.29%","Sludge Swimmer",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","13.33%","Mutant Mongrel",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","13.33%","Hazmat",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","10.48%","Outbreak Assassin",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","9.52%","Toxic Warrior",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","8.57%","Slimefist",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","3.81%","Biohazard",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","1.90%","Plague Hag",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","1.90%","Lab Technician",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.95%","Scrap Metal Monster",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.95%","Telekinetic Mutant",105
-"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.95%","Sludge Soaker",105
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","11.54%","Mutated Behemoth",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","11.08%","Mutant Mongrel",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","10.92%","Hazmat",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","10.77%","The Menace",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","8.00%","Slimefist",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.54%","Outbreak Assassin",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.38%","Telekinetic Mutant",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.08%","Sludge Swimmer",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","5.69%","Toxic Warrior",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.31%","Mutant Ninja",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.31%","Tentacle",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.15%","Biohazard",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.00%","Lab Technician",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","1.23%","Sludge Soaker",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","1.08%","Scrap Metal Monster",650
-"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","0.92%","Plague Hag",650
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","22.55%","Mutated Behemoth",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","17.65%","Sludge Swimmer",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","14.71%","The Menace",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","10.78%","Outbreak Assassin",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","8.82%","Slimefist",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","6.86%","Toxic Warrior",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","6.86%","Hazmat",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","4.90%","Mutant Mongrel",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","3.92%","Lab Technician",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Biohazard",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Mutant Ninja",102
-"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Plague Hag",102
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","29.38%","Spore",1661
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","28.90%","Monster Tail",1661
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","13.37%","Sludge",1661
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","11.80%","Gelatinous Octahedron",1661
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","6.38%","Bog Beast",1661
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","5.24%","Mutated Siblings",1661
+"Toxic Spill","Knight","Rancid Radioactive Blue","-","4.94%","Swamp Runner",1661
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","14.96%","Gelatinous Octahedron",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","7.33%","Plague Hag",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","7.33%","Spore",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","7.04%","Sludge Soaker",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.87%","Scrap Metal Monster",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.57%","Telekinetic Mutant",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","5.28%","Biohazard",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.99%","Slimefist",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.99%","Toxic Warrior",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.69%","Tentacle",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.69%","Outbreak Assassin",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.69%","Mutant Mongrel",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","4.11%","Mutant Ninja",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.81%","Monster Tail",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.81%","Sludge Swimmer",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","3.23%","The Menace",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","2.35%","Sludge",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","2.35%","Mutated Siblings",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","1.47%","Bog Beast",341
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","-","1.47%","Swamp Runner",341
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","19.60%","Sludge",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","17.19%","Gelatinous Octahedron",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","14.27%","Spore",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","12.38%","Monster Tail",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","10.82%","Sludge Soaker",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","10.44%","Plague Hag",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","6.57%","Scrap Metal Monster",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","3.83%","Bog Beast",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","2.65%","Swamp Runner",2117
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","-","2.27%","Mutated Siblings",2117
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","14.22%","Sludge Soaker",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","11.21%","Plague Hag",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","8.84%","Biohazard",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","7.97%","Toxic Warrior",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","7.11%","Telekinetic Mutant",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","6.68%","Scrap Metal Monster",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.82%","Mutant Mongrel",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.82%","Tentacle",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.60%","Sludge Swimmer",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","5.60%","Mutant Ninja",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","4.96%","Slimefist",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","4.74%","The Menace",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","3.45%","Outbreak Assassin",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","2.37%","Sludge",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","1.51%","Mutated Siblings",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","1.08%","Swamp Runner",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.86%","Monster Tail",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.86%","Bog Beast",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.86%","Gelatinous Octahedron",464
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","-","0.43%","Spore",464
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","27.39%","Plague Hag",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","24.77%","Sludge Soaker",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","21.09%","Gelatinous Octahedron",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","6.30%","Monster Tail",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","6.06%","Scrap Metal Monster",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","4.24%","Spore",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","3.92%","Bog Beast",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","3.56%","Mutated Siblings",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","1.33%","Sludge",2475
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","-","1.33%","Swamp Runner",2475
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","17.36%","Plague Hag",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","9.29%","Toxic Warrior",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","7.82%","Slimefist",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","7.33%","Outbreak Assassin",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","6.85%","Sludge Soaker",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","6.85%","Mutant Ninja",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","6.85%","Biohazard",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","6.60%","Sludge Swimmer",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","5.62%","The Menace",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.89%","Scrap Metal Monster",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.65%","Mutant Mongrel",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.65%","Telekinetic Mutant",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","4.40%","Tentacle",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","1.96%","Monster Tail",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","1.22%","Spore",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.98%","Sludge",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.98%","Swamp Runner",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.73%","Gelatinous Octahedron",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.49%","Mutated Siblings",409
+"Toxic Spill","Baron/Baroness","Magical Rancid Radioactive Blue","-","0.49%","Bog Beast",409
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","15.19%","Plague Hag",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","14.04%","Sludge Soaker",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","13.98%","Biohazard",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","12.28%","Tentacle",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","12.09%","Telekinetic Mutant",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","8.43%","Mutant Ninja",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","7.69%","Gelatinous Octahedron",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","6.59%","Scrap Metal Monster",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","2.59%","Bog Beast",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.95%","Monster Tail",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.73%","Mutated Siblings",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.31%","Swamp Runner",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","1.15%","Spore",3747
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","-","0.99%","Sludge",3747
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","16.05%","Tentacle",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","14.32%","Telekinetic Mutant",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","11.36%","The Menace",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","9.14%","Biohazard",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","7.16%","Mutant Ninja",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","6.67%","Toxic Warrior",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","6.67%","Slimefist",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","6.67%","Outbreak Assassin",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","6.42%","Mutant Mongrel",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","5.19%","Sludge Swimmer",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.73%","Swamp Runner",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.48%","Sludge Soaker",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","1.48%","Scrap Metal Monster",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.99%","Sludge",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.99%","Monster Tail",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.99%","Gelatinous Octahedron",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.99%","Mutated Siblings",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.74%","Bog Beast",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.74%","Plague Hag",405
+"Toxic Spill","Count/Countess","Magical Rancid Radioactive Blue","-","0.25%","Spore",405
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","17.32%","Toxic Warrior",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","13.57%","Slimefist",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","13.35%","Mutant Mongrel",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","13.11%","Outbreak Assassin",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","9.54%","Telekinetic Mutant",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","6.73%","Plague Hag",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","6.25%","Biohazard",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","5.58%","Tentacle",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","2.14%","Gelatinous Octahedron",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","2.09%","Sludge Soaker",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.88%","Scrap Metal Monster",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.82%","Mutant Ninja",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.39%","Bog Beast",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.26%","Mutated Siblings",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.02%","Spore",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","1.02%","Sludge",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","0.97%","Monster Tail",3730
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","-","0.97%","Swamp Runner",3730
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","17.39%","Slimefist",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","16.03%","Sludge Swimmer",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","15.76%","Mutant Mongrel",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","12.23%","Outbreak Assassin",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","11.41%","The Menace",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","9.24%","Toxic Warrior",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","2.72%","Sludge",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","2.17%","Plague Hag",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.63%","Telekinetic Mutant",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.63%","Biohazard",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.36%","Spore",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.09%","Scrap Metal Monster",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.09%","Mutated Siblings",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.09%","Swamp Runner",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.09%","Tentacle",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.09%","Sludge Soaker",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","1.09%","Mutant Ninja",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.54%","Monster Tail",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.54%","Bog Beast",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.54%","Glitchpaw",368
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","-","0.27%","Gelatinous Octahedron",368
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","10.99%","Mutant Mongrel",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","9.40%","Slimefist",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","9.12%","Outbreak Assassin",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","9.05%","Toxic Warrior",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.73%","Mutant Ninja",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.64%","Sludge Swimmer",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.40%","Telekinetic Mutant",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","8.32%","The Menace",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","6.71%","Sludge Soaker",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","5.53%","Plague Hag",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","5.48%","Biohazard",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","5.30%","Tentacle",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","-","4.34%","Scrap Metal Monster",5604
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","18.44%","The Menace",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","15.47%","Sludge Swimmer",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","14.86%","Slimefist",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","14.51%","Outbreak Assassin",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","14.07%","Mutant Mongrel",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","13.72%","Toxic Warrior",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.57%","Plague Hag",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.49%","Tentacle",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.49%","Telekinetic Mutant",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.31%","Biohazard",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","1.22%","Sludge Soaker",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","0.87%","Mutant Ninja",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","0.87%","Scrap Metal Monster",1144
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","-","0.09%","Glitchpaw",1144
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","13.14%","Mutant Mongrel",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.98%","Slimefist",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.76%","Mutated Behemoth",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.32%","Outbreak Assassin",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","10.12%","Telekinetic Mutant",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","9.90%","The Menace",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","8.28%","Toxic Warrior",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","7.91%","Sludge Swimmer",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","5.72%","Biohazard",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","5.43%","Tentacle",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","3.14%","Mutant Ninja",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","2.04%","Scrap Metal Monster",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","1.15%","Plague Hag",4071
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","-","1.11%","Sludge Soaker",4071
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","21.99%","Mutated Behemoth",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","15.34%","Sludge Swimmer",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","14.60%","The Menace",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","11.36%","Toxic Warrior",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","10.74%","Slimefist",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","10.57%","Outbreak Assassin",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","7.73%","Mutant Mongrel",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.31%","Plague Hag",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.14%","Biohazard",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.14%","Tentacle",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.08%","Mutant Ninja",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.02%","Telekinetic Mutant",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","1.02%","Sludge Soaker",1760
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","-","0.97%","Scrap Metal Monster",1760
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","19.53%","Swamp Runner",466
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","19.10%","Mutated Siblings",466
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","15.88%","Lab Technician",466
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","15.67%","Monster Tail",466
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","13.95%","Spore",466
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","13.09%","Sludge",466
+"Toxic Spill","Hero","Rancid Radioactive Blue","Rotten","2.79%","Bog Beast",466
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","26.05%","Spore",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","24.34%","Monster Tail",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","17.16%","Lab Technician",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","11.54%","Gelatinous Octahedron",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","9.20%","Sludge",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","4.06%","Swamp Runner",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","4.06%","Mutated Siblings",641
+"Toxic Spill","Knight","Rancid Radioactive Blue","Rotten","3.59%","Bog Beast",641
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","16.06%","Sludge",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","15.81%","Lab Technician",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","14.93%","Gelatinous Octahedron",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","12.17%","Spore",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","11.17%","Monster Tail",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","9.66%","Plague Hag",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","9.28%","Sludge Soaker",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","4.14%","Scrap Metal Monster",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","3.89%","Bog Beast",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","1.88%","Swamp Runner",797
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Rotten","1.00%","Mutated Siblings",797
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","23.99%","Sludge Soaker",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","21.02%","Plague Hag",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","17.62%","Gelatinous Octahedron",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","14.65%","Lab Technician",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","6.05%","Scrap Metal Monster",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","4.56%","Monster Tail",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","4.25%","Spore",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","2.87%","Bog Beast",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","2.65%","Mutated Siblings",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","1.38%","Swamp Runner",942
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Rotten","0.96%","Sludge",942
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","16.17%","Lab Technician",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","13.41%","Sludge Soaker",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","11.95%","Biohazard",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","11.34%","Plague Hag",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","9.89%","Telekinetic Mutant",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","9.43%","Tentacle",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","6.97%","Mutant Ninja",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","6.82%","Gelatinous Octahedron",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","5.90%","Scrap Metal Monster",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","2.30%","Bog Beast",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","2.07%","Monster Tail",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","1.15%","Sludge",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","1.00%","Swamp Runner",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","0.84%","Spore",1305
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Rotten","0.77%","Mutated Siblings",1305
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","12.74%","Lab Technician",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","12.62%","Outbreak Assassin",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","12.62%","Toxic Warrior",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","11.96%","Mutant Mongrel",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","11.52%","Slimefist",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","9.08%","Telekinetic Mutant",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","5.76%","Biohazard",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","5.32%","Plague Hag",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","4.76%","Tentacle",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.88%","Sludge Soaker",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.77%","Scrap Metal Monster",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.77%","Gelatinous Octahedron",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.77%","Mutant Ninja",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.44%","Bog Beast",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.33%","Sludge",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","1.22%","Mutated Siblings",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.89%","Spore",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.89%","Swamp Runner",903
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Rotten","0.66%","Monster Tail",903
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","11.98%","Lab Technician",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","9.27%","The Menace",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.54%","Mutant Ninja",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.44%","Toxic Warrior",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.44%","Mutant Mongrel",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","8.02%","Sludge Swimmer",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","7.81%","Slimefist",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","7.29%","Sludge Soaker",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","6.77%","Telekinetic Mutant",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","5.83%","Outbreak Assassin",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","5.00%","Plague Hag",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","4.58%","Biohazard",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","4.48%","Tentacle",960
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Rotten","3.54%","Scrap Metal Monster",960
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","12.21%","Mutated Behemoth",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","11.34%","Slimefist",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","11.05%","Mutant Mongrel",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","9.30%","The Menace",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","8.43%","Lab Technician",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","8.43%","Toxic Warrior",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","8.14%","Outbreak Assassin",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","7.27%","Sludge Swimmer",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","6.69%","Telekinetic Mutant",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","6.10%","Biohazard",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","3.49%","Tentacle",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","2.91%","Mutant Ninja",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","1.74%","Sludge Soaker",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","1.74%","Scrap Metal Monster",344
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Rotten","1.16%","Plague Hag",344
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","17.11%","Sludge",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","17.11%","Mutated Siblings",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","16.83%","Swamp Runner",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","16.13%","Hazmat",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","11.27%","Spore",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","11.27%","Monster Tail",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","6.40%","Lab Technician",719
+"Toxic Spill","Hero","Rancid Radioactive Blue","Super Rotten","3.89%","Bog Beast",719
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","25.12%","Spore",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","22.26%","Monster Tail",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","12.50%","Sludge",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","11.07%","Hazmat",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","10.12%","Gelatinous Octahedron",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","6.07%","Lab Technician",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","5.24%","Bog Beast",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","4.64%","Swamp Runner",840
+"Toxic Spill","Knight","Rancid Radioactive Blue","Super Rotten","2.98%","Mutated Siblings",840
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","14.84%","Hazmat",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","11.72%","Gelatinous Octahedron",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","10.94%","Scrap Metal Monster",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","6.25%","Sludge Soaker",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","6.25%","Spore",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","6.25%","Lab Technician",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","5.47%","Tentacle",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.69%","Plague Hag",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.69%","Slimefist",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","4.69%","Telekinetic Mutant",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","3.91%","Biohazard",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","3.13%","Toxic Warrior",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","3.13%","Sludge Swimmer",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","3.13%","Mutant Ninja",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","2.34%","Sludge",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.56%","The Menace",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.56%","Mutant Mongrel",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.56%","Monster Tail",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","1.56%","Outbreak Assassin",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","0.78%","Mutated Siblings",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","0.78%","Bog Beast",128
+"Toxic Spill","Knight","Magical Rancid Radioactive Blue","Super Rotten","0.78%","Swamp Runner",128
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","15.79%","Sludge",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","13.63%","Hazmat",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","13.29%","Spore",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","12.68%","Gelatinous Octahedron",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","9.66%","Monster Tail",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","8.20%","Sludge Soaker",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","8.11%","Plague Hag",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","6.73%","Lab Technician",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","5.87%","Scrap Metal Monster",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","2.50%","Bog Beast",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","1.81%","Swamp Runner",1159
+"Toxic Spill","Lord/Lady","Rancid Radioactive Blue","Super Rotten","1.73%","Mutated Siblings",1159
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","18.63%","Hazmat",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","10.78%","Sludge Soaker",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","8.82%","Biohazard",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","6.86%","Lab Technician",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","6.86%","Sludge Swimmer",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","6.86%","Plague Hag",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","5.88%","The Menace",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","4.90%","Outbreak Assassin",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","4.90%","Mutant Ninja",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","3.92%","Slimefist",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","3.92%","Scrap Metal Monster",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","2.94%","Mutant Mongrel",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","2.94%","Tentacle",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","2.94%","Toxic Warrior",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","2.94%","Telekinetic Mutant",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","1.96%","Monster Tail",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Gelatinous Octahedron",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Sludge",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Mutated Siblings",102
+"Toxic Spill","Lord/Lady","Magical Rancid Radioactive Blue","Super Rotten","0.98%","Swamp Runner",102
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","22.52%","Plague Hag",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","22.10%","Sludge Soaker",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","15.48%","Gelatinous Octahedron",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","12.83%","Hazmat",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","6.04%","Lab Technician",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","4.97%","Monster Tail",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","4.88%","Scrap Metal Monster",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","3.06%","Mutated Siblings",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","2.98%","Spore",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","2.81%","Bog Beast",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","1.49%","Sludge",1208
+"Toxic Spill","Baron/Baroness","Rancid Radioactive Blue","Super Rotten","0.83%","Swamp Runner",1208
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","13.83%","Hazmat",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","12.10%","Sludge Soaker",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","11.73%","Plague Hag",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","10.99%","Biohazard",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","10.42%","Telekinetic Mutant",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","9.94%","Tentacle",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","6.73%","Mutant Ninja",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","5.79%","Lab Technician",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","5.16%","Scrap Metal Monster",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","5.16%","Gelatinous Octahedron",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","2.26%","Monster Tail",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","1.53%","Bog Beast",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","1.42%","Mutated Siblings",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","1.26%","Swamp Runner",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","0.89%","Spore",1901
+"Toxic Spill","Count/Countess","Rancid Radioactive Blue","Super Rotten","0.79%","Sludge",1901
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","13.95%","Toxic Warrior",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","13.00%","Hazmat",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","12.94%","Slimefist",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","11.30%","Mutant Mongrel",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","10.46%","Outbreak Assassin",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","6.60%","Telekinetic Mutant",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","5.34%","Plague Hag",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","5.07%","Biohazard",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","4.75%","Tentacle",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","4.49%","Lab Technician",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","2.27%","Mutant Ninja",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.85%","Scrap Metal Monster",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.64%","Sludge Soaker",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.37%","Gelatinous Octahedron",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","1.06%","Swamp Runner",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.95%","Sludge",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.95%","Bog Beast",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.69%","Monster Tail",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.69%","Spore",1893
+"Toxic Spill","Duke/Duchess","Rancid Radioactive Blue","Super Rotten","0.63%","Mutated Siblings",1893
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","15.56%","Mutant Mongrel",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","14.07%","The Menace",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","13.33%","Hazmat",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","11.85%","Sludge Swimmer",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","9.63%","Slimefist",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","8.15%","Outbreak Assassin",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","6.67%","Toxic Warrior",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","3.70%","Lab Technician",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.22%","Swamp Runner",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.22%","Sludge",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.22%","Monster Tail",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.22%","Biohazard",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","2.22%","Scrap Metal Monster",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","1.48%","Telekinetic Mutant",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.74%","Spore",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.74%","Bog Beast",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.74%","Gelatinous Octahedron",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.74%","Sludge Soaker",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.74%","Mutant Ninja",135
+"Toxic Spill","Duke/Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.74%","Plague Hag",135
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","13.79%","Hazmat",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.89%","Mutant Mongrel",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.59%","Mutant Ninja",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.30%","Toxic Warrior",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.24%","Telekinetic Mutant",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.18%","Outbreak Assassin",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","7.07%","Slimefist",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","6.89%","Biohazard",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","6.60%","The Menace",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","6.60%","Sludge Swimmer",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","5.32%","Plague Hag",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","5.02%","Sludge Soaker",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","4.09%","Tentacle",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","3.74%","Scrap Metal Monster",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Rancid Radioactive Blue","Super Rotten","3.68%","Lab Technician",1712
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","19.81%","The Menace",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","14.15%","Sludge Swimmer",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","14.15%","Hazmat",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","13.21%","Mutant Mongrel",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","10.38%","Outbreak Assassin",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","9.43%","Toxic Warrior",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","8.49%","Slimefist",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","3.77%","Biohazard",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","1.89%","Lab Technician",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","1.89%","Plague Hag",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.94%","Telekinetic Mutant",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.94%","Sludge Soaker",106
+"Toxic Spill","Grand Duke/Grand Duchess","Magical Rancid Radioactive Blue","Super Rotten","0.94%","Scrap Metal Monster",106
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","11.60%","Mutated Behemoth",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","10.99%","Mutant Mongrel",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","10.84%","Hazmat",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","10.69%","The Menace",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.94%","Slimefist",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.48%","Outbreak Assassin",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.48%","Telekinetic Mutant",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","7.18%","Sludge Swimmer",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","5.80%","Toxic Warrior",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.43%","Tentacle",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.27%","Mutant Ninja",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","4.12%","Biohazard",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","3.97%","Lab Technician",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","1.22%","Sludge Soaker",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","1.07%","Scrap Metal Monster",655
+"Toxic Spill","Archduke/Archduchess","Rancid Radioactive Blue","Super Rotten","0.92%","Plague Hag",655
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","22.12%","Mutated Behemoth",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","17.31%","Sludge Swimmer",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","14.42%","The Menace",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","10.58%","Outbreak Assassin",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","8.65%","Slimefist",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","6.73%","Hazmat",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","6.73%","Toxic Warrior",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","6.73%","Mutant Mongrel",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","3.85%","Lab Technician",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","0.96%","Biohazard",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","0.96%","Mutant Ninja",104
+"Toxic Spill","Archduke/Archduchess","Magical Rancid Radioactive Blue","Super Rotten","0.96%","Plague Hag",104

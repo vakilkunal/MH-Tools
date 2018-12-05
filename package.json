@@ -4,7 +4,7 @@
   "description": "Assortment of MouseHunt utilities",
   "scripts": {
     "\n-- POPULATION DATA --": "",
-    "old-pop:iceberg": "node data/tools/pop iceberg > data/pop-iceberg.csv",
+    "old-pop:iceberg": "node data/tools/icebergpop > data/pop-iceberg.csv",
     "!pop:burroughs": "node data/tools/pop burroughs-rift > data/location-pop/burroughs-rift.csv",
     "!pop:bristle": "node data/tools/pop bristle-woods-rift > data/location-pop/bristle-woods-rift.csv",
     "pop:cantera": "node data/tools/pop cantera-quarry > data/location-pop/cantera-quarry.csv",
