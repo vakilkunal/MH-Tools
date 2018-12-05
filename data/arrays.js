@@ -71,11 +71,10 @@ var riftBases = [
  */
 var riftCharms = [
   "Cherry Charm",
-  "Enerchi Charm",
   "Gnarled Charm",
   "Stagnant Charm",
+  "Enerchi Charm",
   "Super Enerchi Charm",
-  "Super Spooky Charm",
   "Timesplit Charm"
 ];
 
