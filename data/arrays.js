@@ -13,38 +13,39 @@ Object.size = function(obj) {
   return size;
 };
 
+// Rank up wisdom difference requirements
 var rankupDiff = {
-  novice: 2000, //2000-0
-  recruit: 3000, //5000-2000
-  apprentice: 7500, //12500-5000
-  initiate: 18750, //31250-12500
-  journeyman: 34190, //65440-31250
-  master: 72373, //137813-65440
-  grandmaster: 165375, //303188-137813
-  legendary: 363825, //667013-303188
-  hero: 800415, //1467428-667013
-  knight: 1760913, //3228341-1467428
-  lord: 3874008, //7102349-3228341
-  baron: 8522819, //15625168-7102349
-  count: 18750202, //34375370-15625168
-  duke: 41250443, //75625813-34375370
-  grandduke: 90750976, //166376789-75625813
-  archduke: 199652147, //366028936-166376789
-  viceroy: 439234723, //805263659-366028936
-  elder: 966316389, //1771580048-805263659
-  sage: 2125896058 //3897476106-1771580048
+  novice: 2000, // 2000 - 0
+  recruit: 3000, // 5000 - 2000
+  apprentice: 7500, // 12500 - 5000
+  initiate: 18750, // 31250 - 12500
+  journeyman: 34190, // 65440 - 31250
+  master: 72373, // 137813 - 65440
+  grandmaster: 165375, // 303188 - 137813
+  legendary: 363825, // 667013 - 303188
+  hero: 800415, // 1467428 - 667013
+  knight: 1760913, // 3228341 - 1467428
+  lord: 3874008, // 7102349 - 3228341
+  baron: 8522819, // 15625168 - 7102349
+  count: 18750202, // 34375370 - 15625168
+  duke: 41250443, // 75625813 - 34375370
+  grandduke: 90750976, // 166376789 - 75625813
+  archduke: 199652147, // 366028936 - 166376789
+  viceroy: 439234723, // 805263659 - 366028936
+  elder: 966316389, // 1771580048 - 805263659
+  sage: 2125896058 // 3897476106 - 1771580048
 };
 
 // prettier-ignore
 var standardCheeseCost = {
-  "Cheddar" : 10,
-  "Marble" : 50,
-  "Swiss" : 100,
-  "Brie" : 200,
-  "Gouda" : 600,
-  "Marble String" : 300,
-  "Swiss String" : 800,
-  "Brie String" : 1600
+  "Cheddar": 10,
+  "Marble": 50,
+  "Swiss": 100,
+  "Brie": 200,
+  "Gouda": 600,
+  "Marble String": 300,
+  "Swiss String": 800,
+  "Brie String": 1600
 };
 
 var riftWeapons = [
@@ -67,7 +68,7 @@ var riftBases = [
 ];
 
 /**
- * Rift charms with names that do not contain the word 'rift"
+ * Rift charms with names that do not contain the word "Rift"
  */
 var riftCharms = [
   "Cherry Charm",
@@ -125,6 +126,8 @@ var tauntings = [
   "Tri-dra"
 ];
 
+var brutes = ["Snow Bowler", "Yeti", "Mammoth"];
+var bombSquad = ["Saboteur", "Stickybomber", "Heavy Blaster"];
 var berglings = [
   "Incompetent Ice Climber",
   "Polar Bear",
@@ -134,9 +137,6 @@ var berglings = [
   "Wolfskie",
   "Snowblind"
 ];
-
-var brutes = ["Snow Bowler", "Yeti", "Mammoth"];
-var bombSquad = ["Saboteur", "Stickybomber", "Heavy Blaster"];
 
 // prettier-ignore
 var catchDepth = {
@@ -334,6 +334,7 @@ var basesArray = {
   "Furoma Base": [100, 10, 10, 10, "No Effect"],
   "Gingerbread Base": [225, 8, 0, 4, "Insanely Fresh"],
   "Golden Tournament Base": [500, 15, 10, 8, "Extremely Fresh"],
+  "Glowing Golem Guardian Base": [500, 20, 5, 10, "Fresh"],
   "Hearthstone Base": [200, 0, 10, 2, "Very Fresh"],
   "Horse Jade Base": [325, 10, 10, 10, "Stale"],
   "Hothouse Base": [250, 3, 5, 6, "Very Fresh"],
@@ -455,6 +456,11 @@ var weaponsArray = {
   "Gingerbread House Surprise": ["Tactical", 2200, 10, 10, 8, "Uber Fresh"],
   "Glacier Gatler": ["Hydro", 4800, 10, 10, 20, "Very Fresh"],
   "Goldfrost Crossbow Trap": ["Shadow", 5000, 18, 0, 20, "Very Fresh"],
+  "Golem Guardian Arcane Trap": ["Arcane", 6000, 15, 20, 28, "Fresh"],
+  "Golem Guardian Forgotten Trap": ["Forgotten", 7000, 15, 20, 15, "Fresh"],
+  "Golem Guardian Hydro Trap": ["Hydro", 10000, 15, 20, 28, "Fresh"],
+  "Golem Guardian Physical Trap": ["Physical", 7000, 15, 20, 32, "Fresh"],
+  "Golem Guardian Tactical Trap": ["Tactical", 5000, 15, 20, 30, "Fresh"],
   "Gorgon Trap": ["Shadow", 2000, 5, 5, 7, "Very Stale"],
   "Grand Arcanum Trap": ["Arcane", 4800, 12, 5, 22, "No Effect"],
   "Grungy Deathbot": ["Physical", 2400, 15, 10, 2, "Stale"],
@@ -786,6 +792,7 @@ var charmsArray = {
 var charmKeys = Object.keys(charmsArray);
 charmKeys.sort();
 
+// Weapons that interact with Snowball Charms to give 20% power bonus
 var festiveTraps = [
   "Christmas Cactus Trap",
   "Christmas Cracker Trap",
@@ -807,8 +814,12 @@ var festiveTraps = [
   "Wrapped Gift Trap"
 ];
 
-// No bonus: Haunted Shipwreck, Pumpkin Pummeler, [Maniacal] Brain Extractor
-// Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
+/**
+ * Weapons that interact with Spooky Charms to give 20% power bonus
+ * Below are notable weapons without this bonus:
+ *  Haunted Shipwreck, Pumpkin Pummeler, (Maniacal) Brain Extractor
+ *  Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
+ */
 var halloweenTraps = [
   "Admiral's Galleon Trap",
   "Candy Crusher Trap",

@@ -14,35 +14,27 @@ window.onload = function() {
   loadDropdown("weapon", weaponKeys, weaponChanged, "<option></option>");
   loadDropdown("base", baseKeys, baseChanged, "<option></option>");
   loadCharmDropdown();
-
   showHideWidgets(isCustom());
 
-  // Listen for changes in dropdowns or textboxes
-  document.getElementById("toggleCustom").onchange = function() {
-    var toggle = document.getElementById("toggleCustom");
-    if (toggle.checked) {
-      $(".input-standard").hide();
-      $(".input-custom").show(500);
-      $("#trapPowerType").val(trapType);
-      $("#trapPowerValue").val(trapPower);
-      $("#trapLuckValue").val(trapLuck);
-      $("#trapAttractionValue").val(trapAtt);
-      $("#trapEffect").val(trapEff);
-      $("#bonusPower").val("0");
-      bonusPower = 0;
-      $("#bonusLuck").val("0");
-      bonusLuck = 0;
-      batteryPower = 0;
-      ztAmp = 100;
-      updateCustomSetup();
-    } else {
-      $(".input-custom").hide();
-      $(".input-standard").show(500);
-      calculateTrapSetup();
-    }
-    showHideWidgets(toggle.checked);
-  };
+  // Populate initial golem charge levels
+  var arcaneCharge = parseFloat(localStorage.getItem("golem-charge-arcane"));
+  var forgottenCharge = parseFloat(
+    localStorage.getItem("golem-charge-forgotten")
+  );
+  var hydroCharge = parseFloat(localStorage.getItem("golem-charge-hydro"));
+  var physicalCharge = parseFloat(
+    localStorage.getItem("golem-charge-physical")
+  );
+  var tacticalCharge = parseFloat(
+    localStorage.getItem("golem-charge-tactical")
+  );
+  $("#golem-charge-arcane").val(arcaneCharge || 0);
+  $("#golem-charge-forgotten").val(forgottenCharge || 0);
+  $("#golem-charge-hydro").val(hydroCharge || 0);
+  $("#golem-charge-physical").val(physicalCharge || 0);
+  $("#golem-charge-tactical").val(tacticalCharge || 0);
 
+  // Listen for changes in dropdowns or textboxes
   document.getElementById("trapPowerType").onchange = updateCustomSetup;
   document.getElementById("trapPowerValue").onchange = updateCustomSetup;
   document.getElementById("trapLuckValue").onchange = updateCustomSetup;
@@ -69,6 +61,51 @@ window.onload = function() {
   document.getElementById("cheeseCost").onchange = function() {
     cheeseCost = parseInt(document.getElementById("cheeseCost").value);
     showPop(2);
+  };
+
+  document.getElementById("golem-charge-arcane").oninput = function() {
+    golemChargeChange("arcane");
+  };
+
+  document.getElementById("golem-charge-forgotten").oninput = function() {
+    golemChargeChange("forgotten");
+  };
+
+  document.getElementById("golem-charge-hydro").oninput = function() {
+    golemChargeChange("hydro");
+  };
+
+  document.getElementById("golem-charge-physical").oninput = function() {
+    golemChargeChange("physical");
+  };
+
+  document.getElementById("golem-charge-tactical").oninput = function() {
+    golemChargeChange("tactical");
+  };
+
+  document.getElementById("toggleCustom").onchange = function() {
+    var toggle = document.getElementById("toggleCustom");
+    if (toggle.checked) {
+      $(".input-standard").hide();
+      $(".input-custom").show(500);
+      $("#trapPowerType").val(trapType);
+      $("#trapPowerValue").val(trapPower);
+      $("#trapLuckValue").val(trapLuck);
+      $("#trapAttractionValue").val(trapAtt);
+      $("#trapEffect").val(trapEff);
+      $("#bonusPower").val("0");
+      bonusPower = 0;
+      $("#bonusLuck").val("0");
+      bonusLuck = 0;
+      batteryPower = 0;
+      ztAmp = 100;
+      updateCustomSetup();
+    } else {
+      $(".input-custom").hide();
+      $(".input-standard").show(500);
+      calculateTrapSetup();
+    }
+    showHideWidgets(toggle.checked);
   };
 
   // Send clicked link to setup to Google Analytics
@@ -481,7 +518,7 @@ function loadTourneyDropdown() {
   var tourneyParameter = getURLParameter("tourney");
   if (tourneyParameter !== NULL_URL_PARAM) {
     var select = document.getElementById("tourney");
-    //TODO: Improve
+    // TODO: Improve
     for (var i = 0; i < select.children.length; i++) {
       var child = select.children[i];
       if (child.innerHTML === tourneyParameter) {
@@ -549,6 +586,34 @@ function weaponChanged() {
   // Certain weapons have special effects when paired with particular charms (e.g. Festive + Snowball)
   charmChangeCommon();
   calculateTrapSetup();
+
+  // Handle Golem Guardian charge inputs
+  $(".golem-guardian-charge#arcane").hide();
+  $(".golem-guardian-charge#forgotten").hide();
+  $(".golem-guardian-charge#hydro").hide();
+  $(".golem-guardian-charge#physical").hide();
+  $(".golem-guardian-charge#tactical").hide();
+
+  if (weaponName.indexOf("Golem Guardian") >= 0) {
+    switch (weaponName.split(" ")[2]) {
+      case "Arcane":
+        $(".golem-guardian-charge#arcane").show(500);
+        break;
+      case "Forgotten":
+        $(".golem-guardian-charge#forgotten").show(500);
+        break;
+      case "Hydro":
+        $(".golem-guardian-charge#hydro").show(500);
+        break;
+      case "Physical":
+        $(".golem-guardian-charge#physical").show(500);
+        break;
+      case "Tactical":
+        $(".golem-guardian-charge#tactical").show(500);
+        break;
+      default:
+    }
+  }
 }
 
 function icebergPhase() {
@@ -657,4 +722,72 @@ function tourneyChanged() {
   tournamentName = select.value;
   updateLink();
   calculateTrapSetup();
+}
+
+// Update and validate changes in golem charge inputs
+function golemChargeChange(type) {
+  switch (type) {
+    case "arcane":
+      var arcVal = parseFloat(
+        document.getElementById("golem-charge-arcane").value
+      );
+      if (isValid(arcVal)) {
+        localStorage.setItem("golem-charge-arcane", arcVal);
+        calculateTrapSetup();
+      }
+      break;
+
+    case "forgotten":
+      var forVal = parseFloat(
+        document.getElementById("golem-charge-forgotten").value
+      );
+      if (isValid(forVal)) {
+        localStorage.setItem("golem-charge-forgotten", forVal);
+        calculateTrapSetup();
+      }
+      break;
+
+    case "hydro":
+      var hydVal = parseFloat(
+        document.getElementById("golem-charge-hydro").value
+      );
+      if (isValid(hydVal)) {
+        localStorage.setItem("golem-charge-hydro", hydVal);
+        calculateTrapSetup();
+      }
+      break;
+
+    case "physical":
+      var phyVal = parseFloat(
+        document.getElementById("golem-charge-physical").value
+      );
+      if (isValid(phyVal)) {
+        localStorage.setItem("golem-charge-physical", phyVal);
+        calculateTrapSetup();
+      }
+      break;
+
+    case "tactical":
+      var tacVal = parseFloat(
+        document.getElementById("golem-charge-tactical").value
+      );
+      if (isValid(tacVal)) {
+        localStorage.setItem("golem-charge-tactical", tacVal);
+        calculateTrapSetup();
+      }
+      break;
+
+    default:
+  }
+
+  function isValid(num) {
+    var retBool = false;
+
+    // Validate number between 0-100 and divisible by 0.2
+    if (num >= 0 && num <= 100) {
+      if ((num * 10) % 2 === 0) retBool = true;
+    }
+
+    return retBool;
+  }
 }

@@ -209,6 +209,38 @@ function calculateTrapSetup(skipDisp) {
     braceBonus = false;
 
   if (locationName && cheeseName && weaponName && baseName && phaseName) {
+    // Golem Guardian logic
+    if (weaponName.indexOf("Golem Guardian") >= 0) {
+      var golemCharge = 0;
+      switch (weaponName.split(" ")[2]) {
+        case "Arcane":
+          golemCharge =
+            parseFloat(localStorage.getItem("golem-charge-arcane")) || 0;
+          break;
+        case "Forgotten":
+          golemCharge =
+            parseFloat(localStorage.getItem("golem-charge-forgotten")) || 0;
+          break;
+        case "Hydro":
+          golemCharge =
+            parseFloat(localStorage.getItem("golem-charge-hydro")) || 0;
+          break;
+        case "Physical":
+          golemCharge =
+            parseFloat(localStorage.getItem("golem-charge-physical")) || 0;
+          break;
+        case "Tactical":
+          golemCharge =
+            parseFloat(localStorage.getItem("golem-charge-tactical")) || 0;
+          break;
+        default:
+      }
+
+      golemCharge = parseFloat((golemCharge / 100).toFixed(3));
+      calcGolemStats(golemCharge);
+    }
+
+    // Handle special bonuses that are based on location
     locationSpecificEffects();
 
     if (
@@ -230,16 +262,18 @@ function calculateTrapSetup(skipDisp) {
       } else if (charmName === "Ultimate Polluted Charm") {
         specialLuck += 15;
       }
+    } else if (
+      baseName === "Glowing Golem Guardian Base" &&
+      weaponName.indexOf("Golem Guardian") >= 0
+    ) {
+      specialLuck += 6;
     }
 
     determineRiftBonus(riftStalkerCodex);
-
-    // Battery Levels
     checkBatteryLevel();
     trapType = getPowerType(charmName, weaponName);
     trapPower = getTotalTrapPower();
 
-    //noinspection OverlyComplexArithmeticExpressionJS
     var totalLuck =
       weaponLuck +
       baseLuck +
@@ -250,16 +284,10 @@ function calculateTrapSetup(skipDisp) {
       specialLuck +
       tauntLuck;
     trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
-    trapAtt = weaponAtt + baseAtt + charmAtt;
-    if (trapAtt > 100) {
-      trapAtt = 100;
-    }
+    trapAtt = Math.min(weaponAtt + baseAtt + charmAtt, 100);
     trapEff = weaponEff + baseEff + charmEff;
-    if (trapEff > 6) {
-      trapEff = 6;
-    } else if (trapEff < -6) {
-      trapEff = -6;
-    }
+    trapEff = trapEff > 6 ? 6 : trapEff;
+    trapEff = trapEff < -6 ? -6 : trapEff;
 
     if (user === CRE_USER && !skipDisp) {
       showPop(2);
@@ -606,6 +634,25 @@ function rankChange() {
   genericOnChange();
 }
 
+function golemParamCheck() {
+  var golemParam = getURLParameter("golem_charge");
+  if (golemParam) {
+    var golemArr = JSON.parse(golemParam);
+    if (typeof golemArr === "object" && golemArr.length === 5) {
+      $("#golem-charge-arcane").val(golemArr[0]);
+      $("#golem-charge-forgotten").val(golemArr[1]);
+      $("#golem-charge-hydro").val(golemArr[2]);
+      $("#golem-charge-physical").val(golemArr[3]);
+      $("#golem-charge-tactical").val(golemArr[4]);
+      $("#golem-charge-arcane").trigger("input");
+      $("#golem-charge-forgotten").trigger("input");
+      $("#golem-charge-hydro").trigger("input");
+      $("#golem-charge-physical").trigger("input");
+      $("#golem-charge-tactical").trigger("input");
+    }
+  }
+}
+
 function checkEmpoweredWidget(custom) {
   if (!custom) {
     if (cheeseName === "Brie" || cheeseName === "SB+") {
@@ -740,7 +787,7 @@ function showTrapSetup(type) {
       "<tr><td>Luck</td><td>" +
       trapLuck +
       "</td></tr><tr><td>Attraction Bonus</td><td>" +
-      trapAtt +
+      parseFloat(trapAtt.toFixed(2)) +
       "%</td></tr>" +
       "<tr><td>Cheese Effect</td><td>" +
       reverseParseFreshness[trapEff] +
@@ -1327,6 +1374,7 @@ function checkLoadState(type) {
     riftstalkerParamCheck();
     fortRoxParamCheck();
     rankParamCheck();
+    golemParamCheck();
 
     // Calculate bonuses after param checks are done
     calculateBonusPower();
@@ -1478,4 +1526,16 @@ function formatSampleScore() {
   if (ss) {
     ss.innerHTML = scoreDescriptor;
   }
+}
+
+/**
+ * Calculate and update weapon stats for Golem Guardian variants
+ * @param {number} charge Float from 0.0% to 100.0% (0.2% increment)
+ */
+function calcGolemStats(charge) {
+  // Initial: 2500 Power, 5% Power Bonus, 5% Attraction Bonus, 3 Luck, Fresh
+  weaponPower = (weaponsArray[weaponName][1] - 2500) * charge + 2500;
+  weaponBonus = 10 * charge + 5;
+  weaponAtt = 15 * charge + 5;
+  weaponLuck = Math.floor((weaponsArray[weaponName][4] - 3) * charge + 3);
 }

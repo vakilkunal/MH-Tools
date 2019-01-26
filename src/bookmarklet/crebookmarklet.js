@@ -436,13 +436,59 @@
     urlParams["phase"] = userSublocation;
   }
 
-  sendData(urlParams);
+  if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
+    $.post(
+      "https://www.mousehuntgame.com/managers/ajax/users/gettrapcomponents.php",
+      {
+        hg_is_ajax: 1,
+        uh: user.unique_hash
+      },
+      null,
+      "json"
+    ).done(function(data) {
+      if (data.components) {
+        var arr = data.components.filter(function(el) {
+          return el["component_type"] === "snow_golem_trap_weapon";
+        });
+
+        var urlArr = [0, 0, 0, 0, 0];
+        for (var el of arr) {
+          switch (el["power_type_name"]) {
+            case "Arcane":
+              urlArr[0] = el["golem_guardian_charge_percentage"];
+              break;
+            case "Forgotten":
+              urlArr[1] = el["golem_guardian_charge_percentage"];
+              break;
+            case "Hydro":
+              urlArr[2] = el["golem_guardian_charge_percentage"];
+              break;
+            case "Physical":
+              urlArr[3] = el["golem_guardian_charge_percentage"];
+              break;
+            case "Tactical":
+              urlArr[4] = el["golem_guardian_charge_percentage"];
+              break;
+            default:
+          }
+        }
+
+        urlParams["golem_charge"] = urlArr;
+        sendData(urlParams);
+      }
+    });
+  } else {
+    sendData(urlParams);
+  }
 
   function sendData(parameters) {
     var url = "https://tsitu.github.io/MH-Tools/cre.html?";
 
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);
+      if (key === "golem_charge") {
+        value = "%5B" + value + "%5D";
+      }
       url += key + "=" + value + "&";
     }
 
