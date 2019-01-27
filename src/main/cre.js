@@ -64,23 +64,38 @@ window.onload = function() {
   };
 
   document.getElementById("golem-charge-arcane").oninput = function() {
-    golemChargeChange("arcane");
+    golemChargeChange(
+      "arcane",
+      document.getElementById("golem-charge-arcane").value
+    );
   };
 
   document.getElementById("golem-charge-forgotten").oninput = function() {
-    golemChargeChange("forgotten");
+    golemChargeChange(
+      "forgotten",
+      document.getElementById("golem-charge-forgotten").value
+    );
   };
 
   document.getElementById("golem-charge-hydro").oninput = function() {
-    golemChargeChange("hydro");
+    golemChargeChange(
+      "hydro",
+      document.getElementById("golem-charge-hydro").value
+    );
   };
 
   document.getElementById("golem-charge-physical").oninput = function() {
-    golemChargeChange("physical");
+    golemChargeChange(
+      "physical",
+      document.getElementById("golem-charge-physical").value
+    );
   };
 
   document.getElementById("golem-charge-tactical").oninput = function() {
-    golemChargeChange("tactical");
+    golemChargeChange(
+      "tactical",
+      document.getElementById("golem-charge-tactical").value
+    );
   };
 
   document.getElementById("toggleCustom").onchange = function() {
@@ -722,72 +737,4 @@ function tourneyChanged() {
   tournamentName = select.value;
   updateLink();
   calculateTrapSetup();
-}
-
-// Update and validate changes in golem charge inputs
-function golemChargeChange(type) {
-  switch (type) {
-    case "arcane":
-      var arcVal = parseFloat(
-        document.getElementById("golem-charge-arcane").value
-      );
-      if (isValid(arcVal)) {
-        localStorage.setItem("golem-charge-arcane", arcVal);
-        calculateTrapSetup();
-      }
-      break;
-
-    case "forgotten":
-      var forVal = parseFloat(
-        document.getElementById("golem-charge-forgotten").value
-      );
-      if (isValid(forVal)) {
-        localStorage.setItem("golem-charge-forgotten", forVal);
-        calculateTrapSetup();
-      }
-      break;
-
-    case "hydro":
-      var hydVal = parseFloat(
-        document.getElementById("golem-charge-hydro").value
-      );
-      if (isValid(hydVal)) {
-        localStorage.setItem("golem-charge-hydro", hydVal);
-        calculateTrapSetup();
-      }
-      break;
-
-    case "physical":
-      var phyVal = parseFloat(
-        document.getElementById("golem-charge-physical").value
-      );
-      if (isValid(phyVal)) {
-        localStorage.setItem("golem-charge-physical", phyVal);
-        calculateTrapSetup();
-      }
-      break;
-
-    case "tactical":
-      var tacVal = parseFloat(
-        document.getElementById("golem-charge-tactical").value
-      );
-      if (isValid(tacVal)) {
-        localStorage.setItem("golem-charge-tactical", tacVal);
-        calculateTrapSetup();
-      }
-      break;
-
-    default:
-  }
-
-  function isValid(num) {
-    var retBool = false;
-
-    // Validate number between 0-100 and divisible by 0.2
-    if (num >= 0 && num <= 100) {
-      if ((num * 10) % 2 === 0) retBool = true;
-    }
-
-    return retBool;
-  }
 }

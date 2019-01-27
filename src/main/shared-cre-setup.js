@@ -639,17 +639,52 @@ function golemParamCheck() {
   if (golemParam) {
     var golemArr = JSON.parse(golemParam);
     if (typeof golemArr === "object" && golemArr.length === 5) {
-      $("#golem-charge-arcane").val(golemArr[0]);
-      $("#golem-charge-forgotten").val(golemArr[1]);
-      $("#golem-charge-hydro").val(golemArr[2]);
-      $("#golem-charge-physical").val(golemArr[3]);
-      $("#golem-charge-tactical").val(golemArr[4]);
-      $("#golem-charge-arcane").trigger("input");
-      $("#golem-charge-forgotten").trigger("input");
-      $("#golem-charge-hydro").trigger("input");
-      $("#golem-charge-physical").trigger("input");
-      $("#golem-charge-tactical").trigger("input");
+      golemChargeChange("arcane", golemArr[0]);
+      golemChargeChange("forgotten", golemArr[1]);
+      golemChargeChange("hydro", golemArr[2]);
+      golemChargeChange("physical", golemArr[3]);
+      golemChargeChange("tactical", golemArr[4]);
     }
+  }
+}
+
+// Update and validate changes in golem charge inputs
+function golemChargeChange(type, value) {
+  if (typeof value === "string") {
+    value = parseFloat(value);
+  }
+
+  if (isValid(value)) {
+    switch (type) {
+      case "arcane":
+        localStorage.setItem("golem-charge-arcane", value);
+        break;
+      case "forgotten":
+        localStorage.setItem("golem-charge-forgotten", value);
+        break;
+      case "hydro":
+        localStorage.setItem("golem-charge-hydro", value);
+        break;
+      case "physical":
+        localStorage.setItem("golem-charge-physical", value);
+        break;
+      case "tactical":
+        localStorage.setItem("golem-charge-tactical", value);
+        break;
+      default:
+    }
+    calculateTrapSetup();
+  }
+
+  function isValid(num) {
+    var retBool = false;
+
+    // Validate number between 0-100 and divisible by 0.2
+    if (num >= 0 && num <= 100) {
+      if ((num * 10) % 2 === 0) retBool = true;
+    }
+
+    return retBool;
   }
 }
 
