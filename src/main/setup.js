@@ -279,9 +279,18 @@ function checkStorage() {
     var ownedWeapons = storedData["owned-items"]["weapons"];
     var ownedCharms = storedData["owned-items"]["charms"];
 
+    // Handle Golem Guardian variants
+    var golemCount = 0;
+    for (var el of ownedWeapons) {
+      if (el.indexOf("Golem Guardian") >= 0) golemCount += 1;
+    }
+    golemCount -= 1;
+    var ownedWeaponsLength = ownedWeapons.length - golemCount;
+    var totalWeaponsLength = weaponKeys.length - 4;
+
     console.group("Items: Owned / Total");
     console.log("Bases: " + ownedBases.length + " / " + baseKeys.length);
-    console.log("Weapons: " + ownedWeapons.length + " / " + weaponKeys.length);
+    console.log("Weapons: " + ownedWeaponsLength + " / " + totalWeaponsLength);
     console.log("Charms: " + ownedCharms.length + " / " + charmKeys.length);
     console.groupEnd();
 

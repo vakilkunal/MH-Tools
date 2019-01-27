@@ -427,13 +427,13 @@
     urlParams["cheese"] = userCheese;
   }
 
+  if (userSublocation !== "N/A") {
+    urlParams["phase"] = userSublocation;
+  }
+
   // Weapon edge cases
   if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
     urlParams["weapon"] = "Timesplit Dissonance Weapon";
-  }
-
-  if (userSublocation !== "N/A") {
-    urlParams["phase"] = userSublocation;
   }
 
   if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {

@@ -4,86 +4,82 @@
     return;
   }
 
-  var baseButton = document.querySelector("a.campPage-trap-armedItem.base");
-  var weaponButton = document.querySelector("a.campPage-trap-armedItem.weapon");
-  var charmButton = document.querySelector("a.campPage-trap-armedItem.trinket");
+  $.post(
+    "https://www.mousehuntgame.com/managers/ajax/users/gettrapcomponents.php",
+    {
+      hg_is_ajax: 1,
+      uh: user.unique_hash
+    },
+    null,
+    "json"
+  ).done(function(data) {
+    var arr = data.components;
+    if (arr) {
+      var bases = arr
+        .filter(function(el) {
+          return el.classification === "base" && el.quantity > 0;
+        })
+        .map(function(el) {
+          return el.name;
+        });
 
-  function parse() {
-    function getItemList() {
-      var selector =
-        ".campPage-trap-itemBrowser-items .campPage-trap-itemBrowser-item-name";
-      var nodeList = document.querySelectorAll(selector);
-      var all = Array.prototype.map.call(nodeList, function(node) {
-        return node.textContent;
-      });
-      var unique = all.filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
-      });
-      return unique;
-    }
+      var weapons = arr
+        .filter(function(el) {
+          return el.classification === "weapon" && el.quantity > 0;
+        })
+        .map(function(el) {
+          return el.name;
+        });
 
-    baseButton.click();
-    var bases = getItemList();
-    console.group("Items Owned");
-    console.log("Bases: " + bases.length);
+      var charms = arr
+        .filter(function(el) {
+          return el.classification === "trinket" && el.quantity > 0;
+        })
+        .map(function(el) {
+          return el.name;
+        });
 
-    weaponButton.click();
-    var weapons = getItemList();
-    console.log("Weapons: " + weapons.length);
+      console.group("Items Owned");
+      console.log("Bases: " + bases.length);
+      console.log("Weapons: " + weapons.length);
+      console.log("Charms: " + charms.length);
+      console.groupEnd();
 
-    charmButton.click();
-    var charms = getItemList();
-    console.log("Charms: " + charms.length);
-    console.groupEnd();
+      // Golem Guardian check
+      if (
+        weapons.filter(function(el) {
+          return el.indexOf("Golem Guardian") >= 0;
+        }).length > 0
+      ) {
+        var skins = arr
+          .filter(function(el) {
+            return (
+              el.classification === "skin" &&
+              el.name.indexOf("Golem Guardian") >= 0 &&
+              el.quantity > 0
+            );
+          })
+          .map(function(el) {
+            return el.power_type_name;
+          });
 
-    var closeButton = document.querySelector(
-      "a.campPage-trap-blueprint-closeButton"
-    );
-    if (closeButton) {
-      closeButton.click();
-    }
-
-    // Combine into a single object and pass to window.name
-    var combinedObj = {};
-    combinedObj["bases"] = bases;
-    combinedObj["weapons"] = weapons;
-    combinedObj["charms"] = charms;
-
-    var newWindow = window.open("");
-    newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
-    newWindow.name = JSON.stringify(combinedObj);
-  }
-
-  /**
-   * Wait for initial XHR to populate bases/weapons/charms in UI
-   * Set a 10 second timeout for this operation
-   * Check for completion every 100 ms
-   */
-  function initDOM() {
-    baseButton.click();
-    var timeout = setTimeout(function() {
-      newWindow.close();
-      clearInterval(interval);
-      alert(
-        "XHR timed out after 10 seconds - please check your connection and try again"
-      );
-      return;
-    }, 10000);
-    var interval = setInterval(function() {
-      if (document.querySelector("div.campPage-trap-itemBrowser.base")) {
-        clearTimeout(timeout);
-        clearInterval(interval);
-        parse();
+        for (var el of skins) {
+          var name = "Golem Guardian " + el + " Trap";
+          if (weapons.indexOf(name) < 0) {
+            weapons.push(name);
+          }
+        }
       }
-    }, 100);
-  }
 
-  if (baseButton && weaponButton && charmButton) {
-    initDOM();
-  } else {
-    alert(
-      "Please ensure that you have FreshCoat enabled in Support -> User Preferences, then navigate to the Camp page!"
-    );
-    return;
-  }
+      // Combine into a single object and pass to window.name
+      var combinedObj = {};
+      combinedObj["bases"] = bases;
+      combinedObj["weapons"] = weapons;
+      combinedObj["charms"] = charms;
+
+      var newWindow = window.open("");
+      newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
+      newWindow.name = JSON.stringify(combinedObj);
+    }
+  });
 })();
