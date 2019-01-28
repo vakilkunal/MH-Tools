@@ -1,30 +1,35 @@
 "Location","Phase","Cheese","Charm","Attraction Rate","Mouse","Sample Size"
-"Mousoleum","No Wall","Radioactive Blue","-","39.87%","Gluttonous Zombie",3065
-"Mousoleum","No Wall","Radioactive Blue","-","29.53%","Zombie",3065
-"Mousoleum","No Wall","Radioactive Blue","-","24.89%","Ravenous Zombie",3065
-"Mousoleum","No Wall","Radioactive Blue","-","5.71%","Coffin Zombie",3065
-"Mousoleum","No Wall","Undead Emmental","-","27.92%","Coffin Zombie",530
-"Mousoleum","No Wall","Undead Emmental","-","20.57%","Gluttonous Zombie",530
-"Mousoleum","No Wall","Undead Emmental","-","18.68%","Zombie",530
-"Mousoleum","No Wall","Undead Emmental","-","12.83%","Ravenous Zombie",530
-"Mousoleum","No Wall","Undead Emmental","-","11.89%","Grave Robber",530
-"Mousoleum","No Wall","Undead Emmental","-","8.11%","Zombot Unipire",530
-"Mousoleum","No Wall","Crimson","-","97.01%","Coffin Zombie",401
-"Mousoleum","No Wall","Crimson","-","2.99%","Gluttonous Zombie",401
-"Mousoleum","Has Wall","Crimson","-","54.02%","Mousevina von Vermin",1183
-"Mousoleum","Has Wall","Crimson","-","15.55%","Vampire",1183
-"Mousoleum","Has Wall","Crimson","-","10.74%","Bat",1183
-"Mousoleum","Has Wall","Crimson","-","10.40%","Ghost",1183
-"Mousoleum","Has Wall","Crimson","-","9.30%","Mummy",1183
-"Mousoleum","Has Wall","Radioactive Blue","-","34.63%","Bat",2261
-"Mousoleum","Has Wall","Radioactive Blue","-","20.88%","Mummy",2261
-"Mousoleum","Has Wall","Radioactive Blue","-","19.68%","Vampire",2261
-"Mousoleum","Has Wall","Radioactive Blue","-","15.44%","Ghost",2261
-"Mousoleum","Has Wall","Radioactive Blue","-","6.10%","Giant Snail",2261
-"Mousoleum","Has Wall","Radioactive Blue","-","2.34%","Monster",2261
-"Mousoleum","Has Wall","Radioactive Blue","-","0.93%","Black Widow",2261
-"Mousoleum","Has Wall","Undead Emmental","-","32.38%","Ghost",105
-"Mousoleum","Has Wall","Undead Emmental","-","32.38%","Mummy",105
-"Mousoleum","Has Wall","Undead Emmental","-","15.24%","Grave Robber",105
-"Mousoleum","Has Wall","Undead Emmental","-","10.48%","Vampire",105
-"Mousoleum","Has Wall","Undead Emmental","-","9.52%","Zombot Unipire",105
+"Mousoleum","No Wall","Radioactive Blue","-","39.59%","Gluttonous Zombie",3837
+"Mousoleum","No Wall","Radioactive Blue","-","29.53%","Zombie",3837
+"Mousoleum","No Wall","Radioactive Blue","-","24.94%","Ravenous Zombie",3837
+"Mousoleum","No Wall","Radioactive Blue","-","5.94%","Coffin Zombie",3837
+"Mousoleum","No Wall","Undead Emmental","-","28.09%","Coffin Zombie",559
+"Mousoleum","No Wall","Undead Emmental","-","20.93%","Gluttonous Zombie",559
+"Mousoleum","No Wall","Undead Emmental","-","18.43%","Zombie",559
+"Mousoleum","No Wall","Undead Emmental","-","12.34%","Ravenous Zombie",559
+"Mousoleum","No Wall","Undead Emmental","-","11.99%","Grave Robber",559
+"Mousoleum","No Wall","Undead Emmental","-","8.23%","Zombot Unipire",559
+"Mousoleum","No Wall","Crimson","-","97.23%","Coffin Zombie",469
+"Mousoleum","No Wall","Crimson","-","2.77%","Gluttonous Zombie",469
+"Mousoleum","Has Wall","Crimson","-","54.70%","Mousevina von Vermin",1373
+"Mousoleum","Has Wall","Crimson","-","15.66%","Vampire",1373
+"Mousoleum","Has Wall","Crimson","-","10.27%","Ghost",1373
+"Mousoleum","Has Wall","Crimson","-","10.20%","Bat",1373
+"Mousoleum","Has Wall","Crimson","-","9.18%","Mummy",1373
+"Mousoleum","Has Wall","Moon","-","56.19%","Lycan",105
+"Mousoleum","Has Wall","Moon","-","17.14%","Mummy",105
+"Mousoleum","Has Wall","Moon","-","11.43%","Bat",105
+"Mousoleum","Has Wall","Moon","-","9.52%","Ghost",105
+"Mousoleum","Has Wall","Moon","-","5.71%","Vampire",105
+"Mousoleum","Has Wall","Radioactive Blue","-","34.02%","Bat",2916
+"Mousoleum","Has Wall","Radioactive Blue","-","20.61%","Mummy",2916
+"Mousoleum","Has Wall","Radioactive Blue","-","20.10%","Vampire",2916
+"Mousoleum","Has Wall","Radioactive Blue","-","16.08%","Ghost",2916
+"Mousoleum","Has Wall","Radioactive Blue","-","5.97%","Giant Snail",2916
+"Mousoleum","Has Wall","Radioactive Blue","-","2.30%","Monster",2916
+"Mousoleum","Has Wall","Radioactive Blue","-","0.93%","Black Widow",2916
+"Mousoleum","Has Wall","Undead Emmental","-","33.62%","Mummy",229
+"Mousoleum","Has Wall","Undead Emmental","-","27.95%","Ghost",229
+"Mousoleum","Has Wall","Undead Emmental","-","16.16%","Grave Robber",229
+"Mousoleum","Has Wall","Undead Emmental","-","13.54%","Vampire",229
+"Mousoleum","Has Wall","Undead Emmental","-","8.73%","Zombot Unipire",229
