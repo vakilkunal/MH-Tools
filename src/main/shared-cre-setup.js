@@ -645,6 +645,15 @@ function golemParamCheck() {
       golemChargeChange("physical", golemArr[3]);
       golemChargeChange("tactical", golemArr[4]);
     }
+
+    // CRE <input> update
+    if (document.getElementsByClassName("golem-guardian-charge").length === 5) {
+      $("#golem-charge-arcane").val(golemArr[0]);
+      $("#golem-charge-forgotten").val(golemArr[1]);
+      $("#golem-charge-hydro").val(golemArr[2]);
+      $("#golem-charge-physical").val(golemArr[3]);
+      $("#golem-charge-tactical").val(golemArr[4]);
+    }
   }
 }
 
