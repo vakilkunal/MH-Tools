@@ -2,6 +2,7 @@ const utils = require("../_utils");
 
 const cheeses = [
   "Radioactive Blue",
+  "Limelight",
   "SB+",
   "Gouda",
   "Brie",
