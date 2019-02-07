@@ -53,6 +53,9 @@
     for (let i = 0; i < bookmarkletList.length; i++) {
       bookmarkletJson[bookmarkletList[i]] = format[i];
     }
-    fileUtils.saveJsonFile("data/bookmarklet-timestamps.json", bookmarkletJson);
+    fileUtils.saveJsonFile(
+      "data/json/bookmarklet-timestamps.json",
+      bookmarkletJson
+    );
   });
 })();

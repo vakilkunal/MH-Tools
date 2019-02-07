@@ -8,7 +8,7 @@
         var cdn =
           "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@" +
           sha +
-          "/data/bookmarklet-timestamps.json";
+          "/data/json/bookmarklet-timestamps.json";
         var xhr = new XMLHttpRequest();
         xhr.open("GET", cdn);
         xhr.onload = function() {
@@ -52,7 +52,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.3.4 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
+      "Version 1.3.5 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
