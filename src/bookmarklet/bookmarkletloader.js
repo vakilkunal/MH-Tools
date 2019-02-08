@@ -2,9 +2,10 @@
   init();
 
   function init() {
+    var sha;
     var jsonTimestamp = new Promise(function(resolve, reject) {
       getLatestSHA().then(function(response) {
-        var sha = JSON.parse(response)[0].sha;
+        sha = JSON.parse(response)[0].sha;
         var cdn =
           "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@" +
           sha +
@@ -22,11 +23,14 @@
     });
 
     jsonTimestamp.then(function(response) {
-      buildUI(JSON.parse(response));
+      // Pass sha in here to remove repeat calls in loadBookmarklet
+      // Must reload/refresh Auto-Loader to get individually updated versions
+      // (CORS prevents XHR-ing the GitHub page and DOMParser-ing its HTML)
+      buildUI(JSON.parse(response), sha);
     });
   }
 
-  function buildUI(timestamps) {
+  function buildUI(timestamps, sha) {
     var mainDiv = document.createElement("div");
     mainDiv.id = "mht-bookmarklet-loader";
     var loaderTimestamp = "Last updated: " + timestamps["loader"];
@@ -52,7 +56,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.3.5 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
+      "Version 1.4.0 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
@@ -213,6 +217,14 @@
     mainDiv.style.textAlign = "center";
     document.body.appendChild(mainDiv);
     dragElement(document.getElementById("mht-bookmarklet-loader"));
+
+    function loadBookmarklet(type) {
+      var el = document.createElement("script");
+      var cdn = "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@";
+      cdn += sha + "/src/bookmarklet/" + type + "bookmarklet.min.js";
+      el.src = cdn;
+      document.body.appendChild(el);
+    }
   }
 
   function getLatestSHA() {
@@ -230,17 +242,6 @@
         reject(xhr.statusText);
       };
       xhr.send();
-    });
-  }
-
-  function loadBookmarklet(type) {
-    getLatestSHA().then(function(response) {
-      var sha = JSON.parse(response)[0].sha;
-      var el = document.createElement("script");
-      var cdn = "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@";
-      cdn += sha + "/src/bookmarklet/" + type + "bookmarklet.min.js";
-      el.src = cdn;
-      document.body.appendChild(el);
     });
   }
 
