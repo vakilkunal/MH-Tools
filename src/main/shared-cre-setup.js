@@ -384,9 +384,11 @@ function calculateTrapSetup(skipDisp) {
       if (charmName === "Flamebane Charm") {
         hiddenPowerBonus += 150;
       }
-      if (phaseName === "Wave 4" && weaponName === "Warden Slayer Trap") {
-        specialPower += 2500;
-        shownPowerBonus += 2500;
+      if (weaponName === "Warden Slayer Trap") {
+        if (phaseName === "Wave 4" || phaseName === "Portal") {
+          specialPower += 2500;
+          shownPowerBonus += 2500;
+        }
       }
     } else if (locationName === "Toxic Spill") {
       if (baseName === "Washboard Base") {

@@ -22,7 +22,7 @@ Aquos,675
 Arcane Summoner,9000
 Archer,450
 Armored Archer,4500
-Artillery Commander,0
+Artillery Commander,50000
 Ascended Elder,100000
 Ash Golem,6893
 Assassin,500
@@ -144,10 +144,11 @@ Core Sample,260
 Corridor Bruiser,7500
 Corrupt,1250
 Corrupt Commodore,60
-Costumed Dog,0
+Costumed Dog,450
 Costumed Dragon,342
 Costumed Horse,450
 Costumed Monkey,450
+Costumed Pig,450
 Costumed Rabbit,284
 Costumed Rooster,450
 Costumed Sheep,450
@@ -337,6 +338,7 @@ Gingerbread,190
 Glacia Ice Fist,1485
 Gladiator,837
 Glass Blower,2700
+Glazy,3600
 Glitchpaw,120
 Gluttonous Zombie,225
 Goblin,350
@@ -394,6 +396,7 @@ Hydra,964
 Hydrologist,4000
 Hydrophobe,300
 Hypnotized Gunslinger,8250
+Iceberg Sculptor,6500
 Iceblade,2185
 Iceblock,1115
 Icebreaker,875
@@ -441,7 +444,7 @@ Lovely Sports,300
 Lucky,78
 Lumahead,6400
 Lumberjack,2325
-Lunar Red Candle Maker,0
+Lunar Red Candle Maker,300
 Lycan,925
 Lycanoid,6600
 M400,120000
@@ -526,7 +529,7 @@ Mutant Ninja,13200
 Mutated Behemoth,30000
 Mutated Brown,88
 Mutated Grey,50
-Mutated Mole,0
+Mutated Mole,600
 Mutated Siblings,800
 Mutated White,38
 Mysterious Traveller,300
@@ -544,13 +547,13 @@ Nachore Golem,6000
 "Nachous, The Molten",30000
 Narrator,90
 Naturalist,20000
-Naughty Nougat,0
+Naughty Nougat,6000
 Necromancer,1700
 Nerg Chieftain,1255
 Nerg Lich,4015
 New Year's,220
 Nibbler,110
-Nice Knitting,0
+Nice Knitting,900
 Night Shift Materials Manager,5000
 Night Watcher,4500
 Nightfire,1150
@@ -738,8 +741,8 @@ Snooty,2
 Snow Boulder,1050
 Snow Bowler,1750
 Snow Fort,4800
-Snow Golem Architect,0
-Snow Golem Jockey,0
+Snow Golem Architect,5000
+Snow Golem Jockey,1500
 Snow Scavenger,675
 Snow Slinger,1175
 Snow Sniper,1400

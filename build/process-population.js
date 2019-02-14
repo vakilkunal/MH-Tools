@@ -3,6 +3,7 @@
     "data/populations.csv",
     "data/location-pop/bristle-woods-rift.csv",
     "data/location-pop/cantera-quarry.csv",
+    "data/location-pop/fiery-warpath.csv",
     "data/location-pop/forbidden-grove.csv",
     "data/location-pop/fort-rox.csv",
     "data/location-pop/furoma-rift.csv",

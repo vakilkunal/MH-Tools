@@ -20,7 +20,7 @@
     "pop:prickly": "node data/tools/pop prickly-plains > data/location-pop/prickly-plains.csv",
     "pop:queso": "node data/tools/pop queso-river > data/location-pop/queso-river.csv",
     "pop:toxic": "node data/tools/pop toxic-spill > data/location-pop/toxic-spill.csv",
-    "!pop:warpath": "node data/tools/pop warpath > data/location-pop/fiery-warpath.csv",
+    "pop:warpath": "node data/tools/pop warpath > data/location-pop/fiery-warpath.csv",
     "pop": "npm-run-all --parallel pop:*",
     "\n-- MINIFICATION --": "",
     "minify:bookmarklet": "uglifyjs-folder src/bookmarklet -yeo src/bookmarklet -p **/*.js,!**/*min.js",
