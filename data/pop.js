@@ -11,7 +11,7 @@ if (process.argv.length < 3) {
 const key = process.argv[ 2 ]
 let setup
 try {
-  setup = require(`./pop-setup/${key}`)
+  setup = require(`./pop-js/${key}`)
 } catch (e) {
   console.error(`Unknown setup ${key}`, e)
   process.exit(100)

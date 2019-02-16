@@ -1,7 +1,7 @@
 var _ = require("lodash");
 var Promise = require("bluebird");
 var rp = require("request-promise");
-var debug = require("debug")("htpop");
+var debug = require("debug")("pop-ht");
 
 function requestForm(form, opts) {
   debug("debug", "requesting", form);

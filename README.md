@@ -281,7 +281,7 @@ Keyboard Shortcut | Description
 
 ### :clipboard: Populations
 
-To update population data, download a copy of Jack's most recent database dump from [Keybase](https://keybase.pub/devjacksmith/mh_backups/nightly/) (refresh the page if it says 'Not found'). Then, import the data into your SQL client of choice (takes around an hour on MySQL Workbench 8.0 with MySQL Server 5.7.24 on Windows 10). Finally, use commands such as `npm run pop:queso` (full list in [package.json](https://github.com/tsitu/MH-Tools/blob/master/package.json)) to write updated populations to CSV files in `data/location-pop`, or use `npm run pop` to fetch them all simultaneously.
+To update population data, download a copy of Jack's most recent database dump from [Keybase](https://keybase.pub/devjacksmith/mh_backups/nightly/) (refresh the page if it says 'Not found'). Then, import the data into your SQL client of choice (takes around an hour on MySQL Workbench 8.0 with MySQL Server 5.7.24 on Windows 10). Finally, use commands such as `npm run pop:queso` (full list in [package.json](https://github.com/tsitu/MH-Tools/blob/master/package.json)) to write updated populations to CSV files in `data/pop-csv`, or use `npm run pop` to fetch them all simultaneously.
 
 If you would like to merge new data into the master branch, feel free to open a pull request - Travis CI will build it automatically and run the `build/process-sample-size.js` script, which generates sample size score deltas ([example](https://travis-ci.com/tsitu/MH-Tools/builds/91738912)). We use this to verify that data is trending towards improvement.
 

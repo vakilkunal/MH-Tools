@@ -1,20 +1,20 @@
 (function() {
   const POPULATIONS = [
     "data/populations.csv",
-    "data/location-pop/bristle-woods-rift.csv",
-    "data/location-pop/cantera-quarry.csv",
-    "data/location-pop/fiery-warpath.csv",
-    "data/location-pop/forbidden-grove.csv",
-    "data/location-pop/fort-rox.csv",
-    "data/location-pop/furoma-rift.csv",
-    "data/location-pop/iceberg.csv",
-    "data/location-pop/living-garden.csv",
-    "data/location-pop/laboratory.csv",
-    "data/location-pop/mousoleum.csv",
-    "data/location-pop/moussu-picchu.csv",
-    "data/location-pop/prickly-plains.csv",
-    "data/location-pop/queso-river.csv",
-    "data/location-pop/toxic-spill.csv"
+    "data/pop-csv/bristle-woods-rift.csv",
+    "data/pop-csv/cantera-quarry.csv",
+    "data/pop-csv/fiery-warpath.csv",
+    "data/pop-csv/forbidden-grove.csv",
+    "data/pop-csv/fort-rox.csv",
+    "data/pop-csv/furoma-rift.csv",
+    "data/pop-csv/iceberg.csv",
+    "data/pop-csv/living-garden.csv",
+    "data/pop-csv/laboratory.csv",
+    "data/pop-csv/mousoleum.csv",
+    "data/pop-csv/moussu-picchu.csv",
+    "data/pop-csv/prickly-plains.csv",
+    "data/pop-csv/queso-river.csv",
+    "data/pop-csv/toxic-spill.csv"
   ];
 
   const fs = require("fs");
