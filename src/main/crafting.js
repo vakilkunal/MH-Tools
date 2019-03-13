@@ -4,13 +4,12 @@ var USER_INVENTORY = {};
 
 window.onload = function() {
   loadBookmarkletFromJS(
-    BOOKMARKLET_LOADER_URL,
+    BOOKMARKLET_URLS["loader"],
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
-
   loadBookmarkletFromJS(
-    CRAFTING_BOOKMARKLET_URL,
+    BOOKMARKLET_URLS["crafting"],
     "craftingBookmarklet",
     "#bookmarklet"
   );

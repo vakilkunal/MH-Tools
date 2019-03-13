@@ -24,25 +24,25 @@ var autoCompleteSettings = {
 
 function initPageLoad(toolType) {
   startPopulationLoad(POPULATION_JSON_URL, toolType);
-  loadBookmarkletFromJS(
-    BOOKMARKLET_LOADER_URL,
-    "bookmarkletLoader",
-    "#bookmarkletloader"
-  );
 
   if (toolType === "map") {
     loadBookmarkletFromJS(
-      MAP_BOOKMARKLET_URL,
+      BOOKMARKLET_URLS["map"],
       "mapBookmarklet",
       "#bookmarklet"
     );
   } else if (toolType === "crown") {
     loadBookmarkletFromJS(
-      CROWN_BOOKMARKLET_URL,
+      BOOKMARKLET_URLS["crown"],
       "crownBookmarklet",
       "#bookmarklet"
     );
   }
+  loadBookmarkletFromJS(
+    BOOKMARKLET_URLS["loader"],
+    "bookmarkletLoader",
+    "#bookmarkletloader"
+  );
 
   // Initialize tablesorter, bind to table
   initTablesorter();

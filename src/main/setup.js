@@ -4,17 +4,17 @@ $(window).load(function() {
   user = SETUP_USER;
 
   loadBookmarkletFromJS(
-    BOOKMARKLET_LOADER_URL,
+    BOOKMARKLET_URLS["loader"],
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
   loadBookmarkletFromJS(
-    SETUP_BOOKMARKLET_URL,
+    BOOKMARKLET_URLS["setup_items"],
     "setupBookmarklet",
     "#setupBookmarklet"
   );
   loadBookmarkletFromJS(
-    SETUP_FIELDS_BOOKMARKLET_URL,
+    BOOKMARKLET_URLS["setup_fields"],
     "setupFieldsBookmarklet",
     "#setupFieldsBookmarklet"
   );

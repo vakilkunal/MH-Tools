@@ -4,11 +4,15 @@ window.onload = function() {
   user = CRE_USER;
 
   loadBookmarkletFromJS(
-    BOOKMARKLET_LOADER_URL,
+    BOOKMARKLET_URLS["loader"],
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
-  loadBookmarkletFromJS(CRE_BOOKMARKLET_URL, "creBookmarklet", "#bookmarklet");
+  loadBookmarkletFromJS(
+    BOOKMARKLET_URLS["cre"],
+    "creBookmarklet",
+    "#bookmarklet"
+  );
 
   startPopulationLoad("data/json/populations-cre-setup.json", user);
   loadDropdown("weapon", weaponKeys, weaponChanged, "<option></option>");

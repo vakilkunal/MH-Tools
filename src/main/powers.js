@@ -23,12 +23,12 @@ const battery = {
 
 window.onload = function() {
   loadBookmarkletFromJS(
-    BOOKMARKLET_LOADER_URL,
+    BOOKMARKLET_URLS["loader"],
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
   loadBookmarkletFromJS(
-    POWERS_BOOKMARKLET_URL,
+    BOOKMARKLET_URLS["powers"],
     "powersBookmarklet",
     "#bookmarklet"
   );
