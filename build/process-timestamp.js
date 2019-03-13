@@ -7,14 +7,15 @@
   // Order matters (tree/master/src/bookmarklet)
   const bookmarkletList = [
     "analyzer",
-    "loader",
     "crafting",
     "cre",
     "crown",
+    "loader",
     "map",
+    "menu",
     "powers",
-    "setup",
-    "setupfields"
+    "setup_fields",
+    "setup_items"
   ];
 
   /**

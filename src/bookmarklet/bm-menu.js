@@ -1,31 +1,25 @@
 (function() {
-  init();
-
-  function init() {
-    var sha;
+  var sha = localStorage.getItem("tsitu-latest-sha");
+  if (sha && sha !== 0) {
     var jsonTimestamp = new Promise(function(resolve, reject) {
-      getLatestSHA().then(function(response) {
-        sha = JSON.parse(response)[0].sha;
-        var cdn =
-          "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@" +
-          sha +
-          "/data/json/bookmarklet-timestamps.json";
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", cdn);
-        xhr.onload = function() {
-          resolve(xhr.responseText);
-        };
-        xhr.onerror = function() {
-          reject(xhr.statusText);
-        };
-        xhr.send();
-      });
+      var cdn =
+        "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@" +
+        sha +
+        "/data/json/bookmarklet-timestamps.json";
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", cdn);
+      xhr.onload = function() {
+        resolve(xhr.responseText);
+      };
+      xhr.onerror = function() {
+        reject(xhr.statusText);
+      };
+      xhr.send();
     });
 
     jsonTimestamp.then(function(response) {
-      // Pass sha in here to remove repeat calls in loadBookmarklet
-      // Must reload/refresh Auto-Loader to get individually updated versions
-      // (CORS prevents XHR-ing the GitHub page and DOMParser-ing its HTML)
+      // Use cached SHA to eliminate excessive requests in loadBookmarklet()
+      // Must reload/refresh to get individually updated bookmarklet versions
       buildUI(JSON.parse(response), sha);
     });
   }
@@ -33,15 +27,15 @@
   function buildUI(timestamps, sha) {
     var mainDiv = document.createElement("div");
     mainDiv.id = "mht-bookmarklet-loader";
-    var loaderTimestamp = "Last updated: " + timestamps["loader"];
-    var creTimestamp = "Last updated: " + timestamps["cre"];
-    var mapTimestamp = "Last updated: " + timestamps["map"];
-    var setupTimestamp = "Last updated: " + timestamps["setup"];
-    var setupFieldsTimestamp = "Last updated: " + timestamps["setupfields"];
-    var analyzerTimestamp = "Last updated: " + timestamps["analyzer"];
-    var crownTimestamp = "Last updated: " + timestamps["crown"];
-    var craftingTimestamp = "Last updated: " + timestamps["crafting"];
-    var powersTimestamp = "Last updated: " + timestamps["powers"];
+    var loaderTime = "Last updated: " + (timestamps["menu"] || "N/A");
+    var creTime = "Last updated: " + (timestamps["cre"] || "N/A");
+    var mapTime = "Last updated: " + (timestamps["map"] || "N/A");
+    var setupItTime = "Last updated: " + (timestamps["setup_items"] || "N/A");
+    var setupFiTime = "Last updated: " + (timestamps["setup_fields"] || "N/A");
+    var analyzerTime = "Last updated: " + (timestamps["analyzer"] || "N/A");
+    var crownTime = "Last updated: " + (timestamps["crown"] || "N/A");
+    var craftingTime = "Last updated: " + (timestamps["crafting"] || "N/A");
+    var powersTime = "Last updated: " + (timestamps["powers"] || "N/A");
 
     var closeButton = document.createElement("button", { id: "close-button" });
     closeButton.textContent = "x";
@@ -56,11 +50,11 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.4.0 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
+      "Version 1.5.0 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
-    loaderSpanTimestamp.innerHTML = loaderTimestamp;
+    loaderSpanTimestamp.innerHTML = loaderTime;
 
     var creButton = document.createElement("button", { id: "cre-button" });
     creButton.textContent = "Catch Rate Estimator";
@@ -70,7 +64,7 @@
     var creSpanTimestamp = document.createElement("span");
     creSpanTimestamp.style.fontSize = "10px";
     creSpanTimestamp.style.fontStyle = "italic";
-    creSpanTimestamp.innerHTML = creTimestamp;
+    creSpanTimestamp.innerHTML = creTime;
 
     var mapButton = document.createElement("button", { id: "map-button" });
     mapButton.textContent = "Map Solver";
@@ -80,7 +74,7 @@
     var mapSpanTimestamp = document.createElement("span");
     mapSpanTimestamp.style.fontSize = "10px";
     mapSpanTimestamp.style.fontStyle = "italic";
-    mapSpanTimestamp.innerHTML = mapTimestamp;
+    mapSpanTimestamp.innerHTML = mapTime;
 
     var setupButton = document.createElement("button", { id: "setup-button" });
     setupButton.textContent = "Best Setup: Load Items";
@@ -90,7 +84,7 @@
     var setupSpanTimestamp = document.createElement("span");
     setupSpanTimestamp.style.fontSize = "10px";
     setupSpanTimestamp.style.fontStyle = "italic";
-    setupSpanTimestamp.innerHTML = setupTimestamp;
+    setupSpanTimestamp.innerHTML = setupItTime;
 
     var setupFieldsButton = document.createElement("button", {
       id: "setup-fields-button"
@@ -102,7 +96,7 @@
     var setupFieldsSpanTimestamp = document.createElement("span");
     setupFieldsSpanTimestamp.style.fontSize = "10px";
     setupFieldsSpanTimestamp.style.fontStyle = "italic";
-    setupFieldsSpanTimestamp.innerHTML = setupFieldsTimestamp;
+    setupFieldsSpanTimestamp.innerHTML = setupFiTime;
 
     var analyzerButton = document.createElement("button", {
       id: "analyzer-button"
@@ -114,7 +108,7 @@
     var analyzerSpanTimestamp = document.createElement("span");
     analyzerSpanTimestamp.style.fontSize = "10px";
     analyzerSpanTimestamp.style.fontStyle = "italic";
-    analyzerSpanTimestamp.innerHTML = analyzerTimestamp;
+    analyzerSpanTimestamp.innerHTML = analyzerTime;
 
     var crownButton = document.createElement("button", { id: "crown-button" });
     crownButton.textContent = "Silver Crown Solver";
@@ -124,7 +118,7 @@
     var crownSpanTimestamp = document.createElement("span");
     crownSpanTimestamp.style.fontSize = "10px";
     crownSpanTimestamp.style.fontStyle = "italic";
-    crownSpanTimestamp.innerHTML = crownTimestamp;
+    crownSpanTimestamp.innerHTML = crownTime;
 
     var craftingButton = document.createElement("button", {
       id: "crafting-button"
@@ -136,7 +130,7 @@
     var craftingSpanTimestamp = document.createElement("span");
     craftingSpanTimestamp.style.fontSize = "10px";
     craftingSpanTimestamp.style.fontStyle = "italic";
-    craftingSpanTimestamp.innerHTML = craftingTimestamp;
+    craftingSpanTimestamp.innerHTML = craftingTime;
 
     var powersButton = document.createElement("button", {
       id: "powers-button"
@@ -148,7 +142,7 @@
     var powersSpanTimestamp = document.createElement("span");
     powersSpanTimestamp.style.fontSize = "10px";
     powersSpanTimestamp.style.fontStyle = "italic";
-    powersSpanTimestamp.innerHTML = powersTimestamp;
+    powersSpanTimestamp.innerHTML = powersTime;
 
     mainDiv.appendChild(closeButton);
     mainDiv.appendChild(document.createElement("br"));
@@ -224,25 +218,10 @@
       cdn += sha + "/src/bookmarklet/" + type + "bookmarklet.min.js";
       el.src = cdn;
       document.body.appendChild(el);
+      el.onload = function() {
+        el.remove();
+      };
     }
-  }
-
-  function getLatestSHA() {
-    // Fetch latest gh-pages commit SHA to use with jsDelivr CDN since it caches URLs permanently
-    return new Promise(function(resolve, reject) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(
-        "GET",
-        "https://api.github.com/repos/tsitu/MH-Tools/commits?sha=gh-pages"
-      );
-      xhr.onload = function() {
-        resolve(xhr.responseText);
-      };
-      xhr.onerror = function() {
-        reject(xhr.statusText);
-      };
-      xhr.send();
-    });
   }
 
   function dragElement(el) {
