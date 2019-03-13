@@ -50,7 +50,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.5.0 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
+      "Version 1.5.1 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
@@ -79,7 +79,7 @@
     var setupButton = document.createElement("button", { id: "setup-button" });
     setupButton.textContent = "Best Setup: Load Items";
     setupButton.onclick = function() {
-      loadBookmarklet("setup");
+      loadBookmarklet("setup-items");
     };
     var setupSpanTimestamp = document.createElement("span");
     setupSpanTimestamp.style.fontSize = "10px";
@@ -91,7 +91,7 @@
     });
     setupFieldsButton.textContent = "Best Setup: Fields";
     setupFieldsButton.onclick = function() {
-      loadBookmarklet("setupfields");
+      loadBookmarklet("setup-fields");
     };
     var setupFieldsSpanTimestamp = document.createElement("span");
     setupFieldsSpanTimestamp.style.fontSize = "10px";
@@ -214,8 +214,12 @@
 
     function loadBookmarklet(type) {
       var el = document.createElement("script");
-      var cdn = "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@";
-      cdn += sha + "/src/bookmarklet/" + type + "bookmarklet.min.js";
+      var cdn =
+        "https://cdn.jsdelivr.net/gh/tsitu/MH-Tools@" +
+        sha +
+        "/src/bookmarklet/bm-" +
+        type +
+        ".min.js";
       el.src = cdn;
       document.body.appendChild(el);
       el.onload = function() {
