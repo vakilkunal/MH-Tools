@@ -1,13 +1,15 @@
-var SETUP_FIELDS_BOOKMARKLET_URL =
-  "src/bookmarklet/setupfieldsbookmarklet.min.js";
-var SETUP_BOOKMARKLET_URL = "src/bookmarklet/setupbookmarklet.min.js";
-var ANALYZER_BOOKMARKLET_URL = "src/bookmarklet/analyzerbookmarklet.min.js";
-var CRE_BOOKMARKLET_URL = "src/bookmarklet/crebookmarklet.min.js";
-var MAP_BOOKMARKLET_URL = "src/bookmarklet/mapbookmarklet.min.js";
-var CROWN_BOOKMARKLET_URL = "src/bookmarklet/crownbookmarklet.min.js";
-var CRAFTING_BOOKMARKLET_URL = "src/bookmarklet/craftingbookmarklet.min.js";
-var POWERS_BOOKMARKLET_URL = "src/bookmarklet/powersbookmarklet.min.js";
-var BOOKMARKLET_LOADER_URL = "src/bookmarklet/bookmarkletloader.min.js";
+var BOOKMARKLET_URLS = {
+  analyzer: "src/bookmarklet/bm-analyzer.min.js",
+  crafting: "src/bookmarklet/bm-crafting.min.js",
+  cre: "src/bookmarklet/bm-cre.min.js",
+  crown: "src/bookmarklet/bm-crown.min.js",
+  loader: "src/bookmarklet/bm-loader.min.js",
+  map: "src/bookmarklet/bm-map.min.js",
+  menu: "src/bookmarklet/bm-menu.min.js",
+  powers: "src/bookmarklet/bm-powers.min.js",
+  setup_fields: "src/bookmarklet/bm-setup-fields.min.js",
+  setup_items: "src/bookmarklet/bm-setup-items.min.js"
+};
 
 /**
  * Escape special characters and prepend javascript:void to the string

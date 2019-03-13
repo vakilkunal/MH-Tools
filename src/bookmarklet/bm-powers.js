@@ -363,9 +363,9 @@
 
         console.groupEnd();
         var newWindow = window.open("");
-        newWindow.location =
-          "https://tsitu.github.io/MH-Tools/powers-worksheet.html";
-        // newWindow.location = "http://localhost:8000/powers-worksheet.html";
+        // newWindow.location =
+        // "https://tsitu.github.io/MH-Tools/powers-worksheet.html";
+        newWindow.location = "http://localhost:8000/powers-worksheet.html";
         // 200 IQ method to transfer stringified data across origins
         newWindow.name = JSON.stringify(outputObj);
       }
