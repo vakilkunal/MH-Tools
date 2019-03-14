@@ -55,7 +55,8 @@ var riftWeapons = [
   "Focused Crystal Laser",
   "Multi-Crystal Laser",
   "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes",
-  "Timesplit Dissonance Weapon"
+  "Timesplit Dissonance Weapon",
+  "Wacky Inflatable Party People Trap"
 ];
 
 var riftBases = [
