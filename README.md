@@ -297,12 +297,12 @@ We use ESLint ([`config-airbnb-base`](https://www.npmjs.com/package/eslint-confi
 
 ### :arrow_down: Useful Links
 
-1. Marketplace Analyzer ([forum thread](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost))
-1. Population Data ([CSV](https://github.com/tsitu/MH-Tools/blob/master/data/populations.csv) | [source](https://docs.google.com/spreadsheets/d/1Y_urUwbp7XpbL9vRV4w4uoexkIM_DbuAc5Fb1JL_u20/edit?usp=sharing))
-1. Mouse Power Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1cGu0eG0Fgwf-OWFAfed_tVJC0GQh-j6utxiSDdWRFZE/))
-1. Mouse Wisdom Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing))
-1. New Area Mouse Powers + Effectiveness ([spreadsheet](https://docs.google.com/spreadsheets/d/1pnS4UVFMUndjX2H2s6hfyf5flMcppZyhZrn8EUH23S8/edit?usp=sharing))
-1. Discord (join the community's [server](https://discordapp.com/invite/Ya9zEdk)!)
+- MH Data Repository - MP/E, Gold/Points, Groups ([spreadsheet](https://docs.google.com/spreadsheets/d/1l6P9Cp2HceKSXgJKzcOy26lK_5BEAsAO9HhoiSYviTY/edit?usp=sharing))
+- Mouse Wisdom Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing))
+- New Area Mouse Powers + Effectiveness Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1pnS4UVFMUndjX2H2s6hfyf5flMcppZyhZrn8EUH23S8/edit?usp=sharing))
+- Marketplace Analyzer ([forum thread](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost))
+- Useful Userscripts ([Reddit thread](https://www.reddit.com/r/mousehunt/comments/avazpr/resource_useful_userscripts/))
+- Discord (join the [community server](https://discordapp.com/invite/Ya9zEdk))
 
 ### :heart_decoration: Thanks to...
 
