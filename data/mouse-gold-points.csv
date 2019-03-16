@@ -59,7 +59,7 @@ Black Widow,10,480
 Blacksmith,6000,21000
 Bloomed Sylvan,7180,44400
 Bog Beast,4700,11500
-Bonbon Gummy Goblin,5000,40000
+Bonbon Gummy Globlin,5000,40000
 Bookborn,950,11900
 Borean Commander,8000,15000
 Bottled,660,3360
@@ -104,6 +104,7 @@ Chamber Cleaver,10000,60000
 Chameleon,550,250
 Champion,3360,13800
 Charming Chimer,4500,42000
+Cheesy Party,1111,1111
 Cherry,3000,6000
 Cherry Sprite,22500,82500
 Chess Master,19000,119600
@@ -148,6 +149,7 @@ Costumed Dog,5888,2888
 Costumed Dragon,888,2888
 Costumed Horse,5888,2888
 Costumed Monkey,5888,2888
+Costumed Pig,5888,3888
 Costumed Rabbit,888,1888
 Costumed Rooster,5888,2888
 Costumed Sheep,5888,2888
@@ -277,6 +279,7 @@ Excitable Electric,2888,26250
 Exo-Tech,8760,50000
 Explorator,500,5500
 Extreme Everysports,5000,5000
+Factory Technician,2500,2500
 Fairy,930,5775
 Fall Familiar,830,9940
 Falling Carpet,1600,9800
@@ -337,6 +340,7 @@ Gingerbread,750,1250
 Glacia Ice Fist,2000,9900
 Gladiator,8250,8365
 Glass Blower,6000,18000
+Glazy,5000,18000
 Glitchpaw,1200,1200
 Gluttonous Zombie,2500,1500
 Goblin,3500,3500
@@ -376,6 +380,7 @@ Harvest Harrier,3680,11477
 Harvester,8460,17425
 Hazmat,5000,25000
 Healer,975,855
+Heart of the Meteor,1000000,500000
 Heavy Blaster,1150,7200
 High Roller,10,10
 Hired Eidolon,10000,44220
@@ -393,6 +398,7 @@ Hydra,5760,9640
 Hydrologist,3500,25000
 Hydrophobe,500,2000
 Hypnotized Gunslinger,9000,55000
+Iceberg Sculptor,10000,32017
 Iceblade,3850,14560
 Iceblock,1265,7425
 Icebreaker,1320,5850
@@ -912,6 +918,7 @@ Vampire,900,1400
 Vanguard,2600,14000
 Vanquisher,2560,9980
 Vigilant Ward,5000,42275
+"Vincent, The Magnificent",5000,5000
 Vinetail,6580,13172
 Violet Stormchild,10000,70000
 Walker,3000,17000

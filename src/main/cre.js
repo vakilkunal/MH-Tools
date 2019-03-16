@@ -181,11 +181,19 @@ function showPop(type) {
   }
 
   function getHeaderRow() {
-    var headerHTML =
-      "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches /<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tourney<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
-
-    if (rank) {
-      headerHTML += "<th data-filter='false'>Rank</th>";
+    var headerHTML;
+    if (locationName === "Event") {
+      headerHTML =
+        "<tr align='left'><th align='left'>Mouse Name</th><th data-filter='false'>Catch Rate</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min Luck</th>";
+      if (rank) {
+        headerHTML += "<th data-filter='false'>Rank Per Catch</th>";
+      }
+    } else {
+      headerHTML =
+        "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches /<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tourney<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+      if (rank) {
+        headerHTML += "<th data-filter='false'>Rank</th>";
+      }
     }
 
     if (locationName.indexOf("Seasonal Garden") >= 0) {
@@ -301,33 +309,62 @@ function showPop(type) {
         catchRate = catchRate.toFixed(2);
         catches = catches.toFixed(2);
 
-        var mouseRow =
-          "<td align='left'>" +
-          mouseName +
-          "</td><td>" +
-          attractions.toFixed(2) +
-          "%</td><td>" +
-          catchRate +
-          "%</td><td>" +
-          catches +
-          "</td><td>" +
-          commafy(mouseGold) +
-          "</td><td>" +
-          commafy(mousePoints) +
-          "</td><td>" +
-          tourneyPoints +
-          "</td><td>" +
-          minLuckValue +
-          "</td>";
+        var mouseRow;
+        if (locationName === "Event") {
+          var catchRateStr = catchRate + "%";
+          var minLuckStr = minLuckValue;
+          if (mousePower === 0) {
+            // Link to 'MH Data Repository' spreadsheet
+            // Currently limited to Event mice, but there may be others with MP = 0
+            catchRateStr = "Missing MP";
+            minLuckStr = "N/A";
+          }
+          mouseRow =
+            "<td align='left'>" +
+            mouseName +
+            "</td><td>" +
+            catchRateStr +
+            "</td><td>" +
+            commafy(mouseGold) +
+            "</td><td>" +
+            commafy(mousePoints) +
+            "</td><td>" +
+            minLuckStr +
+            "</td>";
+        } else {
+          mouseRow =
+            "<td align='left'>" +
+            mouseName +
+            "</td><td>" +
+            attractions.toFixed(2) +
+            "%</td><td>" +
+            catchRate +
+            "%</td><td>" +
+            catches +
+            "</td><td>" +
+            commafy(mouseGold) +
+            "</td><td>" +
+            commafy(mousePoints) +
+            "</td><td>" +
+            tourneyPoints +
+            "</td><td>" +
+            minLuckValue +
+            "</td>";
+        }
 
         if (rank) {
           var adv = mouseWisdom[mouseName] / rankupDiff[rank];
           var helpMessage =
-            "<a href='https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit#gid=1426419522' target='blank'>Missing</a>";
-          mouseRow +=
-            "<td>" +
-            (adv ? (adv * 100).toFixed(4) + "%" : helpMessage) +
-            "</td>";
+            "<a href='https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing' target='blank'>Missing</a>";
+          var rankStr;
+          rankStr = adv ? (adv * 100).toFixed(4) + "%" : helpMessage;
+
+          // 0 wisdom edge case(s)
+          if (mouseName === "Romeno") {
+            rankStr = "0.0000%";
+          }
+
+          mouseRow += "<td>" + rankStr + "</td>";
           adv *= catches;
           overallProgress += adv;
         }
@@ -394,31 +431,39 @@ function showPop(type) {
           mouseRow += "<td>" + mouseClues + "</td><td></td>";
         }
 
-        resultsHTML += "<tr align='right'>" + mouseRow + "</tr>";
+        if (locationName === "Event") {
+          resultsHTML += "<tr align='center'>" + mouseRow + "</tr>";
+        } else {
+          resultsHTML += "<tr align='right'>" + mouseRow + "</tr>";
+        }
       }
     }
 
     overallAR *= 100;
     var averageCR = overallCR / overallAR * 100;
 
-    resultsHTML +=
-      "</tbody><tr align='right'><td align='left'><b>Sums / Averages</b></td><td>" +
-      overallAR.toFixed(2) +
-      "%</td><td>" +
-      averageCR.toFixed(2) +
-      "%</td><td>" +
-      overallCR.toFixed(2) +
-      "</td><td>" +
-      commafy(Math.round(overallGold)) +
-      "</td><td>" +
-      commafy(Math.round(overallPoints)) +
-      "</td><td>" +
-      overallTP.toFixed(2) +
-      "</td><td>" +
-      minLuckOverall +
-      "</td>";
+    // Generate 'Sums & Averages' row
+    var statsRow;
+    if (locationName !== "Event") {
+      resultsHTML +=
+        "</tbody><tr align='right'><td align='left'><b>Sums & Averages</b></td><td>" +
+        overallAR.toFixed(2) +
+        "%</td><td>" +
+        averageCR.toFixed(2) +
+        "%</td><td>" +
+        overallCR.toFixed(2) +
+        "</td><td>" +
+        commafy(Math.round(overallGold)) +
+        "</td><td>" +
+        commafy(Math.round(overallPoints)) +
+        "</td><td>" +
+        overallTP.toFixed(2) +
+        "</td><td>" +
+        minLuckOverall +
+        "</td>";
+    }
 
-    if (rank) {
+    if (rank && locationName !== "Event") {
       resultsHTML += "<td>" + overallProgress.toFixed(4) + "%</td>";
     }
 
@@ -455,17 +500,22 @@ function showPop(type) {
     var cheeseEatenPerHunt = overallAR / 100;
     var cheeseStaledPerHunt =
       (100 - overallAR) / 100 * freshness2stale[trapEff];
-    resultsHTML +=
-      "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" +
-      commafy(
-        Math.round(
-          overallGold - cheeseCost * (cheeseEatenPerHunt + cheeseStaledPerHunt)
-        )
-      ) +
-      "</td><td></td><td></td><td></td>";
 
-    if (rank) {
-      resultsHTML += "<td></td>";
+    // Generate gold profit row
+    if (locationName !== "Event") {
+      resultsHTML +=
+        "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" +
+        commafy(
+          Math.round(
+            overallGold -
+              cheeseCost * (cheeseEatenPerHunt + cheeseStaledPerHunt)
+          )
+        ) +
+        "</td><td></td><td></td><td></td>";
+
+      if (rank) {
+        resultsHTML += "<td></td>";
+      }
     }
 
     if (
