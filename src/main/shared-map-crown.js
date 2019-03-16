@@ -597,11 +597,15 @@ function processMap(mapText, toolType) {
                 URLString += "&charm=" + charmName;
               }
 
-              var modURLString = URLString.replace(/ /g, "%20");
-              locationPhaseCheeseCharm +=
-                "<a href=" +
-                modURLString +
-                ' target="_blank" rel="noopener">Link to best setup</a>';
+              if (locationName !== "Event") {
+                var modURLString = URLString.replace(/ /g, "%20");
+                locationPhaseCheeseCharm +=
+                  "<a href=" +
+                  modURLString +
+                  ' target="_blank" rel="noopener">Link to best setup</a>';
+              } else {
+                locationPhaseCheeseCharm += "<i>{ 0% Placeholder AR }</i>";
+              }
 
               var attractionRate;
               if (toolType === "map") {
