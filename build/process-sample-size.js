@@ -172,9 +172,13 @@ function parseJSON() {
     let obj = JSON.parse(data);
 
     let overallSummaryScore = 0;
+    let numLocations = Object.keys(obj).length;
     for (let location in obj) {
       // Exclude Event mice which have no sample data
-      if (location === "Event") continue;
+      if (location === "Event") {
+        numLocations -= 1;
+        continue;
+      }
 
       detailedObj[location] = {};
       for (let phase in obj[location]) {
@@ -235,9 +239,7 @@ function parseJSON() {
       if (conciseAvgScore) overallSummaryScore += conciseAvgScore / locLen;
     }
 
-    const overallSummaryAvg = (
-      overallSummaryScore / Object.keys(obj).length
-    ).toFixed(2);
+    const overallSummaryAvg = (overallSummaryScore / numLocations).toFixed(2);
 
     overallObj["score"] = overallSummaryAvg;
 
