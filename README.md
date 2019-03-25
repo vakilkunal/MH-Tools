@@ -11,11 +11,11 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
 * [Instructions](#instructions)
   * [General Tips](#thought_balloon-general-tips)
   * [Bookmarklets](#bookmark-bookmarklets)
-    * [Browser Installation Tips](#user-content-Browser-Tips)
-    * [Chrome](#user-content-Chrome)
-    * [Firefox](#user-content-Firefox)
-    * [Edge / IE](#user-content-Edge)
-    * [Safari](#user-content-Safari)
+    * [Browser Installation Tips](#user-content-browser-tips)
+    * [Chrome](#user-content-chrome)
+    * [Firefox](#user-content-firefox)
+    * [Edge / IE](#user-content-edge)
+    * [Safari](#user-content-safari)
   * [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
   * [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
   * [Best Setup](#trophy-best-setup)
@@ -68,10 +68,10 @@ _Note:_ The process of using a bookmarklet in mobile browsers can vary. For exam
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
-<br><b id="Browser-Tips">Browser Installation Tips</b><br>
+<br><b id="browser-tips">Browser Installation Tips</b><br>
 Drag the blue bookmarklet link to your browser's bookmarks bar. If that doesn't work, try the following manual instructions. These concepts apply to other browsers (including mobile), but specific steps may vary.<br>
 
-<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/chrome_12-48/chrome_12-48_32x32.png" alt="Chrome" id="Chrome"><br>
+<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/chrome_12-48/chrome_12-48_32x32.png" alt="Chrome" id="chrome"><br>
 _Google Chrome_
 
 1. Bookmark an arbitrary page and name it something memorable, like 'CRE' or 'Auto-Loader'
@@ -79,19 +79,19 @@ _Google Chrome_
 1. Right-click on your newly created bookmark and select `Edit...`
 1. Paste the bookmarklet code into the `URL` field and hit `Save`
 
-<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/firefox_23-56/firefox_23-56_32x32.png" alt="Firefox" id="Firefox"><br>
+<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/firefox_23-56/firefox_23-56_32x32.png" alt="Firefox" id="firefox"><br>
 _Mozilla Firefox_
 
 1. Right-click on the bookmarklet link, select `Bookmark This Link`, and name it accordingly.
 
-<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/edge/edge_32x32.png" alt="Edge" id="Edge"> <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/internet-explorer_9-11/internet-explorer_9-11_32x32.png" alt="Edge" id="Edge"><br>
+<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/edge/edge_32x32.png" alt="Edge" id="Edge"> <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/internet-explorer_9-11/internet-explorer_9-11_32x32.png" alt="Edge" id="edge"><br>
 _Microsoft Edge / Internet Explorer_
 
 1. Edge doesn't seem to natively support saving a bookmark directly from a link or editing a bookmark's URL. However, there is a third-party application called [EdgeManage](http://www.emmet-gray.com/Articles/EdgeManage.html) that purports to add a lot of missing features for managing Favorites - please use at your own discretion.
 
 1. Internet Explorer 11 allows you to drag bookmarklets directly to your favorites bar as well as right-click and `Add to favorites...`. However, it doesn't seem to support certain JavaScript features that enable our bookmarklets to run properly.
 
-<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/safari_1-7/safari_1-7_32x32.png" alt="Safari" id="Safari"><br>
+<br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/safari_1-7/safari_1-7_32x32.png" alt="Safari" id="safari"><br>
 _Apple Safari_
 
 1. Bookmark an arbitrary page and give it a memorable name.
