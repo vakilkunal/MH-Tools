@@ -158,6 +158,26 @@
       var elements = userQuests["QuestMoussuPicchu"]["elements"];
       var stormLevel = elements["storm"][LEVEL_KEY];
 
+      // TODO: storm.level for 100/99 - medium or high? (likely former)
+      // TODO: storm.level for wind & rain both low (< 35%)
+      switch (stormLevel) {
+        case "high":
+          stormLevel = "max";
+          break;
+        case "medium":
+          stormLevel = "high";
+          break;
+        case "low":
+          if (
+            elements[RAIN_KEY]["percent"] >= 35 &&
+            elements[WIND_KEY]["percent"] >= 35
+          ) {
+            stormLevel = "medium";
+          }
+          break;
+        default:
+      }
+
       if (stormLevel !== "none") {
         return "Storm " + stormLevel;
       } else if (elements[RAIN_KEY][DIRECTION_KEY] === UP_DIRECTION) {
