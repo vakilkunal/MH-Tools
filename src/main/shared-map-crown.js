@@ -594,7 +594,7 @@ function processMap(mapText, toolType) {
 
               if (charmName != EMPTY_SELECTION) {
                 locationPhaseCheeseCharm += "[" + charmName + "]" + "<br>";
-                URLString += "&charm=" + charmName;
+                URLString += "&charm=" + charmName + " Charm";
               }
 
               if (locationName !== "Event") {

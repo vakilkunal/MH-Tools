@@ -1173,21 +1173,21 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
         weaponPower -= 10920;
         calculateTrapSetup(true);
       } else if (weaponName === "Technic Pawn Pincher") {
-        weaponPower -= 59.99;
+        weaponPower -= 60;
         weaponBonus -= 5;
         calculateTrapSetup(true);
         catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
-        weaponPower += 59.99;
+        weaponPower += 60;
         weaponBonus += 5;
         calculateTrapSetup(true);
       }
     } else if (mouseName === "Technic Pawn") {
       if (weaponName === "Mystic Pawn Pincher") {
-        weaponPower -= 59.99;
+        weaponPower -= 60;
         weaponBonus -= 5;
         calculateTrapSetup(true);
         catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
-        weaponPower += 59.99;
+        weaponPower += 60;
         weaponBonus += 5;
         calculateTrapSetup(true);
       } else if (weaponName === "Technic Pawn Pincher") {
@@ -1229,7 +1229,7 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
     }
   } else if (charmName === "Dragonbane Charm" && contains(dragons, mouseName)) {
     charmBonus += 300;
-    calculateTrapSetup(true); // not "cre" or else infinite loop
+    calculateTrapSetup(true);
     catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
     charmBonus -= 300;
     calculateTrapSetup(true);
@@ -1238,7 +1238,7 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
     contains(dragons, mouseName)
   ) {
     charmBonus += 600;
-    calculateTrapSetup(true); // not "cre" or else infinite loop
+    calculateTrapSetup(true);
     catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
     charmBonus -= 600;
     calculateTrapSetup(true);
