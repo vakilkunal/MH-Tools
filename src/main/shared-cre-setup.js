@@ -42,7 +42,7 @@ var gsLuck = 7,
   cheeseBonus = 0,
   cheeseCost = 0,
   subtotalPowerBonus = 0,
-  tauntLuck = 0;
+  tauntBonus = 0;
 
 // Total trap stats
 var trapPower = 0,
@@ -281,8 +281,7 @@ function calculateTrapSetup(skipDisp) {
       charmLuck +
       bonusLuck +
       pourLuck +
-      specialLuck +
-      tauntLuck;
+      specialLuck;
     trapLuck = Math.floor(totalLuck * Math.min(1, getAmpBonus()));
     trapAtt = Math.min(weaponAtt + baseAtt + charmAtt, 100);
     trapEff = weaponEff + baseEff + charmEff;
@@ -483,6 +482,9 @@ function calculateTrapSetup(skipDisp) {
   function determineRiftBonus(codex) {
     var riftCount = getRiftCount(weaponName, baseName, charmName);
     var multiplier = codex ? 2 : 1;
+
+    // Taunting Charm active on boss mice
+    if (tauntBonus === 1) riftCount += 1;
 
     if (riftCount === 2) {
       shownPowerBonus += 10 * multiplier;
@@ -1150,7 +1152,7 @@ function checkPhase() {
 }
 
 /**
- * Special location/weapon/charm effects on catch rate
+ * Special location/weapon/charm catch rate effects (for a single mouse)
  * @param {number} catchRate
  * @param {string} mouseName
  * @param {number} eff
@@ -1244,21 +1246,10 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
     calculateTrapSetup(true);
   } else if (charmName === "Taunting Charm" && contains(tauntings, mouseName)) {
     var riftCount = getRiftCount(weaponName, baseName, charmName);
-    var multiplier = riftStalkerCodex ? 2 : 1;
-    if (riftCount === 1) {
-      weaponPower *= 1 + 1 / 10 * multiplier;
-    } else if (riftCount === 2) {
-      weaponPower *= 1 + 1 / 10 * multiplier;
-      tauntLuck += 5 * multiplier;
-    }
+    if (riftCount >= 1) tauntBonus = 1;
     calculateTrapSetup(true);
     catchRate = calcCR(eff, trapPower, trapLuck, mousePower);
-    if (riftCount === 1) {
-      weaponPower /= 1 + 1 / 10 * multiplier;
-    } else if (riftCount === 2) {
-      weaponPower /= 1 + 1 / 10 * multiplier;
-      tauntLuck -= 5 * multiplier;
-    }
+    if (riftCount >= 1) tauntBonus = 0;
     calculateTrapSetup(true);
   } else if (locationName === "Fiery Warpath") {
     if (charmName.indexOf("Super Warpath Archer Charm") >= 0) {
