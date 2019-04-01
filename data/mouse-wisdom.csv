@@ -39,7 +39,7 @@ Barnacle Beautician,4160
 Barracuda,7700
 Bartender,750
 Bat,338
-Battering Ram,0
+Battering Ram,90
 Battle Cleric,10000
 Bear,60
 Beast Tamer,500
@@ -125,11 +125,11 @@ Cloud Collector,6300
 Clownfish,7176
 Clump,7300
 Clumsy Carrier,4496
-Clumsy Chemist,0
+Clumsy Chemist,79
 Coal Shoveller,900
 Cobweb,75
 Coco Commander,1035
-Coffin Zombie,0
+Coffin Zombie,350
 Confused Courier,135
 Conjurer,688
 Conqueror,756
@@ -190,7 +190,7 @@ Cursed,1000
 Cursed Enchanter,2800
 Cursed Engineer,3100
 Cursed Librarian,4000
-Cursed Taskmaster,6050
+Cursed Taskmaster,6000
 Cursed Thief,3400
 Cute Crate Carrier,800
 Cuttle,1856
@@ -735,7 +735,7 @@ Sleepy Merchant,3750
 Slimefist,22000
 Slope Swimmer,550
 Sludge,900
-Sludge Scientist,0
+Sludge Scientist,70
 Sludge Soaker,7000
 Sludge Swimmer,24000
 Snake Charmer,630
@@ -792,7 +792,7 @@ Spring Sprig,800
 Sprinkly Sweet Cupcake Cook,650
 Spud,50
 Squeaken,553
-Squeaker Bot,0
+Squeaker Bot,60
 Squeaker Claws,4268
 Stagecoach Driver,1650
 Stalagmite,12500
