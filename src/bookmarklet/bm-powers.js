@@ -200,7 +200,7 @@
             return $(this).context.textContent;
           })
           .toArray()[0];
-        var trapPower = parseInt(powerStr.replace(/,/, ""));
+        var trapPower = parseInt(powerStr.replace(/,/g, ""));
 
         for (var i = 0; i < trapTypes.length; i++) {
           if (powerStr.indexOf(trapTypes[i]) > -1) {
