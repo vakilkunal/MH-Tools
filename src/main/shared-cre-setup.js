@@ -1557,7 +1557,7 @@ function formatSampleScore() {
       colored = str.fontcolor("orange");
     }
   } else if (sampleScoreParam === 0) {
-    colored = "n/a";
+    colored = "missing";
   } else {
     scoreDescriptor = "N/A";
   }
