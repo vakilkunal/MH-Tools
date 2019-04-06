@@ -16,7 +16,7 @@ module.exports = {
   series: [
     {
       // stages
-      phase: utils.genVarField("stage", "open"),
+      phase: utils.genVarField("stage", "Open"),
       config: [
         {
           opts: {
@@ -27,7 +27,7 @@ module.exports = {
     },
     {
       // stages
-      phase: utils.genVarField("stage", "closed"),
+      phase: utils.genVarField("stage", "Closed"),
       config: [
         {
           opts: {
