@@ -372,7 +372,7 @@ function loadData(inputText) {
 
 /**
  * Checks if mouse data JSON is properly formatted
- * @param {obj} jsonObj
+ * @param {object} jsonObj
  * @return {boolean}
  */
 function validateJsonData(jsonObj) {
@@ -444,10 +444,67 @@ function calculateBounds(input, trapPower, trapType) {
 }
 
 /**
+ * Runs through all stored groups/mice/effs
+ * Checks for mice with multiple 100% eff types
+ * Derives narrowest MP range and updates values accordingly
+ * @param {object} stored
+ */
+function normalizeRanges(stored) {
+  const minCache = {};
+  for (let group in stored) {
+    minCache[group] = {};
+    for (let mouse in stored[group]) {
+      minCache[group][mouse] = {};
+      minCache[group][mouse]["effs"] = [];
+      for (let i = 0; i < 10; i++) {
+        const el = stored[group][mouse]["effs"][i];
+        if (typeof el === "object" && el[0] === 100) {
+          if (!minCache[group][mouse]["range"]) {
+            minCache[group][mouse]["range"] = [el[1], el[2]];
+          }
+          if (el[1] > minCache[group][mouse]["range"][0]) {
+            minCache[group][mouse]["range"][0] = el[1];
+          }
+          if (el[2] < minCache[group][mouse]["range"][1]) {
+            minCache[group][mouse]["range"][1] = el[2];
+          }
+          minCache[group][mouse]["effs"].push(trapTypes[i]);
+        } else if (typeof el === "number" && el === 100) {
+          minCache[group][mouse]["effs"].push(trapTypes[i]);
+        }
+      }
+      const effLen = minCache[group][mouse]["effs"].length;
+      if (effLen === 0 || effLen === 1) {
+        delete minCache[group][mouse];
+      }
+    }
+    if (Object.keys(minCache[group]).length === 0) {
+      delete minCache[group];
+    }
+  }
+
+  for (let group in minCache) {
+    for (let mouse in minCache[group]) {
+      for (let el of minCache[group][mouse]["effs"]) {
+        const ttIndex = trapTypes.indexOf(el);
+        stored[group][mouse]["effs"][ttIndex] = [
+          100,
+          minCache[group][mouse]["range"][0],
+          minCache[group][mouse]["range"][1]
+        ];
+      }
+    }
+  }
+
+  return stored;
+}
+
+/**
  * Diffs the incoming and stored mouse-data objs
  * (Is there a more elegant way to do this?)
  * @param {object} input
  * @param {object} stored
+ * @return {object} Modified in-place
  */
 function mouseDataDiff(input, stored) {
   for (let group in input) {
@@ -478,10 +535,19 @@ function mouseDataDiff(input, stored) {
                     // If eff is different, HG has tweaked it
                     storedArr = inputArr;
                   } else if (inputArr[1] > storedArr[1]) {
-                    // Replace with a bigger lower bound
-                    storedArr[1] = inputArr[1];
+                    if (inputArr[1] <= storedArr[2]) {
+                      // Replace with a bigger lower bound
+                      storedArr[1] = inputArr[1];
+                    }
                   } else if (inputArr[2] < storedArr[2]) {
-                    // Replace with a smaller upper bound
+                    if (inputArr[2] >= storedArr[1]) {
+                      // Replace with a smaller upper bound
+                      storedArr[2] = inputArr[2];
+                    }
+                  } else if (
+                    typeof inputArr[2] === "number" &&
+                    storedArr[2] === "∞"
+                  ) {
                     storedArr[2] = inputArr[2];
                   }
                 }
@@ -583,6 +649,8 @@ function processInput(inputText) {
       incomingObj["mouse-data"],
       storedObj["mouse-data"]
     );
+    storedObj["mouse-data"] = normalizeRanges(storedObj["mouse-data"]);
+    // normalizeRanges(JSON.parse(localStorage.getItem("powers-tool-worksheet-data"))["mouse-data"])
 
     // Insert into trap history
     storedObj["trap-history"].push([
@@ -606,6 +674,7 @@ function processInput(inputText) {
       user["timestamp"],
       user["dom-trap-power"]
     ]);
+    incomingObj["mouse-data"] = normalizeRanges(incomingObj["mouse-data"]);
 
     localStorage.setItem(
       "powers-tool-worksheet-data",
@@ -663,11 +732,14 @@ function renderMousePowers(mouseData) {
           data["effs"][i][0] !== undefined
             ? data["effs"][i][0]
             : data["effs"][i];
-        const lowerBound =
+        let lowerBound =
           typeof data["effs"][i] === "object" &&
           data["effs"][i][1] !== undefined
             ? data["effs"][i][1]
             : 0;
+        if (typeof data["effs"][i] === "number" && data["effs"][i] === 0) {
+          lowerBound = "∞";
+        }
         const upperBound =
           typeof data["effs"][i] === "object" &&
           data["effs"][i][2] !== undefined
