@@ -422,11 +422,10 @@ function calculateBounds(input, trapPower, trapType) {
           break;
         case "Overpowering":
           lowerBound = parseFloat((trapPower * 13 / 7).toFixed(2));
-          upperBound = parseFloat((trapPower * 9).toFixed(2));
+          upperBound = parseFloat((trapPower * 19).toFixed(2));
           break;
         case "Near Impossible":
-          lowerBound = parseFloat((trapPower * 9).toFixed(2));
-          upperBound = parseFloat((trapPower * 19).toFixed(2));
+          lowerBound = parseFloat((trapPower * 19).toFixed(2));
           break;
       }
 
