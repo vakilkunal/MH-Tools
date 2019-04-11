@@ -1,5 +1,5 @@
 (function() {
-  var setLocationSpecificUrlParams = function(
+  function setLocationSpecificUrlParams(
     userLocation,
     urlParams,
     userSublocation
@@ -33,10 +33,13 @@
       urlParams["cannonLevel"] = fort["c"]["level"];
     } else if (userLocation === "Zugzwang's Tower") {
       urlParams["amplifier"] = user["viewing_atts"]["zzt_amplifier"];
+    } else if (userLocation === "Sand Crypts") {
+      urlParams["saltLevel"] =
+        userQuests["QuestSandDunes"]["minigame"]["salt_charms_used"];
     }
-  };
+  }
 
-  var getUserTournament = function() {
+  function getUserTournament() {
     if (document.querySelector("div.tournamentStatusHud") !== null) {
       var tourney = user["viewing_atts"]["tournament"];
       if (tourney["status"] === "active" || tourney["status"] === "pending") {
@@ -44,9 +47,9 @@
         return tourney["name"];
       }
     }
-  };
+  }
 
-  var findSublocation = function(userLocation, userBase) {
+  function findSublocation(userLocation, userBase) {
     var userQuests = user["quests"];
 
     var userViewingAtts = user["viewing_atts"];
@@ -357,7 +360,7 @@
       }
     }
     return "N/A";
-  };
+  }
 
   function contains(collection, searchElement) {
     return collection.indexOf(searchElement) > -1;
