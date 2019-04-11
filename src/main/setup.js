@@ -29,31 +29,32 @@ $(window).load(function() {
 
   var bonusPowerParameter = parseInt(getURLParameter("bonusPower"));
   if (bonusPowerParameter >= 0) {
-    document.querySelector("#bonusPower").value = bonusPowerParameter;
+    document.getElementById("bonusPower").value = bonusPowerParameter;
     bonusPowerChanged();
   }
 
   var bonusLuckParameter = parseInt(getURLParameter("bonusLuck"));
   if (bonusLuckParameter >= 0) {
-    document.querySelector("#bonusLuck").value = bonusLuckParameter;
+    document.getElementById("bonusLuck").value = bonusLuckParameter;
     bonusLuckChanged();
   }
 
   showHideWidgets();
 
-  document.querySelector("#location").onchange = locationChanged;
-  document.querySelector("#phase").onchange = phaseChanged;
-  document.querySelector("#cheese").onchange = cheeseChanged;
-  document.querySelector("#charm").onchange = charmChanged;
-  document.querySelector("#empowered").onchange = empoweredChanged;
-  document.querySelector("#battery").onchange = batteryChanged;
-  document.querySelector("#gs").onchange = gsChanged;
-  document.querySelector("#bonusPower").onchange = bonusPowerChanged;
-  document.querySelector("#bonusLuck").onchange = bonusLuckChanged;
-  document.querySelector("#ballistaLevel").onchange = genericOnChange;
-  document.querySelector("#cannonLevel").onchange = genericOnChange;
-  document.querySelector("#riftstalker").onchange = riftstalkerChange;
-  document.querySelector("#rank").onchange = rankChange;
+  document.getElementById("location").onchange = locationChanged;
+  document.getElementById("phase").onchange = phaseChanged;
+  document.getElementById("cheese").onchange = cheeseChanged;
+  document.getElementById("charm").onchange = charmChanged;
+  document.getElementById("empowered").onchange = empoweredChanged;
+  document.getElementById("battery").onchange = batteryChanged;
+  document.getElementById("gs").onchange = gsChanged;
+  document.getElementById("bonusPower").onchange = bonusPowerChanged;
+  document.getElementById("bonusLuck").onchange = bonusLuckChanged;
+  document.getElementById("ballistaLevel").onchange = genericOnChange;
+  document.getElementById("cannonLevel").onchange = genericOnChange;
+  document.getElementById("saltLevel").onchange = saltChanged;
+  document.getElementById("riftstalker").onchange = riftstalkerChange;
+  document.getElementById("rank").onchange = rankChange;
 
   $("#save_setup_button").click(saveSetupStorage);
 
@@ -138,7 +139,7 @@ $(window).load(function() {
 function loadCharmDropdown() {
   loadDropdown("charm", charmKeys, charmChanged, "<option>No Charm</option>");
   var charmParameter = recentCharm || getURLParameter("charm");
-  var select = document.querySelector("#charm");
+  var select = document.getElementById("charm");
   if (charmParameter != NULL_URL_PARAM) {
     select.value = charmParameter;
   }
@@ -361,7 +362,7 @@ function saveSetupStorage() {
  * Loads the cheese dropdown menu
  */
 function loadCheeseDropdown(location, phase) {
-  var cheeseDropdown = document.querySelector("#cheese");
+  var cheeseDropdown = document.getElementById("cheese");
   var cheeseDropdownHTML = "";
 
   var insertedCheeses = [];
@@ -385,7 +386,7 @@ function loadCheeseDropdown(location, phase) {
   cheeseDropdown.innerHTML = cheeseDropdownHTML;
   cheeseDropdown.selectedIndex = 0;
 
-  var select = document.querySelector("#cheese");
+  var select = document.getElementById("cheese");
   var cheeseParameter = recentCheese || getURLParameter("cheese");
   if (cheeseParameter !== NULL_URL_PARAM) {
     select.value = cheeseParameter;
@@ -398,7 +399,7 @@ function loadCheeseDropdown(location, phase) {
 }
 
 function updateLink() {
-  var select = document.querySelector("#charm");
+  var select = document.getElementById("charm");
   var selectedCharm = select.value;
 
   var urlParams = {
@@ -414,12 +415,13 @@ function updateLink() {
     riftstalker: riftStalkerCodex,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
+    saltLevel: saltLevel,
     rank: rank,
     amplifier: ztAmp
   };
 
   var urlString = buildURL("setup.html", urlParams);
-  document.querySelector("#link").href = urlString;
+  document.getElementById("link").href = urlString;
 
   ga("send", "event", "link", "updated", urlString);
 }
@@ -430,7 +432,7 @@ function weaponChanged() {
 }
 
 function cheeseChanged() {
-  cheeseName = document.querySelector("#cheese").value;
+  cheeseName = document.getElementById("cheese").value;
   recentCheese = cheeseName;
   updateLink();
   checkEmpoweredWidget();
@@ -460,7 +462,7 @@ function charmChanged(customValue) {
 
 function showPop() {
   if (!locationName || !cheeseName) {
-    document.querySelector("#results").innerHTML = "";
+    document.getElementById("results").innerHTML = "";
     $("#pleaseWaitMessage").hide();
     return;
   } else {
@@ -643,7 +645,7 @@ function buildMiceCRCells(micePopulation) {
 function printCombinations(micePopulation, headerHtml) {
   var weaponSelectors = getSelectors("weapon");
   var baseSelectors = getSelectors("base");
-  var selectedCharm = document.querySelector("#charm").value;
+  var selectedCharm = document.getElementById("charm").value;
   var tableHTML = headerHtml + "<tbody>";
   charmName = selectedCharm;
 
@@ -787,6 +789,7 @@ function getCRELinkElement() {
       base: baseName,
       ballistaLevel: fortRox.ballistaLevel,
       cannonLevel: fortRox.cannonLevel,
+      saltLevel: saltLevel,
       rank: rank,
       amplifier: ztAmp
     };

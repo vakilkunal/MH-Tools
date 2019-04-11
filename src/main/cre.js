@@ -59,6 +59,7 @@ window.onload = function() {
   document.getElementById("tourney").onchange = tourneyChanged;
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
+  document.getElementById("saltLevel").onchange = saltChanged;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
   document.getElementById("rank").onchange = rankChange;
 
@@ -617,6 +618,7 @@ function updateLink() {
     riftstalker: riftStalkerCodex,
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
+    saltLevel: saltLevel,
     rank: rank,
     amplifier: ztAmp
   };

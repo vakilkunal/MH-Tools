@@ -73,6 +73,9 @@ var fortRox = {
   cannonLevel: 0
 };
 
+// Initialize Sand Crypts salt level
+var saltLevel = 0;
+
 /**
  * Returns the size of an object based on its length or number of keys
  * @param {object} obj
@@ -421,8 +424,8 @@ function calculateTrapSetup(skipDisp) {
     ) {
       hiddenPowerBonus += 30;
     } else if (locationName === "Fort Rox") {
-      fortRox.ballistaLevel = $("#ballistaLevel").val();
-      fortRox.cannonLevel = $("#cannonLevel").val();
+      fortRox.ballistaLevel = document.getElementById("ballistaLevel").value;
+      fortRox.cannonLevel = document.getElementById("cannonLevel").value;
 
       if (charmName === "Nightlight Charm") {
         if (phaseName === "Day") {
@@ -618,6 +621,10 @@ function riftstalkerChange() {
 function fortRoxParamCheck() {
   updateInputFromParameter("ballistaLevel", genericOnChange);
   updateInputFromParameter("cannonLevel", genericOnChange);
+}
+
+function sandCryptsParamCheck() {
+  updateInputFromParameter("saltLevel", saltChanged);
 }
 
 function getRankKey() {
@@ -852,6 +859,11 @@ function gsChanged() {
   updateLink();
   calculateTrapSetup();
   //showPop();
+}
+
+function saltChanged() {
+  saltLevel = document.getElementById("saltLevel").value;
+  genericOnChange();
 }
 
 function getIcebergBase() {
@@ -1306,6 +1318,12 @@ function calcCREffects(catchRate, mouseName, eff, mousePower) {
         calculateTrapSetup(true);
       }
     }
+  } else if (locationName === "Sand Crypts") {
+    if (mouseName === "King Grub" || mouseName === "King Scarab") {
+      var type = mouseName.split("King ")[1];
+      var saltedMousePower = calcSaltedPower(type, mousePower);
+      catchRate = calcCR(eff, trapPower, trapLuck, saltedMousePower);
+    }
   }
 
   return catchRate;
@@ -1420,6 +1438,7 @@ function checkLoadState(type) {
     gsParamCheck();
     riftstalkerParamCheck();
     fortRoxParamCheck();
+    sandCryptsParamCheck();
     rankParamCheck();
     golemParamCheck();
 
@@ -1585,4 +1604,24 @@ function calcGolemStats(charge) {
   weaponBonus = 10 * charge + 5;
   weaponAtt = 15 * charge + 5;
   weaponLuck = Math.floor((weaponsArray[weaponName][4] - 3) * charge + 3);
+}
+
+/**
+ * Calculate decreased mouse powers for King Grub & Scarab
+ * @param {string} type Grub or Scarab
+ * @param {number} mousePower Base mouse power value
+ * @return {number} Salted/decreased mouse power value
+ */
+function calcSaltedPower(type, mousePower) {
+  var saltedPower = mousePower;
+  var saltVal = parseInt(saltLevel, 10) || 0;
+  if (saltVal > 0 && saltVal <= 50) {
+    if (type === "Grub") {
+      saltedPower = 112571 - 27883 * Math.log(saltVal);
+    } else if (type === "Scarab") {
+      saltedPower = 777879 - 183425 * Math.log(saltVal);
+    }
+  }
+
+  return saltedPower;
 }

@@ -105,7 +105,10 @@
         <tr class="display-location display-sand-crypts">
           <td>Comments:</td>
           <td class="locationComment">
-            Disclaimer: King Grub & Scarab salt effects are not implemented
+            Salt level is believed to be logarithmically related to Grub & Scarab power values
+            <br>The current formulas are approximations based on data from
+            <a href="https://sites.google.com/site/tehhowch/data-spreadsheets/king_grub_salt_charms/kg_mouse_power"
+            target="_blank" rel="noopener">tehhowch</a>
           </td>
         </tr>
 
@@ -186,9 +189,10 @@
         <tr class="display-location display-fort-rox">
           <td>Ballista Level:</td>
           <td>
-            <input name="ballista" id="ballistaLevel" type="number" min="0" max="3" value="0" />
+            <input name="ballista" type="number" id="ballistaLevel" min="0" max="3" value="0" />
           </td>
         </tr>
+
         <tr class="display-location display-fort-rox">
           <td>Cannon Level:</td>
           <td>
@@ -207,6 +211,13 @@
           <td></td>
           <td>
             <div id="ampSlider"></div>
+          </td>
+        </tr>
+
+        <tr class="display-location display-sand-crypts">
+          <td>Salt Level:</td>
+          <td>
+            <input name="salt" type="number" id="saltLevel" min="0" max="50" value="0" />
           </td>
         </tr>
       </tbody>
