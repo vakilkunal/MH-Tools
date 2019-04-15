@@ -70,7 +70,9 @@
         tier_2: "Mist Level 6-18",
         tier_3: "Mist Level 19-20"
       };
-      return tierMapping[tier];
+      return userCheese === "Undead String Emmental"
+        ? userCheese
+        : tierMapping[tier];
     } else if (userLocation === "Fiery Warpath") {
       var wave = userViewingAtts["desert_warpath"]["wave"];
       return "Wave " + wave;
@@ -246,7 +248,7 @@
       };
 
       // TODO: Investigate possibility of using nextStatus and rising/falling
-      // to determine this instead of looping over titles
+      //  to determine this instead of looping over titles
       for (var key in titles) {
         if (titles.hasOwnProperty(key) && titles[key].active) {
           sublocation = spillSublocationMap[key];
@@ -399,11 +401,10 @@
   /**
    * Controls the names and values placed in URL
    */
-  var urlParams = {};
-
   var userLocation = user["location"];
   var userBase = user["base_name"];
 
+  var urlParams = {};
   urlParams["location"] = userLocation;
   urlParams["weapon"] = user["weapon_name"];
   urlParams["base"] = userBase;
@@ -426,9 +427,6 @@
       ? Number(luck_element.textContent)
       : user["trap_luck"];
 
-  var userSublocation = findSublocation(userLocation, userBase);
-  setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
-
   // Cheese edge cases
   var userCheese = user["bait_name"];
   if (userCheese) {
@@ -449,6 +447,9 @@
     }
     urlParams["cheese"] = userCheese;
   }
+
+  var userSublocation = findSublocation(userLocation, userBase);
+  setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
 
   if (userSublocation !== "N/A") {
     urlParams["phase"] = userSublocation;

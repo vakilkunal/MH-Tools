@@ -8,7 +8,6 @@
     if (userLocation === "Furoma Rift") {
       var chargeLevel = userQuests["QuestRiftFuroma"]["droid"]["charge_level"];
       if (chargeLevel !== "") {
-        /*Replaced if-else with dictionary lookup -- less code*/
         var levels = {
           charge_level_one: 1,
           charge_level_two: 2,
@@ -61,7 +60,9 @@
         tier_2: "Mist Level 6-18",
         tier_3: "Mist Level 19-20"
       };
-      return tierMapping[tier];
+      return userCheese === "Undead String Emmental"
+        ? userCheese
+        : tierMapping[tier];
     } else if (userLocation === "Fiery Warpath") {
       var wave = userViewingAtts["desert_warpath"]["wave"];
       return "Wave " + wave;
@@ -236,7 +237,8 @@
         knight: "Knight"
       };
 
-      //TODO: Investigate possibility of using nextStatus and rising/falling to determine this instead of looping over titles
+      // TODO: Investigate possibility of using nextStatus and rising/falling
+      //  to determine this instead of looping over titles
       for (var key in titles) {
         if (titles.hasOwnProperty(key) && titles[key].active) {
           sublocation = spillSublocationMap[key];
@@ -261,7 +263,6 @@
       var district_type = quest.clue_name;
       var district_tier = quest.district_tier;
 
-      //TODO: Check cluename/cluetype of Lair to improve this
       if (contains(districtname, "Minotaur")) {
         return "Lair of the Minotaur";
       } else {
@@ -390,11 +391,10 @@
   /**
    * Controls the names and values placed in URL
    */
-  var urlParams = {};
-
   var userLocation = user["location"];
   var userBase = user["base_name"];
 
+  var urlParams = {};
   urlParams["location"] = userLocation;
   urlParams["weapon"] = user["weapon_name"];
   urlParams["base"] = userBase;
@@ -416,9 +416,6 @@
       ? Number(luck_element.textContent)
       : user["trap_luck"];
 
-  var userSublocation = findSublocation(userLocation, userBase);
-  setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
-
   // Cheese edge cases
   var userCheese = user["bait_name"];
   if (userCheese) {
@@ -439,6 +436,9 @@
     }
     urlParams["cheese"] = userCheese;
   }
+
+  var userSublocation = findSublocation(userLocation, userBase);
+  setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
 
   if (userSublocation !== "N/A") {
     urlParams["phase"] = userSublocation;
