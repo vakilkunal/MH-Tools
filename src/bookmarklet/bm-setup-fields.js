@@ -416,8 +416,11 @@
       ? Number(luck_element.textContent)
       : user["trap_luck"];
 
-  // Cheese edge cases
   var userCheese = user["bait_name"];
+  var userSublocation = findSublocation(userLocation, userBase);
+  setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
+
+  // Cheese edge cases
   if (userCheese) {
     if (contains(userCheese, "Empowered")) {
       userCheese = userCheese.slice(6, userCheese.length);
@@ -436,9 +439,6 @@
     }
     urlParams["cheese"] = userCheese;
   }
-
-  var userSublocation = findSublocation(userLocation, userBase);
-  setLocationSpecificUrlParams(userLocation, urlParams, userSublocation);
 
   if (userSublocation !== "N/A") {
     urlParams["phase"] = userSublocation;
