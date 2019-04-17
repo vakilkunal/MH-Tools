@@ -74,29 +74,32 @@ Drag the blue bookmarklet link to your browser's bookmarks bar. If that doesn't 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/chrome_12-48/chrome_12-48_32x32.png" alt="Chrome" id="chrome"><br>
 _Google Chrome_
 
-1. Bookmark an arbitrary page and name it something memorable, like 'CRE' or 'Auto-Loader'
-1. Copy the bookmarklet code by right-clicking the link and selecting `Copy link address`
+1. Bookmark an arbitrary page and give it a memorable name like 'CRE' or 'Auto-Loader'
+1. Copy the bookmarklet code by right-clicking its link and selecting `Copy link address`
 1. Right-click on your newly created bookmark and select `Edit...`
 1. Paste the bookmarklet code into the `URL` field and hit `Save`
 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/firefox_23-56/firefox_23-56_32x32.png" alt="Firefox" id="firefox"><br>
 _Mozilla Firefox_
 
-1. Right-click on the bookmarklet link, select `Bookmark This Link`, and name it accordingly.
+1. Right-click on the bookmarklet link, select `Bookmark This Link`, and name it accordingly
 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/edge/edge_32x32.png" alt="Edge" id="Edge"> <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/internet-explorer_9-11/internet-explorer_9-11_32x32.png" alt="Edge" id="edge"><br>
 _Microsoft Edge / Internet Explorer_
 
-1. Edge doesn't seem to natively support saving a bookmark directly from a link or editing a bookmark's URL. However, there is a third-party application called [EdgeManage](http://www.emmet-gray.com/Articles/EdgeManage.html) that purports to add a lot of missing features for managing Favorites - please use at your own discretion.
-
-1. Internet Explorer 11 allows you to drag bookmarklets directly to your favorites bar as well as right-click and `Add to favorites...`. However, it doesn't seem to support certain JavaScript features that enable our bookmarklets to run properly.
+1. Bookmark an arbitrary page and give it a memorable name like 'CRE' or 'Auto-Loader'
+1. Copy the bookmarklet code by right-clicking its link and selecting `Copy link`
+1. Go to 'Hub -> Favorites', right-click on your newly created bookmark and click `Edit URL`
+1. Paste the bookmarklet code into the text field and hit <kbd>Enter</kbd> to save
+1. If that doesn't work, there is a third-party application called [EdgeManage](http://www.emmet-gray.com/Articles/EdgeManage.html) that claims to add a lot of missing features for managing Favorites - please use at your own discretion
+1. Internet Explorer 11 allows you to drag bookmarklets directly to your favorites bar, or right-click and choose `Add to favorites`. However, it doesn't seem to support certain JavaScript features that enable the bookmarklets to run properly
 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/safari_1-7/safari_1-7_32x32.png" alt="Safari" id="safari"><br>
 _Apple Safari_
 
-1. Bookmark an arbitrary page and give it a memorable name.
+1. Bookmark an arbitrary page and give it a memorable name
 1. Right-click on the bookmarklet link and select `Copy Link`
-1. Right-click on the newly created bookmark, select `Edit Address`, paste into the text box, then click `Done`
+1. Right-click on the newly created bookmark, select `Edit Address`, paste into the text box, and click `Done`
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
