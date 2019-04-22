@@ -517,6 +517,13 @@ function calculateTrapSetup(skipDisp) {
       "Shadow Charm": "Shadow"
     };
 
+    // Power-type charms don't affect II and GG
+    if (
+      weapon.indexOf("Isle Idol") >= 0 ||
+      weapon.indexOf("Golem Guardian") >= 0
+    ) {
+      return weaponsArray[weapon][0];
+    }
     return charmPowerTypes[charm] || weaponsArray[weapon][0];
   }
 }

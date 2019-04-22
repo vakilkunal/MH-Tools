@@ -474,6 +474,13 @@ function generateResults() {
           (charm === "Shadow Charm" && powerTypes.indexOf("Shadow") > -1)
         ) {
           for (let weapon of loopWeapons) {
+            // Power-type charms don't affect II and GG
+            if (
+              weapon.indexOf("Isle Idol") >= 0 ||
+              weapon.indexOf("Golem Guardian") >= 0
+            ) {
+              continue;
+            }
             for (let base of loopBases) {
               // Physical Brace Base check
               bonusObj["brace"] =
