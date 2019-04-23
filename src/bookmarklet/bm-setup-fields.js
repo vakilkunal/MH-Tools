@@ -350,6 +350,8 @@
       } else if (poster_active && !has_wanted_poster) {
         return "Crew";
       }
+    } else if (userLocation === "Mousoleum") {
+      return userQuests["QuestMousoleum"]["has_wall"] ? "Has Wall" : "No Wall";
     }
     return "N/A";
   }
