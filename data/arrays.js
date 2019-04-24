@@ -625,6 +625,7 @@ var charmsArray = {
   "Extra Sweet Cupcake Charm": [0, 0, 8, 8, "Fresh"],
   "Extreme Ancient Charm": [800, 7, 7, 7, "Insanely Fresh"],
   "Extreme Attraction Charm": [0, 0, 50, 0, "No Effect"],
+  "Extreme Dragonbane Charm": [0, 0, 0, 0, "No Effect"],
   "Extreme Luck Charm": [0, 0, 0, 5, "No Effect"],
   "Extreme Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Extreme Power Charm": [600, 5, 0, 0, "No Effect"],
