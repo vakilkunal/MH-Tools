@@ -449,6 +449,8 @@
       } else {
         userCheese = userCheese.slice(0, userCheese.indexOf(" Cheese"));
       }
+    } else if (userCheese === "Fusion Fondue") {
+      urlParams["location"] = "M400 Hunting";
     }
     urlParams["cheese"] = userCheese;
   }
