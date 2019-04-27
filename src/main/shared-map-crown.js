@@ -268,7 +268,14 @@ function initTablesorter() {
         "Vengeful Vanilla Stilton",
         "White Cheddar" // etc
       ],
-      magicEssence: ["SB+", "Moon", "Maki", "Maki String", "Magical String"],
+      magicEssence: [
+        "SB+",
+        "Moon",
+        "Maki",
+        "Maki String",
+        "Magical String",
+        "Magical Rancid Radioactive Blue"
+      ],
       marketplace: [
         "Crescent",
         "Magical String",
