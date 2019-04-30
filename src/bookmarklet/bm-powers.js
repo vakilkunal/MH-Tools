@@ -109,7 +109,14 @@
     "Living Garden Mice": ["Misc."],
     "Lost City Mice": ["Misc."],
     "Sand Dunes Mice": ["Misc."],
-    "Queso Canyoneers": ["River Riders", "Spice Mice", "Quarry Quarries"],
+    "Queso Canyoneers": [
+      "River Riders",
+      "Spice Mice",
+      "Quarry Quarries",
+      "Cork Collector",
+      "Pressure Builder",
+      "Geyser Hunter"
+    ],
     "Deep Sea Dwellers": [
       "Sunken City Citizen",
       "Finned Fiend",
