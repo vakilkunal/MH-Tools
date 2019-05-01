@@ -42,6 +42,7 @@ Bat,3000,3000
 Battering Ram,100,900
 Battle Cleric,8760,50000
 Bear,575,310
+Bearded Elder,5000,45000
 Beast Tamer,3125,5000
 Berserker,210,425
 Betta,2535,28000
@@ -73,10 +74,12 @@ Briegull,440,360
 Brimstone,2300,11200
 Brown,150,115
 Bruticle,5040,16560
+"Bruticus, the Blazing",15000,90000
 Buccaneer,2750,4290
 Buckethead,1300,900
 Builder,900,12000
 Burglar,1250,1420
+Burly Bruiser,4500,15000
 Cabin Boy,100,270
 Calalilly,2050,15250
 Calligraphy,888,1888
@@ -116,6 +119,7 @@ Chocolate Overload,350,1200
 Christmas Tree,5000,17500
 Chrono,12250,19750
 Chronomaster,20000,170000
+Cinderstorm,8000,60000
 Circuit Judge,9500,15000
 City Noble,1100,17000
 City Worker,700,19000
@@ -142,6 +146,9 @@ Coral Guard,2800,35355
 Coral Harvester,2500,33950
 Coral Queen,2850,37000
 Core Sample,1000,2600
+Cork Defender,2900,10000
+Corkataur,40000,225000
+"Corky, the Collector",5000,20000
 Corridor Bruiser,8000,50000
 Corrupt,1250,8250
 Corrupt Commodore,600,400
@@ -262,6 +269,7 @@ Elite Guardian,4205,25500
 Elub Chieftain,7520,16560
 Elub Lich,8272,52992
 Elven Princess,400,2700
+Emberstone Scaled,60000,300000
 Enginseer,324,17800
 Enlightened Labourer,3800,50000
 Enslaved Spirit,900,20000
@@ -324,6 +332,7 @@ Fungal Frog,3500,32250
 Fungal Spore,2650,15250
 Fungal Technomorph,12750,80800
 Funglore,2400,40000
+Fuzzy Drake,900,8000
 Gargantuamouse,4000,25000
 Gargoyle,2800,5600
 Gate Guardian,1400,2800
@@ -391,6 +400,7 @@ Hollowhead,900,875
 Homeopathic Apothecary,3000,45000
 Hookshot,9000,8000
 Hope,1000,1000
+Horned Cork Hoarder,6000,35000
 Hot Head,550,2250
 Huntereater,40000,190000
 Hurdle,4000,4000
@@ -404,6 +414,7 @@ Iceblock,1265,7425
 Icebreaker,1320,5850
 Icewing,11295,51250
 Icicle,3840,11980
+Ignatia,8000,50000
 Ignis,1000,4490
 Impersonator,180,120
 Incompetent Ice Climber,1150,3850
@@ -417,6 +428,7 @@ Jellyfish,1990,31700
 Joy,8090,9920
 Juliyes,999,999
 Jurassic,6490,39470
+Kalor'ignis of the Geyser,75000,325000
 Karmachameleon,4350,42500
 Keeper,3900,3950
 Keeper's Assistant,1920,3170
@@ -488,6 +500,7 @@ Meteorite Mystic,4500,35000
 Meteorite Snacker,2500,25000
 Micro,3400,28000
 Mighty Mole,5000,35000
+Mild Spicekin,3000,30000
 Militant Samurai,5000,80000
 Mimic,12890,57325
 Mind Tearer,10000,60000
@@ -627,6 +640,7 @@ Pumpkin Head,960,4500
 Pumpkin Hoarder,1000,1800
 Puppet Master,210,200
 Pygmy Wrangler,1250,6500
+Pyrehyde,10000,80000
 Pyrite,5000,20000
 Queen Quesada,70000,300000
 Queso Extractor,4000,8008
@@ -639,6 +653,7 @@ Rain Wallower,3500,40000
 Rainbow Racer,4745,21340
 Rainmancer,7500,80000
 Rainwater Purifier,2250,32000
+Rambunctious Rain Rumbler,9000,60000
 Rancid Bog Beast,1950,50000
 Ravenous Zombie,4000,3000
 Raw Diamond,2000,60000
@@ -726,6 +741,7 @@ Silvertail,1200,1200
 Sinister Egg Painter,1200,5000
 Sir Fleekio,27000,90000
 Siren,600,5200
+Sizzle Pup,3000,35000
 Skeletal Champion,1000,20000
 Skeleton,960,2392
 Slay Ride,7000,30000
@@ -738,6 +754,7 @@ Sludge,3500,4500
 Sludge Scientist,525,465
 Sludge Soaker,4500,35000
 Sludge Swimmer,10000,120000
+Smoldersnap,5000,40000
 Snake Charmer,600,4200
 Snooty,10,10
 Snow Boulder,900,7000
@@ -798,6 +815,7 @@ Stagecoach Driver,8000,11000
 Stalagmite,3000,62500
 Stealth,295,500
 Steam Grip,7000,8000
+Steam Sailor,2000,12000
 Steel,500,270
 Steel Horse Rider,12000,9000
 Stickybomber,725,6850
@@ -807,6 +825,7 @@ Stocking,4745,21340
 Stone Cutter,1800,4360
 Stone Maiden,5000,45000
 Stonework Warrior,4510,24670
+"Stormsurge, the Vile Tempest",20000,200000
 Stoutgear,8500,7000
 Stowaway,2000,4000
 Strawberry Hotcakes,1950,14500
@@ -917,6 +936,7 @@ Urchin King,2850,37000
 Vampire,900,1400
 Vanguard,2600,14000
 Vanquisher,2560,9980
+Vaporior,7000,40000
 Vigilant Ward,5000,42275
 "Vincent, The Magnificent",5000,5000
 Vinetail,6580,13172
@@ -924,6 +944,7 @@ Violet Stormchild,10000,70000
 Walker,3000,17000
 Wandering Monk,4200,68000
 Warehouse Manager,14000,7500
+Warming Wyvern,4500,28000
 Warmonger,27000,198000
 Water Nymph,790,4725
 Water Sprite,7250,46500

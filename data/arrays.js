@@ -117,7 +117,28 @@ var dragons = [
   "Thunder Strike",
   "Thundering Watcher",
   "Thunderlord",
-  "Violet Stormchild"
+  "Violet Stormchild",
+  "Burly Bruiser",
+  "Cork Defender",
+  "Corkataur",
+  "Corky, the Collector",
+  "Fuzzy Drake",
+  "Horned Cork Hoarder",
+  "Rambunctious Rain Rumbler",
+  "Emberstone Scaled",
+  "Pyrehyde",
+  "Steam Sailor",
+  "Vaporior",
+  "Warming Wyvern",
+  "Bearded Elder",
+  "Bruticus, the Blazing",
+  "Cinderstorm",
+  "Ignatia",
+  "Kalor'ignis of the Geyser",
+  "Mild Spicekin",
+  "Sizzle Pup",
+  "Smoldersnap",
+  "Stormsurge, the Vile Tempest"
 ];
 
 var tauntings = [
