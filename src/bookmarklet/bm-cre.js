@@ -362,6 +362,15 @@
       }
     } else if (userLocation === "Mousoleum") {
       return userQuests["QuestMousoleum"]["has_wall"] ? "Has Wall" : "No Wall";
+    } else if (userLocation === "Queso Geyser") {
+      var geyserState = userQuests["QuestQuesoGeyser"]["state"];
+      if (geyserState === "collecting") {
+        return "Cork Collectors";
+      } else if (geyserState === "corked") {
+        return "Pressure Builders";
+      } else if (geyserState === "eruption") {
+        return userQuests["QuestQuesoGeyser"]["state_name"];
+      }
     }
     return "N/A";
   }
