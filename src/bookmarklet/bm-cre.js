@@ -365,9 +365,9 @@
     } else if (userLocation === "Queso Geyser") {
       var geyserState = userQuests["QuestQuesoGeyser"]["state"];
       if (geyserState === "collecting") {
-        return "Cork Collectors";
+        return "Cork Collecting";
       } else if (geyserState === "corked") {
-        return "Pressure Builders";
+        return "Pressure Building";
       } else if (geyserState === "eruption") {
         return userQuests["QuestQuesoGeyser"]["state_name"];
       }
