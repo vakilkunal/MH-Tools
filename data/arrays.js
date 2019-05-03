@@ -463,6 +463,7 @@ var weaponsArray = {
   "Dimensional Chest Trap": ["Tactical", 5200, 8, 10, 21, "Extremely Fresh"],
   "Double Diamond Adventure": ["Hydro", 3500, 0, 5, 18, "Insanely Fresh"],
   "Dragon Lance": ["Draconic", 4950, 30, 5, 12, "Extremely Stale"],
+  "Dragon Slayer Cannon": ["Draconic", 10000, 35, 10, 25, "No Effect"],
   "Dragonvine Ballista Trap": ["Draconic", 5750, 15, 5, 14, "Stale"],
   "Dreaded Totem Trap": ["Shadow", 3000, 15, 10, 10, "Very Stale"],
   "Droid Archmagus Trap" : ["Arcane", 5000, 15, 10, 20, "Stale"],
