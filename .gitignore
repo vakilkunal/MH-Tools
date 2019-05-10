@@ -9,3 +9,4 @@ src/**/*.min.js
 data/**/*.json
 !data/json/all-recipes.json
 .vscode/
+data/debug&tests/
