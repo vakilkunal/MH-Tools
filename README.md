@@ -155,7 +155,7 @@ The following special effects _are included in catch rate calculations_ for both
   * Dragonbane Charms: +300/600/900% power bonus on Dragon-type mice
   * Taunting Charm: Only applies Rift Set bonuses on WWRift bosses
   * Super Warpath Charms: +50 power on corresponding groups
-  * King Grub/Scarab: Salt level applies a logarithmic function to decrease mouse
+  * King Grub/Scarab: Salt level applies a logarithmic function to decrease mouse power
   * Golem Guardian skins: Charge levels are set in CRE and carry over to Best Setup
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
