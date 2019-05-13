@@ -11,19 +11,22 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
 * [Instructions](#instructions)
   * [General Tips](#thought_balloon-general-tips)
   * [Bookmarklets](#bookmark-bookmarklets)
-    * [Browser Installation Tips](#user-content-browser-tips)
+    * [Browser Installation Tips](#-browser-installation-tips)
     * [Chrome](#user-content-chrome)
     * [Firefox](#user-content-firefox)
     * [Edge / IE](#user-content-edge)
     * [Safari](#user-content-safari)
   * [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
+    * [Sample Size Score](#-sample-size-score)
+    * [Special Catch Rate Effects](#-special-catch-rate-effects)
   * [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
+    * [Cheese Filters](#-cheese-filters)
   * [Best Setup](#trophy-best-setup)
   * [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
   * [Crown Solver](#crown-crown-solver)
   * [Crafting Wizard](#hammer-crafting-wizard)
   * [Trap Setup Powers](#mag-trap-setup-powers)
-    * [Worksheet](#user-content-powers-worksheet)
+    * [Worksheet](#-worksheet)
   * [CRE Tabs](#bookmark_tabs-cre-tabs)
 * [Developers](#developers)
   * [Build and Run](#construction_worker-build-and-run)
@@ -68,8 +71,9 @@ _Note:_ The process of using a bookmarklet in mobile browsers can vary. For exam
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
-<br><b id="browser-tips">Browser Installation Tips</b><br>
-Drag the blue bookmarklet link to your browser's bookmarks bar. If that doesn't work, try the following manual instructions. These concepts apply to other browsers (including mobile), but specific steps may vary.<br>
+#### &sect; Browser Installation Tips
+
+Drag the blue bookmarklet link to your browser's bookmarks bar. If that doesn't work, try the following manual instructions. These concepts apply to other browsers (including mobile), but specific steps may vary.
 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/chrome_12-48/chrome_12-48_32x32.png" alt="Chrome" id="chrome"><br>
 _Google Chrome_
@@ -124,11 +128,35 @@ _Apple Safari_
 
 <br>
 
-**Sample Size Score:** An indicator of the quality and accuracy of a specific setup's data based on its sample size and the number of mice in its attraction pool. Setups are separated by locations, sublocations, cheeses and occasionally charms (if they have attraction-altering effects i.e. Warpath Warrior Charm in Waves 1-3 of Fiery Warpath). If you have a charm selected that doesn't affect a setup's mouse population pool, its corresponding "No Charm" data is displayed, since they are equivalent.
+#### &sect; Sample Size Score
+
+An indicator of the quality and accuracy of a specific setup's data based on its sample size and the number of mice in its attraction pool. Setups are separated by locations, sublocations, cheeses and occasionally charms (if they have attraction-altering effects i.e. Warpath Warrior Charm in Waves 1-3 of Fiery Warpath). If you have a charm selected that doesn't affect a setup's mouse population pool, its corresponding "No Charm" data is displayed, since they are equivalent.
 
 Previously, the tool displayed a flat sample size number with a rating assigned to it, which looked like `Sample Size: 300 (bad)` or `Sample Size: 100000 (excellent)`. This format was misleading because it didn't encode important contextual information. The current scoring scheme takes into account factors such as number of mice in a particular setup, 95% confidence levels, and relative margins of error. It combines and normalizes these factors into a single number, capped at 100.
 
 _Note:_ Certain setups may have low scores or even no sample size data attached to them. This could be because: (1) the data was extracted from HornTracker before we decided to start keeping track of sample sizes, (2) there aren't enough recorded hunts for that setup in Jack's database, (3) our population fetching scripts need to be re-run.
+
+#### &sect; Special Catch Rate Effects
+
+The following special effects _are included in catch rate calculations_ for both CRE and Best Setup.
+
+* Final Catch Rate Modifiers
+  * Zugzwang's Ultimate Move: 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%
+  * Fort Rox: 50% increased catch rate when upgrades are level 2 or 3; 100% catch rate on Nightmancer and Nightfire when upgrades are level 3
+  * Anniversary weapons: Up to 10% increased catch rate
+  * Ultimate Charm: 100% catch rate
+  * Ultimate Anchor Charm: 100% catch rate while on a dive in Sunken City
+  * Bounty Hunter: 100% catch rate with Sheriff's Badge Charm equipped
+  * Zurreal the Eternal: 0% catch rate without Zurreal's Folly equipped
+* Special Bonuses & Effects
+  * Rook Crumble Charm: 300% power bonus on Rook mice in Zugzwang's Tower
+  * Pawn Pinchers: +10920 power on corresponding Pawn, -60 power and -5 Luck on opposite Pawn
+  * Obvious Ambush / Blackstone Pass: +1800 power on corresponding side, -2400 power on opposite side
+  * Dragonbane Charms: +300/600/900% power bonus on Dragon-type mice
+  * Taunting Charm: Only applies Rift Set bonuses on WWRift bosses
+  * Super Warpath Charms: +50 power on corresponding groups
+  * King Grub/Scarab: Salt level applies a logarithmic function to decrease mouse
+  * Golem Guardian skins: Charge levels are set in CRE and carry over to Best Setup
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
@@ -150,7 +178,9 @@ _Note:_ Certain setups may have low scores or even no sample size data attached 
 | Total                   | Sum for a specific location, sublocation, cheese, and charm             |
 | Weighted                | Same as Total AR, but with baseline cheese attraction rates factored in |
 
-**Cheese Filters:** Allows you to easily hide certain cheeses from the Best Locations table depending on your hunting situation. For example, frugal hunters may want to tick the `Magic Essence` checkbox to hide costly SB+ derived cheeses.
+#### &sect; Cheese Filters
+
+Cheese filters allow you to easily hide certain cheeses from the Best Locations table depending on your hunting situation. For example, frugal hunters may want to tick the `Magic Essence` checkbox to hide costly SB+ derived cheeses.
 
 You can `Apply` filters to the first column, `Reset` filters on the table, or `Clear` all of your ticks.
 
@@ -241,7 +271,9 @@ With that explained, you may also wonder whether there are tools out there that 
 
 This is where I hope 'Trap Setup Powers' comes in. With this new tool, you can: [1] hone in on one power type at a time, or include all 10 at once (be aware that a large number of power types ticked with a narrow power range will slow down processing by a significant amount), [2] specify a variety of power-altering parameters, and [3] choose whether to use owned or all items. In order to take advantage of showing only items you own, run the 'Best Setup: Load Items' bookmarklet before returning to the Powers tool.
 
-<b id="powers-worksheet">Worksheet:</b> This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers' a.k.a. 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, and [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
+#### &sect; Worksheet
+
+This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers' a.k.a. 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, and [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
 
 There are several options to refine the 'Mouse Powers' table view. You can tick the checkboxes for the power types you'd like to be shown, select the mouse group/subgroup/name you'd like to filter down to, and then click 'Reload Table' to apply your preferences. 'Save Preferences' stores your settings in localStorage for future sessions. 'Reset Data' clears all worksheet data. It may be prudent to reset data if performance starts to take a noticeable hit, or if some unexpected data corruption occurs.
 
