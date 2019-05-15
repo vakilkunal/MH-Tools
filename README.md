@@ -138,25 +138,48 @@ _Note:_ Certain setups may have low scores or even no sample size data attached 
 
 #### &sect; Special Catch Rate Effects
 
-The following special effects _are included in catch rate calculations_ for both CRE and Best Setup.
+The following special effects _are included in catch rate calculations_ for both CRE and Best Setup
 
 * Final Catch Rate Modifiers
-  * Zugzwang's Ultimate Move: 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%
-  * Fort Rox: 50% increased catch rate when upgrades are level 2 or 3; 100% catch rate on Nightmancer and Nightfire when upgrades are level 3
-  * Anniversary weapons: Up to 10% increased catch rate
-  * Ultimate Charm: 100% catch rate
-  * Ultimate Anchor Charm: 100% catch rate while on a dive in Sunken City
-  * Bounty Hunter: 100% catch rate with Sheriff's Badge Charm equipped
-  * Zurreal the Eternal: 0% catch rate without Zurreal's Folly equipped
+  | Name | Modifier |
+  | :----------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
+  | Anniversary Weapon variants | Up to 10% increased catch rate
+  | Bounty Hunter | 100% catch rate with Sheriff's Badge Charm equipped
+  | Fort Rox | &middot; 50% increased catch rate when upgrades are level 2 or 3<br>&middot; 100% catch rate on Nightmancer and Nightfire when upgrades are level 3
+  | Ultimate Anchor Charm | 100% catch rate while on a dive in Sunken City
+  | Ultimate Charm | 100% catch rate everywhere
+  | Zugzwang's Ultimate Move | 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%
+  | Zurreal the Eternal | 0% catch rate without Zurreal's Folly equipped
+
 * Special Bonuses & Effects
-  * Rook Crumble Charm: 300% power bonus on Rook mice in Zugzwang's Tower
-  * Pawn Pinchers: +10920 power on corresponding Pawn, -60 power and -5 Luck on opposite Pawn
-  * Obvious Ambush / Blackstone Pass: +1800 power on corresponding side, -2400 power on opposite side
-  * Dragonbane Charms: +300/600/900% power bonus on Dragon-type mice
-  * Taunting Charm: Only applies Rift Set bonuses on WWRift bosses
-  * Super Warpath Charms: +50 power on corresponding groups
-  * King Grub/Scarab: Salt level applies a logarithmic function to decrease mouse power
-  * Golem Guardian skins: Charge levels are set in CRE and carry over to Best Setup
+  | Name | Effect |
+  |:-:|:-:|
+  | Dragonbane Charm variants | +300/600/900% Power Bonus on Dragon-type mice
+  | EMP400 Charm | +25000 Power with Fusion Fondue armed
+  | Golem Guardian variants | &middot; Charge levels are set in CRE and carry over to Best Setup<br>&middot; +6 Luck when equipped with Glowing Golem Guardian Base
+  | King Grub/Scarab | Salt level applies a logarithmic function to decrease mouse power
+  | Obvious Ambush / Blackstone Pass | +1800 Power on corresponding side, -2400 Power on opposite side
+  | Pawn Pinchers | +10920 Power on corresponding Pawn, -60 Power and -5 Luck on opposite Pawn
+  | Physical Brace Base | 25% Power Bonus when equipped with a Physical weapon
+  | Polluted Charm variants | +4/6/10/15 Luck when equipped with Polluted Base or Refined Pollutinum Base
+  | Rook Crumble Charm | 300% Power Bonus on Rook mice in Zugzwang's Tower
+  | Super Warpath Charms | +50 Power on corresponding Warpath groups
+  | Taunting Charm | Only applies Rift Set bonuses on WWRift bosses
+
+* Location Specific Effects
+  | Location | Effect |
+  |:-:|:-:|
+  | Claw Shot City | &middot; Claw Shot Base gives +1000 Power when equipped with a S.L.A.C. variant<br>&middot; +2500 Power when equipped with a S.L.A.C. variant _and_ a Cactus Charm variant
+  | Fiery Warpath | &middot; Flamebane Charm gives +150 Power<br>&middot; Warden Slayer Trap gives +2500 Power and +2500% Power Bonus when equipped in Wave 4 or Portal
+  | Fort Rox | Nightlight Charm gives +1/3/5/7/9/12/15% Power Bonus depending on the stage of night
+  | Gnawnian Express Station | Supply Grabber, Bandit Deflector, and Engine Doubler give +1500 Power in Supply Depot, Raider River, and Daredevil Canyon respectively
+  | Iceberg & Slushy Shoreline | &middot; Steam Laser Mk. I gives +1750 Power and +3 Luck<br>&middot; Steam Laser Mk. II gives +1250 Power and +2 Luck<br>&middot; Steam Laser Mk. III gives +1500 Power and +2 Luck<br>&middot; Deep Freeze Base and Ultimate Iceberg Base give +665 Power and +9 Luck in Icewing's Lair, Hidden Depths, and The Deep Lair
+  | Jungle of Dread | &middot; Dreaded Totem Trap gives +8500 Power<br>&middot; Dreaded Charm gives +300% Power Bonus
+  | Seasonal Garden | &middot; Seasonal Base gives +18% Power Bonus<br>&middot; Soul Harvester and Terrifying Spider Trap give +10 Luck during Fall
+  | Sunken City | Depth Charge Base gives +1000 Power while on a dive
+  | Town of Digby | &middot; +30% Power Bonus if Limelight cheese and Mining Charm are equipped<br>(TODO: Only against Digby Dirt Dwellers plus increased BBB/I-BB chance?)
+  | Toxic Spill | &middot; Washboard Base gives +5% Power Bonus and +5 Luck<br>&middot; Soap Charm gives +5000 Power and +10 Luck<br>&middot; Super Soap Charm gives +8000 Power and +12 Luck
+  | Tribal Isles | &middot; Tiki Base gives +6 Luck<br>&middot; Tribe power charms (Derr/Nerg/Elub) give +600 Power and +5% Power Bonus in their respective locations
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
