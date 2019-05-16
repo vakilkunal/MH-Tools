@@ -142,15 +142,15 @@ The following special effects _are included in catch rate calculations_ for both
 
 * Final Catch Rate Modifiers
 
-  |            Name             |                                                                      Modifier                                                                       |
-  | :-------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: |
-  | Anniversary Weapon variants |                                                           Up to 10% increased catch rate                                                            |
-  |        Bounty Hunter        |                                                 100% catch rate with Sheriff's Badge Charm equipped                                                 |
-  |          Fort Rox           | &middot; 50% increased catch rate when upgrades are level 2 or 3<br>&middot; 100% catch rate on Nightmancer and Nightfire when upgrades are level 3 |
-  |    Ultimate Anchor Charm    |                                                   100% catch rate while on a dive in Sunken City                                                    |
-  |       Ultimate Charm        |                                                             100% catch rate everywhere                                                              |
-  |  Zugzwang's Ultimate Move   |                                 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%                                  |
-  |     Zurreal the Eternal     |                                                   0% catch rate without Zurreal's Folly equipped                                                    |
+  |            Name             |                                                                                                       Modifier                                                                                                       |
+  | :-------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+  | Anniversary Weapon variants |                                                                             Up to 10% increased catch rate, i.e. `CR + (0.1 * (1 - CR))`                                                                             |
+  |        Bounty Hunter        |                                                                                 100% catch rate with Sheriff's Badge Charm equipped                                                                                  |
+  |          Fort Rox           | &middot; Up to 50% increased catch rate when upgrades are level 2 or 3<br>&middot; 100% catch rate on Nightmancer and Nightfire when upgrades are level 3<br>&middot; TODO: Mage Tower effect is not yet implemented |
+  |    Ultimate Anchor Charm    |                                                                                    100% catch rate while on a dive in Sunken City                                                                                    |
+  |       Ultimate Charm        |                                                                                              100% catch rate everywhere                                                                                              |
+  |  Zugzwang's Ultimate Move   |                                                               Up to 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%                                                               |
+  |     Zurreal the Eternal     |                                                                                    0% catch rate without Zurreal's Folly equipped                                                                                    |
 
 * Special Bonuses & Effects
 
