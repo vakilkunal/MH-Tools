@@ -7,6 +7,7 @@ module.exports = {
       "Radioactive Blue",
       "Ancient",
       "Moon",
+      "Crescent",
       "Undead Emmental"
     ]),
     config: [
