@@ -48,7 +48,7 @@
       if (tide === "low") {
         return "Low Tide";
       } else if (tide === "med") {
-        return "Mid Tide";
+        return "Medium Tide";
       } else if (tide === "high") {
         return "High Tide";
       }
