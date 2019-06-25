@@ -109,14 +109,14 @@ function calcSpecialCharms(charmName) {
       charmLuck += 2;
     }
   } else if (charmName === "Growth Charm") {
-    if (baseName === "Soiled Base") {
+    if (baseName === "Soiled Base" || baseName === "Living Grove Base") {
       charmPower += 100;
       charmBonus += 3;
       charmAtt += 5;
       charmLuck += 4;
     }
   } else if (charmName === "Wild Growth Charm") {
-    if (baseName === "Soiled Base") {
+    if (baseName === "Soiled Base" || baseName === "Living Grove Base") {
       charmPower += 300;
       charmBonus += 8;
       charmAtt += 20;
@@ -1409,6 +1409,11 @@ function calcCRMods(catchRate, mouseName) {
     weaponName !== "Zurreal's Folly"
   ) {
     catchRate = 0;
+  } else if (
+    mouseName === "Battering Ram" &&
+    weaponName === "Moonbeam Barrier Trap"
+  ) {
+    catchRate = 1;
   }
 
   return catchRate;

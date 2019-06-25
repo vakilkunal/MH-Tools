@@ -385,6 +385,11 @@ function showPop(type) {
           if (charmName === "Wax Charm" && contains(berglings, mouseName)) {
             deltaDepthCatch += 1;
           } else if (
+            charmName === "Super Wax Charm" &&
+            contains(berglings, mouseName)
+          ) {
+            deltaDepthCatch += 2;
+          } else if (
             charmName === "Sticky Charm" &&
             contains(berglings, mouseName)
           ) {
