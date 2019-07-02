@@ -372,7 +372,20 @@ function showPop(type) {
 
         if (locationName.indexOf("Seasonal Garden") >= 0) {
           var dAmp = deltaAmp[mouseName];
-          if (charmName === "Amplifier Charm") dAmp *= 2;
+          var ampMultiplier = 1;
+          if (charmName === "Amplifier Charm") ampMultiplier += 1;
+          if (weaponName === "Chesla's Revenge") ampMultiplier += 0.5; // 50% proc additional charge
+          dAmp *= ampMultiplier;
+
+          // TODO: For SS/Harvester, dAmp = (max - current) / 2
+          // (maximum is 175/2 = 87.5, minimum is 0.5)
+          // if (
+          //   weaponName === "Sandcastle Shard Trap" &&
+          //   mouseName === "Harvester"
+          // ) {
+          //   dAmp = 87.5; // 50% proc full charge (0.5 * 175)
+          // }
+
           mouseRow += "<td>" + dAmp + "%</td>";
           deltaAmpOverall += catches / 100 * dAmp;
         } else if (
