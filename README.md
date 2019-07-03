@@ -115,16 +115,16 @@ _Apple Safari_
 
 **Bookmarklet:** Run the `CRE` bookmarklet from basically any page on the MH website.
 
-|           Descriptor           |  Per  |    Sum or Average (bottom row)    |
-| :----------------------------: | :---: | :-------------------------------: |
-|        Attraction Rate         | Mouse |        Sum for this setup         |
-|           Catch Rate           | Mouse |      Average for this setup       |
-| Catches / 100 hunts (AR \* CR) | Mouse |         Sum per 100 hunts         |
-|              Gold              | Catch |         Average per hunt          |
-|             Points             | Catch |         Average per hunt          |
-|         Tourney Points         | Catch |         Average per hunt          |
-|            Min Luck            | Mouse | Highest for this particular setup |
-|              Rank              | Catch |             Per hunt              |
+|            Descriptor            |  Per  |    Sum or Average (bottom row)    |
+| :------------------------------: | :---: | :-------------------------------: |
+|         Attraction Rate          | Mouse |        Sum for this setup         |
+|            Catch Rate            | Mouse |      Average for this setup       |
+| Catches (AR \* CR per 100 hunts) | Mouse |         Sum per 100 hunts         |
+|               Gold               | Catch |         Average per hunt          |
+|              Points              | Catch |         Average per hunt          |
+|          Tourney Points          | Catch |         Average per hunt          |
+|             Min Luck             | Mouse | Highest for this particular setup |
+|               Rank               | Catch |             Per hunt              |
 
 <br>
 

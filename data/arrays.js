@@ -247,6 +247,15 @@ var deltaAmp = {
   "Whirleygig": 1
 };
 
+// prettier-ignore
+var pressureMice = {
+  "Steam Sailor": 5,
+  "Warming Wyvern": 15,
+  "Vaporior": 40,
+  "Pyrehyde": 100,
+  "Emberstone Scaled": 1500,
+}
+
 var freshness2stale = {
   "-6": 1,
   "-5": 0.9,

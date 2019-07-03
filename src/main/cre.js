@@ -191,7 +191,7 @@ function showPop(type) {
       }
     } else {
       headerHTML =
-        "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches /<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tourney<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+        "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tourney<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
       if (rank) {
         headerHTML += "<th data-filter='false'>Rank</th>";
       }
@@ -213,6 +213,12 @@ function showPop(type) {
     } else if (locationName === "Labyrinth" && phaseName !== "Intersection") {
       headerHTML +=
         "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
+    } else if (
+      locationName === "Queso Geyser" &&
+      phaseName === "Pressure Building"
+    ) {
+      headerHTML +=
+        "<th data-filter='false'>kPa</th><th data-filter='false'>kPa Tonic</th>";
     }
     headerHTML += "</tr>";
     return headerHTML;
@@ -247,7 +253,9 @@ function showPop(type) {
       overallPoints = 0,
       overallTP = 0,
       minLuckOverall = 0,
-      overallProgress = 0;
+      overallProgress = 0,
+      pressureOverall = 0,
+      pressureOverallTonic = 0;
 
     var headerHTML = getHeaderRow();
     var overallAR = getCheeseAttraction();
@@ -387,7 +395,7 @@ function showPop(type) {
           // }
 
           mouseRow += "<td>" + dAmp + "%</td>";
-          deltaAmpOverall += catches / 100 * dAmp;
+          deltaAmpOverall += dAmp * catches / 100;
         } else if (
           contains(locationName, "Iceberg") &&
           phaseName.indexOf("Lair") < 0
@@ -448,6 +456,14 @@ function showPop(type) {
             mouseClues += 2;
           avgLanternClues += mouseClues * catches / 100;
           mouseRow += "<td>" + mouseClues + "</td><td></td>";
+        } else if (
+          locationName === "Queso Geyser" &&
+          phaseName === "Pressure Building"
+        ) {
+          var kPaGain = pressureMice[mouseName];
+          pressureOverall += kPaGain * catches / 100;
+          pressureOverallTonic += kPaGain * 2 * catches / 100;
+          mouseRow += "<td>" + kPaGain + "</td><td>" + kPaGain * 2 + "</td>";
         }
 
         if (locationName === "Event") {
@@ -514,6 +530,16 @@ function showPop(type) {
         deadEnds /= 2;
       if (charmName == "Compass Magnet Charm") deadEnds = -0.5;
       resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
+    } else if (
+      locationName === "Queso Geyser" &&
+      phaseName === "Pressure Building"
+    ) {
+      resultsHTML +=
+        "<td>" +
+        pressureOverall.toFixed(2) +
+        "</td><td>" +
+        pressureOverallTonic.toFixed(2) +
+        "</td>";
     }
 
     var cheeseEatenPerHunt = overallAR / 100;
@@ -547,7 +573,10 @@ function showPop(type) {
       phaseName.indexOf("Lair") < 0
     ) {
       resultsHTML += "<td colspan='2'></td>";
-    } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
+    } else if (
+      (locationName == "Labyrinth" && phaseName != "Intersection") ||
+      (locationName === "Queso Geyser" && phaseName === "Pressure Building")
+    ) {
       resultsHTML += "<td></td><td></td>";
     }
     resultsHTML += "</tr>";
