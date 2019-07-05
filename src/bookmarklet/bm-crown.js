@@ -250,8 +250,8 @@
             console.log(outputLength);
             console.log(outputObj);
             var newWindow = window.open("");
-            // newWindow.location = "https://tsitu.github.io/MH-Tools/crown.html";
-            newWindow.location = "http://localhost:8000/crown.html";
+            newWindow.location = "https://tsitu.github.io/MH-Tools/crown.html";
+            // newWindow.location = "http://localhost:8000/crown.html";
             newWindow.name = JSON.stringify(outputObj);
           }
         }
