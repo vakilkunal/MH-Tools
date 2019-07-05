@@ -49,7 +49,7 @@ _Disclaimer:_ Newer tools like 'Crafting Wizard' and 'Trap Setup Powers' may be 
 
 ### :bookmark: Bookmarklets
 
-Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 9 different bookmarklets: Catch Rate Estimator, Map Solver, Best Setup: Load Items, Best Setup: Fields, Markeplace Analyzer, Silver Crown Solver, Crafting Wizard, Powers: Worksheet and the all-in-one Auto-Loader. They are each available on their corresponding tool's page.
+Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 9 different bookmarklets: Catch Rate Estimator, Map Solver, Best Setup: Load Items, Best Setup: Fields, Marketplace Analyzer, Crown Solver, Crafting Wizard, Powers: Worksheet and the all-in-one Auto-Loader. They are each available on their corresponding tool's page.
 
 Using the Auto-Loader is recommended because it automatically grabs the latest version of each bookmarklet without having to manually update.
 
@@ -57,17 +57,17 @@ You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.co
 
 _Note:_ The process of using a bookmarklet in mobile browsers can vary. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
 
-|    Bookmarklet    | Functionality                                                                                                                                                                                                                                        |
-| :---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|        CRE        | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, and more                                                                                                                               |
-| Setup: Load Items | Automatically loads your owned weapons, bases, and charms into Best Setup                                                                                                                                                                            |
-|   Setup: Fields   | Automatically fills in Best Setup with your location, sublocation, cheese, charm, and more                                                                                                                                                           |
-|     Analyzer      | Generates a pop-up dialog that allows you to download your entire Marketplace transaction history and send it to the tool                                                                                                                            |
-|        Map        | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map                                                                                                                             |
-|       Crown       | Automatically fills in the Crown Solver's `textarea` with the 50 Bronze Crown mice on your 'King's Crowns' page that are closest to reaching Silver status (100 catches)<br><br>_Note:_ Favorited Bronze mice will be included regardless of catches |
-|     Crafting      | Automatically loads your 'Crafting Table' materials into Crafting Wizard                                                                                                                                                                             |
-| Powers: Worksheet | Generates a pop-up dialog that allows you to select a mouse group/subgroup to target with your current trap setup                                                                                                                                    |
-|      Loader       | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet                                                                                                                                                           |
+|    Bookmarklet    | Functionality                                                                                                                                                                                                                      |
+| :---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|        CRE        | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, and more                                                                                                             |
+| Setup: Load Items | Automatically loads your owned weapons, bases, and charms into Best Setup                                                                                                                                                          |
+|   Setup: Fields   | Automatically fills in Best Setup with your location, sublocation, cheese, charm, and more                                                                                                                                         |
+|     Analyzer      | Generates a pop-up dialog that allows you to download your entire Marketplace transaction history and send it to the tool                                                                                                          |
+|        Map        | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map                                                                                                           |
+|       Crown       | Generates a pop-up dialog that allows you to select the crown types and corresponding catch cutoff values that you'd like to send over to the Crown Solver<br><br>_Note:_ Favorited mice will be prioritized in the resulting list |
+|     Crafting      | Automatically loads your 'Crafting Table' materials into Crafting Wizard                                                                                                                                                           |
+| Powers: Worksheet | Generates a pop-up dialog that allows you to select a mouse group/subgroup to target with your current trap setup                                                                                                                  |
+|      Loader       | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet                                                                                                                                         |
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
@@ -259,17 +259,17 @@ To check whether all of your items have properly loaded, you may want to open up
 
 ### :crown: [Crown Solver](https://tsitu.github.io/MH-Tools/crown.html)
 
-> Calculates the best locations to achieve 10/100/500 catches of mouse breeds (Bronze and Gold coming soon).
+> Calculates the best locations to achieve crowns of given mouse breeds based on number of catches.
 
-**Bookmarklet:** Run the `Crown` bookmarklet from Hunter's Profile -> King's Crowns to automatically populate the 50 Bronze Crown mice that are closest to reaching Silver status (100 catches)
+**Bookmarklet:** Run the `Crown` bookmarklet to automatically populate the a list of mice that are closest to a crown
 
-This spin-off of the Map Solver by [vsong](https://github.com/vsong) factors in the difference between 100 and the number of catches you currently have for a breed. All else being equal, a mouse with 99 catches is weighted more heavily than one with 80 catches.
+This spin-off of the Map Solver inspired by [vsong](https://github.com/vsong) factors in the difference between 10/100/500/1000/2500/5000 and the number of catches you currently have for a breed. All else being equal, a mouse that's closer to any given crown is weighted more heavily than one that's further away (e.g. a mouse with 99 catches vs. a mouse with 3).
 
-| Type of Crown Progress | Description                                                                           |
-| :--------------------: | ------------------------------------------------------------------------------------- |
-|          Raw           | Shown for individual mice, factors in attraction rate and catches remaining until 100 |
-|         Total          | Sum for a specific location, sublocation, cheese, and charm                           |
-|        Weighted        | Same as Total CP, but with baseline cheese attraction rates factored in               |
+| Type of Crown Progress | Description                                                                             |
+| :--------------------: | --------------------------------------------------------------------------------------- |
+|          Raw           | Shown for individual mice, factors in attraction rate and catches remaining until crown |
+|         Total          | Sum for a specific location, sublocation, cheese, and charm                             |
+|        Weighted        | Same as Total CP, but with baseline cheese attraction rates factored in                 |
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 

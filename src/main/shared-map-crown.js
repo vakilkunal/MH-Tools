@@ -118,7 +118,7 @@ function initPageLoad(toolType) {
       var nameCatchesObj = JSON.parse(window.name);
       var ncoKeys = Object.keys(nameCatchesObj);
       var textareaInput = "";
-      for (var i = 0; i < 50; i++) {
+      for (var i = 0; i < ncoKeys.length; i++) {
         textareaInput += ncoKeys[i] + "\n" + nameCatchesObj[ncoKeys[i]] + "\n";
       }
       document.getElementById("map").value = textareaInput;
@@ -456,7 +456,7 @@ function processMap(mapText, toolType) {
     $("#mapLink").attr("href", url);
   } else if (toolType === "crown") {
     mouseArray = mapText.match(/^[A-Za-z].*/gm);
-    numCatchesArray = mapText.match(/^[0-9]{1,2}$/gm);
+    numCatchesArray = mapText.match(/^[0-9]{1,4}$/gm); // does not match negative #'s
     if (Object.size(mouseArray) !== Object.size(numCatchesArray)) {
       return; // Number of mice != number of catches rows
     }
@@ -483,9 +483,22 @@ function processMap(mapText, toolType) {
   remainingMice = 0;
 
   for (var i = 0; i < Object.size(mouseArray); i++) {
-    var catchesFromSilver; // Crown
+    var catchesFromCrown = Infinity;
     if (toolType === "crown") {
-      catchesFromSilver = 100 - numCatchesArray[i];
+      var num = +numCatchesArray[i];
+      if (num > 0 && num < 10) {
+        catchesFromCrown = 10 - num;
+      } else if (num < 100) {
+        catchesFromCrown = 100 - num;
+      } else if (num < 500) {
+        catchesFromCrown = 500 - num;
+      } else if (num < 1000) {
+        catchesFromCrown = 1000 - num;
+      } else if (num < 2500) {
+        catchesFromCrown = 2500 - num;
+      } else if (num < 5000) {
+        catchesFromCrown = 5000 - num;
+      }
     }
 
     var mouseName = mouseArray[i];
@@ -627,7 +640,7 @@ function processMap(mapText, toolType) {
                     popArray[mouseName][locationName][phaseName][cheeseName][
                       charmName
                     ]
-                  ) / catchesFromSilver
+                  ) / catchesFromCrown
                 ).toFixed(4);
               }
 
