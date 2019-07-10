@@ -361,6 +361,8 @@
       } else if (geyserState === "eruption") {
         return userQuests["QuestQuesoGeyser"]["state_name"];
       }
+    } else if (userLocation === "Forbidden Grove") {
+      return user["viewing_atts"]["grove_open"] ? "Open" : "Closed";
     }
     return "N/A";
   }

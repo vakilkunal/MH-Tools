@@ -301,6 +301,7 @@
         return "Training Grounds";
       }
     } else if (userLocation === "Bristle Woods Rift") {
+      // TODO: "Rift Acolyte Tower" = "Entrance" (is this from chamber_name?)
       var stage = [];
       stage.push(userQuests["QuestRiftBristleWoods"]["chamber_name"]);
       if (
@@ -371,6 +372,8 @@
       } else if (geyserState === "eruption") {
         return userQuests["QuestQuesoGeyser"]["state_name"];
       }
+    } else if (userLocation === "Forbidden Grove") {
+      return user["viewing_atts"]["grove_open"] ? "Open" : "Closed";
     }
     return "N/A";
   }
