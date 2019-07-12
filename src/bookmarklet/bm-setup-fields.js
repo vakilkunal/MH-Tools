@@ -363,6 +363,15 @@
       }
     } else if (userLocation === "Forbidden Grove") {
       return user["viewing_atts"]["grove_open"] ? "Open" : "Closed";
+    } else if (userLocation === "Harbour") {
+      if (
+        userQuests["QuestHarbour"]["status"] === "searchStarted" &&
+        !userQuests["QuestHarbour"]["can_claim"]
+      ) {
+        return "On Bounty";
+      } else {
+        return "No Bounty";
+      }
     }
     return "N/A";
   }

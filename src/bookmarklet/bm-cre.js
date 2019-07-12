@@ -374,6 +374,15 @@
       }
     } else if (userLocation === "Forbidden Grove") {
       return user["viewing_atts"]["grove_open"] ? "Open" : "Closed";
+    } else if (userLocation === "Harbour") {
+      if (
+        userQuests["QuestHarbour"]["status"] === "searchStarted" &&
+        !userQuests["QuestHarbour"]["can_claim"]
+      ) {
+        return "On Bounty";
+      } else {
+        return "No Bounty";
+      }
     }
     return "N/A";
   }
@@ -535,6 +544,7 @@
 
   function sendData(parameters) {
     var url = "https://tsitu.github.io/MH-Tools/cre.html?";
+    // var url = "http://localhost:8000/cre.html?";
 
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);
