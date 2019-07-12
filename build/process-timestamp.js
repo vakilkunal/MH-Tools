@@ -18,6 +18,10 @@
     "setup_items"
   ];
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   /**
    * Parses datetime data from master/src/bookmarklet HTML
    * @param {string} htmlUrl
@@ -30,12 +34,19 @@
       //   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
     });
 
-    // Initial throwaway page: "Failed to load latest commit information"
-    const initPage = await browser.newPage();
-    await initPage.goto(htmlUrl);
-    const initBody = await initPage.content();
-    await initPage.close();
-
+    // 2 throwaway pages to try and avoid "Failed to load latest commit information"
+    const prePage1 = await browser.newPage();
+    await prePage1.goto(htmlUrl);
+    const preBody1 = await prePage1.content();
+    await sleep(200);
+    await prePage1.close();
+    await sleep(300);
+    const prePage2 = await browser.newPage();
+    await prePage2.goto(htmlUrl);
+    const preBody2 = await prePage2.content();
+    await sleep(200);
+    await prePage2.close();
+    await sleep(300);
     const page = await browser.newPage();
     await page.goto(htmlUrl);
     const body = await page.content();
