@@ -974,28 +974,25 @@ function empoweredParamCheck() {
 
 /**
  * Show or hide and reset UI widgets based on the selected location:
- *    - All items with the css class display-location are hidden
- *    - Items wih the location-specific custom class is shown (eg. location-fiery-warpath, location-labyrinth) are shown
- *    - If a custom setup is used only location specific items inside the .comments block will be shown
- * @param {boolean} custom Is a custom setup being used
+ *  - All items with the css class display-location are hidden
+ *  - Items with proper location-specific custom class are shown (e.g. location-labyrinth)
+ *  - If a custom setup is used, don't show the empowered widget
+ * @param {boolean} custom
  */
 function showHideWidgets(custom) {
-  $("#empoweredRow").hide();
-  $("#empowered").val("No");
-  $("#battery").val(0);
-  $("#ampSlider").slider("option", "value", 100);
-
-  $(".display-location").hide();
   var locationNameClass =
     ".display-" +
     locationName
       .replace(/ /g, "-")
       .replace(/'/g, "")
       .toLowerCase();
-  $(".comments " + locationNameClass).show(500);
-  if (!custom) {
-    $(locationNameClass).show(500);
-  }
+
+  $("#empoweredRow").hide();
+  $("#empowered").val("No");
+  $("#battery").val(0);
+  $("#ampSlider").slider("option", "value", 100);
+  $(".display-location").hide();
+  $(locationNameClass).show(500);
   checkEmpoweredWidget(custom);
 }
 
@@ -1469,7 +1466,7 @@ function checkLoadState(type) {
 
     status.innerHTML = "<td>All set!</td>";
     setTimeout(function() {
-      status.innerHTML = "<td><br></td>";
+      status.style.display = "none";
     }, 1776);
   }
 
