@@ -526,9 +526,12 @@ function showPop(type) {
       resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
       var deadEnds = (overallAR - overallCR) / 100;
       // Assuming 50% proc rates
-      if (baseName == "Minotaur Base" || baseName == "Labyrinth Base")
+      if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") {
         deadEnds /= 2;
-      if (charmName == "Compass Magnet Charm") deadEnds = -0.5;
+      }
+      if (charmName == "Compass Magnet Charm") {
+        deadEnds -= 0.5 * overallCR / 100;
+      }
       resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
     } else if (
       locationName === "Queso Geyser" &&
