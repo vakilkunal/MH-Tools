@@ -191,9 +191,12 @@ function showPop(type) {
       }
     } else {
       headerHTML =
-        "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tourney<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+        "<tr align='left'><th>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min.<br>Luck</th>";
       if (rank) {
-        headerHTML += "<th data-filter='false'>Rank</th>";
+        headerHTML += "<th data-filter='false'>Rank<br>Adv.</th>";
+      }
+      if (tournamentName !== "") {
+        headerHTML += "<th data-filter='false'>Tourney<br>Points</th>";
       }
     }
 
@@ -355,8 +358,6 @@ function showPop(type) {
             "</td><td>" +
             commafy(mousePoints) +
             "</td><td>" +
-            tourneyPoints +
-            "</td><td>" +
             minLuckValue +
             "</td>";
         }
@@ -376,6 +377,10 @@ function showPop(type) {
           mouseRow += "<td>" + rankStr + "</td>";
           adv *= catches;
           overallProgress += adv;
+        }
+
+        if (tournamentName !== "") {
+          mouseRow += "<td>" + tourneyPoints + "</td>";
         }
 
         if (locationName.indexOf("Seasonal Garden") >= 0) {
@@ -469,7 +474,7 @@ function showPop(type) {
         if (locationName === "Event") {
           resultsHTML += "<tr align='center'>" + mouseRow + "</tr>";
         } else {
-          resultsHTML += "<tr align='right'>" + mouseRow + "</tr>";
+          resultsHTML += "<tr align='center'>" + mouseRow + "</tr>";
         }
       }
     }
@@ -477,11 +482,11 @@ function showPop(type) {
     overallAR *= 100;
     var averageCR = overallCR / overallAR * 100;
 
-    // Generate 'Sums & Averages' row
+    // Generate 'Overall Stats' row
     var statsRow;
     if (locationName !== "Event") {
       resultsHTML +=
-        "</tbody><tr align='right'><td align='left'><b>Sums & Averages</b></td><td>" +
+        "</tbody><tr align='center'><td align='left'><b>Overall Stats</b></td><td>" +
         overallAR.toFixed(2) +
         "%</td><td>" +
         averageCR.toFixed(2) +
@@ -492,14 +497,16 @@ function showPop(type) {
         "</td><td>" +
         commafy(Math.round(overallPoints)) +
         "</td><td>" +
-        overallTP.toFixed(2) +
-        "</td><td>" +
         minLuckOverall +
         "</td>";
     }
 
     if (rank && locationName !== "Event") {
       resultsHTML += "<td>" + overallProgress.toFixed(4) + "%</td>";
+    }
+
+    if (tournamentName !== "") {
+      resultsHTML += "<td>" + overallTP.toFixed(2) + "</td>";
     }
 
     if (locationName.indexOf("Seasonal Garden") >= 0) {
@@ -552,16 +559,20 @@ function showPop(type) {
     // Generate gold profit row
     if (locationName !== "Event") {
       resultsHTML +=
-        "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" +
+        "</tr><tr align='center'><td align='right'>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" +
         commafy(
           Math.round(
             overallGold -
               cheeseCost * (cheeseEatenPerHunt + cheeseStaledPerHunt)
           )
         ) +
-        "</td><td></td><td></td><td></td>";
+        "</td><td></td><td></td>";
 
       if (rank) {
+        resultsHTML += "<td></td>";
+      }
+
+      if (tournamentName !== "") {
         resultsHTML += "<td></td>";
       }
     }

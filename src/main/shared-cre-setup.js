@@ -211,7 +211,7 @@ function calculateTrapSetup(skipDisp) {
     hiddenPowerBonus = 0, // implicit, unable to be parsed
     braceBonus = false;
 
-  if (locationName && cheeseName && weaponName && baseName && phaseName) {
+  if (locationName && phaseName && cheeseName && weaponName && baseName) {
     // Golem Guardian logic
     if (weaponName.indexOf("Golem Guardian") >= 0) {
       var golemCharge = 0;
@@ -291,12 +291,11 @@ function calculateTrapSetup(skipDisp) {
     trapEff = trapEff > 6 ? 6 : trapEff;
     trapEff = trapEff < -6 ? -6 : trapEff;
 
-    if (user === CRE_USER && !skipDisp) {
-      showPop(2);
-      showTrapSetup();
-    }
-  } else {
-    showTrapSetup(0);
+    if (user === CRE_USER) showTrapSetup();
+  }
+
+  if (user === CRE_USER && !skipDisp) {
+    showPop(2);
   }
 
   // Only calculate if both weapon and base selected
@@ -835,26 +834,21 @@ function loadLocationDropdown() {
   loadDropdown("location", array, locationChanged, "<option></option>");
 }
 
-function showTrapSetup(type) {
-  var trapSetup = document.getElementById("trapSetup");
-
-  if (type === 0) trapSetup.innerHTML = "<tr><td></td></tr>";
-  else {
-    trapSetup.innerHTML =
-      "<tr><td>Type</td><td>" +
-      trapType +
-      "<tr><td>Power</td><td>" +
-      commafy(trapPower) +
-      "</td></tr>" +
-      "<tr><td>Luck</td><td>" +
-      trapLuck +
-      "</td></tr><tr><td>Attraction Bonus</td><td>" +
-      parseFloat(trapAtt.toFixed(2)) +
-      "%</td></tr>" +
-      "<tr><td>Cheese Effect</td><td>" +
-      reverseParseFreshness[trapEff] +
-      "</td></tr>";
-  }
+function showTrapSetup() {
+  document.getElementById("trapSetup").innerHTML =
+    "<tr><td>Type</td><td>" +
+    trapType +
+    "<tr><td>Power</td><td>" +
+    commafy(trapPower) +
+    "</td></tr>" +
+    "<tr><td>Luck</td><td>" +
+    trapLuck +
+    "</td></tr><tr><td>Attraction Bonus</td><td>" +
+    parseFloat(trapAtt.toFixed(2)) +
+    "%</td></tr>" +
+    "<tr><td>Cheese Effect</td><td>" +
+    reverseParseFreshness[trapEff] +
+    "</td></tr>";
 }
 
 function gsChanged() {
