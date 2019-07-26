@@ -49,7 +49,7 @@ _Disclaimer:_ Newer tools like 'Crafting Wizard' and 'Trap Setup Powers' may be 
 
 ### :bookmark: Bookmarklets
 
-Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 9 different bookmarklets: Catch Rate Estimator, Map Solver, Best Setup: Load Items, Best Setup: Fields, Markeplace Analyzer, Silver Crown Solver, Crafting Wizard, Powers: Worksheet and the all-in-one Auto-Loader. They are each available on their corresponding tool's page.
+Bookmarklets are pieces of JavaScript code that are saved as a bookmark in the user's browser, enabling them to interact with webpages on the fly. We provide 9 different bookmarklets: Catch Rate Estimator, Map Solver, Best Setup: Load Items, Best Setup: Fields, Marketplace Analyzer, Crown Solver, Crafting Wizard, Powers: Worksheet and the all-in-one Auto-Loader. They are each available on their corresponding tool's page.
 
 Using the Auto-Loader is recommended because it automatically grabs the latest version of each bookmarklet without having to manually update.
 
@@ -57,17 +57,17 @@ You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.co
 
 _Note:_ The process of using a bookmarklet in mobile browsers can vary. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
 
-|    Bookmarklet    | Functionality                                                                                                                                                                                                                                        |
-| :---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|        CRE        | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, and more                                                                                                                               |
-| Setup: Load Items | Automatically loads your owned weapons, bases, and charms into Best Setup                                                                                                                                                                            |
-|   Setup: Fields   | Automatically fills in Best Setup with your location, sublocation, cheese, charm, and more                                                                                                                                                           |
-|     Analyzer      | Generates a pop-up dialog that allows you to download your entire Marketplace transaction history and send it to the tool                                                                                                                            |
-|        Map        | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map                                                                                                                             |
-|       Crown       | Automatically fills in the Crown Solver's `textarea` with the 50 Bronze Crown mice on your 'King's Crowns' page that are closest to reaching Silver status (100 catches)<br><br>_Note:_ Favorited Bronze mice will be included regardless of catches |
-|     Crafting      | Automatically loads your 'Crafting Table' materials into Crafting Wizard                                                                                                                                                                             |
-| Powers: Worksheet | Generates a pop-up dialog that allows you to select a mouse group/subgroup to target with your current trap setup                                                                                                                                    |
-|      Loader       | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet                                                                                                                                                           |
+|    Bookmarklet    | Functionality                                                                                                                                                                                                                      |
+| :---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|        CRE        | Automatically fills in the Catch Rate Estimator with your location, sublocation, cheese, charm, weapon, base, and more                                                                                                             |
+| Setup: Load Items | Automatically loads your owned weapons, bases, and charms into Best Setup                                                                                                                                                          |
+|   Setup: Fields   | Automatically fills in Best Setup with your location, sublocation, cheese, charm, and more                                                                                                                                         |
+|     Analyzer      | Generates a pop-up dialog that allows you to download your entire Marketplace transaction history and send it to the tool                                                                                                          |
+|        Map        | Automatically fills in the Map Solver's mouse name `textarea` with all of the remaining uncaught mice on your Active Map                                                                                                           |
+|       Crown       | Generates a pop-up dialog that allows you to select the crown types and corresponding catch cutoff values that you'd like to send over to the Crown Solver<br><br>_Note:_ Favorited mice will be prioritized in the resulting list |
+|     Crafting      | Automatically loads your 'Crafting Table' materials into Crafting Wizard                                                                                                                                                           |
+| Powers: Worksheet | Generates a pop-up dialog that allows you to select a mouse group/subgroup to target with your current trap setup                                                                                                                  |
+|      Loader       | Generates a pop-up dialog that gives you access to the latest versions of each bookmarklet                                                                                                                                         |
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
@@ -115,16 +115,16 @@ _Apple Safari_
 
 **Bookmarklet:** Run the `CRE` bookmarklet from basically any page on the MH website.
 
-|           Descriptor           |  Per  |    Sum or Average (bottom row)    |
-| :----------------------------: | :---: | :-------------------------------: |
-|        Attraction Rate         | Mouse |        Sum for this setup         |
-|           Catch Rate           | Mouse |      Average for this setup       |
-| Catches / 100 hunts (AR \* CR) | Mouse |         Sum per 100 hunts         |
-|              Gold              | Catch |         Average per hunt          |
-|             Points             | Catch |         Average per hunt          |
-|         Tourney Points         | Catch |         Average per hunt          |
-|            Min Luck            | Mouse | Highest for this particular setup |
-|              Rank              | Catch |             Per hunt              |
+|            Descriptor            |  Per  |    Sum or Average (bottom row)    |
+| :------------------------------: | :---: | :-------------------------------: |
+|         Attraction Rate          | Mouse |        Sum for this setup         |
+|            Catch Rate            | Mouse |      Average for this setup       |
+| Catches (AR \* CR per 100 hunts) | Mouse |         Sum per 100 hunts         |
+|               Gold               | Catch |         Average per hunt          |
+|              Points              | Catch |         Average per hunt          |
+|          Tourney Points          | Catch |         Average per hunt          |
+|             Min Luck             | Mouse | Highest for this particular setup |
+|               Rank               | Catch |             Per hunt              |
 
 <br>
 
@@ -154,18 +154,18 @@ The following special effects _are included in catch rate calculations_ for both
 
 * Special Bonuses & Effects
 
-  |           Name            |                                                                                                      Effect                                                                                                      |
-  | :-----------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-  |      Champion Charm       |                                                                       +2/3/4 Luck when equipped with Bronze/Silver/Golden Tournament Base                                                                        |
-  | Dragonbane Charm variants |                                                                                  +300/600/900% Power Bonus on Dragon-type mice                                                                                   |
-  |       EMP400 Charm        |                                                                                      +25000 Power with Fusion Fondue armed                                                                                       |
-  |  Golem Guardian variants  |                                      &middot; +6 Luck when equipped with Glowing Golem Guardian Base<br>&middot; Charge levels are set in CRE and carry over to Best Setup                                       |
-  |    Physical Brace Base    |                                                                              +25% Power Bonus when equipped with a Physical weapon                                                                               |
-  |  Polluted Charm variants  |                                                                   +4/6/10/15 Luck when equipped with Polluted Base or Refined Pollutinum Base                                                                    |
-  |        Soiled Base        | &middot; +100 Power, +3% Power Bonus, +5% Attraction Bonus, +4 Luck when equipped with Growth Charm<br>&middot; +300 Power, +8% Power Bonus, +20% Attraction Bonus, +9 Luck when equipped with Wild Growth Charm |
-  |  Snowball Charm variants  |                                                                               +20% Power Bonus when equipped with Festive weapons                                                                                |
-  |      Spellbook Charm      |                                                                         +500 Power and +8% Power Bonus when equipped with Spellbook Base                                                                         |
-  |   Spooky Charm variants   |                                                                              +20% Power Bonus when equipped with Halloween weapons                                                                               |
+  |            Name            |                                                                                                      Effect                                                                                                      |
+  | :------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+  |       Champion Charm       |                                                                       +2/3/4 Luck when equipped with Bronze/Silver/Golden Tournament Base                                                                        |
+  | Dragonbane Charm variants  |                                                                                  +300/600/900% Power Bonus on Dragon-type mice                                                                                   |
+  |        EMP400 Charm        |                                                                                      +25000 Power with Fusion Fondue armed                                                                                       |
+  |  Golem Guardian variants   |                                      &middot; +6 Luck when equipped with Glowing Golem Guardian Base<br>&middot; Charge levels are set in CRE and carry over to Best Setup                                       |
+  |    Physical Brace Base     |                                                                              +25% Power Bonus when equipped with a Physical weapon                                                                               |
+  |  Polluted Charm variants   |                                                                   +4/6/10/15 Luck when equipped with Polluted Base or Refined Pollutinum Base                                                                    |
+  | Soiled & Living Grove Base | &middot; +100 Power, +3% Power Bonus, +5% Attraction Bonus, +4 Luck when equipped with Growth Charm<br>&middot; +300 Power, +8% Power Bonus, +20% Attraction Bonus, +9 Luck when equipped with Wild Growth Charm |
+  |  Snowball Charm variants   |                                                                               +20% Power Bonus when equipped with Festive weapons                                                                                |
+  |      Spellbook Charm       |                                                                         +500 Power and +8% Power Bonus when equipped with Spellbook Base                                                                         |
+  |   Spooky Charm variants    |                                                                              +20% Power Bonus when equipped with Halloween weapons                                                                               |
 
 * Location Specific Effects
 
@@ -178,7 +178,7 @@ The following special effects _are included in catch rate calculations_ for both
   | Iceberg & Slushy Shoreline | &middot; Steam Laser Mk. I gives +1750 Power and +3 Luck<br>&middot; Steam Laser Mk. II gives +1250 Power and +2 Luck<br>&middot; Steam Laser Mk. III gives +1500 Power and +2 Luck<br>&middot; Deep Freeze Base and Ultimate Iceberg Base give +665 Power and +9 Luck in Icewing's Lair, Hidden Depths, and The Deep Lair |
   |      Jungle of Dread       |                                                                                                              &middot; Dreaded Totem Trap gives +8500 Power<br>&middot; Dreaded Charm gives +300% Power Bonus                                                                                                               |
   |        Sand Crypts         |                                                                                                               Salt level applies a logarithmic function to decrease mouse power for King Grub & King Scarab                                                                                                                |
-  |      Seasonal Garden       |                                                                                               &middot; Seasonal Base gives +18% Power Bonus<br>&middot; Soul Harvester and Terrifying Spider Trap give +10 Luck during Fall                                                                                                |
+  |      Seasonal Garden       |         &middot; Seasonal Base gives +18% Power Bonus<br>&middot; Soul Harvester and Terrifying Spider Trap give +10 Luck during Fall<br>&middot; Chesla's Revenge has a 50% chance to proc an additional charge<br>&middot; TODO: Sandcastle Shard's effect is not implemented due to current/max amp requirement         |
   |        Sunken City         |                                                                                                                                    Depth Charge Base gives +1000 Power while on a dive                                                                                                                                     |
   |       Town of Digby        |                                                                               &middot; +30% Power Bonus if Limelight cheese and Mining Charm are equipped<br>&middot; TODO: Only against Digby Dirt Dwellers plus increased BBB/I-BB chance?                                                                               |
   |        Toxic Spill         |                                                                        &middot; Washboard Base gives +5% Power Bonus and +5 Luck<br>&middot; Soap Charm gives +5000 Power and +10 Luck<br>&middot; Super Soap Charm gives +8000 Power and +12 Luck                                                                         |
@@ -259,17 +259,17 @@ To check whether all of your items have properly loaded, you may want to open up
 
 ### :crown: [Crown Solver](https://tsitu.github.io/MH-Tools/crown.html)
 
-> Calculates the best locations to achieve 10/100/500 catches of mouse breeds (Bronze and Gold coming soon).
+> Calculates the best locations to achieve crowns of given mouse breeds based on number of catches.
 
-**Bookmarklet:** Run the `Crown` bookmarklet from Hunter's Profile -> King's Crowns to automatically populate the 50 Bronze Crown mice that are closest to reaching Silver status (100 catches)
+**Bookmarklet:** Run the `Crown` bookmarklet to automatically populate the a list of mice that are closest to a crown
 
-This spin-off of the Map Solver by [vsong](https://github.com/vsong) factors in the difference between 100 and the number of catches you currently have for a breed. All else being equal, a mouse with 99 catches is weighted more heavily than one with 80 catches.
+This spin-off of the Map Solver inspired by [vsong](https://github.com/vsong) factors in the difference between 10/100/500/1000/2500/5000 and the number of catches you currently have for a breed. All else being equal, a mouse that's closer to any given crown is weighted more heavily than one that's further away (e.g. a mouse with 99 catches vs. a mouse with 3).
 
-| Type of Crown Progress | Description                                                                           |
-| :--------------------: | ------------------------------------------------------------------------------------- |
-|          Raw           | Shown for individual mice, factors in attraction rate and catches remaining until 100 |
-|         Total          | Sum for a specific location, sublocation, cheese, and charm                           |
-|        Weighted        | Same as Total CP, but with baseline cheese attraction rates factored in               |
+| Type of Crown Progress | Description                                                                             |
+| :--------------------: | --------------------------------------------------------------------------------------- |
+|          Raw           | Shown for individual mice, factors in attraction rate and catches remaining until crown |
+|         Total          | Sum for a specific location, sublocation, cheese, and charm                             |
+|        Weighted        | Same as Total CP, but with baseline cheese attraction rates factored in                 |
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 

@@ -109,14 +109,14 @@ function calcSpecialCharms(charmName) {
       charmLuck += 2;
     }
   } else if (charmName === "Growth Charm") {
-    if (baseName === "Soiled Base") {
+    if (baseName === "Soiled Base" || baseName === "Living Grove Base") {
       charmPower += 100;
       charmBonus += 3;
       charmAtt += 5;
       charmLuck += 4;
     }
   } else if (charmName === "Wild Growth Charm") {
-    if (baseName === "Soiled Base") {
+    if (baseName === "Soiled Base" || baseName === "Living Grove Base") {
       charmPower += 300;
       charmBonus += 8;
       charmAtt += 20;
@@ -211,7 +211,7 @@ function calculateTrapSetup(skipDisp) {
     hiddenPowerBonus = 0, // implicit, unable to be parsed
     braceBonus = false;
 
-  if (locationName && cheeseName && weaponName && baseName && phaseName) {
+  if (locationName && phaseName && cheeseName && weaponName && baseName) {
     // Golem Guardian logic
     if (weaponName.indexOf("Golem Guardian") >= 0) {
       var golemCharge = 0;
@@ -291,12 +291,11 @@ function calculateTrapSetup(skipDisp) {
     trapEff = trapEff > 6 ? 6 : trapEff;
     trapEff = trapEff < -6 ? -6 : trapEff;
 
-    if (user === CRE_USER && !skipDisp) {
-      showPop(2);
-      showTrapSetup();
-    }
-  } else {
-    showTrapSetup(0);
+    if (user === CRE_USER) showTrapSetup();
+  }
+
+  if (user === CRE_USER && !skipDisp) {
+    showPop(2);
   }
 
   // Only calculate if both weapon and base selected
@@ -835,26 +834,21 @@ function loadLocationDropdown() {
   loadDropdown("location", array, locationChanged, "<option></option>");
 }
 
-function showTrapSetup(type) {
-  var trapSetup = document.getElementById("trapSetup");
-
-  if (type === 0) trapSetup.innerHTML = "<tr><td></td></tr>";
-  else {
-    trapSetup.innerHTML =
-      "<tr><td>Type</td><td>" +
-      trapType +
-      "<tr><td>Power</td><td>" +
-      commafy(trapPower) +
-      "</td></tr>" +
-      "<tr><td>Luck</td><td>" +
-      trapLuck +
-      "</td></tr><tr><td>Attraction Bonus</td><td>" +
-      parseFloat(trapAtt.toFixed(2)) +
-      "%</td></tr>" +
-      "<tr><td>Cheese Effect</td><td>" +
-      reverseParseFreshness[trapEff] +
-      "</td></tr>";
-  }
+function showTrapSetup() {
+  document.getElementById("trapSetup").innerHTML =
+    "<tr><td>Type</td><td>" +
+    trapType +
+    "<tr><td>Power</td><td>" +
+    commafy(trapPower) +
+    "</td></tr>" +
+    "<tr><td>Luck</td><td>" +
+    trapLuck +
+    "</td></tr><tr><td>Attraction Bonus</td><td>" +
+    parseFloat(trapAtt.toFixed(2)) +
+    "%</td></tr>" +
+    "<tr><td>Cheese Effect</td><td>" +
+    reverseParseFreshness[trapEff] +
+    "</td></tr>";
 }
 
 function gsChanged() {
@@ -974,28 +968,25 @@ function empoweredParamCheck() {
 
 /**
  * Show or hide and reset UI widgets based on the selected location:
- *    - All items with the css class display-location are hidden
- *    - Items wih the location-specific custom class is shown (eg. location-fiery-warpath, location-labyrinth) are shown
- *    - If a custom setup is used only location specific items inside the .comments block will be shown
- * @param {boolean} custom Is a custom setup being used
+ *  - All items with the css class display-location are hidden
+ *  - Items with proper location-specific custom class are shown (e.g. location-labyrinth)
+ *  - If a custom setup is used, don't show the empowered widget
+ * @param {boolean} custom
  */
 function showHideWidgets(custom) {
-  $("#empoweredRow").hide();
-  $("#empowered").val("No");
-  $("#battery").val(0);
-  $("#ampSlider").slider("option", "value", 100);
-
-  $(".display-location").hide();
   var locationNameClass =
     ".display-" +
     locationName
       .replace(/ /g, "-")
       .replace(/'/g, "")
       .toLowerCase();
-  $(".comments " + locationNameClass).show(500);
-  if (!custom) {
-    $(locationNameClass).show(500);
-  }
+
+  $("#empoweredRow").hide();
+  $("#empowered").val("No");
+  $("#battery").val(0);
+  $("#ampSlider").slider("option", "value", 100);
+  $(".display-location").hide();
+  $(locationNameClass).show(500);
   checkEmpoweredWidget(custom);
 }
 
@@ -1409,6 +1400,11 @@ function calcCRMods(catchRate, mouseName) {
     weaponName !== "Zurreal's Folly"
   ) {
     catchRate = 0;
+  } else if (
+    mouseName === "Battering Ram" &&
+    weaponName === "Moonbeam Barrier Trap"
+  ) {
+    catchRate = 1;
   }
 
   return catchRate;
@@ -1464,7 +1460,7 @@ function checkLoadState(type) {
 
     status.innerHTML = "<td>All set!</td>";
     setTimeout(function() {
-      status.innerHTML = "<td><br></td>";
+      status.style.display = "none";
     }, 1776);
   }
 

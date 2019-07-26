@@ -2,6 +2,10 @@
  * 5 July 2018: 105/112 cheeses
  * Runny, Marshmallow Monterey, Rockforth entries all have null attraction_bonus
  * Dumpling, Nian Gao'da and [Extra Sweet] Cupcake Colby do not have IDs in DB
+ *
+ * Manually added Crimson as of 11-29-18 dump
+ * Manually added Rockforth as of 6-26-19 dump
+ * TODO: Update all cheeses!
  */
 
 // prettier-ignore
@@ -22,7 +26,7 @@ var baselineAttArray = {
   "Combat": 0.9900, // Guesstimate | Calculated: 0.9835, Sample: 1483 (High)
   "Creamy Havarti": 0.9850, // Guesstimate | Calculated: 0.9817, Sample: 193 (Low)
   "Crescent": 0.8879, // Sample: 35835 (Excellent)
-  "Crimson": 0.8878, // Sample: 1518 (High) as of 11-29-18 dump
+  "Crimson": 0.8878, // Sample: 1518 (High)
   "Crunchy": 0.9850, // Guesstimate | Calculated: 0.9879, Sample: 4200 (High)
   "Crunchy Havarti": 0.9850, // Guesstimate | Calculated: 0.9795, Sample: 233 (Low)
   "Dewthief Camembert": 0.9296, // Sample: 9458 (High)
@@ -88,6 +92,7 @@ var baselineAttArray = {
   "Rift Rumble": 0.9879, // Sample: 15555 (Very High)
   "Rift Susheese": 0.9550, // Guesstimate | Calculated: 0.9557, Sample: 3990 (High)
   "Riftiago": 0.9609, // Sample: 7864 (High)
+  "Rockforth": 0.9498, // Sample: 3476 (High)
   "Rumble": 0.9888, // Sample: 6477 (High)
   "Runic": 0.9638, // Sample: 10351 (Very High)
   "Runic String": 0.9997, // Sample: 141066 (Excellent)

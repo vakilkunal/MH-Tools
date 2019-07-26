@@ -48,7 +48,7 @@
       if (tide === "low") {
         return "Low Tide";
       } else if (tide === "med") {
-        return "Mid Tide";
+        return "Medium Tide";
       } else if (tide === "high") {
         return "High Tide";
       }
@@ -361,6 +361,17 @@
       } else if (geyserState === "eruption") {
         return userQuests["QuestQuesoGeyser"]["state_name"];
       }
+    } else if (userLocation === "Forbidden Grove") {
+      return user["viewing_atts"]["grove_open"] ? "Open" : "Closed";
+    } else if (userLocation === "Harbour") {
+      if (
+        userQuests["QuestHarbour"]["status"] === "searchStarted" &&
+        !userQuests["QuestHarbour"]["can_claim"]
+      ) {
+        return "On Bounty";
+      } else {
+        return "No Bounty";
+      }
     }
     return "N/A";
   }
@@ -460,6 +471,18 @@
   // Weapon edge cases
   if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
     urlParams["weapon"] = "Timesplit Dissonance Weapon";
+  }
+
+  // Denture Base toothlet check
+  if (urlParams["base"] === "Denture Base") {
+    if (
+      document
+        .querySelector(".mousehuntHud-userStat.trap.base > .icon")
+        .getAttribute("style")
+        .indexOf("vteeth") >= 0
+    ) {
+      urlParams["base"] = "Denture Base (Toothlet Charged)";
+    }
   }
 
   if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {

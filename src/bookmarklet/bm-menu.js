@@ -50,7 +50,7 @@
 
     var descriptionSpan = document.createElement("span");
     descriptionSpan.innerHTML =
-      "Version 1.5.1 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
+      "Version 1.5.2 / Using <a href='https://www.jsdelivr.com/?docs=gh' target='blank'>jsDelivr</a>";
     var loaderSpanTimestamp = document.createElement("span");
     loaderSpanTimestamp.style.fontSize = "10px";
     loaderSpanTimestamp.style.fontStyle = "italic";
@@ -111,7 +111,7 @@
     analyzerSpanTimestamp.innerHTML = analyzerTime;
 
     var crownButton = document.createElement("button", { id: "crown-button" });
-    crownButton.textContent = "Silver Crown Solver";
+    crownButton.textContent = "Crown Solver";
     crownButton.onclick = function() {
       loadBookmarklet("crown");
     };

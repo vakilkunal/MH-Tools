@@ -23,6 +23,11 @@
           return el.name;
         });
 
+      // Auto-add Denture Base (Toothlet Charged)
+      if (bases.indexOf("Denture Base") >= 0) {
+        bases.push("Denture Base (Toothlet Charged)");
+      }
+
       var weapons = arr
         .filter(function(el) {
           return el.classification === "weapon" && el.quantity > 0;

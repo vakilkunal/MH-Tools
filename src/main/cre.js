@@ -191,9 +191,12 @@ function showPop(type) {
       }
     } else {
       headerHTML =
-        "<tr align='left'><th align='left'>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches /<br>100 hunts</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Tourney<br>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+        "<tr align='left'><th>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min.<br>Luck</th>";
       if (rank) {
-        headerHTML += "<th data-filter='false'>Rank</th>";
+        headerHTML += "<th data-filter='false'>Rank<br>Adv.</th>";
+      }
+      if (tournamentName !== "") {
+        headerHTML += "<th data-filter='false'>Tourney<br>Points</th>";
       }
     }
 
@@ -213,6 +216,12 @@ function showPop(type) {
     } else if (locationName === "Labyrinth" && phaseName !== "Intersection") {
       headerHTML +=
         "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
+    } else if (
+      locationName === "Queso Geyser" &&
+      phaseName === "Pressure Building"
+    ) {
+      headerHTML +=
+        "<th data-filter='false'>kPa</th><th data-filter='false'>kPa Tonic</th>";
     }
     headerHTML += "</tr>";
     return headerHTML;
@@ -247,7 +256,9 @@ function showPop(type) {
       overallPoints = 0,
       overallTP = 0,
       minLuckOverall = 0,
-      overallProgress = 0;
+      overallProgress = 0,
+      pressureOverall = 0,
+      pressureOverallTonic = 0;
 
     var headerHTML = getHeaderRow();
     var overallAR = getCheeseAttraction();
@@ -347,8 +358,6 @@ function showPop(type) {
             "</td><td>" +
             commafy(mousePoints) +
             "</td><td>" +
-            tourneyPoints +
-            "</td><td>" +
             minLuckValue +
             "</td>";
         }
@@ -370,11 +379,28 @@ function showPop(type) {
           overallProgress += adv;
         }
 
+        if (tournamentName !== "") {
+          mouseRow += "<td>" + tourneyPoints + "</td>";
+        }
+
         if (locationName.indexOf("Seasonal Garden") >= 0) {
           var dAmp = deltaAmp[mouseName];
-          if (charmName === "Amplifier Charm") dAmp *= 2;
+          var ampMultiplier = 1;
+          if (charmName === "Amplifier Charm") ampMultiplier += 1;
+          if (weaponName === "Chesla's Revenge") ampMultiplier += 0.5; // 50% proc additional charge
+          dAmp *= ampMultiplier;
+
+          // TODO: For SS/Harvester, dAmp = (max - current) / 2
+          // (maximum is 175/2 = 87.5, minimum is 0.5)
+          // if (
+          //   weaponName === "Sandcastle Shard Trap" &&
+          //   mouseName === "Harvester"
+          // ) {
+          //   dAmp = 87.5; // 50% proc full charge (0.5 * 175)
+          // }
+
           mouseRow += "<td>" + dAmp + "%</td>";
-          deltaAmpOverall += catches / 100 * dAmp;
+          deltaAmpOverall += dAmp * catches / 100;
         } else if (
           contains(locationName, "Iceberg") &&
           phaseName.indexOf("Lair") < 0
@@ -384,6 +410,11 @@ function showPop(type) {
 
           if (charmName === "Wax Charm" && contains(berglings, mouseName)) {
             deltaDepthCatch += 1;
+          } else if (
+            charmName === "Super Wax Charm" &&
+            contains(berglings, mouseName)
+          ) {
+            deltaDepthCatch += 2;
           } else if (
             charmName === "Sticky Charm" &&
             contains(berglings, mouseName)
@@ -430,12 +461,20 @@ function showPop(type) {
             mouseClues += 2;
           avgLanternClues += mouseClues * catches / 100;
           mouseRow += "<td>" + mouseClues + "</td><td></td>";
+        } else if (
+          locationName === "Queso Geyser" &&
+          phaseName === "Pressure Building"
+        ) {
+          var kPaGain = pressureMice[mouseName];
+          pressureOverall += kPaGain * catches / 100;
+          pressureOverallTonic += kPaGain * 2 * catches / 100;
+          mouseRow += "<td>" + kPaGain + "</td><td>" + kPaGain * 2 + "</td>";
         }
 
         if (locationName === "Event") {
           resultsHTML += "<tr align='center'>" + mouseRow + "</tr>";
         } else {
-          resultsHTML += "<tr align='right'>" + mouseRow + "</tr>";
+          resultsHTML += "<tr align='center'>" + mouseRow + "</tr>";
         }
       }
     }
@@ -443,11 +482,11 @@ function showPop(type) {
     overallAR *= 100;
     var averageCR = overallCR / overallAR * 100;
 
-    // Generate 'Sums & Averages' row
+    // Generate 'Overall Stats' row
     var statsRow;
     if (locationName !== "Event") {
       resultsHTML +=
-        "</tbody><tr align='right'><td align='left'><b>Sums & Averages</b></td><td>" +
+        "</tbody><tr align='center'><td align='left'><b>Overall Stats</b></td><td>" +
         overallAR.toFixed(2) +
         "%</td><td>" +
         averageCR.toFixed(2) +
@@ -458,14 +497,16 @@ function showPop(type) {
         "</td><td>" +
         commafy(Math.round(overallPoints)) +
         "</td><td>" +
-        overallTP.toFixed(2) +
-        "</td><td>" +
         minLuckOverall +
         "</td>";
     }
 
     if (rank && locationName !== "Event") {
       resultsHTML += "<td>" + overallProgress.toFixed(4) + "%</td>";
+    }
+
+    if (tournamentName !== "") {
+      resultsHTML += "<td>" + overallTP.toFixed(2) + "</td>";
     }
 
     if (locationName.indexOf("Seasonal Garden") >= 0) {
@@ -492,10 +533,23 @@ function showPop(type) {
       resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
       var deadEnds = (overallAR - overallCR) / 100;
       // Assuming 50% proc rates
-      if (baseName == "Minotaur Base" || baseName == "Labyrinth Base")
+      if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") {
         deadEnds /= 2;
-      if (charmName == "Compass Magnet Charm") deadEnds = -0.5;
+      }
+      if (charmName == "Compass Magnet Charm") {
+        deadEnds -= 0.5 * overallCR / 100;
+      }
       resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
+    } else if (
+      locationName === "Queso Geyser" &&
+      phaseName === "Pressure Building"
+    ) {
+      resultsHTML +=
+        "<td>" +
+        pressureOverall.toFixed(2) +
+        "</td><td>" +
+        pressureOverallTonic.toFixed(2) +
+        "</td>";
     }
 
     var cheeseEatenPerHunt = overallAR / 100;
@@ -505,16 +559,20 @@ function showPop(type) {
     // Generate gold profit row
     if (locationName !== "Event") {
       resultsHTML +=
-        "</tr><tr align='right'><td>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" +
+        "</tr><tr align='center'><td align='right'>Profit (minus cheese cost)</td><td></td><td></td><td></td><td>" +
         commafy(
           Math.round(
             overallGold -
               cheeseCost * (cheeseEatenPerHunt + cheeseStaledPerHunt)
           )
         ) +
-        "</td><td></td><td></td><td></td>";
+        "</td><td></td><td></td>";
 
       if (rank) {
+        resultsHTML += "<td></td>";
+      }
+
+      if (tournamentName !== "") {
         resultsHTML += "<td></td>";
       }
     }
@@ -529,7 +587,10 @@ function showPop(type) {
       phaseName.indexOf("Lair") < 0
     ) {
       resultsHTML += "<td colspan='2'></td>";
-    } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
+    } else if (
+      (locationName == "Labyrinth" && phaseName != "Intersection") ||
+      (locationName === "Queso Geyser" && phaseName === "Pressure Building")
+    ) {
       resultsHTML += "<td></td><td></td>";
     }
     resultsHTML += "</tr>";

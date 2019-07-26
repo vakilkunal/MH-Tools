@@ -58,7 +58,7 @@
       if (tide === "low") {
         return "Low Tide";
       } else if (tide === "med") {
-        return "Mid Tide";
+        return "Medium Tide";
       } else if (tide === "high") {
         return "High Tide";
       }
@@ -301,6 +301,7 @@
         return "Training Grounds";
       }
     } else if (userLocation === "Bristle Woods Rift") {
+      // TODO: "Rift Acolyte Tower" = "Entrance" (is this from chamber_name?)
       var stage = [];
       stage.push(userQuests["QuestRiftBristleWoods"]["chamber_name"]);
       if (
@@ -370,6 +371,17 @@
         return "Pressure Building";
       } else if (geyserState === "eruption") {
         return userQuests["QuestQuesoGeyser"]["state_name"];
+      }
+    } else if (userLocation === "Forbidden Grove") {
+      return user["viewing_atts"]["grove_open"] ? "Open" : "Closed";
+    } else if (userLocation === "Harbour") {
+      if (
+        userQuests["QuestHarbour"]["status"] === "searchStarted" &&
+        !userQuests["QuestHarbour"]["can_claim"]
+      ) {
+        return "On Bounty";
+      } else {
+        return "No Bounty";
       }
     }
     return "N/A";
@@ -473,6 +485,18 @@
     urlParams["weapon"] = "Timesplit Dissonance Weapon";
   }
 
+  // Denture Base toothlet check
+  if (urlParams["base"] === "Denture Base") {
+    if (
+      document
+        .querySelector(".mousehuntHud-userStat.trap.base > .icon")
+        .getAttribute("style")
+        .indexOf("vteeth") >= 0
+    ) {
+      urlParams["base"] = "Denture Base (Toothlet Charged)";
+    }
+  }
+
   if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
     $.post(
       "https://www.mousehuntgame.com/managers/ajax/users/gettrapcomponents.php",
@@ -520,6 +544,7 @@
 
   function sendData(parameters) {
     var url = "https://tsitu.github.io/MH-Tools/cre.html?";
+    // var url = "http://localhost:8000/cre.html?";
 
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);
