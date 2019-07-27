@@ -493,12 +493,14 @@ function normalizeRanges(stored) {
   for (let group in minCache) {
     for (let mouse in minCache[group]) {
       for (let el of minCache[group][mouse]["effs"]) {
-        const ttIndex = trapTypes.indexOf(el);
-        stored[group][mouse]["effs"][ttIndex] = [
-          100,
-          minCache[group][mouse]["range"][0],
-          minCache[group][mouse]["range"][1]
-        ];
+        if (minCache[group][mouse]["range"] !== undefined) {
+          const ttIndex = trapTypes.indexOf(el);
+          stored[group][mouse]["effs"][ttIndex] = [
+            100,
+            minCache[group][mouse]["range"][0],
+            minCache[group][mouse]["range"][1]
+          ];
+        }
       }
     }
   }
