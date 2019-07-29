@@ -191,7 +191,7 @@ function showPop(type) {
       }
     } else {
       headerHTML =
-        "<tr align='left'><th>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+        "<tr align='left'><th>Mouse Name</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min.<br>Luck</th>";
       if (rank) {
         headerHTML += "<th data-filter='false'>Rank<br>Adv.</th>";
       }
@@ -212,7 +212,7 @@ function showPop(type) {
       locationName.indexOf("Sunken City") >= 0 &&
       phaseName !== "Docked"
     ) {
-      headerHTML += "<th data-filter='false'>Metres<br>per hunt</th>";
+      headerHTML += "<th data-filter='false'>Meters<br>per hunt</th>";
     } else if (locationName === "Labyrinth" && phaseName !== "Intersection") {
       headerHTML +=
         "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
