@@ -1,4 +1,3 @@
-// prettier-ignore
 var tourneysArray = {
   "Baker's Dozen": {
     "White": 1,
@@ -478,19 +477,19 @@ var tourneysArray = {
     "Goliath Field": 400
   },
   "High Seas Hunting": {
-    "Bottled": 15,
-    "Briegull": 1,
-    "Buccaneer": 5,
-    "Captain": 15,
-    "Cook": 15,
-    "Leviathan": 25,
-    "Mermouse": 25,
-    "Pinchy": 1,
-    "Shelder": 300,
-    "Shipwrecked": 5,
-    "Siren": 5,
-    "Squeaken": 25,
-    "Swabbie": 1
+    Bottled: 15,
+    Briegull: 1,
+    Buccaneer: 5,
+    Captain: 15,
+    Cook: 15,
+    Leviathan: 25,
+    Mermouse: 25,
+    Pinchy: 1,
+    Shelder: 300,
+    Shipwrecked: 5,
+    Siren: 5,
+    Squeaken: 25,
+    Swabbie: 1
   },
   "Indigenous Mouse Hunting": {
     "Bionic": 5,

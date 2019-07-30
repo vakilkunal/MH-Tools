@@ -484,7 +484,7 @@ function showPop() {
    * @return {string}
    */
   function getHeader(population) {
-    var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
+    var resultsHeader = "<thead><tr><th align='left'>Trap Setup</th>";
     for (var mouseName in population) {
       resultsHeader += "<th data-filter='false'>" + mouseName + "</th>";
     }
@@ -626,13 +626,13 @@ function buildMiceCRCells(micePopulation) {
         overallProgress += mouseWisdom[mouse] / rankupDiff[rank] * catches;
       }
     }
-    html += "<td align='right'>" + catches.toFixed(2) + "</td>";
+    html += "<td align='center'>" + catches.toFixed(2) + "</td>";
   }
 
-  html += "<td align='right'>" + overallCR.toFixed(2) + "</td>";
+  html += "<td align='center'>" + overallCR.toFixed(2) + "</td>";
   if (rank) {
     // numbers are usually 0.00##% per hunt, but per 100 hunts is consistent with values shown
-    html += "<td>" + (overallProgress * 100).toFixed(2) + "%</td>";
+    html += "<td align='center'>" + (overallProgress * 100).toFixed(2) + "%</td>";
   }
   return html;
 }
@@ -701,12 +701,12 @@ function printCombinations(micePopulation, headerHtml) {
     tableHTML += "<tr>" + obj["link"];
     for (var j = 0; j < obj["catches"].length; j++) {
       tableHTML +=
-        "<td align='right'>" + obj["catches"][j].toFixed(2) + "</td>";
+        "<td align='center'>" + obj["catches"][j].toFixed(2) + "</td>";
     }
-    tableHTML += "<td align='right'>" + obj["cr"].toFixed(2) + "</td>";
+    tableHTML += "<td align='center'>" + obj["cr"].toFixed(2) + "</td>";
     if (rank) {
       // numbers are usually 0.00##% per hunt, but per 100 hunts is consistent with values shown
-      tableHTML += "<td>" + (obj["rank"] * 100).toFixed(2) + "%</td>";
+      tableHTML += "<td align='center'>" + (obj["rank"] * 100).toFixed(2) + "%</td>";
     }
   }
   $("#results").html(tableHTML);
