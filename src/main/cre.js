@@ -300,8 +300,8 @@ function showPop(type) {
           mouseGold += Math.ceil(Math.min(mouseGold * 0.4, 50000));
         }
 
-        var gold = catches * mouseGold / 100;
-        var points = catches * mousePoints / 100;
+        var gold = (catches * mouseGold) / 100;
+        var points = (catches * mousePoints) / 100;
         var tournamentMice = tourneysArray[tournamentName];
 
         if (tournamentMice) {
@@ -310,7 +310,7 @@ function showPop(type) {
           tourneyPoints = 0;
         }
 
-        var TP = catches * tourneyPoints / 100;
+        var TP = (catches * tourneyPoints) / 100;
         overallCR += catches;
         overallTP += TP;
         overallGold += gold;
@@ -400,7 +400,7 @@ function showPop(type) {
           // }
 
           mouseRow += "<td>" + dAmp + "%</td>";
-          deltaAmpOverall += dAmp * catches / 100;
+          deltaAmpOverall += (dAmp * catches) / 100;
         } else if (
           contains(locationName, "Iceberg") &&
           phaseName.indexOf("Lair") < 0
@@ -439,14 +439,14 @@ function showPop(type) {
             "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
 
           deltaDepthOverall +=
-            (catchRate / 100 * deltaDepthCatch +
-              (100 - catchRate) / 100 * deltaDepthFTC) *
-            attractions /
+            (((catchRate / 100) * deltaDepthCatch +
+              ((100 - catchRate) / 100) * deltaDepthFTC) *
+              attractions) /
             100;
 
           depthTest +=
-            deltaDepthCatch * catches / 100 +
-            deltaDepthFTC * (attractions - catches) / 100;
+            (deltaDepthCatch * catches) / 100 +
+            (deltaDepthFTC * (attractions - catches)) / 100;
         } else if (
           locationName.indexOf("Sunken City") >= 0 &&
           phaseName != "Docked"
@@ -459,15 +459,15 @@ function showPop(type) {
             mouseClues += 1;
           if (charmName === "Super Lantern Oil Charm" && mouseClues != 0)
             mouseClues += 2;
-          avgLanternClues += mouseClues * catches / 100;
+          avgLanternClues += (mouseClues * catches) / 100;
           mouseRow += "<td>" + mouseClues + "</td><td></td>";
         } else if (
           locationName === "Queso Geyser" &&
           phaseName === "Pressure Building"
         ) {
           var kPaGain = pressureMice[mouseName];
-          pressureOverall += kPaGain * catches / 100;
-          pressureOverallTonic += kPaGain * 2 * catches / 100;
+          pressureOverall += (kPaGain * catches) / 100;
+          pressureOverallTonic += (kPaGain * 2 * catches) / 100;
           mouseRow += "<td>" + kPaGain + "</td><td>" + kPaGain * 2 + "</td>";
         }
 
@@ -480,7 +480,7 @@ function showPop(type) {
     }
 
     overallAR *= 100;
-    var averageCR = overallCR / overallAR * 100;
+    var averageCR = (overallCR / overallAR) * 100;
 
     // Generate 'Overall Stats' row
     var statsRow;
@@ -510,7 +510,7 @@ function showPop(type) {
     }
 
     if (locationName.indexOf("Seasonal Garden") >= 0) {
-      deltaAmpOverall += (100 - overallAR) / 100 * -3; // Accounting for FTAs (-3%)
+      deltaAmpOverall += ((100 - overallAR) / 100) * -3; // Accounting for FTAs (-3%)
       resultsHTML += "<td>" + deltaAmpOverall.toFixed(2) + "%</td>";
     } else if (
       contains(locationName, "Iceberg") &&
@@ -522,11 +522,12 @@ function showPop(type) {
       locationName.indexOf("Sunken City") >= 0 &&
       phaseName != "Docked"
     ) {
-      diveMPH = 30 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
+      diveMPH = (30 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       if (charmName.indexOf("Anchor Charm") >= 0) {
-        diveMPH = 10 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
+        diveMPH = (10 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       } else if (charmName.indexOf("Water Jet Charm") >= 0) {
-        diveMPH = 500 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
+        diveMPH =
+          (500 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       }
       resultsHTML += "<td>" + diveMPH.toFixed(2) + "</td>";
     } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
@@ -537,7 +538,7 @@ function showPop(type) {
         deadEnds /= 2;
       }
       if (charmName == "Compass Magnet Charm") {
-        deadEnds -= 0.5 * overallCR / 100;
+        deadEnds = (-0.5 * overallCR) / 100;
       }
       resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
     } else if (
@@ -554,7 +555,7 @@ function showPop(type) {
 
     var cheeseEatenPerHunt = overallAR / 100;
     var cheeseStaledPerHunt =
-      (100 - overallAR) / 100 * freshness2stale[trapEff];
+      ((100 - overallAR) / 100) * freshness2stale[trapEff];
 
     // Generate gold profit row
     if (locationName !== "Event") {
