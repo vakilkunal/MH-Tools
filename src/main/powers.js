@@ -27,11 +27,6 @@ window.onload = function() {
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
-  loadBookmarkletFromJS(
-    BOOKMARKLET_URLS["powers"],
-    "powersBookmarklet",
-    "#bookmarklet"
-  );
 
   // Process best-setup-items
   const setupItems = localStorage.getItem("best-setup-items");

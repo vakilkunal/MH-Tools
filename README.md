@@ -8,34 +8,34 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
 
 ## :book: Table of Contents
 
-* [Instructions](#instructions)
-  * [General Tips](#thought_balloon-general-tips)
-  * [Bookmarklets](#bookmark-bookmarklets)
-    * [Browser Installation Tips](#-browser-installation-tips)
-    * [Chrome](#user-content-chrome)
-    * [Firefox](#user-content-firefox)
-    * [Edge / IE](#user-content-edge)
-    * [Safari](#user-content-safari)
-  * [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
-    * [Sample Size Score](#-sample-size-score)
-    * [Special Catch Rate Effects](#-special-catch-rate-effects)
-  * [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
-    * [Cheese Filters](#-cheese-filters)
-  * [Best Setup](#trophy-best-setup)
-  * [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
-  * [Crown Solver](#crown-crown-solver)
-  * [Crafting Wizard](#hammer-crafting-wizard)
-  * [Trap Setup Powers](#mag-trap-setup-powers)
-    * [Worksheet](#-worksheet)
-  * [CRE Tabs](#bookmark_tabs-cre-tabs)
-* [Developers](#developers)
-  * [Build and Run](#construction_worker-build-and-run)
-  * [Populations](#clipboard-populations)
-  * [Coding Style](#barber-coding-style)
-* [Miscellaneous](#miscellaneous)
-  * [Useful Links](#arrow_down-useful-links)
-  * [Thanks](#heart_decoration-thanks-to)
-* [License](#license)
+- [Instructions](#instructions)
+  - [General Tips](#thought_balloon-general-tips)
+  - [Bookmarklets](#bookmark-bookmarklets)
+    - [Browser Installation Tips](#-browser-installation-tips)
+    - [Chrome](#user-content-chrome)
+    - [Firefox](#user-content-firefox)
+    - [Edge / IE](#user-content-edge)
+    - [Safari](#user-content-safari)
+  - [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
+    - [Sample Size Score](#-sample-size-score)
+    - [Special Catch Rate Effects](#-special-catch-rate-effects)
+  - [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
+    - [Cheese Filters](#-cheese-filters)
+  - [Best Setup](#trophy-best-setup)
+  - [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
+  - [Crown Solver](#crown-crown-solver)
+  - [Crafting Wizard](#hammer-crafting-wizard)
+  - [Trap Setup Powers](#mag-trap-setup-powers)
+    - [Worksheet](#-worksheet)
+  - [CRE Tabs](#bookmark_tabs-cre-tabs)
+- [Developers](#developers)
+  - [Build and Run](#construction_worker-build-and-run)
+  - [Populations](#clipboard-populations)
+  - [Coding Style](#barber-coding-style)
+- [Miscellaneous](#miscellaneous)
+  - [Useful Links](#arrow_down-useful-links)
+  - [Thanks](#heart_decoration-thanks-to)
+- [License](#license)
 
 ## Instructions
 
@@ -55,7 +55,7 @@ Using the Auto-Loader is recommended because it automatically grabs the latest v
 
 You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.com/) website for these bookmarklets to work. Same-origin policy blocks access to DOM elements and requests to server endpoints while playing in Facebook's `<iframe>`.
 
-_Note:_ The process of using a bookmarklet in mobile browsers can vary. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
+_Note:_ Mobile browsers can vary in their approach to accessing bookmarklets. For example, in Chrome for Android, you must type the first few characters of a bookmarklet's name in the address bar and click it from there for the code to take effect.
 
 |    Bookmarklet    | Functionality                                                                                                                                                                                                                      |
 | :---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -73,7 +73,7 @@ _Note:_ The process of using a bookmarklet in mobile browsers can vary. For exam
 
 #### &sect; Browser Installation Tips
 
-Drag the blue bookmarklet link to your browser's bookmarks bar. If that doesn't work, try the following manual instructions. These concepts apply to other browsers (including mobile), but specific steps may vary.
+On desktop, drag the blue bookmarklet link to your browser's bookmarks bar. On mobile, first tap the corresponding clipboard icon to copy the bookmarklet code to your clipboard, then paste it into the URL field of a new bookmark. The following instructions illustrate the basic concepts for 4 major browsers - these concepts should apply to other browsers as well (including mobile), but specific steps may vary.
 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/chrome_12-48/chrome_12-48_32x32.png" alt="Chrome" id="chrome"><br>
 _Google Chrome_
@@ -140,7 +140,7 @@ _Note:_ Certain setups may have low scores or even no sample size data attached 
 
 The following special effects _are included in catch rate calculations_ for both CRE and Best Setup
 
-* Final Catch Rate Modifiers
+- Final Catch Rate Modifiers
 
   |            Name             |                                                                                                       Modifier                                                                                                       |
   | :-------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -152,7 +152,7 @@ The following special effects _are included in catch rate calculations_ for both
   |  Zugzwang's Ultimate Move   |                                                               Up to 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%                                                               |
   |     Zurreal the Eternal     |                                                                                    0% catch rate without Zurreal's Folly equipped                                                                                    |
 
-* Special Bonuses & Effects
+- Special Bonuses & Effects
 
   |            Name            |                                                                                                      Effect                                                                                                      |
   | :------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -167,7 +167,7 @@ The following special effects _are included in catch rate calculations_ for both
   |      Spellbook Charm       |                                                                         +500 Power and +8% Power Bonus when equipped with Spellbook Base                                                                         |
   |   Spooky Charm variants    |                                                                              +20% Power Bonus when equipped with Halloween weapons                                                                               |
 
-* Location Specific Effects
+- Location Specific Effects
 
   |          Location          |                                                                                                                                                           Effect                                                                                                                                                           |
   | :------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -353,18 +353,18 @@ _This is still a work in progress, along with converting the codebase to align w
 
 ### :arrow_down: Useful Links
 
-* MH Data Repository - MP/E, Gold/Points, Groups ([spreadsheet](https://docs.google.com/spreadsheets/d/1l6P9Cp2HceKSXgJKzcOy26lK_5BEAsAO9HhoiSYviTY/edit?usp=sharing))
-* Mouse Wisdom Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing))
-* New Area Mouse Powers + Effectiveness Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1pnS4UVFMUndjX2H2s6hfyf5flMcppZyhZrn8EUH23S8/edit?usp=sharing))
-* Marketplace Analyzer ([forum thread](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost))
-* Useful Userscripts ([Reddit thread](https://www.reddit.com/r/mousehunt/comments/avazpr/resource_useful_userscripts/))
-* Discord (join the [community server](https://discordapp.com/invite/Ya9zEdk))
+- MH Data Repository - MP/E, Gold/Points, Groups ([spreadsheet](https://docs.google.com/spreadsheets/d/1l6P9Cp2HceKSXgJKzcOy26lK_5BEAsAO9HhoiSYviTY/edit?usp=sharing))
+- Mouse Wisdom Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing))
+- New Area Mouse Powers + Effectiveness Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1pnS4UVFMUndjX2H2s6hfyf5flMcppZyhZrn8EUH23S8/edit?usp=sharing))
+- Marketplace Analyzer ([forum thread](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost))
+- Useful Userscripts ([Reddit thread](https://www.reddit.com/r/mousehunt/comments/avazpr/resource_useful_userscripts/))
+- Discord (join the [community server](https://discordapp.com/invite/Ya9zEdk))
 
 ### :heart_decoration: Thanks to...
 
-* Our contributors :thumbsup:
-* haoala for the [original tools](https://dl.dropboxusercontent.com/u/14589881/index.html) (no longer maintained or hosted)
-* [Start Bootstrap](https://github.com/davidtmiller) for the index.html theme
+- Our contributors :thumbsup:
+- haoala for the [original tools](https://dl.dropboxusercontent.com/u/14589881/index.html) (no longer maintained or hosted)
+- [Start Bootstrap](https://github.com/davidtmiller) for the index.html theme
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 
