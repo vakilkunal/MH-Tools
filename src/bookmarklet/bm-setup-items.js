@@ -87,8 +87,9 @@
       combinedObj["charms"] = charms;
 
       var newWindow = window.open("");
-      newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
       newWindow.name = JSON.stringify(combinedObj);
+      newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
+
     }
   });
 })();
