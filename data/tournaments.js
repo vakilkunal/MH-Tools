@@ -605,18 +605,19 @@ var tourneysArray = {
     "Treasure Brawler": 25
   },
   "Mousoleum Mastery": {
-    "Bat": 5,
-    "Black Widow": 100,
-    "Ghost": 5,
-    "Giant Snail": 10,
-    "Lycan": 8,
-    "Monster": 50,
-    "Mummy": 10,
-    "Mutated Grey": 1,
-    "Mutated White": 1,
-    "Ravenous Zombie": 10,
-    "Vampire": 50,
-    "Zombie": 5
+    "Gluttonous Zombie": 5,
+    "Zombie": 5,
+    "Ravenous Zombie": 7,
+    "Coffin Zombie": 10,
+    "Mummy": 25,
+    "Ghost": 25,
+    "Bat": 30,
+    "Giant Snail": 30,
+    "Vampire": 30,
+    "Lycan": 40,
+    "Mousevina von Vermin": 50,
+    "Monster": 70,
+    "Black Widow": 100
   },
   "Nerg Tribal Hunting": {
     "Alnilam": 15,
