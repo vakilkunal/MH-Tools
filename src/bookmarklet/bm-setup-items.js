@@ -89,7 +89,6 @@
       var newWindow = window.open("");
       newWindow.name = JSON.stringify(combinedObj);
       newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
-
     }
   });
 })();

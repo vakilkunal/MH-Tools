@@ -370,11 +370,11 @@
 
         console.groupEnd();
         var newWindow = window.open("");
+        // 200 IQ method to transfer stringified data across origins
+        newWindow.name = JSON.stringify(outputObj);
         newWindow.location =
           "https://tsitu.github.io/MH-Tools/powers-worksheet.html";
         // newWindow.location = "http://localhost:8000/powers-worksheet.html";
-        // 200 IQ method to transfer stringified data across origins
-        newWindow.name = JSON.stringify(outputObj);
       }
     });
   }
@@ -384,11 +384,11 @@
    */
   function genPayload(category) {
     return {
-      page: "Adversaries",
+      "page": "Adversaries",
       "page_arguments[tab]": "groups",
       "page_arguments[sub_tab]": "all",
       "page_arguments[category]": categories[category],
-      uh: user.unique_hash
+      "uh": user.unique_hash
     };
   }
 
