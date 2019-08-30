@@ -58,7 +58,24 @@ module.exports = {
               "Bilged Boatswain",
               "Cabin Boy",
               "Corrupt Commodore",
-              "Dashing Buccaneer"
+              "Dashing Buccaneer",
+              "Bionic",
+              "Black Widow",
+              "Brown",
+              "Burglar",
+              "Diamond",
+              "Dwarf",
+              "Fog",
+              "Gold",
+              "Granite",
+              "Grey",
+              "Magic",
+              "Pugilist",
+              "Scruffy",
+              "Silvertail",
+              "Spotted",
+              "Steel",
+              "White"
             ]
           }
         }
