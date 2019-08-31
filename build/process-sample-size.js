@@ -44,7 +44,7 @@ function AgrestiCoull(p) {
  */
 function MarginOfError(p, n) {
   // 1.96 is z for an alpha of 5%
-  return 1.96 * Math.sqrt(p * (1 - p) / n);
+  return 1.96 * Math.sqrt((p * (1 - p)) / n);
 }
 
 /**
@@ -67,7 +67,7 @@ function calculateNormalizedMoE(obj, sampleSize) {
     const percent = obj[key];
     const moe = MarginOfError(percent / 100, sampleSize) * 100;
     marginE += moe;
-    relativeE += moe / percent * 100;
+    relativeE += (moe / percent) * 100;
   }
 
   const averageM = marginE / popNum;
@@ -122,7 +122,7 @@ function calculateACScore(obj, sampleSize) {
   const idealSize = preIdeal1 + preIdeal2 / 2; // roughly 1.25x preIdeal1
 
   // Divide existing sample size into calculated 'ideal' and normalize
-  return +(sampleSize / idealSize * 25).toFixed(2);
+  return +((sampleSize / idealSize) * 25).toFixed(2);
 }
 
 /**
@@ -244,7 +244,10 @@ function parseJSON() {
     overallObj["score"] = overallSummaryAvg;
 
     // Next function called to calculate diffs from current data
-    calculateDiffs();
+    // calculateDiffs();
+
+    // Uncomment below and comment out above if build has failed and JSONs need to be rebuilt
+    outputJSON();
   });
 }
 
@@ -382,7 +385,7 @@ async function calculateDiffs() {
   // Force update raw JSON files on GitHub using Puppeteer
   const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: "google-chrome-beta"
+    executablePath: "google-chrome-stable"
   });
   const overallPage = await browser.newPage();
   const concisePage = await browser.newPage();

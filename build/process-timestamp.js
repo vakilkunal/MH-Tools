@@ -29,7 +29,7 @@
   async function fetchTimestamps(htmlUrl) {
     const browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: "google-chrome-beta"
+      executablePath: "google-chrome-stable"
       // executablePath:
       //   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
     });
