@@ -210,22 +210,19 @@ function showPop(type) {
       }
     }
 
-    if (locationName.indexOf("Seasonal Garden") >= 0) {
+    if (locationName === "Seasonal Garden") {
       headerHTML += "<th data-filter='false'>Amp %</th>";
-    } else if (locationName.indexOf("Whisker Woods Rift") >= 0) {
-      headerHTML += "<th data-filter='false'>Crazed Rage</th>";
-      headerHTML += "<th data-filter='false'>Gnarled Rage</th>";
-      headerHTML += "<th data-filter='false'>Deep Rage</th>";
+    } else if (locationName === "Whisker Woods Rift") {
+      headerHTML += "<th data-filter='false'>Crazed<br>Rage</th>";
+      headerHTML += "<th data-filter='false'>Gnarled<br>Rage</th>";
+      headerHTML += "<th data-filter='false'>Deep<br>Rage</th>";
     } else if (
       contains(locationName, "Iceberg") &&
       phaseName.indexOf("Lair") < 0
     ) {
       headerHTML +=
         "<th data-filter='false'>Catch ft</th><th data-filter='false'>FTC ft</th>";
-    } else if (
-      locationName.indexOf("Sunken City") >= 0 &&
-      phaseName !== "Docked"
-    ) {
+    } else if (locationName === "Sunken City" && phaseName !== "Docked") {
       headerHTML += "<th data-filter='false'>Meters<br>per hunt</th>";
     } else if (locationName === "Labyrinth" && phaseName !== "Intersection") {
       headerHTML +=
@@ -400,7 +397,7 @@ function showPop(type) {
           mouseRow += "<td>" + tourneyPoints + "</td>";
         }
 
-        if (locationName.indexOf("Seasonal Garden") >= 0) {
+        if (locationName === "Seasonal Garden") {
           var dAmp = deltaAmp[mouseName];
           var ampMultiplier = 1;
           if (charmName === "Amplifier Charm") ampMultiplier += 1;
@@ -418,7 +415,7 @@ function showPop(type) {
 
           mouseRow += "<td>" + dAmp + "%</td>";
           deltaAmpOverall += (dAmp * catches) / 100;
-        } else if (locationName.indexOf("Whisker Woods Rift") >= 0) {
+        } else if (locationName === "Whisker Woods Rift") {
           var crazedRageIncrease = rage_increase_table[mouseName]["Crazed"];
           var gnarledRageIncrease = rage_increase_table[mouseName]["Gnarled"];
           var deepRageIncrease = rage_increase_table[mouseName]["Deep"];
@@ -493,10 +490,7 @@ function showPop(type) {
           depthTest +=
             (deltaDepthCatch * catches) / 100 +
             (deltaDepthFTC * (attractions - catches)) / 100;
-        } else if (
-          locationName.indexOf("Sunken City") >= 0 &&
-          phaseName != "Docked"
-        ) {
+        } else if (locationName === "Sunken City" && phaseName != "Docked") {
           mouseRow += "<td></td>";
         } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
           var mouseClues = labyrinthMiceClues[mouseName];
@@ -555,10 +549,10 @@ function showPop(type) {
       resultsHTML += "<td>" + overallTP.toFixed(2) + "</td>";
     }
 
-    if (locationName.indexOf("Seasonal Garden") >= 0) {
+    if (locationName === "Seasonal Garden") {
       deltaAmpOverall += ((100 - overallAR) / 100) * -3; // Accounting for FTAs (-3%)
       resultsHTML += "<td>" + deltaAmpOverall.toFixed(2) + "%</td>";
-    } else if (locationName.indexOf("Whisker Woods Rift") >= 0) {
+    } else if (locationName === "Whisker Woods Rift") {
       resultsHTML += "<td>" + crazedRageIncreaseOverall.toFixed(2) + "</td>";
       resultsHTML += "<td>" + gnarledRageIncreaseOverall.toFixed(2) + "</td>";
       resultsHTML += "<td>" + deepRageIncreaseOverall.toFixed(2) + "</td>";
@@ -568,10 +562,7 @@ function showPop(type) {
     ) {
       resultsHTML +=
         "<td colspan='2'>" + deltaDepthOverall.toFixed(2) + " ft/hunt</td>";
-    } else if (
-      locationName.indexOf("Sunken City") >= 0 &&
-      phaseName != "Docked"
-    ) {
+    } else if (locationName === "Sunken City" && phaseName != "Docked") {
       diveMPH = (30 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       if (charmName.indexOf("Anchor Charm") >= 0) {
         diveMPH = (10 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
@@ -629,22 +620,20 @@ function showPop(type) {
     }
 
     if (
-      locationName.indexOf("Seasonal Garden") >= 0 ||
-      locationName.indexOf("Whisker Woods Rift") >= 0 ||
-      (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked")
+      locationName === "Seasonal Garden" ||
+      (locationName === "Sunken City" && phaseName != "Docked")
     ) {
       resultsHTML += "<td></td>";
     } else if (
-      contains(locationName, "Iceberg") &&
-      phaseName.indexOf("Lair") < 0
-    ) {
-      resultsHTML += "<td colspan='2'></td>";
-    } else if (
+      (contains(locationName, "Iceberg") && phaseName.indexOf("Lair") < 0) ||
       (locationName == "Labyrinth" && phaseName != "Intersection") ||
       (locationName === "Queso Geyser" && phaseName === "Pressure Building")
     ) {
-      resultsHTML += "<td></td><td></td>";
+      resultsHTML += "<td colspan='2'></td>";
+    } else if (locationName === "Whisker Woods Rift") {
+      resultsHTML += "<td colspan='3'></td>";
     }
+
     resultsHTML += "</tr>";
     results.innerHTML = resultsHTML;
 
