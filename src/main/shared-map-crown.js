@@ -496,8 +496,6 @@ function processMap(mapText, toolType) {
         catchesFromCrown = 1000 - num;
       } else if (num < 2500) {
         catchesFromCrown = 2500 - num;
-      } else if (num < 5000) {
-        catchesFromCrown = 5000 - num;
       }
     }
 
@@ -665,14 +663,14 @@ function processMap(mapText, toolType) {
                     attractionRate *
                     (baseline +
                       attractionBonus / 100 -
-                      attractionBonus / 100 * baseline);
+                      (attractionBonus / 100) * baseline);
                 } else {
                   var baseline = findBaseline(cheeseName);
                   weightedBLA[locationPhaseCheeseCharm] =
                     attractionRate *
                     (baseline +
                       attractionBonus / 100 -
-                      attractionBonus / 100 * baseline);
+                      (attractionBonus / 100) * baseline);
                 }
               } else {
                 bestLocationArray[locationPhaseCheeseCharm] += attractionRate;
@@ -686,14 +684,14 @@ function processMap(mapText, toolType) {
                     attractionRate *
                     (baseline +
                       attractionBonus / 100 -
-                      attractionBonus / 100 * baseline);
+                      (attractionBonus / 100) * baseline);
                 } else {
                   var baseline = findBaseline(cheeseName);
                   weightedBLA[locationPhaseCheeseCharm] +=
                     attractionRate *
                     (baseline +
                       attractionBonus / 100 -
-                      attractionBonus / 100 * baseline);
+                      (attractionBonus / 100) * baseline);
                 }
               }
 

@@ -1,12 +1,5 @@
 (function() {
-  var crownTypes = [
-    "Bronze",
-    "Silver",
-    "Gold",
-    "Platinum",
-    "Diamond",
-    "Master"
-  ];
+  var crownTypes = ["Bronze", "Silver", "Gold", "Platinum", "Diamond"];
 
   var crownValues = {
     // default, min, max
@@ -14,8 +7,7 @@
     Silver: [90, 10, 99],
     Gold: [400, 100, 499],
     Platinum: [750, 500, 999],
-    Diamond: [2000, 1000, 2499],
-    Master: [4000, 2500, 4999]
+    Diamond: [2000, 1000, 2499]
   };
 
   function buildUI() {
@@ -34,8 +26,7 @@
       silver: [],
       gold: [],
       platinum: [],
-      diamond: [],
-      master: []
+      diamond: []
     };
 
     // Populate 'crownData' catch stats object
@@ -63,8 +54,6 @@
           crownData["platinum"].push([mouseName, count]);
         } else if (count < 2500) {
           crownData["diamond"].push([mouseName, count]);
-        } else if (count < 5000) {
-          crownData["master"].push([mouseName, count]);
         }
       }
     }
@@ -299,8 +288,7 @@
         silver: [undefined, undefined],
         gold: [undefined, undefined],
         platinum: [undefined, undefined],
-        diamond: [undefined, undefined],
-        master: [undefined, undefined]
+        diamond: [undefined, undefined]
       };
 
       document
