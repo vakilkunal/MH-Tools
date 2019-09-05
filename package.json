@@ -48,7 +48,9 @@
     "type": "git",
     "url": "git+https://github.com/tsitu/MH-Tools.git"
   },
-  "keywords": ["MouseHunt"],
+  "keywords": [
+    "MouseHunt"
+  ],
   "bugs": {
     "url": "https://github.com/tsitu/MH-Tools/issues"
   },
@@ -60,11 +62,9 @@
     "csvtojson": "^1.1.7",
     "delayed-stream": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "npm-run-all": "^4.0.2",
     "request": "^2.83.0",
     "uglify-es": "^3.3.9",
-    "uglify-js": "^3.0.25",
-    "uglifyjs-folder": "^1.5.0"
+    "uglify-js": "^3.0.25"
   },
   "devDependencies": {
     "bluebird": "^3.5.1",
@@ -78,6 +78,8 @@
     "js-combinatorics": "^0.5.2",
     "json2csv": "^3.11.5",
     "lodash": "^4.17.4",
-    "prettier": "^1.18.2"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "uglifyjs-folder": "^1.5.1"
   }
 }
