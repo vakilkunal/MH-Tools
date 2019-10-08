@@ -54,7 +54,7 @@ var riftWeapons = [
   "Focused Crystal Laser",
   "Multi-Crystal Laser",
   "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes",
-  "Timesplit Dissonance Weapon",
+  "Timesplit Dissonance Trap",
   "Wacky Inflatable Party People Trap"
 ];
 
@@ -641,7 +641,7 @@ var weaponsArray = {
   "The Forgotten Art of Dance": ["Forgotten", 5000, 12, 6, 6, "No Effect"],
   "The Law Draw": ["Law", 1100, 5, 20, 5, "Fresh"],
   "Thorned Venus Mouse Trap": ["Tactical", 3400, 5, 2, 14, "Very Fresh"],
-  "Timesplit Dissonance Weapon": ["Rift", 3000, 10, 10, 7, "No Effect"],
+  "Timesplit Dissonance Trap": ["Rift", 3000, 10, 10, 7, "No Effect"],
   "Ultra MegaMouser MechaBot Trap": ["Physical", 2250, 5, 15, 8, "No Effect"],
   "Veiled Vine Trap": ["Tactical", 3500, 12, 0, 20, "Very Stale"],
   "Venus Mouse Trap": ["Tactical", 1900, 0, 5, 5, "Extremely Fresh"],

@@ -468,11 +468,6 @@
     urlParams["phase"] = userSublocation;
   }
 
-  // Weapon edge cases
-  if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
-    urlParams["weapon"] = "Timesplit Dissonance Weapon";
-  }
-
   // Denture Base toothlet check
   if (urlParams["base"] === "Denture Base") {
     if (
