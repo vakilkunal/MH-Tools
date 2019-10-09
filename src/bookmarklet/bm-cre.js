@@ -470,7 +470,10 @@
     if (userCheese.indexOf("SUPER|brie+") >= 0) {
       userCheese = "SB+";
     } else if (userCheese.indexOf(" Cheese") >= 0) {
-      if (contains(userCheese, "Gauntlet")) {
+      if (
+        contains(userCheese, "Gauntlet") &&
+        userCheese !== "Gauntlet String Cheese"
+      ) {
         userCheese = userCheese.slice(16, userCheese.length);
         userSublocation = userCheese;
       } else {
