@@ -383,6 +383,12 @@
       } else {
         return "No Bounty";
       }
+    } else if (userLocation === "Valour Rift") {
+      if (userQuests["QuestRiftValour"]["state"] === "farming") {
+        return "Outside";
+      } else if (userQuests["QuestRiftValour"]["state"] === "tower") {
+        return "Floor " + userQuests["QuestRiftValour"]["floor_type"];
+      }
     }
     return "N/A";
   }
