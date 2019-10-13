@@ -816,14 +816,13 @@ function loadDropdown(category, array, callback, initialHtml) {
     inputElement.value = recentCharm;
   } else {
     var paramVal = getURLParameter(category);
+    inputElement.value = paramVal;
 
     if (category === "weapon") {
       // Weapon edge cases
       if (paramVal === "Ambush Trap") {
         inputElement.value = "Ambush";
       }
-    } else {
-      inputElement.value = paramVal;
     }
   }
 
