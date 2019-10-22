@@ -34,6 +34,7 @@ var charmPower = 0,
 
 // Misc bonuses
 var gsLuck = 7,
+  ztAmp = 100,
   bonusPower = 0,
   bonusLuck = 0,
   pourBonus = 0,
