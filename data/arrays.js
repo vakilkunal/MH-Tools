@@ -396,6 +396,7 @@ var basesArray = {
   "Depth Charge Base": [450, 10, 0, 10, "No Effect"],
   "Dog Jade Base": [375, 12, 10, 10, "Stale"],
   "Dragon Jade Base": [300, 10, 0, 10, "No Effect"],
+  "Electromagnetic Meteorite Base": [350, 12, 15, 8, "Very Stale"],
   "Enerchi Induction Base": [100, 10, 0, 10, "Stale"],
   "Explosive Base": [300, 5, 5, 0, "Stale"],
   "Extra Sweet Cupcake Birthday Base": [300, 8, 8, 8, "Extremely Fresh"],
@@ -451,6 +452,7 @@ var basesArray = {
   "Tribal Base": [175, 18, 2, 0, "Fresh"],
   "Tribal Kaboom Base": [200, 18, 2, 0, "Very Fresh"],
   "Ultimate Iceberg Base": [200, 5, 10, 5, "Very Fresh"],
+  "Vegetation Base": [250, 20, 10, 5, "Fresh"],
   "Washboard Base": [250, 10, 8, 8, "Extremely Stale"],
   "Wooden Base": [35, 0, 0, 0, "Very Fresh"],
   "Wooden Base with Target": [75, 0, 20, 0, "No Effect"]
