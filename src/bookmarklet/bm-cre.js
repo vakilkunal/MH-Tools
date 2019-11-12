@@ -501,6 +501,19 @@
     }
   }
 
+  // Prestige Base highest floor check
+  if (urlParams["base"] === "Prestige Base") {
+    urlParams["umbraFloor"] = 0;
+    document
+      .querySelectorAll(".campPage-trap-trapStat-mathRow-name")
+      .forEach(el => {
+        if (el.textContent.indexOf("(Floor") >= 0)
+          urlParams["umbraFloor"] = +el.textContent
+            .split("(Floor")[1]
+            .split(")")[0];
+      });
+  }
+
   if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
     $.post(
       "https://www.mousehuntgame.com/managers/ajax/users/gettrapcomponents.php",
@@ -547,8 +560,8 @@
   }
 
   function sendData(parameters) {
-    var url = "https://tsitu.github.io/MH-Tools/cre.html?";
-    // var url = "http://localhost:8000/cre.html?";
+    // var url = "https://tsitu.github.io/MH-Tools/cre.html?";
+    var url = "http://localhost:8000/cre.html?";
 
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);

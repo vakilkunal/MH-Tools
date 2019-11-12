@@ -63,6 +63,7 @@ var riftBases = [
   "Enerchi Induction Base",
   "Fissure Base",
   "Fracture Base",
+  "Prestige Base",
   "Rift Base"
 ];
 

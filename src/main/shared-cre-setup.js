@@ -43,7 +43,9 @@ var gsLuck = 7,
   cheeseBonus = 0,
   cheeseCost = 0,
   subtotalPowerBonus = 0,
-  tauntBonus = 0;
+  tauntBonus = 0,
+  saltLevel = 0,
+  umbraFloor = 0;
 
 // Total trap stats
 var trapPower = 0,
@@ -66,16 +68,11 @@ var baseName = "",
   recentCharm = "",
   recentCheese = "";
 
-/**
- * Initialize Fort Rox ballista and cannon levels
- */
+// Initialize Fort Rox Ballista and Cannon levels
 var fortRox = {
   ballistaLevel: 0,
   cannonLevel: 0
 };
-
-// Initialize Sand Crypts salt level
-var saltLevel = 0;
 
 /**
  * Returns the size of an object based on its length or number of keys
@@ -243,6 +240,8 @@ function calculateTrapSetup(skipDisp) {
       golemCharge = parseFloat((golemCharge / 100).toFixed(3));
       calcGolemStats(golemCharge);
     }
+
+    if (baseName === "Prestige Base") calcPrestigeStats();
 
     // Handle special bonuses that are based on location
     locationSpecificEffects();
@@ -634,6 +633,10 @@ function sandCryptsParamCheck() {
   updateInputFromParameter("saltLevel", saltChanged);
 }
 
+function valourRiftParamCheck() {
+  updateInputFromParameter("umbraFloor", umbraChanged);
+}
+
 function getRankKey() {
   return "rank-" + user;
 }
@@ -873,6 +876,11 @@ function gsChanged() {
 
 function saltChanged() {
   saltLevel = document.getElementById("saltLevel").value;
+  genericOnChange();
+}
+
+function umbraChanged() {
+  umbraFloor = document.getElementById("umbraFloor").value;
   genericOnChange();
 }
 
@@ -1459,6 +1467,7 @@ function checkLoadState(type) {
     riftstalkerParamCheck();
     fortRoxParamCheck();
     sandCryptsParamCheck();
+    valourRiftParamCheck();
     rankParamCheck();
     golemParamCheck();
 
@@ -1644,4 +1653,16 @@ function calcSaltedPower(type, mousePower) {
   }
 
   return saltedPower;
+}
+
+/**
+ * Calculate Prestige Base bonus stats
+ * @param {number} umbraFloor Highest Umbra Floor reached (0-200)
+ */
+function calcPrestigeStats() {
+  // Initial: 490 Power, 20% Power Bonus, 0% Attraction Bonus, 5 Luck, No Effect
+  if (umbraFloor > 0 && umbraFloor <= 200) {
+    basePower = 490 + umbraFloor * 10;
+    baseLuck = 5 + Math.floor((umbraFloor - 1) / 8);
+  }
 }
