@@ -576,7 +576,11 @@ function showPop(type) {
       resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
       var deadEnds = (overallAR - overallCR) / 100;
       // Assuming 50% proc rates
-      if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") {
+      if (
+        baseName == "Minotaur Base" ||
+        baseName == "Labyrinth Base" ||
+        baseName == "Treasure Seeker Base"
+      ) {
         deadEnds /= 2;
       }
       if (charmName == "Compass Magnet Charm") {
