@@ -911,6 +911,7 @@ var festiveTraps = [
   "Christmas Crystalabra Trap",
   "Double Diamond Adventure",
   "Explosive Toboggan Ride",
+  "Father Winter's Timepiece Trap",
   "Festive Forgotten Fir Trap",
   "Festive Gauntlet Crusher",
   "Gingerbread House Surprise",
@@ -926,22 +927,26 @@ var festiveTraps = [
   "Ice Blaster",
   "Infinite Winter Horizon Trap",
   "Nutcracker Nuisance Trap",
+  "Rift Glacier Gatler",
   "Snow Barrage",
   "Snowglobe Trap",
   "Wrapped Gift Trap"
 ];
 
-/**
- * Weapons that interact with Spooky Charms to give 20% power bonus
- * Notable weapons without this bonus:
- *  Haunted Shipwreck, Pumpkin Pummeler, (Maniacal) Brain Extractor
- *  Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
- */
+// Weapons that interact with Spooky Charms to give 20% power bonus
 var halloweenTraps = [
   "Admiral's Galleon Trap",
+  "Brain Extractor",
+  "Cackle Lantern Trap",
   "Candy Crusher Trap",
   "Cemetery Gate Grappler",
-  "Sandcastle Shard Trap"
+  "Haunted Shipwreck Trap",
+  "Maniacal Brain Extractor",
+  "Pumpkin Pummeler",
+  "Sandcastle Shard Trap",
+  "Soul Catcher",
+  "Soul Harvester",
+  "Terrifying Spider Trap"
 ];
 
 var wereMice = [
