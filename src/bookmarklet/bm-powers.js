@@ -234,7 +234,7 @@
           outputObj["user-data"]["empowered"] = true;
         }
 
-        var userLocation = user.location;
+        var userLocation = user.environment_name;
         var userQuests = user.quests;
         if (userLocation === "Furoma Rift") {
           var chargeLevel =

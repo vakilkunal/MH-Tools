@@ -221,7 +221,7 @@
     const locationEl = document.querySelector(".mousehuntHud-environmentName");
     if (locationEl && !locationEl.onclick) {
       locationEl.onclick = function() {
-        const locationName = user.location;
+        const locationName = user.environment_name;
         var newWindow = window.open("");
         newWindow.location = `https://mhwiki.hitgrab.com/wiki/index.php/${locationName.replace(
           " ",
