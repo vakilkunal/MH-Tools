@@ -218,7 +218,7 @@
    * Adds a click handler to HUD location name that opens corresponding MHWiki link
    */
   function locationQuickWiki() {
-    const locationEl = document.querySelector(".mousehuntHud-environmentName");
+    const locationEl = document.querySelector(".mousehuntHud-environmentIcon");
     if (locationEl && !locationEl.onclick) {
       locationEl.onclick = function() {
         const locationName = user.environment_name;
