@@ -726,7 +726,6 @@ function updateLink() {
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
     saltLevel: saltLevel,
-    umbraFloor: umbraFloor,
     rank: rank,
     amplifier: ztAmp
   };
@@ -885,6 +884,12 @@ function baseChanged() {
   // Certain bases have special effects when paired with particular charms
   charmChangeCommon();
   calculateTrapSetup();
+
+  // Handle Prestige Base input
+  $("#prestige-umbra-floor").hide();
+  if (baseName === "Prestige Base") {
+    $("#prestige-umbra-floor").show(500);
+  }
 }
 
 function charmChanged() {

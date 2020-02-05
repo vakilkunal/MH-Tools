@@ -635,6 +635,8 @@ function sandCryptsParamCheck() {
 
 function valourRiftParamCheck() {
   updateInputFromParameter("umbraFloor", umbraChanged);
+  umbraFloor = parseInt(localStorage.getItem("tsitu-umbra-floor")) || 0;
+  $("#umbraFloor").val(umbraFloor);
 }
 
 function getRankKey() {
@@ -881,6 +883,7 @@ function saltChanged() {
 
 function umbraChanged() {
   umbraFloor = document.getElementById("umbraFloor").value;
+  localStorage.setItem("tsitu-umbra-floor", umbraFloor);
   genericOnChange();
 }
 
@@ -1061,9 +1064,9 @@ function genericOnChange() {
 }
 
 /**
- * Update a text input's value from a url paramter
- * @param {string} category The input id and url parameter
- * @param {function()} callback
+ * Update a text input's value from a URL parameter
+ * @param {string} category Input ID / URL parameter
+ * @param {function} callback Callback function - usually ends in Change()
  */
 function updateInputFromParameter(category, callback) {
   var parameter = getURLParameter(category);

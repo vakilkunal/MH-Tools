@@ -417,7 +417,6 @@ function updateLink() {
     ballistaLevel: fortRox.ballistaLevel,
     cannonLevel: fortRox.cannonLevel,
     saltLevel: saltLevel,
-    umbraFloor: umbraFloor,
     rank: rank,
     amplifier: ztAmp
   };
@@ -794,7 +793,6 @@ function getCRELinkElement() {
       ballistaLevel: fortRox.ballistaLevel,
       cannonLevel: fortRox.cannonLevel,
       saltLevel: saltLevel,
-      umbraFloor: umbraFloor,
       rank: rank,
       amplifier: ztAmp
     };
