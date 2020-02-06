@@ -376,7 +376,22 @@
       if (userQuests["QuestRiftValour"]["state"] === "farming") {
         return "Outside";
       } else if (userQuests["QuestRiftValour"]["state"] === "tower") {
-        return "Floor " + userQuests["QuestRiftValour"]["floor_type"];
+        var vrFloorType = userQuests["QuestRiftValour"]["floor_type"];
+        urlParams["vrFloorType"] =
+          vrFloorType >= 1 && vrFloorType <= 7 ? vrFloorType - 1 : 0;
+
+        var floorNum = userQuests["QuestRiftValour"]["floor"] || 1;
+        var floorStr = userQuests["QuestRiftValour"]["is_eclipse_mode"]
+          ? "Umbra "
+          : "";
+
+        if (floorNum % 8 === 0) floorStr += "Eclipse";
+        else if (floorNum <= 7) floorStr += "Floors 1-7";
+        else if (floorNum <= 15) floorStr += "Floors 9-15";
+        else if (floorNum <= 23) floorStr += "Floors 17-23";
+        else if (floorNum >= 25) floorStr += "Floors 25-31+";
+
+        return floorStr;
       }
     }
     return "N/A";
@@ -392,16 +407,44 @@
    */
   function findUserRank() {
     var userRank = user["title_name"];
-    if (userRank === "Archduke" || userRank === "Archduchess")
+
+    if (
+      userRank.indexOf("Archduke") >= 0 ||
+      userRank.indexOf("Archduchess") >= 0
+    ) {
       return "archduke";
-    if (userRank === "Grand Duke" || userRank === "Grand Duchess")
+    }
+
+    if (
+      userRank.indexOf("Grand Duke") >= 0 ||
+      userRank.indexOf("Grand Duchess") >= 0
+    ) {
       return "grandduke";
-    if (userRank === "Duke" || userRank === "Duchess") return "duke";
-    if (userRank === "Count" || userRank === "Countess") return "count";
-    if (userRank === "Baron" || userRank === "Baroness") return "baron";
-    if (userRank === "Lord" || userRank === "Lady") return "lord";
-    if (userRank === "Journeyman" || userRank === "Journeywoman")
+    }
+
+    if (userRank.indexOf("Duke") >= 0 || userRank.indexOf("Duchess") >= 0) {
+      return "duke";
+    }
+
+    if (userRank.indexOf("Count") >= 0 || userRank.indexOf("Countess") >= 0) {
+      return "count";
+    }
+
+    if (userRank.indexOf("Baron") >= 0 || userRank.indexOf("Baroness") >= 0) {
+      return "baron";
+    }
+
+    if (userRank.indexOf("Lord") >= 0 || userRank.indexOf("Lady") >= 0) {
+      return "lord";
+    }
+
+    if (
+      userRank.indexOf("Journeyman") >= 0 ||
+      userRank.indexOf("Journeywoman") >= 0
+    ) {
       return "journeyman";
+    }
+
     return userRank.toLowerCase();
   }
 
