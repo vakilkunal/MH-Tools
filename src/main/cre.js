@@ -60,6 +60,7 @@ window.onload = function() {
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
   document.getElementById("saltLevel").onchange = saltChanged;
+  document.getElementById("vrFloorType").onchange = genericOnChange;
   document.getElementById("umbraFloor").onchange = umbraChanged;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
   document.getElementById("rank").onchange = rankChange;
@@ -202,9 +203,9 @@ function showPop(type) {
       headerHTML += "<th data-filter='false'>Catches</th>";
       headerHTML += "<th data-filter='false'>Gold</th>";
       headerHTML += "<th data-filter='false'>Points</th>";
-      headerHTML += "<th data-filter='false'>Min.<br>Luck</th>";
+      headerHTML += "<th data-filter='false'>Min<br>Luck</th>";
       if (rank) {
-        headerHTML += "<th data-filter='false'>Rank<br>Adv.</th>";
+        headerHTML += "<th data-filter='false'>Rank<br>Adv</th>";
       }
       if (tournamentName !== "") {
         headerHTML += "<th data-filter='false'>Tourney<br>Points</th>";
@@ -284,6 +285,8 @@ function showPop(type) {
       var mouseName = miceNames[i];
 
       if (mouseName !== "SampleSize") {
+        var attractions = popArrayLC[mouseName] * overallAR;
+        mouseName = dynamicMouseRename(mouseName);
         var eff = findEff(mouseName);
         var mousePower = powersArray[mouseName][0];
 
@@ -299,7 +302,7 @@ function showPop(type) {
         catchRate = calcCRMods(catchRate, mouseName);
         var minLuckValue = minLuck(eff, mousePower);
         minLuckOverall = Math.max(minLuckValue, minLuckOverall);
-        var attractions = popArrayLC[mouseName] * overallAR;
+
         var catches = attractions * catchRate;
         var mouseRewards = miceArray[mouseName] || [0, 0];
         var mouseGold = mouseRewards[0];
@@ -682,20 +685,17 @@ function loadCheeseDropdown(locationName, phaseName) {
 
 function loadTourneyDropdown() {
   var tourneyDropdown = document.getElementById("tourney");
-
   var tourneyDropdownHTML = "<option></option>";
-
   var tourneys = Object.keys(tourneysArray || []);
+
   for (var key in tourneys) {
     tourneyDropdownHTML += "<option>" + tourneys[key] + "</option>\n";
   }
-
   tourneyDropdown.innerHTML = tourneyDropdownHTML;
 
   var tourneyParameter = getURLParameter("tourney");
   if (tourneyParameter !== NULL_URL_PARAM) {
     var select = document.getElementById("tourney");
-    // TODO: Improve
     for (var i = 0; i < select.children.length; i++) {
       var child = select.children[i];
       if (child.innerHTML === tourneyParameter) {
@@ -727,7 +727,8 @@ function updateLink() {
     cannonLevel: fortRox.cannonLevel,
     saltLevel: saltLevel,
     rank: rank,
-    amplifier: ztAmp
+    amplifier: ztAmp,
+    vrFloorType: document.querySelector("#vrFloorType").selectedIndex
   };
   var URLString = buildURL("cre.html", urlParams);
   document.getElementById("link").href = URLString;

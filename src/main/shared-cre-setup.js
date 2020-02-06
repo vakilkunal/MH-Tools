@@ -91,10 +91,17 @@ function commafy(x) {
   return x.toLocaleString();
 }
 
+/**
+ * Checks for existence of search element in an array or string
+ */
 function contains(arrayOrString, searchElement) {
   return arrayOrString.indexOf(searchElement) > -1;
 }
 
+/**
+ * Special charm bonus calculations
+ * @param {string} charmName
+ */
 function calcSpecialCharms(charmName) {
   populateCharmData(charmName); // Resets charm globals
   if (charmName === "Champion Charm") {
@@ -164,7 +171,7 @@ function getURLParameter(name) {
  *  - NB: Always test this with Toxic Spill sublocations if it is changed
  * @param {string} location
  * @param {string[]} urlParams
- * @returns {string}
+ * @return {string}
  */
 function buildURL(location, urlParams) {
   var url = location + "?";
@@ -177,6 +184,11 @@ function buildURL(location, urlParams) {
   return url;
 }
 
+/**
+ * Checks if specified charm is part of the Rift set
+ * @param {string} charmName
+ * @return {boolean}
+ */
 function isRiftCharm(charmName) {
   return (
     contains(riftCharms, charmName) || contains(charmName.toLowerCase(), "rift")
@@ -184,10 +196,10 @@ function isRiftCharm(charmName) {
 }
 
 /**
- * Gets the number of rift items
- * @param {string} weapon Weapon Name
- * @param {string} base Base Name
- * @param {string} charm Charm Name
+ * Counts the number of Rift items
+ * @param {string} weapon
+ * @param {string} base
+ * @param {string} charm
  * @return {number}
  */
 function getRiftCount(weapon, base, charm) {
@@ -505,9 +517,6 @@ function calculateTrapSetup(skipDisp) {
     specialLuck += batteryExtras[1];
   }
 
-  /**
-   * Get power type
-   */
   function getPowerType(charm, weapon) {
     var charmPowerTypes = {
       "Forgotten Charm": "Forgotten",
@@ -528,13 +537,13 @@ function calculateTrapSetup(skipDisp) {
 }
 
 /**
- * Catch Rate calculation
+ * Master catch rate formula
  * Source: https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/
  * @param {number} effectiveness Trap power effectiveness
  * @param {number} trapPower Trap power
  * @param {number} trapLuck Trap luck
  * @param {number} mousePower Mouse power
- * @returns {number} Catch Rate Estimate: Number between 0 and 1
+ * @return {number} Catch Rate Estimate: Number between 0 and 1
  */
 function calcCR(effectiveness, trapPower, trapLuck, mousePower) {
   var catchRate =
@@ -559,6 +568,9 @@ function minLuck(effectiveness, mousePower) {
   return Math.ceil(Math.sqrt(minLuckSquared));
 }
 
+/**
+ * Furoma Rift battery change handler
+ */
 function batteryChanged() {
   var batteryLevel = document.getElementById("battery").value;
   batteryPower = parseInt(batteryLevel) || 0;
@@ -574,7 +586,7 @@ function batteryChanged() {
 /**
  * Returns effectiveness of current power type against a mouse.
  * @param {string} mouseName
- * @returns {number}
+ * @return {number}
  */
 function findEff(mouseName) {
   if (trapType === "") {
@@ -585,15 +597,26 @@ function findEff(mouseName) {
   }
 }
 
+/**
+ * Returns baseline attraction rate for a given cheese
+ * @param {string} cheese
+ * @return {float}
+ */
 function findBaselineAttraction(cheese) {
   return baselineAttArray[cheese];
 }
 
+/**
+ * Calculates final attraction rate
+ */
 function getCheeseAttraction() {
   var baselineAtt = findBaselineAttraction(cheeseName);
   return baselineAtt + trapAtt / 100 - (trapAtt / 100) * baselineAtt;
 }
 
+/**
+ * Golden Shield change handler
+ */
 function gsParamCheck() {
   var gsParameter = getURLParameter("gs");
   if (gsParameter !== NULL_URL_PARAM) {
@@ -603,7 +626,6 @@ function gsParamCheck() {
   }
 }
 
-// Riftstalker effect handling
 function getRiftstalkerKey() {
   return "riftstalker-" + user;
 }
@@ -634,9 +656,16 @@ function sandCryptsParamCheck() {
 }
 
 function valourRiftParamCheck() {
+  // Highest Umbra Floor check (for Prestige Base)
   updateInputFromParameter("umbraFloor", umbraChanged);
   umbraFloor = parseInt(localStorage.getItem("tsitu-umbra-floor")) || 0;
   $("#umbraFloor").val(umbraFloor);
+
+  // Floor Type check (for populations)
+  var floorType = getURLParameter("vrFloorType");
+  if (floorType !== NULL_URL_PARAM) {
+    document.querySelector("#vrFloorType").selectedIndex = floorType;
+  }
 }
 
 function getRankKey() {
@@ -1668,4 +1697,42 @@ function calcPrestigeStats() {
     basePower = 490 + umbraFloor * 10;
     baseLuck = 5 + Math.floor((umbraFloor - 1) / 8);
   }
+}
+
+/**
+ * Rename generic placeholders with precise mouse names based on variables & inputs
+ * @param {string} mouseName
+ */
+function dynamicMouseRename(mouseName) {
+  var returnName = mouseName;
+
+  if (locationName === "Valour Rift") {
+    var floorNormal = [
+      "Puppetto",
+      "Cutpurse",
+      "Martial",
+      "One-Mouse Band",
+      "Mouse of Elements",
+      "Cursed Crusader",
+      "Withered Remains"
+    ];
+
+    var floorChamp = [
+      "Puppet Champion",
+      "Champion Thief",
+      "Praetorian Champion",
+      "Champion Danseuse",
+      "Magic Champion",
+      "Fallen Champion Footman",
+      "Arch Champion Necromancer"
+    ];
+
+    var floorTypeIndex =
+      document.querySelector("#vrFloorType").selectedIndex || 0;
+
+    if (mouseName === "Floor Basic") returnName = floorNormal[floorTypeIndex];
+    if (mouseName === "Floor Champion") returnName = floorChamp[floorTypeIndex];
+  }
+
+  return returnName;
 }

@@ -53,6 +53,7 @@ $(window).load(function() {
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
   document.getElementById("saltLevel").onchange = saltChanged;
+  document.getElementById("vrFloorType").onchange = genericOnChange;
   document.getElementById("umbraFloor").onchange = umbraChanged;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
   document.getElementById("rank").onchange = rankChange;
@@ -418,7 +419,8 @@ function updateLink() {
     cannonLevel: fortRox.cannonLevel,
     saltLevel: saltLevel,
     rank: rank,
-    amplifier: ztAmp
+    amplifier: ztAmp,
+    vrFloorType: document.querySelector("#vrFloorType").selectedIndex
   };
 
   var urlString = buildURL("setup.html", urlParams);
@@ -502,17 +504,25 @@ function showPop() {
 /**
  * Get mouse population for current location/phase/cheese and the selected charm
  * @param {string} selectedCharm
- * @return Mouse Populations
+ * @return Mouse population object (name -> AR)
  */
 function getPopulation(selectedCharm) {
   var popArrayLPC = popArray[locationName][phaseName][cheeseName];
-  var retArray = popArrayLPC[selectedCharm]
+  var charmObj = popArrayLPC[selectedCharm]
     ? popArrayLPC[selectedCharm]
     : popArrayLPC["-"];
+  var returnObj = {};
 
   // Trim the extra "SampleSize" element
-  delete retArray["SampleSize"];
-  return retArray;
+  delete charmObj["SampleSize"];
+
+  // Handle dynamic mouse name conversion
+  Object.keys(charmObj).forEach(function(mouse) {
+    var dynMouse = dynamicMouseRename(mouse);
+    returnObj[dynMouse] = charmObj[mouse];
+  });
+
+  return returnObj;
 }
 
 /**
@@ -794,10 +804,11 @@ function getCRELinkElement() {
       cannonLevel: fortRox.cannonLevel,
       saltLevel: saltLevel,
       rank: rank,
-      amplifier: ztAmp
+      amplifier: ztAmp,
+      vrFloorType: document.querySelector("#vrFloorType").selectedIndex
     };
     var urlString = buildURL("cre.html", urlParams);
-    urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
+    urlString = urlString.replace(/'/g, "%27");
     return urlString;
   }
 }

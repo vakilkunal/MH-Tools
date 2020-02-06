@@ -27,6 +27,7 @@
     "pop:queso": "node data/pop queso-river > data/pop-csv/queso-river.csv",
     "pop:ronza": "node data/pop ronza > data/pop-csv/ronza.csv",
     "pop:toxic": "node data/pop toxic-spill > data/pop-csv/toxic-spill.csv",
+    "pop:vrift": "node data/pop valour-rift > data/pop-csv/valour-rift.csv",
     "pop:warpath": "node data/pop warpath > data/pop-csv/fiery-warpath.csv",
     "pop": "npm-run-all --parallel pop:*",
     "\n-- MINIFICATION --": "",
