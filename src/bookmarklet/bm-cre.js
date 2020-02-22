@@ -557,6 +557,12 @@
       });
   }
 
+  // Golem Guardian skin module check
+  if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
+    urlParams["weapon"] =
+      "Golem Guardian " + user["trap_power_type_name"] + " Trap";
+  }
+
   if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
     $.post(
       "https://www.mousehuntgame.com/managers/ajax/users/gettrapcomponents.php",
