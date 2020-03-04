@@ -140,6 +140,10 @@ function calcSpecialCharms(charmName) {
     if (contains(halloweenTraps, weaponName)) {
       charmBonus += 20;
     }
+  } else if (charmName.indexOf("Party Charm") >= 0) {
+    if (contains(birthdayTraps, weaponName)) {
+      charmBonus += 20;
+    }
   }
 
   if (user === CRE_USER) {

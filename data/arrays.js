@@ -380,6 +380,7 @@ var basesArray = {
   "Bamboozler Base": [200, 10, 5, 0, "Very Fresh"],
   "Birthday Banana Cake Base": [300, 11, 11, 11, "Fresh"],
   "Birthday Cake Base": [175, 11, 5, 0, "No Effect"],
+  "Birthday Confetti Cake Base": [300, 12, 12, 10, "Extremely Fresh"],
   "Birthday Drag\xE9e Cake Base": [175, 5, 15, 6, "Very Fresh"],
   "Black Widow Base": [100, 10, 10, 10, "No Effect"],
   "Bronze Tournament Base": [300, 5, 3, 5, "Fresh"],
@@ -607,6 +608,7 @@ var weaponsArray = {
   "Phantasmic Oasis Trap": ["Hydro", 5850, 15, 20, 26, "No Effect"],
   "Pneumatic Tube Trap": ["Physical", 2300, 20, 5, 18, "No Effect"],
   "Pumpkin Pummeler": ["Shadow", 1150, 5, 10, 5, "Fresh"],
+  "Queso Factory Trap": ["Law", 2000, 12, 30, 5, "Extremely Fresh"],
   "Queso Fount Trap": ["Hydro", 11000, 30, 10, 25, "Stale"],
   "Reaper's Perch": ["Shadow", 3300, 10, 5, 16, "Stale"],
   "Rewers Riposte": ["Tactical", 2900, 15, 5, 25, "Fresh"],
@@ -722,6 +724,7 @@ var charmsArray = {
   "Extreme Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Extreme Power Charm": [600, 5, 0, 0, "No Effect"],
   "Extreme Queso Pump Charm": [100, 10, 10, 8, "Very Fresh"],
+  "Extreme Party Charm": [0, 12, 0, 12, "No Effect"],
   "Extreme Regal Charm": [2000, 0, 75, 8, "No Effect"],
   "Extreme Snowball Charm": [400, 4, 4, 8, "No Effect"],
   "Extreme Spooky Charm": [400, 4, 4, 8, "No Effect"],
@@ -842,6 +845,7 @@ var charmsArray = {
   "Super Lantern Oil Charm": [300, 5, 5, 3, "Very Fresh"],
   "Super Luck Charm": [0, 0, 0, 3, "No Effect"],
   "Super Nightshade Farming Charm": [300, 3, 2, 1, "Fresh"],
+  "Super Party Charm": [0, 6, 0, 6, "No Effect"],
   "Super Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Super Power Charm": [360, 3, 0, 0, "No Effect"],
   "Super Queso Pump Charm": [50, 5, 5, 5, "Very Fresh"],
@@ -874,6 +878,7 @@ var charmsArray = {
   "Ultimate Luck Charm": [0, 0, 0, 20, "No Effect"],
   "Ultimate Lucky Power Charm": [2400, 20, 0, 20, "No Effect"],
   "Ultimate Polluted Charm": [0, 0, 0, 0, "No Effect"],
+  "Ultimate Party Charm": [0, 24, 0, 30, "No Effect"],
   "Ultimate Power Charm": [2400, 20, 0, 0, "No Effect"],
   "Ultimate Snowball Charm": [800, 8, 8, 20, "No Effect"],
   "Ultimate Spooky Charm": [800, 8, 8, 20, "No Effect"],
@@ -948,6 +953,25 @@ var halloweenTraps = [
   "Soul Catcher",
   "Soul Harvester",
   "Terrifying Spider Trap"
+];
+
+// Weapons that interact with Party Charms to give 20% power bonus
+var birthdayTraps = [
+  "Anniversary Ambush",
+  "Anniversary Ancient Box Trap",
+  "Anniversary Arcane Capturing Rod Of Never Yielding Mystery",
+  "Anniversary DeathBot",
+  "Anniversary Reaper's Perch",
+  "Birthday Candle Kaboom",
+  "Birthday Party Pi\xF1ata Bonanza",
+  "Bubbles: The Party Crasher Trap",
+  "Nannybot",
+  "Queso Factory Trap",
+  "Sprinkly Cupcake Surprise Trap",
+  "Stale Cupcake Golem Trap",
+  "Surprise Party Trap",
+  "Ultra MegaMouser MechaBot Trap",
+  "Wacky Inflatable Party People Trap"
 ];
 
 var wereMice = [

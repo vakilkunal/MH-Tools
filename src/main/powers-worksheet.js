@@ -613,7 +613,9 @@ function processInput(inputText) {
     (user.charm.indexOf("Snowball Charm") > -1 &&
       festiveTraps.indexOf(user.weapon) > -1) ||
     (user.charm.indexOf("Spooky Charm") > -1 &&
-      halloweenTraps.indexOf(user.weapon) > -1)
+      halloweenTraps.indexOf(user.weapon) > -1) ||
+    (user.charm.indexOf("Party Charm") > -1 &&
+      birthdayTraps.indexOf(user.weapon) > -1)
       ? 20
       : 0;
 
