@@ -218,10 +218,13 @@
    * Adds a click handler to HUD location name that opens corresponding MHWiki link
    */
   function locationQuickWiki() {
-    const locationEl = document.querySelector(".mousehuntHud-environmentIcon");
+    var locationEl = document.querySelector(".mousehuntHud-environmentIcon");
     if (locationEl && !locationEl.onclick) {
       locationEl.onclick = function() {
-        const locationName = user.environment_name;
+        var locationName = user.environment_name;
+        if (locationName === "SUPER|brie+ Factory") {
+          locationName = "MouseHunt_Birthday"; // SB+ Factory workaround
+        }
         var newWindow = window.open("");
         newWindow.location = `https://mhwiki.hitgrab.com/wiki/index.php/${locationName.replace(
           " ",
