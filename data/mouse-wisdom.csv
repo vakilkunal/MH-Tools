@@ -53,7 +53,7 @@ Big Bad Burroughs,2270
 Bilged Boatswain,35
 Biohazard,12800
 Bionic,60
-Birthday,90
+Birthday,135
 Bitter Root,5000
 Black Diamond Racer,3600
 Black Mage,444
@@ -70,7 +70,7 @@ Bottom Feeder,3056
 Boulder Biter,7700
 Bounty Hunter,950
 Brawny,3600
-Breakdancer,225
+Breakdancer,664
 Breeze Borrower,4800
 Briegull,36
 Brimstone,1120
@@ -78,7 +78,7 @@ Brown,35
 Bruticle,2484
 "Bruticus, the Blazing",13500
 Buccaneer,429
-Buckethead,90
+Buckethead,255
 Builder,750
 Bulwark of Ascent,12000
 Burglar,142
@@ -112,7 +112,7 @@ Champion,1380
 Champion Danseuse,15000
 Champion Thief,15000
 Charming Chimer,6300
-Cheesy Party,150
+Cheesy Party,300
 Cherry,900
 Cherry Sprite,20000
 Chess Master,17940
@@ -193,10 +193,10 @@ Crystal Observer,18000
 Crystal Queen,16400
 Crystalback,12200
 Crystalline Slasher,10000
-Cupcake Camo,375
-Cupcake Candle Thief,150
-Cupcake Cutie,600
-Cupcake Runner,300
+Cupcake Camo,1155
+Cupcake Candle Thief,630
+Cupcake Cutie,1050
+Cupcake Runner,735
 Cupid,88
 Curious Chemist,240
 Cursed,1000
@@ -215,7 +215,7 @@ Cyborg,10800
 Cycloness,7500
 Cyclops,280
 Cyclops Barbarian,50000
-Dance Party,150
+Dance Party,630
 Dancer,290
 Dancing Assassin,18000
 Dangerous Duo,1200
@@ -243,7 +243,7 @@ Desperado,1425
 Destructoy,1890
 Diamond,180
 Diamondhide,58000
-Dinosuit,210
+Dinosuit,213
 Dire Lycan,1000
 Dirt Thing,9900
 Dojo Sensei,2867
@@ -270,7 +270,7 @@ Egg Scrambler,500
 Eggscavator,975
 Eggsplosive Scientist,930
 Eggsquisite Entertainer,330
-El Flamenco,750
+El Flamenco,1890
 Elder,1141
 Elf,1985
 Elite Guardian,4080
@@ -296,7 +296,7 @@ Excitable Electric,4600
 Exo-Tech,10000
 Explorator,825
 Extreme Everysports,500
-Factory Technician,500
+Factory Technician,7050
 Fairy,578
 Fall Familiar,1491
 Fallen Champion Footman,15000
@@ -304,6 +304,7 @@ Falling Carpet,1470
 Farmhand,100
 Farrier,750
 Fencer,30
+Fete Fromager,1470
 Fetid Swamp,2083
 Fiddler,409
 Field,40
@@ -320,11 +321,11 @@ Flutterby,1800
 Fluttering Flutist,7200
 Flying,50
 Fog,80
-Force Fighter Blue,275
-Force Fighter Green,300
-Force Fighter Pink,300
-Force Fighter Red,275
-Force Fighter Yellow,275
+Force Fighter Blue,525
+Force Fighter Green,1260
+Force Fighter Pink,1050
+Force Fighter Red,840
+Force Fighter Yellow,1050
 Forever Alone,180
 Foxy,165
 Free Skiing,2625
@@ -615,7 +616,7 @@ Page,35
 Paladin,2520
 Paladin Weapon Master,70000
 Pan Slammer,1080
-Para Para Dancer,330
+Para Para Dancer,1050
 Parlour Player,825
 Party Head,200
 Passenger,250
@@ -629,7 +630,7 @@ Phase Zombie,6200
 Photographer,400
 Pie Thief,1238
 Pinchy,35
-Pintail,120
+Pintail,255
 Pirate,35
 Pirate Anchor,5472
 Plague Hag,9200
@@ -643,7 +644,7 @@ Portal Plunderer,7000
 Portal Pursuer,4000
 Possessed Armaments,16635
 Praetorian Champion,15000
-Present,135
+Present,129
 Prestigious Adventurer,33230
 Primal,1645
 Princess Fist,3450
@@ -677,7 +678,7 @@ Rambunctious Rain Rumbler,9000
 Rancid Bog Beast,10000
 Ravenous Zombie,475
 Raw Diamond,12000
-Reality Restitch,1200
+Reality Restitch,840
 Realm Ripper,450
 Reanimated Carver,13500
 Reaper,870
@@ -755,8 +756,8 @@ Shelder,260
 Shinobi,6000
 Shipwrecked,210
 Shopkeeper,400
-Shorts-All-Year,6000
 Shortcut,800
+Shorts-All-Year,6000
 Shroom,2500
 Silth,2545
 Silvertail,120
@@ -768,7 +769,7 @@ Skeletal Champion,2000
 Skeleton,240
 Slay Ride,6000
 Slayer,1046
-Sleepwalker,130
+Sleepwalker,255
 Sleepy Merchant,3750
 Slimefist,22000
 Slope Swimmer,550
@@ -829,7 +830,7 @@ Sporty Ski Instructor,1890
 Spotted,40
 Spring Familiar,1361
 Spring Sprig,800
-Sprinkly Sweet Cupcake Cook,650
+Sprinkly Sweet Cupcake Cook,1680
 Spud,50
 Squeaken,553
 Squeaker Bot,60
@@ -866,7 +867,7 @@ Summer Mage,2484
 Summoning Scholar,4875
 Sunken Banshee,5840
 Sunken Citizen,2848
-Super FighterBot MegaSupreme,350
+Super FighterBot MegaSupreme,1470
 Super Mega Mecha Ultra RoboGold,10000
 Supernatural,5000
 Supply Hoarder,1000
@@ -893,7 +894,7 @@ Teenage Vampire,200
 Telekinetic Mutant,15800
 Tentacle,15800
 Terra,420
-Terrible Twos,80
+Terrible Twos,120
 Terrified Adventurer,10500
 Terror Knight,840
 The Menace,25000
@@ -907,9 +908,9 @@ Thundering Watcher,20000
 Thunderlord,18000
 Tidal Fisher,1470
 Tiger,550
-Time Punk,500
-Time Tailor,1000
-Time Thief,10000
+Time Punk,525
+Time Tailor,830
+Time Thief,1925
 Timeless Lich,25000
 Timelost Thaumaturge,9000
 Timeslither Pythoness,15000
@@ -965,7 +966,7 @@ Vanguard,2240
 Vanquisher,998
 Vaporior,6000
 Vigilant Ward,5985
-"Vincent, The Magnificent",5000
+"Vincent, The Magnificent",2100
 Vinetail,1976
 Violet Stormchild,14000
 Walker,2550
