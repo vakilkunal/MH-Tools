@@ -970,6 +970,7 @@ var birthdayTraps = [
   "Sprinkly Cupcake Surprise Trap",
   "Stale Cupcake Golem Trap",
   "Surprise Party Trap",
+  "The Forgotten Art of Dance",
   "Ultra MegaMouser MechaBot Trap",
   "Wacky Inflatable Party People Trap"
 ];
