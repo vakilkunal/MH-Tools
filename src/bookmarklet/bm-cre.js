@@ -582,19 +582,19 @@
         for (var el of arr) {
           switch (el["power_type_name"]) {
             case "Arcane":
-              urlArr[0] = el["golem_guardian_charge_percentage"];
+              urlArr[0] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Forgotten":
-              urlArr[1] = el["golem_guardian_charge_percentage"];
+              urlArr[1] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Hydro":
-              urlArr[2] = el["golem_guardian_charge_percentage"];
+              urlArr[2] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Physical":
-              urlArr[3] = el["golem_guardian_charge_percentage"];
+              urlArr[3] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Tactical":
-              urlArr[4] = el["golem_guardian_charge_percentage"];
+              urlArr[4] = el["golem_guardian_charge_percentage"] || 0;
               break;
             default:
           }
