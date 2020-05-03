@@ -32,6 +32,28 @@ var tourneysArray = {
     "Nibbler": 15,
     "Steel": 1
   },
+  "Bristle Woods Rift: Portal Plunders": {
+    "Portal Pursuer": 1,
+    "Skeletal Champion": 3,
+    "Record Keeper's Assistant": 5,
+    "Sentient Slime": 5,
+    "Record Keeper": 7,
+    "Chamber Cleaver": 10,
+    "Dread Knight": 10,
+    "Portal Plunderer": 12,
+    "Clockwork Timespinner": 12,
+    "Epoch Golem": 20,
+    "Harbinger of Death": 25,
+    "Vigilant Ward": 30,
+    "Timelost Thaumaturge": 30,
+    "Shackled Servant": 30,
+    "Portal Paladin": 30,
+    "Timeslither Pythoness": 30,
+    "Carrion Medium": 40,
+    "Timeless Lich": 40,
+    "Chronomaster": 45,
+    "Absolute Acolyte": 75
+  },
   "Burroughs Rift: Dirty": {
     "Pneumatic Dirt Displacement": 3,
     "Itty Bitty Rifty Burroughs": 3,
@@ -540,15 +562,16 @@ var tourneysArray = {
     "Zephyr": 17
   },
   "Laboratory Potion Hunting": {
-    "Bionic": 20,
-    "Black Widow": 5,
-    "Burglar": 5,
-    "Granite": 20,
-    "Monster": 5,
-    "Mutated Grey": 1,
     "Mutated White": 1,
-    "Steel": 20,
-    "Zombie": 1
+    "Mutated Grey": 1,
+    "Mutated Brown": 1,
+    "Burglar": 5,
+    "Monster": 5,
+    "Black Widow": 5,
+    "Sludge Scientist": 20,
+    "Squeaker Bot": 20,
+    "Bionic": 20,
+    "Clumsy Chemist": 30
   },
   "Library Brawl": {
     "Aether": 100,
