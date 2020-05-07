@@ -12,7 +12,7 @@ const trapTypes = [
 ];
 
 const subcategories = {
-  "Indigenous Mice": ["Misc.", "Rare Rodents"],
+  "Indigenous Mice": ["Misc.", "Great Gnawnian Games", "Rare Rodents"],
   "Dock Dwellers": ["Misc."],
   "Mountain Mice": ["Misc."],
   "Forest Guild": ["Misc."],
@@ -129,7 +129,6 @@ const subcategories = {
     "New Year",
     "Misc.",
     "Prize",
-    "Great Gnawnian Games",
     "Birthday",
     "Lunar New Year",
     "Valentine's"
