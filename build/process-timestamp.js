@@ -29,8 +29,7 @@
     console.log("Initializing Puppeteer browser...");
 
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: "google-chrome-beta"
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
       // executablePath:
       //   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
     });
@@ -41,31 +40,22 @@
     const prePage1 = await browser.newPage();
     console.log("prePage1 object instantiated...");
     await prePage1.goto(htmlUrl);
-    console.log("prePage1 navigated to GH URL...");
     const preBody1 = await prePage1.content();
-    console.log("prePage1 content loaded...");
     await sleep(200);
     await prePage1.close();
-    console.log("prePage1 closed...");
     await sleep(300);
     const prePage2 = await browser.newPage();
     console.log("prePage2 object instantiated...");
     await prePage2.goto(htmlUrl);
-    console.log("prePage2 navigated to GH URL...");
     const preBody2 = await prePage2.content();
-    console.log("prePage2 content loaded...");
     await sleep(200);
     await prePage2.close();
-    console.log("prePage2 closed...");
     await sleep(300);
     const page = await browser.newPage();
     console.log("Final page object instantiated...");
     await page.goto(htmlUrl);
-    console.log("Final page navigated to GH URL...");
     const body = await page.content();
-    console.log("Final page body acquired...");
     await page.close();
-    console.log("Final page closed");
     await browser.close();
     console.log("Browser closed");
 

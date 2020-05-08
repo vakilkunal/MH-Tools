@@ -384,8 +384,9 @@ function processDetailed() {
 async function calculateDiffs() {
   // Force update raw JSON files on GitHub using Puppeteer
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: "google-chrome-stable"
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    // executablePath:
+    //   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
   });
   const overallPage = await browser.newPage();
   const concisePage = await browser.newPage();
