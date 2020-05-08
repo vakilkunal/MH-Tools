@@ -7,7 +7,7 @@ env:
   - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 addons:
-  chrome: stable
+  chrome: beta
 
 language: node_js
 
