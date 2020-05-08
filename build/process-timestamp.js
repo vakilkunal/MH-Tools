@@ -26,12 +26,16 @@
    * @param {string} htmlUrl
    */
   async function fetchTimestamps(htmlUrl) {
+    console.log("Initializing Puppeteer browser...");
+
     const browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
       executablePath: "google-chrome-stable"
       // executablePath:
       //   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
     });
+
+    console.log("Initialization complete. Loading pages...");
 
     // 2 throwaway pages to try and avoid "Failed to load latest commit information"
     // const prePage1 = await browser.newPage();
@@ -47,8 +51,11 @@
     // await prePage2.close();
     // await sleep(300);
     const page = await browser.newPage();
+    console.log("New page object instantiated...");
     await page.goto(htmlUrl);
+    console.log("Navigated to GH URL...");
     const body = await page.content();
+    console.log("Page body acquired...");
     // await page.close();
     // await browser.close();
 
@@ -65,6 +72,8 @@
   }
 
   (async function main() {
+    console.log("Begin fetchTimestamps routine...");
+
     const res = await fetchTimestamps(
       "https://github.com/tsitu/MH-Tools/tree/master/src/bookmarklet"
     ).catch(error => console.log(error));
