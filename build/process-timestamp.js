@@ -1,8 +1,7 @@
 (function() {
-  const cheerio = require("cheerio");
-  const puppeteer = require("puppeteer");
-
   const fileUtils = require("./file-utils");
+  const puppeteer = require("puppeteer");
+  const jsdom = require("jsdom");
 
   // Order matters (tree/master/src/bookmarklet)
   const bookmarkletList = [
@@ -53,17 +52,25 @@
     await page.close();
     await browser.close();
 
-    const $ = cheerio.load(body);
-    const result = $("time-ago")
-      .map((i, el) => $(el).attr("title"))
-      .get();
+    const { JSDOM } = jsdom;
+    const dom = new JSDOM(`${body}`);
+    const document = dom.window.document;
+
+    const result = [];
+    document.querySelectorAll("time-ago").forEach(el => {
+      result.push(el.title);
+    });
 
     return result;
   }
 
-  fetchTimestamps(
-    "https://github.com/tsitu/MH-Tools/tree/master/src/bookmarklet"
-  ).then(res => {
+  (async function main() {
+    const res = await fetchTimestamps(
+      "https://github.com/tsitu/MH-Tools/tree/master/src/bookmarklet"
+    ).catch(error => console.log(error));
+
+    console.log(res);
+
     const format = res.map(el => {
       const spl = el.split(", ");
       return `${spl[0]}, ${spl[1]}`;
@@ -73,11 +80,12 @@
     for (let i = 0; i < bookmarkletList.length; i++) {
       bookmarkletJson[bookmarkletList[i]] = format[i];
     }
+
     console.log(bookmarkletJson);
 
     fileUtils.saveJsonFile(
       "data/json/bookmarklet-timestamps.json",
       bookmarkletJson
     );
-  });
+  })();
 })();
