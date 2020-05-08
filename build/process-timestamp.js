@@ -34,23 +34,23 @@
     });
 
     // 2 throwaway pages to try and avoid "Failed to load latest commit information"
-    const prePage1 = await browser.newPage();
-    await prePage1.goto(htmlUrl);
-    const preBody1 = await prePage1.content();
-    await sleep(200);
-    await prePage1.close();
-    await sleep(300);
-    const prePage2 = await browser.newPage();
-    await prePage2.goto(htmlUrl);
-    const preBody2 = await prePage2.content();
-    await sleep(200);
-    await prePage2.close();
-    await sleep(300);
+    // const prePage1 = await browser.newPage();
+    // await prePage1.goto(htmlUrl);
+    // const preBody1 = await prePage1.content();
+    // await sleep(200);
+    // await prePage1.close();
+    // await sleep(300);
+    // const prePage2 = await browser.newPage();
+    // await prePage2.goto(htmlUrl);
+    // const preBody2 = await prePage2.content();
+    // await sleep(200);
+    // await prePage2.close();
+    // await sleep(300);
     const page = await browser.newPage();
     await page.goto(htmlUrl);
     const body = await page.content();
-    await page.close();
-    await browser.close();
+    // await page.close();
+    // await browser.close();
 
     const { JSDOM } = jsdom;
     const dom = new JSDOM(`${body}`);
