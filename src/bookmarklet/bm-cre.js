@@ -552,8 +552,8 @@
       .forEach(el => {
         if (el.textContent.indexOf("(Highest Umbra Floor") >= 0)
           urlParams["umbraFloor"] = +el.textContent
-              .split("(Highest Umbra Floor: ")[1]
-              .split(")")[0];
+            .split("(Highest Umbra Floor: ")[1]
+            .split(")")[0];
       });
   }
 
