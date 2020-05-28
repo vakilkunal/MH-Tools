@@ -79,7 +79,7 @@ function startPopulationLoad(populationJsonUrl, type) {
           jqxhr.status +
           " error occured while fetching the JSON file for:\n\n- " +
           descriptor +
-          "\n\nThis is likely an error involving the GitHub hosting service. If the tool is not working properly, please wait some time and try again.";
+          "\n\nThis is likely an error involving the GitHub hosting service. If the tool is not working properly, please wait some time and try again.\n\nMore info: https://www.githubstatus.com";
         alert(alertStr);
       });
   }

@@ -39,7 +39,7 @@ Barmy Gunner,35
 Barnacle Beautician,4160
 Barracuda,7700
 Bartender,750
-Bat,338
+Bat,600
 Battering Ram,90
 Battle Cleric,10000
 Bear,60
@@ -52,7 +52,7 @@ Big Bad Behemoth Burroughs,30000
 Big Bad Burroughs,2270
 Bilged Boatswain,35
 Biohazard,12800
-Bionic,60
+Bionic,83
 Birthday,135
 Bitter Root,5000
 Black Diamond Racer,3600
@@ -81,7 +81,7 @@ Buccaneer,429
 Buckethead,255
 Builder,750
 Bulwark of Ascent,12000
-Burglar,142
+Burglar,188
 Burly Bruiser,2250
 Cabin Boy,25
 Calalilly,2300
@@ -352,9 +352,9 @@ Gemorpher,8000
 Gemstone Worshipper,13000
 General Drheller,5482
 Gentleman Caller,85
-Ghost,359
+Ghost,700
 Ghost Pirate Queen,17250
-Giant Snail,575
+Giant Snail,1200
 Gilded Leaf,6000
 Gingerbread,190
 Glacia Ice Fist,1485
@@ -471,7 +471,7 @@ Lumahead,6400
 Lumberjack,2325
 Lumi-lancer,4500
 Lunar Red Candle Maker,300
-Lycan,925
+Lycan,1378
 Lycanoid,6600
 M400,120000
 Mad Elf,3800
@@ -532,7 +532,7 @@ Molten Midas,19800
 Monarch,250
 Monk,525
 Monsoon Maker,7500
-Monster,910
+Monster,875
 Monster of the Meteor,18000
 Monster Tail,2700
 Monstrous Abomination,20000
@@ -547,9 +547,9 @@ Mouse of Winter Future,1500
 Mouse of Winter Past,1500
 Mouse of Winter Present,1500
 Mouse With No Name,1050
-Mousevina von Vermin,5000
+Mousevina von Vermin,1250
 Moussile,450
-Mummy,473
+Mummy,700
 Mush,6000
 Mush Monster,6693
 Mushroom Harvester,5796
@@ -557,11 +557,11 @@ Mushroom Sprite,3000
 Mutant Mongrel,19800
 Mutant Ninja,13200
 Mutated Behemoth,30000
-Mutated Brown,88
-Mutated Grey,50
+Mutated Brown,105
+Mutated Grey,75
 Mutated Mole,600
 Mutated Siblings,800
-Mutated White,38
+Mutated White,68
 Mysterious Traveller,300
 Mystic,750
 Mystic Bishop,5544
@@ -961,7 +961,7 @@ Undertaker,1800
 Unwavering Adventurer,8250
 Upper Class Lady,675
 Urchin King,5920
-Vampire,270
+Vampire,325
 Vanguard,2240
 Vanquisher,998
 Vaporior,6000
@@ -1006,6 +1006,6 @@ Yeti,1475
 Young Prodigy Racer,750
 Zephyr,590
 Zombie,310
-Zombot Unipire,263
+Zombot Unipire,270
 Zombot Unipire the Third,6500
 Zurreal the Eternal,11850
