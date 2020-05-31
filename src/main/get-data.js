@@ -46,17 +46,43 @@ var powersArray = {};
  */
 function startPopulationLoad(populationJsonUrl, type) {
   if (type === "cre" || type === "setup") {
-    $.getJSON(WISDOM_URL, setWisdom);
-    $.getJSON(SAMPLE_URL, setSample);
-    $.getJSON(GP_URL, setGoldPoints);
-    $.getJSON(PE_URL, setPowerEffs);
+    getJSONWrapper(WISDOM_URL, setWisdom, "Wisdom Values");
+    getJSONWrapper(SAMPLE_URL, setSample, "Sample Sizes");
+    getJSONWrapper(GP_URL, setGoldPoints, "Gold & Points");
+    getJSONWrapper(PE_URL, setPowerEffs, "Powers & Effs");
   }
 
   if (type === "map" || type === "crown") {
-    $.getJSON(PE_URL, setPowerEffs);
+    getJSONWrapper(PE_URL, setPowerEffs, "Powers & Effs");
   }
 
-  $.getJSON(populationJsonUrl, setPopulation);
+  getJSONWrapper(populationJsonUrl, setPopulation, "Population Data");
+
+  /**
+   * Wrapper for jQuery's getJSON function
+   * @param {string} url URL of data file to fetch
+   * @param {function} callback Callback function to process JSON
+   * @param {string} descriptor Description of requested file for debugging purposes
+   */
+  function getJSONWrapper(url, callback, descriptor) {
+    $.getJSON(url)
+      .done(function(data, textStatus, jqxhr) {
+        if (textStatus === "success" && jqxhr.status === 200) {
+          callback(data);
+        } else {
+          alert("Generic error while processing JSON data files");
+        }
+      })
+      .fail(function(jqxhr) {
+        var alertStr =
+          "An HTTP " +
+          jqxhr.status +
+          " error occured while fetching the JSON file for:\n\n- " +
+          descriptor +
+          "\n\nThis is likely an error involving the GitHub hosting service. If the tool is not working properly, please wait some time and try again.\n\nMore info: https://www.githubstatus.com";
+        alert(alertStr);
+      });
+  }
 
   function setPopulation(jsonData) {
     popArray = jsonData;

@@ -27,11 +27,6 @@ window.onload = function() {
     "bookmarkletLoader",
     "#bookmarkletloader"
   );
-  loadBookmarkletFromJS(
-    BOOKMARKLET_URLS["powers"],
-    "powersBookmarklet",
-    "#bookmarklet"
-  );
 
   // Process best-setup-items
   const setupItems = localStorage.getItem("best-setup-items");
@@ -199,7 +194,7 @@ function calcPower(weapon, base, charm, bonusObj) {
   rawPowerBonus +=
     weaponsArray[weapon][2] + basesArray[base][1] + bonusObj["event"];
 
-  const pourBonus = 1 + bonusObj["pour"] / 100 * (1 + rawPowerBonus / 100);
+  const pourBonus = 1 + (bonusObj["pour"] / 100) * (1 + rawPowerBonus / 100);
   const totalPowerBonus =
     1 +
     (rawPowerBonus +
@@ -438,7 +433,9 @@ function generateResults() {
               (charm.indexOf("Snowball Charm") > -1 &&
                 festiveTraps.indexOf(weapon) > -1) ||
               (charm.indexOf("Spooky Charm") > -1 &&
-                halloweenTraps.indexOf(weapon) > -1)
+                halloweenTraps.indexOf(weapon) > -1) ||
+              (charm.indexOf("Party Charm") > -1 &&
+                birthdayTraps.indexOf(weapon) > -1)
                 ? 20
                 : 0;
 

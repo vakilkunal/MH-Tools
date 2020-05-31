@@ -60,6 +60,8 @@ window.onload = function() {
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
   document.getElementById("saltLevel").onchange = saltChanged;
+  document.getElementById("vrFloorType").onchange = genericOnChange;
+  document.getElementById("umbraFloor").onchange = umbraChanged;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
   document.getElementById("rank").onchange = rankChange;
 
@@ -184,35 +186,46 @@ function showPop(type) {
   function getHeaderRow() {
     var headerHTML;
     if (locationName === "Event") {
-      headerHTML =
-        "<tr align='left'><th align='left'>Mouse Name</th><th data-filter='false'>Catch Rate</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min Luck</th>";
+      headerHTML = "<tr align='left'>";
+      headerHTML += "<th align='left'>Mouse Name</th>";
+      headerHTML += "<th data-filter='false'>Catch Rate</th>";
+      headerHTML += "<th data-filter='false'>Gold</th>";
+      headerHTML += "<th data-filter='false'>Points</th>";
+      headerHTML += "<th data-filter='false'>Min Luck</th>";
       if (rank) {
         headerHTML += "<th data-filter='false'>Rank Per Catch</th>";
       }
     } else {
-      headerHTML =
-        "<tr align='left'><th>Mouse</th><th data-filter='false'>Attraction<br>Rate</th><th data-filter='false'>Catch<br>Rate</th><th data-filter='false'>Catches</th><th data-filter='false'>Gold</th><th data-filter='false'>Points</th><th data-filter='false'>Min.<br>Luck</th>";
+      headerHTML = "<tr align='left'>";
+      headerHTML += "<th>Mouse Name</th>";
+      headerHTML += "<th data-filter='false'>Attraction<br>Rate</th>";
+      headerHTML += "<th data-filter='false'>Catch<br>Rate</th>";
+      headerHTML += "<th data-filter='false'>Catches</th>";
+      headerHTML += "<th data-filter='false'>Gold</th>";
+      headerHTML += "<th data-filter='false'>Points</th>";
+      headerHTML += "<th data-filter='false'>Min<br>Luck</th>";
       if (rank) {
-        headerHTML += "<th data-filter='false'>Rank<br>Adv.</th>";
+        headerHTML += "<th data-filter='false'>Rank<br>Adv</th>";
       }
       if (tournamentName !== "") {
         headerHTML += "<th data-filter='false'>Tourney<br>Points</th>";
       }
     }
 
-    if (locationName.indexOf("Seasonal Garden") >= 0) {
+    if (locationName === "Seasonal Garden") {
       headerHTML += "<th data-filter='false'>Amp %</th>";
+    } else if (locationName === "Whisker Woods Rift") {
+      headerHTML += "<th data-filter='false'>Crazed<br>Rage</th>";
+      headerHTML += "<th data-filter='false'>Gnarled<br>Rage</th>";
+      headerHTML += "<th data-filter='false'>Deep<br>Rage</th>";
     } else if (
       contains(locationName, "Iceberg") &&
       phaseName.indexOf("Lair") < 0
     ) {
       headerHTML +=
         "<th data-filter='false'>Catch ft</th><th data-filter='false'>FTC ft</th>";
-    } else if (
-      locationName.indexOf("Sunken City") >= 0 &&
-      phaseName !== "Docked"
-    ) {
-      headerHTML += "<th data-filter='false'>Metres<br>per hunt</th>";
+    } else if (locationName === "Sunken City" && phaseName !== "Docked") {
+      headerHTML += "<th data-filter='false'>Meters<br>per hunt</th>";
     } else if (locationName === "Labyrinth" && phaseName !== "Intersection") {
       headerHTML +=
         "<th data-filter='false'>Hallway Clues</th><th data-filter='false'>Dead End Clues</th>";
@@ -257,6 +270,9 @@ function showPop(type) {
       overallTP = 0,
       minLuckOverall = 0,
       overallProgress = 0,
+      crazedRageIncreaseOverall = 0,
+      gnarledRageIncreaseOverall = 0,
+      deepRageIncreaseOverall = 0,
       pressureOverall = 0,
       pressureOverallTonic = 0;
 
@@ -269,6 +285,8 @@ function showPop(type) {
       var mouseName = miceNames[i];
 
       if (mouseName !== "SampleSize") {
+        var attractions = popArrayLC[mouseName] * overallAR;
+        mouseName = dynamicMouseRename(mouseName);
         var eff = findEff(mouseName);
         var mousePower = powersArray[mouseName][0];
 
@@ -284,7 +302,7 @@ function showPop(type) {
         catchRate = calcCRMods(catchRate, mouseName);
         var minLuckValue = minLuck(eff, mousePower);
         minLuckOverall = Math.max(minLuckValue, minLuckOverall);
-        var attractions = popArrayLC[mouseName] * overallAR;
+
         var catches = attractions * catchRate;
         var mouseRewards = miceArray[mouseName] || [0, 0];
         var mouseGold = mouseRewards[0];
@@ -300,8 +318,8 @@ function showPop(type) {
           mouseGold += Math.ceil(Math.min(mouseGold * 0.4, 50000));
         }
 
-        var gold = catches * mouseGold / 100;
-        var points = catches * mousePoints / 100;
+        var gold = (catches * mouseGold) / 100;
+        var points = (catches * mousePoints) / 100;
         var tournamentMice = tourneysArray[tournamentName];
 
         if (tournamentMice) {
@@ -310,7 +328,7 @@ function showPop(type) {
           tourneyPoints = 0;
         }
 
-        var TP = catches * tourneyPoints / 100;
+        var TP = (catches * tourneyPoints) / 100;
         overallCR += catches;
         overallTP += TP;
         overallGold += gold;
@@ -383,7 +401,7 @@ function showPop(type) {
           mouseRow += "<td>" + tourneyPoints + "</td>";
         }
 
-        if (locationName.indexOf("Seasonal Garden") >= 0) {
+        if (locationName === "Seasonal Garden") {
           var dAmp = deltaAmp[mouseName];
           var ampMultiplier = 1;
           if (charmName === "Amplifier Charm") ampMultiplier += 1;
@@ -400,7 +418,36 @@ function showPop(type) {
           // }
 
           mouseRow += "<td>" + dAmp + "%</td>";
-          deltaAmpOverall += dAmp * catches / 100;
+          deltaAmpOverall += (dAmp * catches) / 100;
+        } else if (locationName === "Whisker Woods Rift") {
+          var crazedRageIncrease = rage_increase_table[mouseName]["Crazed"];
+          var gnarledRageIncrease = rage_increase_table[mouseName]["Gnarled"];
+          var deepRageIncrease = rage_increase_table[mouseName]["Deep"];
+          if (charmName == "Cherry Charm") {
+            crazedRageIncrease =
+              crazedRageIncrease + gnarledRageIncrease + deepRageIncrease;
+            gnarledRageIncrease = 0;
+            deepRageIncrease = 0;
+          } else if (charmName == "Gnarled Charm") {
+            gnarledRageIncrease =
+              crazedRageIncrease + gnarledRageIncrease + deepRageIncrease;
+            crazedRageIncrease = 0;
+            deepRageIncrease = 0;
+          } else if (charmName == "Stagnant Charm") {
+            deepRageIncrease =
+              crazedRageIncrease + gnarledRageIncrease + deepRageIncrease;
+            crazedRageIncrease = 0;
+            gnarledRageIncrease = 0;
+          }
+          mouseRow += "<td>" + crazedRageIncrease + "</td>";
+          mouseRow += "<td>" + gnarledRageIncrease + "</td>";
+          mouseRow += "<td>" + deepRageIncrease + "</td>";
+          crazedRageIncreaseOverall +=
+            ((catchRate / 100) * crazedRageIncrease * attractions) / 100.0;
+          gnarledRageIncreaseOverall +=
+            ((catchRate / 100) * gnarledRageIncrease * attractions) / 100.0;
+          deepRageIncreaseOverall +=
+            ((catchRate / 100) * deepRageIncrease * attractions) / 100.0;
         } else if (
           contains(locationName, "Iceberg") &&
           phaseName.indexOf("Lair") < 0
@@ -439,18 +486,15 @@ function showPop(type) {
             "<td>" + deltaDepthCatch + "</td><td>" + deltaDepthFTC + "</td>";
 
           deltaDepthOverall +=
-            (catchRate / 100 * deltaDepthCatch +
-              (100 - catchRate) / 100 * deltaDepthFTC) *
-            attractions /
+            (((catchRate / 100) * deltaDepthCatch +
+              ((100 - catchRate) / 100) * deltaDepthFTC) *
+              attractions) /
             100;
 
           depthTest +=
-            deltaDepthCatch * catches / 100 +
-            deltaDepthFTC * (attractions - catches) / 100;
-        } else if (
-          locationName.indexOf("Sunken City") >= 0 &&
-          phaseName != "Docked"
-        ) {
+            (deltaDepthCatch * catches) / 100 +
+            (deltaDepthFTC * (attractions - catches)) / 100;
+        } else if (locationName === "Sunken City" && phaseName != "Docked") {
           mouseRow += "<td></td>";
         } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
           var mouseClues = labyrinthMiceClues[mouseName];
@@ -459,15 +503,15 @@ function showPop(type) {
             mouseClues += 1;
           if (charmName === "Super Lantern Oil Charm" && mouseClues != 0)
             mouseClues += 2;
-          avgLanternClues += mouseClues * catches / 100;
+          avgLanternClues += (mouseClues * catches) / 100;
           mouseRow += "<td>" + mouseClues + "</td><td></td>";
         } else if (
           locationName === "Queso Geyser" &&
           phaseName === "Pressure Building"
         ) {
           var kPaGain = pressureMice[mouseName];
-          pressureOverall += kPaGain * catches / 100;
-          pressureOverallTonic += kPaGain * 2 * catches / 100;
+          pressureOverall += (kPaGain * catches) / 100;
+          pressureOverallTonic += (kPaGain * 2 * catches) / 100;
           mouseRow += "<td>" + kPaGain + "</td><td>" + kPaGain * 2 + "</td>";
         }
 
@@ -480,7 +524,7 @@ function showPop(type) {
     }
 
     overallAR *= 100;
-    var averageCR = overallCR / overallAR * 100;
+    var averageCR = (overallCR / overallAR) * 100;
 
     // Generate 'Overall Stats' row
     var statsRow;
@@ -509,35 +553,41 @@ function showPop(type) {
       resultsHTML += "<td>" + overallTP.toFixed(2) + "</td>";
     }
 
-    if (locationName.indexOf("Seasonal Garden") >= 0) {
-      deltaAmpOverall += (100 - overallAR) / 100 * -3; // Accounting for FTAs (-3%)
+    if (locationName === "Seasonal Garden") {
+      deltaAmpOverall += ((100 - overallAR) / 100) * -3; // Accounting for FTAs (-3%)
       resultsHTML += "<td>" + deltaAmpOverall.toFixed(2) + "%</td>";
+    } else if (locationName === "Whisker Woods Rift") {
+      resultsHTML += "<td>" + crazedRageIncreaseOverall.toFixed(2) + "</td>";
+      resultsHTML += "<td>" + gnarledRageIncreaseOverall.toFixed(2) + "</td>";
+      resultsHTML += "<td>" + deepRageIncreaseOverall.toFixed(2) + "</td>";
     } else if (
       contains(locationName, "Iceberg") &&
       phaseName.indexOf("Lair") < 0
     ) {
       resultsHTML +=
         "<td colspan='2'>" + deltaDepthOverall.toFixed(2) + " ft/hunt</td>";
-    } else if (
-      locationName.indexOf("Sunken City") >= 0 &&
-      phaseName != "Docked"
-    ) {
-      diveMPH = 30 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
+    } else if (locationName === "Sunken City" && phaseName != "Docked") {
+      diveMPH = (30 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       if (charmName.indexOf("Anchor Charm") >= 0) {
-        diveMPH = 10 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
+        diveMPH = (10 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       } else if (charmName.indexOf("Water Jet Charm") >= 0) {
-        diveMPH = 500 * overallCR / 100 + 10 * (overallAR - overallCR) / 100;
+        diveMPH =
+          (500 * overallCR) / 100 + (10 * (overallAR - overallCR)) / 100;
       }
       resultsHTML += "<td>" + diveMPH.toFixed(2) + "</td>";
     } else if (locationName == "Labyrinth" && phaseName != "Intersection") {
       resultsHTML += "<td>" + avgLanternClues.toFixed(2) + "</td>";
       var deadEnds = (overallAR - overallCR) / 100;
       // Assuming 50% proc rates
-      if (baseName == "Minotaur Base" || baseName == "Labyrinth Base") {
+      if (
+        baseName == "Minotaur Base" ||
+        baseName == "Labyrinth Base" ||
+        baseName == "Treasure Seeker Base"
+      ) {
         deadEnds /= 2;
       }
       if (charmName == "Compass Magnet Charm") {
-        deadEnds -= 0.5 * overallCR / 100;
+        deadEnds = (-0.5 * overallCR) / 100;
       }
       resultsHTML += "<td>" + deadEnds.toFixed(2) + "</td>";
     } else if (
@@ -554,7 +604,7 @@ function showPop(type) {
 
     var cheeseEatenPerHunt = overallAR / 100;
     var cheeseStaledPerHunt =
-      (100 - overallAR) / 100 * freshness2stale[trapEff];
+      ((100 - overallAR) / 100) * freshness2stale[trapEff];
 
     // Generate gold profit row
     if (locationName !== "Event") {
@@ -578,21 +628,20 @@ function showPop(type) {
     }
 
     if (
-      locationName.indexOf("Seasonal Garden") >= 0 ||
-      (locationName.indexOf("Sunken City") >= 0 && phaseName != "Docked")
+      locationName === "Seasonal Garden" ||
+      (locationName === "Sunken City" && phaseName != "Docked")
     ) {
       resultsHTML += "<td></td>";
     } else if (
-      contains(locationName, "Iceberg") &&
-      phaseName.indexOf("Lair") < 0
-    ) {
-      resultsHTML += "<td colspan='2'></td>";
-    } else if (
+      (contains(locationName, "Iceberg") && phaseName.indexOf("Lair") < 0) ||
       (locationName == "Labyrinth" && phaseName != "Intersection") ||
       (locationName === "Queso Geyser" && phaseName === "Pressure Building")
     ) {
-      resultsHTML += "<td></td><td></td>";
+      resultsHTML += "<td colspan='2'></td>";
+    } else if (locationName === "Whisker Woods Rift") {
+      resultsHTML += "<td colspan='3'></td>";
     }
+
     resultsHTML += "</tr>";
     results.innerHTML = resultsHTML;
 
@@ -636,20 +685,17 @@ function loadCheeseDropdown(locationName, phaseName) {
 
 function loadTourneyDropdown() {
   var tourneyDropdown = document.getElementById("tourney");
-
   var tourneyDropdownHTML = "<option></option>";
-
   var tourneys = Object.keys(tourneysArray || []);
+
   for (var key in tourneys) {
     tourneyDropdownHTML += "<option>" + tourneys[key] + "</option>\n";
   }
-
   tourneyDropdown.innerHTML = tourneyDropdownHTML;
 
   var tourneyParameter = getURLParameter("tourney");
   if (tourneyParameter !== NULL_URL_PARAM) {
     var select = document.getElementById("tourney");
-    // TODO: Improve
     for (var i = 0; i < select.children.length; i++) {
       var child = select.children[i];
       if (child.innerHTML === tourneyParameter) {
@@ -681,7 +727,8 @@ function updateLink() {
     cannonLevel: fortRox.cannonLevel,
     saltLevel: saltLevel,
     rank: rank,
-    amplifier: ztAmp
+    amplifier: ztAmp,
+    vrFloorType: document.querySelector("#vrFloorType").selectedIndex
   };
   var URLString = buildURL("cre.html", urlParams);
   document.getElementById("link").href = URLString;
@@ -838,6 +885,12 @@ function baseChanged() {
   // Certain bases have special effects when paired with particular charms
   charmChangeCommon();
   calculateTrapSetup();
+
+  // Handle Prestige Base input
+  $("#prestige-umbra-floor").hide();
+  if (baseName === "Prestige Base") {
+    $("#prestige-umbra-floor").show(500);
+  }
 }
 
 function charmChanged() {

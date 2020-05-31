@@ -53,6 +53,8 @@ $(window).load(function() {
   document.getElementById("ballistaLevel").onchange = genericOnChange;
   document.getElementById("cannonLevel").onchange = genericOnChange;
   document.getElementById("saltLevel").onchange = saltChanged;
+  document.getElementById("vrFloorType").onchange = genericOnChange;
+  document.getElementById("umbraFloor").onchange = umbraChanged;
   document.getElementById("riftstalker").onchange = riftstalkerChange;
   document.getElementById("rank").onchange = rankChange;
 
@@ -417,7 +419,8 @@ function updateLink() {
     cannonLevel: fortRox.cannonLevel,
     saltLevel: saltLevel,
     rank: rank,
-    amplifier: ztAmp
+    amplifier: ztAmp,
+    vrFloorType: document.querySelector("#vrFloorType").selectedIndex
   };
 
   var urlString = buildURL("setup.html", urlParams);
@@ -484,7 +487,7 @@ function showPop() {
    * @return {string}
    */
   function getHeader(population) {
-    var resultsHeader = "<thead><tr><th align='left'>Setup</th>";
+    var resultsHeader = "<thead><tr><th align='left'>Trap Setup</th>";
     for (var mouseName in population) {
       resultsHeader += "<th data-filter='false'>" + mouseName + "</th>";
     }
@@ -501,17 +504,25 @@ function showPop() {
 /**
  * Get mouse population for current location/phase/cheese and the selected charm
  * @param {string} selectedCharm
- * @return Mouse Populations
+ * @return Mouse population object (name -> AR)
  */
 function getPopulation(selectedCharm) {
   var popArrayLPC = popArray[locationName][phaseName][cheeseName];
-  var retArray = popArrayLPC[selectedCharm]
+  var charmObj = popArrayLPC[selectedCharm]
     ? popArrayLPC[selectedCharm]
     : popArrayLPC["-"];
+  var returnObj = {};
 
   // Trim the extra "SampleSize" element
-  delete retArray["SampleSize"];
-  return retArray;
+  delete charmObj["SampleSize"];
+
+  // Handle dynamic mouse name conversion
+  Object.keys(charmObj).forEach(function(mouse) {
+    var dynMouse = dynamicMouseRename(mouse);
+    returnObj[dynMouse] = charmObj[mouse];
+  });
+
+  return returnObj;
 }
 
 /**
@@ -582,7 +593,7 @@ function buildOverallCR(
     if (rank) {
       // handle missing data
       if (mouseWisdom[mouse]) {
-        overallProgress += mouseWisdom[mouse] / rankupDiff[rank] * catches;
+        overallProgress += (mouseWisdom[mouse] / rankupDiff[rank]) * catches;
       }
     }
   }
@@ -623,16 +634,17 @@ function buildMiceCRCells(micePopulation) {
     if (rank) {
       // handle missing data
       if (mouseWisdom[mouse]) {
-        overallProgress += mouseWisdom[mouse] / rankupDiff[rank] * catches;
+        overallProgress += (mouseWisdom[mouse] / rankupDiff[rank]) * catches;
       }
     }
-    html += "<td align='right'>" + catches.toFixed(2) + "</td>";
+    html += "<td align='center'>" + catches.toFixed(2) + "</td>";
   }
 
-  html += "<td align='right'>" + overallCR.toFixed(2) + "</td>";
+  html += "<td align='center'>" + overallCR.toFixed(2) + "</td>";
   if (rank) {
     // numbers are usually 0.00##% per hunt, but per 100 hunts is consistent with values shown
-    html += "<td>" + (overallProgress * 100).toFixed(2) + "%</td>";
+    html +=
+      "<td align='center'>" + (overallProgress * 100).toFixed(2) + "%</td>";
   }
   return html;
 }
@@ -701,12 +713,13 @@ function printCombinations(micePopulation, headerHtml) {
     tableHTML += "<tr>" + obj["link"];
     for (var j = 0; j < obj["catches"].length; j++) {
       tableHTML +=
-        "<td align='right'>" + obj["catches"][j].toFixed(2) + "</td>";
+        "<td align='center'>" + obj["catches"][j].toFixed(2) + "</td>";
     }
-    tableHTML += "<td align='right'>" + obj["cr"].toFixed(2) + "</td>";
+    tableHTML += "<td align='center'>" + obj["cr"].toFixed(2) + "</td>";
     if (rank) {
       // numbers are usually 0.00##% per hunt, but per 100 hunts is consistent with values shown
-      tableHTML += "<td>" + (obj["rank"] * 100).toFixed(2) + "%</td>";
+      tableHTML +=
+        "<td align='center'>" + (obj["rank"] * 100).toFixed(2) + "%</td>";
     }
   }
   $("#results").html(tableHTML);
@@ -791,10 +804,11 @@ function getCRELinkElement() {
       cannonLevel: fortRox.cannonLevel,
       saltLevel: saltLevel,
       rank: rank,
-      amplifier: ztAmp
+      amplifier: ztAmp,
+      vrFloorType: document.querySelector("#vrFloorType").selectedIndex
     };
     var urlString = buildURL("cre.html", urlParams);
-    urlString = urlString.replace(/'/g, "%27"); //TODO: Verify necessity
+    urlString = urlString.replace(/'/g, "%27");
     return urlString;
   }
 }

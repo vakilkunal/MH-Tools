@@ -41,8 +41,8 @@
         <- All Tools</a>
           <h1>Catch Rate Estimator</h1>
           <a href="https://github.com/tsitu/MH-Tools/blob/master/README.md#straight_ruler-catch-rate-estimator" target="_blank" rel="noopener">Instructions</a> |
-          <a id="bookmarkletloader" href="#">Auto-Loader</a> |
-          <a id="bookmarklet" href="#">CRE</a>
+          <a id="bookmarkletloader" href="#">Auto-Loader</a> <span id="bookmarkletloaderCopy" style="cursor: pointer">📋</span> |
+          <a id="bookmarklet" href="#">CRE</a> <span id="bookmarkletCopy" style="cursor: pointer">📋</span>
     </div>
 
     <table class="form">
@@ -67,7 +67,7 @@
         <tr class="display-location display-labyrinth">
           <td>Comments:</td>
           <td class="locationComment">
-            Proc rates for Labyrinth Base, Minotaur Base, and Compass Magnet Charm are set to 50%
+            Proc rates for Labyrinth/Minotaur/Treasure Seeker Base and Compass Magnet Charm are set to 50%
           </td>
         </tr>
 
@@ -125,7 +125,7 @@
         <tr class="display-location display-queso-geyser">
           <td>Comments:</td>
           <td class="locationComment">
-            Eff values for Kalor, Stormsurge, Bruticus, Corkataur, and Emberstone are currently set to 600%
+            Eff values for Stormsurge, Bruticus, Corkataur, and Emberstone are currently set to 600% (Kalor at 900%)
             <br>Please report incorrect minimum luck values or drastically inaccurate catch rates
           </td>
         </tr>
@@ -135,6 +135,20 @@
           <td class="locationComment">
             Proc rate for Chesla's Revenge is set to 50%
             <br>Sandcastle Shard Trap is not implemented since its Amp % effect depends on your current & max levels
+          </td>
+        </tr>
+
+        <tr class="display-location display-harbour">
+          <td>Comments:</td>
+          <td class="locationComment">
+            Pirate Crew attraction rates will vary depending on your current manifest
+          </td>
+        </tr>
+
+        <tr class="display-location display-valour-rift">
+          <td>Comments:</td>
+          <td class="locationComment">
+            Eff values for Soldier of the Shade & Bulwark of Ascent are still speculative
           </td>
         </tr>
 
@@ -162,6 +176,21 @@
           </td>
         </tr>
 
+        <tr class="display-location display-valour-rift">
+          <td>Floor Type:</td>
+          <td>
+            <select id="vrFloorType">
+              <option>1 (Puppet)</option>
+              <option>2 (Thief)</option>
+              <option>3 (Melee)</option>
+              <option>4 (Bard)</option>
+              <option>5 (Magic)</option>
+              <option>6 (Noble)</option>
+              <option>7 (Dusty)</option>
+            </select>
+          </td>
+        </tr>
+
         <tr>
           <td>Cheese:</td>
           <td>
@@ -183,7 +212,7 @@
       </tbody>
 
       <tbody class="input-special">
-        <tr class="display-location display-labyrinth" style="display:none">
+        <tr class="display-location display-labyrinth">
           <td>Lantern Oil:</td>
           <td>
             <select id="oil">
@@ -193,7 +222,7 @@
           </td>
         </tr>
 
-        <tr class="display-location display-furoma-rift" style="display:none">
+        <tr class="display-location display-furoma-rift">
           <td>Battery Level:</td>
           <td>
             <input type="number" id="battery" min="0" max="10" />
@@ -214,7 +243,7 @@
           </td>
         </tr>
 
-        <tr class="display-location display-zugzwangs-tower" style="display:none">
+        <tr class="display-location display-zugzwangs-tower">
           <td>Amp:</td>
           <td>
             <input id="ampValue" type="text" size="3" value="0" readonly>%
@@ -285,6 +314,13 @@
           <td>
             <select id="base">
             </select>
+          </td>
+        </tr>
+
+        <tr id="prestige-umbra-floor" style="display:none">
+          <td>Highest Umbra Floor:</td>
+          <td>
+            <input name="umbra" type="number" id="umbraFloor" min="0" max="200" value="0" />
           </td>
         </tr>
 
@@ -417,7 +453,7 @@
               <option value='lord'>Lord / Lady</option>
               <option value='baron'>Baron / Baroness</option>
               <option value='count'>Count / Countess</option>
-              <option value='duke'>Duke/ Duchess</option>
+              <option value='duke'>Duke / Duchess</option>
               <option value='grandduke'>Grand Duke / Grand Duchess</option>
               <option value='archduke'>Archduke / Archduchess</option>
               <option value='viceroy'>Viceroy</option>

@@ -35,44 +35,57 @@ function loadBookmarkletFromJS(url, storageKey, linkSelector) {
   );
 
   function checkBookmarklet(bookmarkletString, storageKey) {
+    var keyMap = {
+      bookmarkletLoader: "Auto-Loader",
+      creBookmarklet: "Catch Rate Estimator",
+      mapBookmarklet: "Map Solver",
+      setupBookmarklet: "Best Setup: Load Items",
+      setupFieldsBookmarklet: "Best Setup: Fields",
+      analyzerBookmarklet: "Marketplace Analyzer",
+      crownBookmarklet: "Crown Solver",
+      craftingBookmarklet: "Crafting Wizard",
+      powersBookmarklet: "Powers Worksheet"
+    };
+
     if (bookmarkletString !== localStorage.getItem(storageKey)) {
-      var alertString = "";
-      if (storageKey === "bookmarkletLoader") {
-        alertString = "The Bookmarklet Auto-Loader has been updated!";
-      } else if (storageKey) {
-        switch (storageKey) {
-          case "creBookmarklet":
-            alertString = "The Catch Rate Estimator ";
-            break;
-          case "mapBookmarklet":
-            alertString = "The Map Solver ";
-            break;
-          case "setupBookmarklet":
-            alertString = "The Best Setup: Load Items ";
-            break;
-          case "setupFieldsBookmarklet":
-            alertString = "The Best Setup: Fields ";
-            break;
-          case "analyzerBookmarklet":
-            alertString = "The Marketplace Analyzer ";
-            break;
-          case "crownBookmarklet":
-            alertString = "The Silver Crown Solver ";
-            break;
-          case "craftingBookmarklet":
-            alertString = "The Crafting Wizard ";
-            break;
-          case "powersBookmarklet":
-            alertString = "The Powers Worksheet ";
-            break;
-        }
-        alertString +=
-          "bookmarklet has been updated.\nPlease edit accordingly, or try the Auto-Loader!";
+      var alertString =
+        "The " + keyMap[storageKey] + " bookmarklet has been updated.";
+      if (storageKey !== "bookmarkletLoader") {
+        alertString += "\nPlease edit accordingly, or try the Auto-Loader!";
       }
       alert(alertString);
       localStorage.setItem(storageKey, bookmarkletString);
     }
 
     $(linkSelector).attr("href", bookmarkletString);
+    $(linkSelector + "Copy").click(function() {
+      var tempCopyArea = document.createElement("textarea");
+      tempCopyArea.style.position = "fixed";
+      tempCopyArea.style.top = 0;
+      tempCopyArea.style.left = 0;
+      tempCopyArea.style.width = "2em";
+      tempCopyArea.style.height = "2em";
+      tempCopyArea.style.padding = 0;
+      tempCopyArea.style.border = "none";
+      tempCopyArea.style.outline = "none";
+      tempCopyArea.style.boxShadow = "none";
+      tempCopyArea.style.background = "transparent";
+      tempCopyArea.value = bookmarkletString;
+      document.body.appendChild(tempCopyArea);
+      tempCopyArea.focus();
+      tempCopyArea.select();
+
+      var copySuccess = document.execCommand("copy");
+      if (copySuccess) {
+        alert(
+          "The " +
+            keyMap[storageKey] +
+            " bookmarklet was copied to your clipboard."
+        );
+      } else {
+        alert("Failed to copy bookmarklet to clipboard.");
+      }
+      document.body.removeChild(tempCopyArea);
+    });
   }
 }

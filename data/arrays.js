@@ -1,7 +1,5 @@
 "use strict";
 
-var ztAmp = 100;
-
 // Utility function for determining size of multi-level array
 Object.size = function(obj) {
   var size = 0;
@@ -13,7 +11,7 @@ Object.size = function(obj) {
   return size;
 };
 
-// Rank up wisdom difference requirements
+// Hunter's title wisdom requirements
 var rankupDiff = {
   novice: 2000, // 2000 - 0
   recruit: 3000, // 5000 - 2000
@@ -36,7 +34,6 @@ var rankupDiff = {
   sage: 2125896058 // 3897476106 - 1771580048
 };
 
-// prettier-ignore
 var standardCheeseCost = {
   "Cheddar": 10,
   "Marble": 50,
@@ -50,12 +47,14 @@ var standardCheeseCost = {
 
 var riftWeapons = [
   "Biomolecular Re-atomizer Trap",
+  "Celestial Dissonance Trap",
   "Christmas Crystalabra Trap",
   "Crystal Tower",
   "Focused Crystal Laser",
   "Multi-Crystal Laser",
   "Mysteriously unYielding Null-Onyx Rampart of Cascading Amperes",
-  "Timesplit Dissonance Weapon",
+  "Rift Glacier Gatler",
+  "Timesplit Dissonance Trap",
   "Wacky Inflatable Party People Trap"
 ];
 
@@ -65,12 +64,11 @@ var riftBases = [
   "Enerchi Induction Base",
   "Fissure Base",
   "Fracture Base",
+  "Prestige Base",
   "Rift Base"
 ];
 
-/**
- * Rift charms with names that do not contain the word "Rift"
- */
+// Rift charms with names that do not contain the word "Rift"
 var riftCharms = [
   "Cherry Charm",
   "Gnarled Charm",
@@ -80,7 +78,6 @@ var riftCharms = [
   "Timesplit Charm"
 ];
 
-// prettier-ignore
 var labyrinthMiceClues = {
   "Ash Golem": 1,
   "Automated Stone Sentry": 2,
@@ -148,6 +145,60 @@ var tauntings = [
   "Tri-dra"
 ];
 
+var rage_increase_table = {
+  // CC Low
+  "Bloomed Sylvan": { Crazed: 1, Gnarled: 0, Deep: 0 },
+  "Cranky Caterpillar": { Crazed: 1, Gnarled: 0, Deep: 0 },
+  "Mossy Moosker": { Crazed: 1, Gnarled: 0, Deep: 0 },
+
+  // CC Mid
+  "Treant Queen": { Crazed: 2, Gnarled: 0, Deep: 0 },
+  "Spirit Fox": { Crazed: 2, Gnarled: 0, Deep: 0 },
+  "Red-Eyed Watcher Owl": { Crazed: 2, Gnarled: 0, Deep: 0 },
+
+  // CC High
+  "Cyclops Barbarian": { Crazed: 0, Gnarled: 0, Deep: 0 },
+
+  // CC Funnel-only
+  "Cherry Sprite": { Crazed: 6, Gnarled: 0, Deep: 0 },
+
+  // GG Low
+  "Spirit of Balance": { Crazed: 0, Gnarled: 1, Deep: 0 },
+  "Fungal Frog": { Crazed: 0, Gnarled: 1, Deep: 0 },
+  "Karmachameleon": { Crazed: 0, Gnarled: 1, Deep: 0 },
+
+  // GG Mid
+  "Red Coat Bear": { Crazed: 0, Gnarled: 2, Deep: 0 },
+  "Rift Tiger": { Crazed: 0, Gnarled: 2, Deep: 0 },
+  "Nomadic Warrior": { Crazed: 0, Gnarled: 2, Deep: 0 },
+
+  // GG High
+  "Centaur Ranger": { Crazed: 0, Gnarled: 0, Deep: 0 },
+
+  // GG Funnel-only
+  "Naturalist": { Crazed: 0, Gnarled: 6, Deep: 0 },
+
+  // DL Low
+  "Twisted Treant": { Crazed: 0, Gnarled: 0, Deep: 1 },
+  "Water Sprite": { Crazed: 0, Gnarled: 0, Deep: 1 },
+  "Crazed Goblin": { Crazed: 0, Gnarled: 0, Deep: 1 },
+
+  // DL Mid
+  "Medicine": { Crazed: 0, Gnarled: 0, Deep: 2 },
+  "Tree Troll": { Crazed: 0, Gnarled: 0, Deep: 2 },
+  "Winged Harpy": { Crazed: 0, Gnarled: 0, Deep: 2 },
+
+  // DL High
+  "Tri-dra": { Crazed: 0, Gnarled: 0, Deep: 0 },
+
+  // DL Funnel-only
+  "Grizzled Silth": { Crazed: 0, Gnarled: 0, Deep: 6 },
+
+  // Misc
+  "Gilded Leaf": { Crazed: 2, Gnarled: 2, Deep: 2 },
+  "Monstrous Black Widow": { Crazed: 0, Gnarled: 0, Deep: 0 }
+};
+
 var brutes = ["Snow Bowler", "Yeti", "Mammoth"];
 var bombSquad = ["Saboteur", "Stickybomber", "Heavy Blaster"];
 var berglings = [
@@ -160,7 +211,6 @@ var berglings = [
   "Snowblind"
 ];
 
-// prettier-ignore
 var catchDepth = {
   "Chipper": 16,
   "Frostlance Guard": 15,
@@ -188,7 +238,6 @@ var catchDepth = {
   "Yeti": -4
 };
 
-// prettier-ignore
 var ftcDepth = {
   "Chipper": 0,
   "Frostlance Guard": 0,
@@ -216,7 +265,6 @@ var ftcDepth = {
   "Yeti": -16
 };
 
-// prettier-ignore
 var deltaAmp = {
   "Bruticle": 4,
   "Frostbite": 4,
@@ -247,14 +295,13 @@ var deltaAmp = {
   "Whirleygig": 1
 };
 
-// prettier-ignore
 var pressureMice = {
   "Steam Sailor": 5,
   "Warming Wyvern": 15,
   "Vaporior": 40,
   "Pyrehyde": 100,
-  "Emberstone Scaled": 1500,
-}
+  "Emberstone Scaled": 1500
+};
 
 var freshness2stale = {
   "-6": 1,
@@ -288,7 +335,6 @@ var reverseParseFreshness = {
   "6": "Über Fresh (0% stale rate)"
 };
 
-// prettier-ignore
 var parseFreshness = {
   "Uber Stale": -6,
   "Ultimately Stale": -5,
@@ -305,9 +351,7 @@ var parseFreshness = {
   "Uber Fresh": 6
 };
 
-/**
- * Maps types to integers for lookup in the powers array
- */
+// Trap type to integer map for lookup in the powers array
 var typeEff = {
   Arcane: 1,
   Draconic: 2,
@@ -322,20 +366,21 @@ var typeEff = {
 };
 
 // Power, power bonus (%), attraction bonus (%), luck, cheese effect
-// prettier-ignore
 var basesArray = {
-  "10 Layer Birthday Cake Base" : [300, 10, 10, 10, "No Effect"],
-  "2017 New Year's Base" : [200, 7, 0, 10, "Fresh"],
-  "2018 New Year's Base" : [200, 7, 0, 10, "Fresh"],
-  "2019 New Year's Base" : [200, 7, 0, 10, "Fresh"],
+  "10 Layer Birthday Cake Base": [300, 10, 10, 10, "No Effect"],
+  "2017 New Year's Base": [200, 7, 0, 10, "Fresh"],
+  "2018 New Year's Base": [200, 7, 0, 10, "Fresh"],
+  "2019 New Year's Base": [200, 7, 0, 10, "Fresh"],
+  "2020 New Year's Base": [220, 7, 0, 10, "Fresh"],
   "Aqua Base": [230, 0, 0, 8, "No Effect"],
   "Attuned Enerchi Induction Base": [500, 10, 10, 10, "Stale"],
-  "Ancient Booster Base" : [300, 0, 10, 10, "Fresh"],
-  "Aurora Base" : [250, 3, 5, 6, "Very Fresh"],
+  "Ancient Booster Base": [300, 0, 10, 10, "Fresh"],
+  "Aurora Base": [250, 3, 5, 6, "Very Fresh"],
   "Bacon Base": [200, 0, 15, 0, "Extremely Fresh"],
   "Bamboozler Base": [200, 10, 5, 0, "Very Fresh"],
   "Birthday Banana Cake Base": [300, 11, 11, 11, "Fresh"],
   "Birthday Cake Base": [175, 11, 5, 0, "No Effect"],
+  "Birthday Confetti Cake Base": [300, 12, 12, 10, "Extremely Fresh"],
   "Birthday Drag\xE9e Cake Base": [175, 5, 15, 6, "Very Fresh"],
   "Black Widow Base": [100, 10, 10, 10, "No Effect"],
   "Bronze Tournament Base": [300, 5, 3, 5, "Fresh"],
@@ -353,8 +398,10 @@ var basesArray = {
   "Denture Base": [100, 10, 0, 0, "No Effect"],
   "Denture Base (Toothlet Charged)": [1500, 25, 25, 20, "No Effect"],
   "Depth Charge Base": [450, 10, 0, 10, "No Effect"],
+  "Desert Heater Base": [500, 15, 0, 10, "Very Stale"],
   "Dog Jade Base": [375, 12, 10, 10, "Stale"],
   "Dragon Jade Base": [300, 10, 0, 10, "No Effect"],
+  "Electromagnetic Meteorite Base": [350, 12, 15, 8, "Very Stale"],
   "Enerchi Induction Base": [100, 10, 0, 10, "Stale"],
   "Explosive Base": [300, 5, 5, 0, "Stale"],
   "Extra Sweet Cupcake Birthday Base": [300, 8, 8, 8, "Extremely Fresh"],
@@ -369,6 +416,7 @@ var basesArray = {
   "Gingerbread Base": [225, 8, 0, 4, "Insanely Fresh"],
   "Golden Tournament Base": [500, 15, 10, 8, "Extremely Fresh"],
   "Glowing Golem Guardian Base": [500, 20, 5, 10, "Fresh"],
+  "Hallowed Ground Base": [350, 10, 15, 10, "No Effect"],
   "Hearthstone Base": [200, 0, 10, 2, "Very Fresh"],
   "Horse Jade Base": [325, 10, 10, 10, "Stale"],
   "Hothouse Base": [250, 3, 5, 6, "Very Fresh"],
@@ -388,6 +436,8 @@ var basesArray = {
   "Pig Jade Base": [375, 12, 10, 10, "Stale"],
   "Polar Base": [200, 10, 0, 4, "Insanely Fresh"],
   "Polluted Base": [500, 10, 0, 5, "Stale"],
+  "Prestige Base": [490, 20, 0, 5, "No Effect"],
+  "Rat Jade Base": [375, 12, 10, 10, "Stale"],
   "Refined Pollutinum Base": [500, 12, 5, 10, "No Effect"],
   "Remote Detonator Base": [300, 10, 10, 4, "Stale"],
   "Rift Base": [250, 12, 0, 11, "Fresh"],
@@ -401,13 +451,15 @@ var basesArray = {
   "Soiled Base": [400, 12, 5, 6, "Very Fresh"],
   "Spellbook Base": [500, 14, 5, 7, "Fresh"],
   "Spiked Base": [300, 12, 0, 3, "Very Stale"],
-  "Sprinkly Sweet Cupcake Birthday Base" :[300, 9, 9, 9, "Extremely Fresh"],
+  "Sprinkly Sweet Cupcake Birthday Base": [300, 9, 9, 9, "Extremely Fresh"],
   "Stone Base": [150, 10, 0, 0, "Fresh"],
   "Tidal Base": [800, 8, 10, 10, "Fresh"],
   "Tiki Base": [200, 18, 5, 0, "Very Fresh"],
+  "Treasure Seeker Base": [150, 20, 10, 10, "Fresh"],
   "Tribal Base": [175, 18, 2, 0, "Fresh"],
   "Tribal Kaboom Base": [200, 18, 2, 0, "Very Fresh"],
   "Ultimate Iceberg Base": [200, 5, 10, 5, "Very Fresh"],
+  "Vegetation Base": [250, 20, 10, 5, "Fresh"],
   "Washboard Base": [250, 10, 8, 8, "Extremely Stale"],
   "Wooden Base": [35, 0, 0, 0, "Very Fresh"],
   "Wooden Base with Target": [75, 0, 20, 0, "No Effect"]
@@ -445,6 +497,8 @@ var weaponsArray = {
   "Bubbles: The Party Crasher Trap": ["Hydro", 5800, 18, 8, 8, "Very Stale"],
   "Cackle Lantern Trap": ["Shadow", 2200, 5, 10, 12, "Extremely Stale"],
   "Candy Crusher Trap": ["Shadow", 2000, 3, 15, 15, "No Effect"],
+  "Celestial Dissonance Trap": ["Rift", 3500, 12, 10, 10, "Fresh"],
+  "Cemetery Gate Grappler": ["Draconic", 5100, 10, 10, 10, "No Effect"],
   "Chesla's Revenge": ["Tactical", 5000, 2, 10, 16, "Extremely Fresh"],
   "Christmas Cactus Trap": ["Law", 1800, 5, 15, 4, "Fresh"],
   "Christmas Cracker Trap": ["Physical", 3000, 15, 5, 24, "Very Fresh"],
@@ -477,14 +531,15 @@ var weaponsArray = {
   "Dragon Slayer Cannon": ["Draconic", 10000, 35, 10, 25, "No Effect"],
   "Dragonvine Ballista Trap": ["Draconic", 5750, 15, 5, 14, "Stale"],
   "Dreaded Totem Trap": ["Shadow", 3000, 15, 10, 10, "Very Stale"],
-  "Droid Archmagus Trap" : ["Arcane", 5000, 15, 10, 20, "Stale"],
-  "Ember Prison Core Trap" : ["Law", 4500, 25, 10, 16, "Stale"],
+  "Droid Archmagus Trap": ["Arcane", 5000, 15, 10, 20, "Stale"],
+  "Ember Prison Core Trap": ["Law", 4500, 25, 10, 16, "Stale"],
   "Endless Labyrinth Trap": ["Forgotten", 10000, 15, 5, 9, "Very Stale"],
   "Engine Doubler": ["Law", 1500, 12, 0, 0, "No Effect"],
   "Enraged RhinoBot": ["Physical", 5900, 10, 0, 20, "Insanely Stale"],
   "Event Horizon Trap": ["Arcane", 6000, 12, 10, 25, "No Effect"],
   "Explosive Toboggan Ride": ["Hydro", 2700, 14, 3, 16, "Extremely Fresh"],
-  "Festive Forgotten Fir Trap" :["Forgotten", 7000, 20, 5, 10, "Fresh"],
+  "Father Winter's Timepiece Trap": ["Forgotten", 5000, 15, 10, 8, "Fresh"],
+  "Festive Forgotten Fir Trap": ["Forgotten", 7000, 20, 5, 10, "Fresh"],
   "Festive Gauntlet Crusher": ["Physical", 1200, 5, 25, 5, "Extremely Fresh"],
   "Fluffy DeathBot": ["Physical", 2400, 15, 10, 2, "Stale"],
   "Focused Crystal Laser": ["Rift", 1750, 0, 0, 0, "No Effect"],
@@ -510,7 +565,7 @@ var weaponsArray = {
   "HitGrab Horsey": ["Physical", 550, 2, 0, 20, "Very Fresh"],
   "HitGrab Rainbow Rockin' Horse": ["Physical", 1250, 2, 10, 25, "Uber Fresh"],
   "HitGrab Rockin' Horse": ["Physical", 1250, 2, 10, 25, "No Effect"],
-  "Holiday Hydro Hailstone Trap" : ["Hydro", 3500, 20, 5, 20, "Fresh"],
+  "Holiday Hydro Hailstone Trap": ["Hydro", 3500, 20, 5, 20, "Fresh"],
   "Horrific Venus Mouse Trap": ["Tactical", 3400, 12, 1, 16, "No Effect"],
   "Ice Blaster": ["Hydro", 3800, 5, 5, 12, "Fresh"],
   "Ice Maiden": ["Draconic", 5200, 12, 0, 8, "No Effect"],
@@ -525,8 +580,8 @@ var weaponsArray = {
   "Kraken Chaos": ["Hydro", 3400, 0, 0, 18, "Very Stale"],
   "Law Laser Trap": ["Law", 1750, 20, 10, 3, "Fresh"],
   "Maniacal Brain Extractor": ["Shadow", 2600, 10, 0, 13, "Very Fresh"],
-  "Meteor Prison Core Trap" : ["Law", 3000, 20, 10, 8, "No Effect"],
-  "Moonbeam Barrier Trap" : ["Shadow", 4000, 10, 10, 15, "Stale"],
+  "Meteor Prison Core Trap": ["Law", 3000, 20, 10, 8, "No Effect"],
+  "Moonbeam Barrier Trap": ["Shadow", 4000, 10, 10, 15, "Stale"],
   "Mouse DeathBot": ["Physical", 2400, 15, 10, 2, "Stale"],
   "Mouse Hot Tub": ["Physical", 70, 3, 35, 2, "No Effect"],
   "Mouse Mary O'Nette": ["Physical", 250, 0, 6, 5, "Fresh"],
@@ -538,8 +593,8 @@ var weaponsArray = {
   "Mystic Pawn Pincher": ["Tactical", 60, 5, 20, 0, "Fresh"],
   "Nannybot": ["Parental", 525, 5, 0, 5, "No Effect"],
   "Net Cannon": ["Hydro", 3000, 0, 3, 5, "Stale"],
-  "New Horizon Trap" : ["Arcane", 6217, 15, 10, 26, "Fresh"],
-  "New Year's Fireworks Trap" : ["Physical", 6000, 12, 10, 23, "Stale"],
+  "New Horizon Trap": ["Arcane", 6217, 15, 10, 26, "Fresh"],
+  "New Year's Fireworks Trap": ["Physical", 6000, 12, 10, 23, "Stale"],
   "Ninja Ambush Trap": ["Tactical", 3000, 5, 0, 12, "Fresh"],
   "Nutcracker Nuisance Trap": ["Arcane", 3000, 18, 15, 16, "Insanely Fresh"],
   "NVMRC Forcefield Trap": ["Physical", 2350, 12, 10, 12, "No Effect"],
@@ -553,17 +608,19 @@ var weaponsArray = {
   "Phantasmic Oasis Trap": ["Hydro", 5850, 15, 20, 26, "No Effect"],
   "Pneumatic Tube Trap": ["Physical", 2300, 20, 5, 18, "No Effect"],
   "Pumpkin Pummeler": ["Shadow", 1150, 5, 10, 5, "Fresh"],
+  "Queso Factory Trap": ["Law", 2000, 12, 30, 5, "Extremely Fresh"],
   "Queso Fount Trap": ["Hydro", 11000, 30, 10, 25, "Stale"],
   "Reaper's Perch": ["Shadow", 3300, 10, 5, 16, "Stale"],
   "Rewers Riposte": ["Tactical", 2900, 15, 5, 25, "Fresh"],
   "RhinoBot": ["Physical", 4950, 0, 0, 8, "Very Stale"],
+  "Rift Glacier Gatler": ["Rift", 1250, 10, 10, 3, "Very Fresh"],
   "Rocket Propelled Gavel Trap": ["Physical", 6200, 15, 0, 22, "Stale"],
   "Rune Shark Trap": ["Hydro", 6700, 15, 20, 27, "Very Fresh"],
   "S.A.M. F.E.D. DN-5": ["Tactical", 2750, 5, 20, 15, "Fresh"],
   "S.L.A.C.": ["Law", 300, 5, 10, 0, "No Effect"],
   "S.L.A.C. II": ["Law", 1500, 6, 15, 0, "No Effect"],
   "S.U.P.E.R. Scum Scrubber": ["Hydro", 4000, 15, 15, 15, "Stale"],
-  "Sandcastle Shard Trap":["Shadow", 3000, 5, 15, 12, "Fresh"],
+  "Sandcastle Shard Trap": ["Shadow", 3000, 5, 15, 12, "Fresh"],
   "Sandstorm MonstroBot": ["Physical", 8000, 20, 5, 27, "No Effect"],
   "Sandtail Sentinel": ["Physical", 6800, 17, 10, 25, "No Effect"],
   "Scarlet Ember Root Trap": ["Forgotten", 6000, 3, 10, 7, "Very Stale"],
@@ -595,7 +652,7 @@ var weaponsArray = {
   "The Forgotten Art of Dance": ["Forgotten", 5000, 12, 6, 6, "No Effect"],
   "The Law Draw": ["Law", 1100, 5, 20, 5, "Fresh"],
   "Thorned Venus Mouse Trap": ["Tactical", 3400, 5, 2, 14, "Very Fresh"],
-  "Timesplit Dissonance Weapon": ["Rift", 3000, 10, 10, 7, "No Effect"],
+  "Timesplit Dissonance Trap": ["Rift", 3000, 10, 10, 7, "No Effect"],
   "Ultra MegaMouser MechaBot Trap": ["Physical", 2250, 5, 15, 8, "No Effect"],
   "Veiled Vine Trap": ["Tactical", 3500, 12, 0, 20, "Very Stale"],
   "Venus Mouse Trap": ["Tactical", 1900, 0, 5, 5, "Extremely Fresh"],
@@ -613,7 +670,6 @@ var weaponKeys = Object.keys(weaponsArray);
 weaponKeys.sort();
 
 // Power, power bonus (%), attraction bonus (%), luck, cheese effect
-// prettier-ignore
 var charmsArray = {
   "2014 Charm": [2014, 0, 0, 0, "No Effect"],
   "2015 Charm": [2015, 0, 0, 0, "No Effect"],
@@ -621,6 +677,7 @@ var charmsArray = {
   "2017 Charm": [2017, 0, 0, 0, "No Effect"],
   "2018 Charm": [2018, 0, 0, 0, "No Effect"],
   "2019 Charm": [2019, 0, 0, 0, "No Effect"],
+  "2020 Charm": [2020, 0, 0, 0, "No Effect"],
   "Airship Charm": [800, 0, 0, 5, "No Effect"],
   "Amplifier Charm": [0, 0, 0, 0, "No Effect"],
   "Ancient Charm": [600, 5, 5, 5, "Extremely Fresh"],
@@ -667,6 +724,7 @@ var charmsArray = {
   "Extreme Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Extreme Power Charm": [600, 5, 0, 0, "No Effect"],
   "Extreme Queso Pump Charm": [100, 10, 10, 8, "Very Fresh"],
+  "Extreme Party Charm": [0, 12, 0, 12, "No Effect"],
   "Extreme Regal Charm": [2000, 0, 75, 8, "No Effect"],
   "Extreme Snowball Charm": [400, 4, 4, 8, "No Effect"],
   "Extreme Spooky Charm": [400, 4, 4, 8, "No Effect"],
@@ -728,16 +786,24 @@ var charmsArray = {
   "Red Double Sponge Charm": [0, 0, 0, 0, "No Effect"],
   "Red Sponge Charm": [0, 0, 0, 0, "No Effect"],
   "Regal Charm": [1000, 0, 20, 6, "No Effect"],
+  "Rift 2020 Charm": [2020, 0, 0, 0, "No Effect"],
   "Rift Airship Charm": [500, 0, 0, 5, "No Effect"],
   "Rift Antiskele Charm": [0, 0, 0, 0, "No Effect"],
   "Rift Charm": [100, 1, 0, 0, "Stale"],
   "Rift Extreme Luck Charm": [0, 0, 0, 5, "No Effect"],
+  "Rift Extreme Power Charm": [1200, 12, 0, 0, "No Effect"],
+  "Rift Extreme Snowball Charm": [400, 4, 4, 8, "No Effect"],
   "Rift Luck Charm": [0, 0, 0, 1, "No Effect"],
   "Rift Power Charm": [500, 5, 0, 0, "No Effect"],
+  "Rift Snowball Charm": [100, 1, 1, 2, "No Effect"],
+  "Rift Spooky Charm": [500, 5, 0, 2, "No Effect"],
   "Rift Super Luck Charm": [0, 0, 0, 3, "No Effect"],
+  "Rift Super Power Charm": [750, 8, 0, 0, "No Effect"],
+  "Rift Super Snowball Charm": [200, 2, 2, 4, "No Effect"],
   "Rift Ultimate Luck Charm": [0, 0, 0, 20, "No Effect"],
   "Rift Ultimate Lucky Power Charm": [2400, 20, 0, 20, "No Effect"],
   "Rift Ultimate Power Charm": [2400, 20, 0, 0, "No Effect"],
+  "Rift Ultimate Snowball Charm": [800, 8, 8, 20, "No Effect"],
   "Rift Vacuum Charm": [0, 0, 0, 0, "No Effect"],
   "Rift Wealth Charm": [0, 0, 0, 0, "No Effect"],
   "Roof Rack Charm": [0, 3, 0, 5, "Fresh"],
@@ -779,6 +845,7 @@ var charmsArray = {
   "Super Lantern Oil Charm": [300, 5, 5, 3, "Very Fresh"],
   "Super Luck Charm": [0, 0, 0, 3, "No Effect"],
   "Super Nightshade Farming Charm": [300, 3, 2, 1, "Fresh"],
+  "Super Party Charm": [0, 6, 0, 6, "No Effect"],
   "Super Polluted Charm": [0, 0, 0, 0, "No Effect"],
   "Super Power Charm": [360, 3, 0, 0, "No Effect"],
   "Super Queso Pump Charm": [50, 5, 5, 5, "Very Fresh"],
@@ -811,6 +878,7 @@ var charmsArray = {
   "Ultimate Luck Charm": [0, 0, 0, 20, "No Effect"],
   "Ultimate Lucky Power Charm": [2400, 20, 0, 20, "No Effect"],
   "Ultimate Polluted Charm": [0, 0, 0, 0, "No Effect"],
+  "Ultimate Party Charm": [0, 24, 0, 30, "No Effect"],
   "Ultimate Power Charm": [2400, 20, 0, 0, "No Effect"],
   "Ultimate Snowball Charm": [800, 8, 8, 20, "No Effect"],
   "Ultimate Spooky Charm": [800, 8, 8, 20, "No Effect"],
@@ -849,6 +917,7 @@ var festiveTraps = [
   "Christmas Crystalabra Trap",
   "Double Diamond Adventure",
   "Explosive Toboggan Ride",
+  "Father Winter's Timepiece Trap",
   "Festive Forgotten Fir Trap",
   "Festive Gauntlet Crusher",
   "Gingerbread House Surprise",
@@ -864,21 +933,46 @@ var festiveTraps = [
   "Ice Blaster",
   "Infinite Winter Horizon Trap",
   "Nutcracker Nuisance Trap",
+  "Rift Glacier Gatler",
   "Snow Barrage",
   "Snowglobe Trap",
   "Wrapped Gift Trap"
 ];
 
-/**
- * Weapons that interact with Spooky Charms to give 20% power bonus
- * Below are notable weapons without this bonus:
- *  Haunted Shipwreck, Pumpkin Pummeler, (Maniacal) Brain Extractor
- *  Cackle Lantern, Soul Catcher/Harvester, Terrifying Spider
- */
+// Weapons that interact with Spooky Charms to give 20% power bonus
 var halloweenTraps = [
   "Admiral's Galleon Trap",
+  "Brain Extractor",
+  "Cackle Lantern Trap",
   "Candy Crusher Trap",
-  "Sandcastle Shard Trap"
+  "Cemetery Gate Grappler",
+  "Haunted Shipwreck Trap",
+  "Maniacal Brain Extractor",
+  "Pumpkin Pummeler",
+  "Sandcastle Shard Trap",
+  "Soul Catcher",
+  "Soul Harvester",
+  "Terrifying Spider Trap"
+];
+
+// Weapons that interact with Party Charms to give 20% power bonus
+var birthdayTraps = [
+  "Anniversary Ambush",
+  "Anniversary Ancient Box Trap",
+  "Anniversary Arcane Capturing Rod Of Never Yielding Mystery",
+  "Anniversary DeathBot",
+  "Anniversary Reaper's Perch",
+  "Birthday Candle Kaboom",
+  "Birthday Party Pi\xF1ata Bonanza",
+  "Bubbles: The Party Crasher Trap",
+  "Nannybot",
+  "Queso Factory Trap",
+  "Sprinkly Cupcake Surprise Trap",
+  "Stale Cupcake Golem Trap",
+  "Surprise Party Trap",
+  "The Forgotten Art of Dance",
+  "Ultra MegaMouser MechaBot Trap",
+  "Wacky Inflatable Party People Trap"
 ];
 
 var wereMice = [

@@ -27,6 +27,7 @@
     "pop:queso": "node data/pop queso-river > data/pop-csv/queso-river.csv",
     "pop:ronza": "node data/pop ronza > data/pop-csv/ronza.csv",
     "pop:toxic": "node data/pop toxic-spill > data/pop-csv/toxic-spill.csv",
+    "pop:vrift": "node data/pop valour-rift > data/pop-csv/valour-rift.csv",
     "pop:warpath": "node data/pop warpath > data/pop-csv/fiery-warpath.csv",
     "pop": "npm-run-all --parallel pop:*",
     "\n-- MINIFICATION --": "",
@@ -48,23 +49,23 @@
     "type": "git",
     "url": "git+https://github.com/tsitu/MH-Tools.git"
   },
-  "keywords": ["MouseHunt"],
+  "keywords": [
+    "MouseHunt"
+  ],
   "bugs": {
     "url": "https://github.com/tsitu/MH-Tools/issues"
   },
   "homepage": "https://tsitu.github.io/MH-Tools",
   "license": "Apache-2.0",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
     "combined-stream": "^1.0.5",
     "csvtojson": "^1.1.7",
     "delayed-stream": "^1.0.0",
+    "jsdom": "^16.2.2",
     "mkdirp": "^0.5.1",
-    "npm-run-all": "^4.0.2",
     "request": "^2.83.0",
     "uglify-es": "^3.3.9",
-    "uglify-js": "^3.0.25",
-    "uglifyjs-folder": "^1.5.0"
+    "uglify-js": "^3.0.25"
   },
   "devDependencies": {
     "bluebird": "^3.5.1",
@@ -77,7 +78,9 @@
     "jacksmhtools-client": "^0.1.2",
     "js-combinatorics": "^0.5.2",
     "json2csv": "^3.11.5",
-    "lodash": "^4.17.4",
-    "prettier": "1.9.1"
+    "lodash": "^4.17.15",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "uglifyjs-folder": "^1.5.1"
   }
 }

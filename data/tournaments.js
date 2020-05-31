@@ -1,4 +1,3 @@
-// prettier-ignore
 var tourneysArray = {
   "Baker's Dozen": {
     "White": 1,
@@ -32,6 +31,28 @@ var tourneysArray = {
     "Mutated White": 1,
     "Nibbler": 15,
     "Steel": 1
+  },
+  "Bristle Woods Rift: Portal Plunders": {
+    "Portal Pursuer": 1,
+    "Skeletal Champion": 3,
+    "Record Keeper's Assistant": 5,
+    "Sentient Slime": 5,
+    "Record Keeper": 7,
+    "Chamber Cleaver": 10,
+    "Dread Knight": 10,
+    "Portal Plunderer": 12,
+    "Clockwork Timespinner": 12,
+    "Epoch Golem": 20,
+    "Harbinger of Death": 25,
+    "Vigilant Ward": 30,
+    "Timelost Thaumaturge": 30,
+    "Shackled Servant": 30,
+    "Portal Paladin": 30,
+    "Timeslither Pythoness": 30,
+    "Carrion Medium": 40,
+    "Timeless Lich": 40,
+    "Chronomaster": 45,
+    "Absolute Acolyte": 75
   },
   "Burroughs Rift: Dirty": {
     "Pneumatic Dirt Displacement": 3,
@@ -478,19 +499,19 @@ var tourneysArray = {
     "Goliath Field": 400
   },
   "High Seas Hunting": {
-    "Bottled": 15,
-    "Briegull": 1,
-    "Buccaneer": 5,
-    "Captain": 15,
-    "Cook": 15,
-    "Leviathan": 25,
-    "Mermouse": 25,
-    "Pinchy": 1,
-    "Shelder": 300,
-    "Shipwrecked": 5,
-    "Siren": 5,
-    "Squeaken": 25,
-    "Swabbie": 1
+    Bottled: 15,
+    Briegull: 1,
+    Buccaneer: 5,
+    Captain: 15,
+    Cook: 15,
+    Leviathan: 25,
+    Mermouse: 25,
+    Pinchy: 1,
+    Shelder: 300,
+    Shipwrecked: 5,
+    Siren: 5,
+    Squeaken: 25,
+    Swabbie: 1
   },
   "Indigenous Mouse Hunting": {
     "Bionic": 5,
@@ -541,15 +562,16 @@ var tourneysArray = {
     "Zephyr": 17
   },
   "Laboratory Potion Hunting": {
-    "Bionic": 20,
-    "Black Widow": 5,
-    "Burglar": 5,
-    "Granite": 20,
-    "Monster": 5,
-    "Mutated Grey": 1,
     "Mutated White": 1,
-    "Steel": 20,
-    "Zombie": 1
+    "Mutated Grey": 1,
+    "Mutated Brown": 1,
+    "Burglar": 5,
+    "Monster": 5,
+    "Black Widow": 5,
+    "Sludge Scientist": 20,
+    "Squeaker Bot": 20,
+    "Bionic": 20,
+    "Clumsy Chemist": 30
   },
   "Library Brawl": {
     "Aether": 100,
@@ -606,18 +628,19 @@ var tourneysArray = {
     "Treasure Brawler": 25
   },
   "Mousoleum Mastery": {
-    "Bat": 5,
-    "Black Widow": 100,
-    "Ghost": 5,
-    "Giant Snail": 10,
-    "Lycan": 8,
-    "Monster": 50,
-    "Mummy": 10,
-    "Mutated Grey": 1,
-    "Mutated White": 1,
-    "Ravenous Zombie": 10,
-    "Vampire": 50,
-    "Zombie": 5
+    "Gluttonous Zombie": 5,
+    "Zombie": 5,
+    "Ravenous Zombie": 7,
+    "Coffin Zombie": 10,
+    "Mummy": 25,
+    "Ghost": 25,
+    "Bat": 30,
+    "Giant Snail": 30,
+    "Vampire": 30,
+    "Lycan": 40,
+    "Mousevina von Vermin": 50,
+    "Monster": 70,
+    "Black Widow": 100
   },
   "Nerg Tribal Hunting": {
     "Alnilam": 15,

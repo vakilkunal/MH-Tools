@@ -12,7 +12,7 @@ const trapTypes = [
 ];
 
 const subcategories = {
-  "Indigenous Mice": ["Misc.", "Rare Rodents"],
+  "Indigenous Mice": ["Misc.", "Great Gnawnian Games", "Rare Rodents"],
   "Dock Dwellers": ["Misc."],
   "Mountain Mice": ["Misc."],
   "Forest Guild": ["Misc."],
@@ -120,7 +120,7 @@ const subcategories = {
     "Storm Dragon"
   ],
   "Rift Walkers": ["Gnawnia Rift", "Burroughs Rift", "Whisker Woods Rift"],
-  "Rift Stalkers": ["Bristle Woods Rift", "Furoma Rift"],
+  "Rift Stalkers": ["Bristle Woods Rift", "Furoma Rift", "Valour Rift"],
   "The Polluted": ["Misc."],
   "Event Mice": [
     "Great Winter Hunt",
@@ -129,7 +129,6 @@ const subcategories = {
     "New Year",
     "Misc.",
     "Prize",
-    "Great Gnawnian Games",
     "Birthday",
     "Lunar New Year",
     "Valentine's"
@@ -417,18 +416,18 @@ function calculateBounds(input, trapPower, trapType) {
           break;
         case "Moderate":
           lowerBound = parseFloat((trapPower / 9).toFixed(2));
-          upperBound = parseFloat((trapPower * 7 / 13).toFixed(2));
+          upperBound = parseFloat(((trapPower * 7) / 13).toFixed(2));
           break;
         case "Challenging":
-          lowerBound = parseFloat((trapPower * 7 / 13).toFixed(2));
+          lowerBound = parseFloat(((trapPower * 7) / 13).toFixed(2));
           upperBound = parseFloat(trapPower.toFixed(2));
           break;
         case "Difficult":
           lowerBound = parseFloat(trapPower.toFixed(2));
-          upperBound = parseFloat((trapPower * 13 / 7).toFixed(2));
+          upperBound = parseFloat(((trapPower * 13) / 7).toFixed(2));
           break;
         case "Overpowering":
-          lowerBound = parseFloat((trapPower * 13 / 7).toFixed(2));
+          lowerBound = parseFloat(((trapPower * 13) / 7).toFixed(2));
           upperBound = parseFloat((trapPower * 19).toFixed(2));
           break;
         case "Near Impossible":
@@ -493,12 +492,14 @@ function normalizeRanges(stored) {
   for (let group in minCache) {
     for (let mouse in minCache[group]) {
       for (let el of minCache[group][mouse]["effs"]) {
-        const ttIndex = trapTypes.indexOf(el);
-        stored[group][mouse]["effs"][ttIndex] = [
-          100,
-          minCache[group][mouse]["range"][0],
-          minCache[group][mouse]["range"][1]
-        ];
+        if (minCache[group][mouse]["range"] !== undefined) {
+          const ttIndex = trapTypes.indexOf(el);
+          stored[group][mouse]["effs"][ttIndex] = [
+            100,
+            minCache[group][mouse]["range"][0],
+            minCache[group][mouse]["range"][1]
+          ];
+        }
       }
     }
   }
@@ -611,7 +612,9 @@ function processInput(inputText) {
     (user.charm.indexOf("Snowball Charm") > -1 &&
       festiveTraps.indexOf(user.weapon) > -1) ||
     (user.charm.indexOf("Spooky Charm") > -1 &&
-      halloweenTraps.indexOf(user.weapon) > -1)
+      halloweenTraps.indexOf(user.weapon) > -1) ||
+    (user.charm.indexOf("Party Charm") > -1 &&
+      birthdayTraps.indexOf(user.weapon) > -1)
       ? 20
       : 0;
 

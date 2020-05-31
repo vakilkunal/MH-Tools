@@ -372,6 +372,27 @@
       } else {
         return "No Bounty";
       }
+    } else if (userLocation === "Valour Rift") {
+      if (userQuests["QuestRiftValour"]["state"] === "farming") {
+        return "Outside";
+      } else if (userQuests["QuestRiftValour"]["state"] === "tower") {
+        var vrFloorType = userQuests["QuestRiftValour"]["floor_type"];
+        urlParams["vrFloorType"] =
+          vrFloorType >= 1 && vrFloorType <= 7 ? vrFloorType - 1 : 0;
+
+        var floorNum = userQuests["QuestRiftValour"]["floor"] || 1;
+        var floorStr = userQuests["QuestRiftValour"]["is_eclipse_mode"]
+          ? "Umbra "
+          : "";
+
+        if (floorNum % 8 === 0) floorStr += "Eclipse";
+        else if (floorNum <= 7) floorStr += "Floors 1-7";
+        else if (floorNum <= 15) floorStr += "Floors 9-15";
+        else if (floorNum <= 23) floorStr += "Floors 17-23";
+        else if (floorNum >= 25) floorStr += "Floors 25-31+";
+
+        return floorStr;
+      }
     }
     return "N/A";
   }
@@ -386,16 +407,44 @@
    */
   function findUserRank() {
     var userRank = user["title_name"];
-    if (userRank === "Archduke" || userRank === "Archduchess")
+
+    if (
+      userRank.indexOf("Archduke") >= 0 ||
+      userRank.indexOf("Archduchess") >= 0
+    ) {
       return "archduke";
-    if (userRank === "Grand Duke" || userRank === "Grand Duchess")
+    }
+
+    if (
+      userRank.indexOf("Grand Duke") >= 0 ||
+      userRank.indexOf("Grand Duchess") >= 0
+    ) {
       return "grandduke";
-    if (userRank === "Duke" || userRank === "Duchess") return "duke";
-    if (userRank === "Count" || userRank === "Countess") return "count";
-    if (userRank === "Baron" || userRank === "Baroness") return "baron";
-    if (userRank === "Lord" || userRank === "Lady") return "lord";
-    if (userRank === "Journeyman" || userRank === "Journeywoman")
+    }
+
+    if (userRank.indexOf("Duke") >= 0 || userRank.indexOf("Duchess") >= 0) {
+      return "duke";
+    }
+
+    if (userRank.indexOf("Count") >= 0 || userRank.indexOf("Countess") >= 0) {
+      return "count";
+    }
+
+    if (userRank.indexOf("Baron") >= 0 || userRank.indexOf("Baroness") >= 0) {
+      return "baron";
+    }
+
+    if (userRank.indexOf("Lord") >= 0 || userRank.indexOf("Lady") >= 0) {
+      return "lord";
+    }
+
+    if (
+      userRank.indexOf("Journeyman") >= 0 ||
+      userRank.indexOf("Journeywoman") >= 0
+    ) {
       return "journeyman";
+    }
+
     return userRank.toLowerCase();
   }
 
@@ -413,7 +462,7 @@
   /**
    * Controls the names and values placed in URL
    */
-  var userLocation = user["location"];
+  var userLocation = user["environment_name"];
   var userBase = user["base_name"];
 
   var urlParams = {};
@@ -452,7 +501,10 @@
     if (userCheese.indexOf("SUPER|brie+") >= 0) {
       userCheese = "SB+";
     } else if (userCheese.indexOf(" Cheese") >= 0) {
-      if (contains(userCheese, "Gauntlet")) {
+      if (
+        contains(userCheese, "Gauntlet") &&
+        userCheese !== "Gauntlet String Cheese"
+      ) {
         userCheese = userCheese.slice(16, userCheese.length);
         userSublocation = userCheese;
       } else {
@@ -468,11 +520,6 @@
     urlParams["phase"] = userSublocation;
   }
 
-  // Weapon edge cases
-  if (urlParams["weapon"] === "Timesplit Dissonance Trap") {
-    urlParams["weapon"] = "Timesplit Dissonance Weapon";
-  }
-
   // Denture Base toothlet check
   if (urlParams["base"] === "Denture Base") {
     if (
@@ -483,6 +530,25 @@
     ) {
       urlParams["base"] = "Denture Base (Toothlet Charged)";
     }
+  }
+
+  // Prestige Base highest floor check
+  if (urlParams["base"] === "Prestige Base") {
+    urlParams["umbraFloor"] = 0;
+    document
+      .querySelectorAll(".campPage-trap-trapStat-mathRow-name")
+      .forEach(el => {
+        if (el.textContent.indexOf("(Highest Umbra Floor") >= 0)
+          urlParams["umbraFloor"] = +el.textContent
+            .split("(Highest Umbra Floor: ")[1]
+            .split(")")[0];
+      });
+  }
+
+  // Golem Guardian skin module check
+  if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
+    urlParams["weapon"] =
+      "Golem Guardian " + user["trap_power_type_name"] + " Trap";
   }
 
   if (urlParams["weapon"].indexOf("Golem Guardian") >= 0) {
@@ -504,19 +570,19 @@
         for (var el of arr) {
           switch (el["power_type_name"]) {
             case "Arcane":
-              urlArr[0] = el["golem_guardian_charge_percentage"];
+              urlArr[0] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Forgotten":
-              urlArr[1] = el["golem_guardian_charge_percentage"];
+              urlArr[1] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Hydro":
-              urlArr[2] = el["golem_guardian_charge_percentage"];
+              urlArr[2] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Physical":
-              urlArr[3] = el["golem_guardian_charge_percentage"];
+              urlArr[3] = el["golem_guardian_charge_percentage"] || 0;
               break;
             case "Tactical":
-              urlArr[4] = el["golem_guardian_charge_percentage"];
+              urlArr[4] = el["golem_guardian_charge_percentage"] || 0;
               break;
             default:
           }

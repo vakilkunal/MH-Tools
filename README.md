@@ -8,34 +8,34 @@ Feel free to post your questions, comments, or concerns there (or [here](https:/
 
 ## :book: Table of Contents
 
-* [Instructions](#instructions)
-  * [General Tips](#thought_balloon-general-tips)
-  * [Bookmarklets](#bookmark-bookmarklets)
-    * [Browser Installation Tips](#-browser-installation-tips)
-    * [Chrome](#user-content-chrome)
-    * [Firefox](#user-content-firefox)
-    * [Edge / IE](#user-content-edge)
-    * [Safari](#user-content-safari)
-  * [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
-    * [Sample Size Score](#-sample-size-score)
-    * [Special Catch Rate Effects](#-special-catch-rate-effects)
-  * [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
-    * [Cheese Filters](#-cheese-filters)
-  * [Best Setup](#trophy-best-setup)
-  * [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
-  * [Crown Solver](#crown-crown-solver)
-  * [Crafting Wizard](#hammer-crafting-wizard)
-  * [Trap Setup Powers](#mag-trap-setup-powers)
-    * [Worksheet](#-worksheet)
-  * [CRE Tabs](#bookmark_tabs-cre-tabs)
-* [Developers](#developers)
-  * [Build and Run](#construction_worker-build-and-run)
-  * [Populations](#clipboard-populations)
-  * [Coding Style](#barber-coding-style)
-* [Miscellaneous](#miscellaneous)
-  * [Useful Links](#arrow_down-useful-links)
-  * [Thanks](#heart_decoration-thanks-to)
-* [License](#license)
+- [Instructions](#instructions)
+  - [General Tips](#thought_balloon-general-tips)
+  - [Bookmarklets](#bookmark-bookmarklets)
+    - [Browser Installation Tips](#-browser-installation-tips)
+    - [Chrome](#user-content-chrome)
+    - [Firefox](#user-content-firefox)
+    - [Edge / IE](#user-content-edge)
+    - [Safari](#user-content-safari)
+  - [Catch Rate Estimator](#straight_ruler-catch-rate-estimator)
+    - [Sample Size Score](#-sample-size-score)
+    - [Special Catch Rate Effects](#-special-catch-rate-effects)
+  - [Map Solver and Mouse Finder](#earth_americas-map-solver-and-mouse-finder)
+    - [Cheese Filters](#-cheese-filters)
+  - [Best Setup](#trophy-best-setup)
+  - [Marketplace Analyzer](#chart_with_upwards_trend-marketplace-analyzer)
+  - [Crown Solver](#crown-crown-solver)
+  - [Crafting Wizard](#hammer-crafting-wizard)
+  - [Trap Setup Powers](#mag-trap-setup-powers)
+    - [Worksheet](#-worksheet)
+  - [CRE Tabs](#bookmark_tabs-cre-tabs)
+- [Developers](#developers)
+  - [Build and Run](#construction_worker-build-and-run)
+  - [Populations](#clipboard-populations)
+  - [Coding Style](#barber-coding-style)
+- [Miscellaneous](#miscellaneous)
+  - [Useful Links](#arrow_down-useful-links)
+  - [Thanks](#heart_decoration-thanks-to)
+- [License](#license)
 
 ## Instructions
 
@@ -55,7 +55,7 @@ Using the Auto-Loader is recommended because it automatically grabs the latest v
 
 You **must** be on the official [mousehuntgame.com](https://www.mousehuntgame.com/) website for these bookmarklets to work. Same-origin policy blocks access to DOM elements and requests to server endpoints while playing in Facebook's `<iframe>`.
 
-_Note:_ The process of using a bookmarklet in mobile browsers can vary. For example, in Chrome for Android, you must type the first few characters of the bookmarklet's name in the address bar and click it from there for the code to take effect.
+_Note:_ Mobile browsers can vary in their approach to accessing bookmarklets. For example, in Chrome for Android, you must type the first few characters of a bookmarklet's name in the address bar and click it from there for the code to take effect.
 
 |    Bookmarklet    | Functionality                                                                                                                                                                                                                      |
 | :---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -73,7 +73,7 @@ _Note:_ The process of using a bookmarklet in mobile browsers can vary. For exam
 
 #### &sect; Browser Installation Tips
 
-Drag the blue bookmarklet link to your browser's bookmarks bar. If that doesn't work, try the following manual instructions. These concepts apply to other browsers (including mobile), but specific steps may vary.
+On desktop, drag the blue bookmarklet link to your browser's bookmarks bar. On mobile, first tap the corresponding clipboard icon to copy the bookmarklet code to your clipboard, then paste it into the URL field of a new bookmark. The following instructions illustrate the basic concepts for 4 major browsers - these concepts should apply to other browsers as well (including mobile), but specific steps may vary.
 
 <br><img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/archive/chrome_12-48/chrome_12-48_32x32.png" alt="Chrome" id="chrome"><br>
 _Google Chrome_
@@ -140,7 +140,7 @@ _Note:_ Certain setups may have low scores or even no sample size data attached 
 
 The following special effects _are included in catch rate calculations_ for both CRE and Best Setup
 
-* Final Catch Rate Modifiers
+- Final Catch Rate Modifiers
 
   |            Name             |                                                                                                       Modifier                                                                                                       |
   | :-------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -152,7 +152,7 @@ The following special effects _are included in catch rate calculations_ for both
   |  Zugzwang's Ultimate Move   |                                                               Up to 50% increased catch rate in Seasonal Garden & Zugzwang's Tower when amplifier > 0%                                                               |
   |     Zurreal the Eternal     |                                                                                    0% catch rate without Zurreal's Folly equipped                                                                                    |
 
-* Special Bonuses & Effects
+- Special Bonuses & Effects
 
   |            Name            |                                                                                                      Effect                                                                                                      |
   | :------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -167,7 +167,7 @@ The following special effects _are included in catch rate calculations_ for both
   |      Spellbook Charm       |                                                                         +500 Power and +8% Power Bonus when equipped with Spellbook Base                                                                         |
   |   Spooky Charm variants    |                                                                              +20% Power Bonus when equipped with Halloween weapons                                                                               |
 
-* Location Specific Effects
+- Location Specific Effects
 
   |          Location          |                                                                                                                                                           Effect                                                                                                                                                           |
   | :------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -289,19 +289,19 @@ This spin-off of the Map Solver inspired by [vsong](https://github.com/vsong) fa
 
 > Shows the weapons, bases, and charms that match a specified power range and type. Synergizes with the 'Best Setup: Load Items' bookmarklet to use only items you own.
 
-To understand why this tool exists, we need to take a crash course (or a peek behind the curtain if you will) on MouseHunt's game mechanics.
+To understand why this tool exists, we need to take a quick crash course on MouseHunt's game mechanics.
 
-The best formula we have for calculating catch rate and minimum luck was [derived in 2011](https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/). As you can see, it takes into account several variables: power type effectiveness, trap power, trap luck, and mouse power. It turns out that total trap power and luck are easy to calculate, since item and effect stats are present in-game. However, neither mouse powers nor exact type effectiveness values are as easily obtained.
+The best formula we have for calculating catch rate and minimum luck was [derived in 2011](https://mhanalysis.wordpress.com/2011/01/05/mousehunt-catch-rates-3-0/). As you can see, it takes into account several variables: power type effectiveness, trap power, trap luck, and mouse power. Total trap power and luck are easy to calculate, since item and effect stats are present in-game. However, neither mouse powers nor exact type effectiveness values are as easily obtained.
 
-Given the unknowns, you may wonder how folks have determined these hidden mouse power numbers with such precision in the past. Kristian G wrote an [essential guide](https://www.mousehuntgame.com/forum/showthread.php?106764-how-do-people-find-mouse-power-values&p=1166955&viewfull=1#post1166955) on this trial and error process a few years back - please read it. The TL;DR gist is that we equip different weapons, bases, and charms to attain a specific total trap power. Then, we look at the description page of the mouse we're targeting and note its 'Difficulty' rating. Depending on what that label says and what boundary is targeted (i.e. Challenging/Difficult, Easy/Moderate), we can deduce upper/lower bounds for the mouse's power. Kristian's post goes into much more detail and provides several examples.
+Given the unknowns, you may wonder how folks have determined these hidden mouse power numbers with such precision in the past. Kristian G wrote an [essential guide](https://www.mousehuntgame.com/forum/showthread.php?106764-how-do-people-find-mouse-power-values&p=1166955&viewfull=1#post1166955) on this process a few years back - please read it. The TL;DR gist is that we equip different weapons, bases, and charms to attain a specific total trap power. Then, we look at the description page of the mouse we're targeting and note its 'Difficulty' rating. Depending on what that label says and what boundary is targeted (i.e. Challenging/Difficult, Easy/Moderate), we can deduce upper/lower bounds for the mouse's power. Kristian's post goes into much more detail and provides several examples.
 
-With that explained, you may also wonder whether there are tools out there that make this process less tedious. No matter what, we have to manually tweak trap setups in-game and refresh mouse pages to glean information from their 'Difficulty' ratings. But, it would be helpful if we could at least specify a range of total trap powers, and have a tool spit out setups that match. From what I can gather, HornTracker's [Trap Combinations](http://horntracker.com/trapsetups.php?minpower=6466&maxpower=7075&ptype=4&tabs=1) was the most popular tool for this purpose, along with tehhowch's GetPower sheet on [MH Reference](https://drive.google.com/file/d/0B38esHSXteUJZTRhMDNjMzItMmU4My00YWU0LThiODctMDk0OWRjOGFkMDE4/view?hl=en). Unfortunately, both tools have not been updated in some time. As such, they don't include the latest items or effects.
+With that explained, you may be wondering whether there are tools out there that make this process less tedious. No matter what, we'll have to manually tweak trap setups in-game and refresh mouse pages to glean information from their 'Difficulty' ratings. But, it would be helpful if we could specify a range of desired total trap powers, and have a tool spit out corresponding trap setups. From what I can gather, HornTracker's [Trap Combinations](http://horntracker.com/trapsetups.php?minpower=6466&maxpower=7075&ptype=4&tabs=1) was the best tool for this purpose, along with tehhowch's GetPower sheet on [MH Reference](https://drive.google.com/file/d/0B38esHSXteUJZTRhMDNjMzItMmU4My00YWU0LThiODctMDk0OWRjOGFkMDE4/view?hl=en). Unfortunately, both tools haven't been updated in some time. Thus, they don't include the latest items and effects.
 
-This is where I hope 'Trap Setup Powers' comes in. With this new tool, you can: [1] hone in on one power type at a time, or include all 10 at once (be aware that a large number of power types ticked with a narrow power range will slow down processing by a significant amount), [2] specify a variety of power-altering parameters, and [3] choose whether to use owned or all items. In order to take advantage of showing only items you own, run the 'Best Setup: Load Items' bookmarklet before returning to the Powers tool.
+This is where 'Trap Setup Powers' comes in. With this new tool, you can: [1] hone in on one power type at a time, or include all 10 at once (be aware that a large number of power types ticked with a narrow power range will slow down processing by a significant amount), [2] specify a variety of power-altering parameters, and [3] choose whether to use only owned items or all items. In order to take advantage of showing only items you own, run the 'Best Setup: Load Items' bookmarklet before returning to the Powers tool.
 
 #### &sect; Worksheet
 
-This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers' a.k.a. 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, and [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
+This supplementary tool provides a mostly automated way to derive many mouse power values at once. Using the 'Powers: Worksheet' bookmarklet on [mousehuntgame.com](https://www.mousehuntgame.com/), select a mouse group/subgroup to target with your current trap setup and Rift Set tier. Then, hit 'Go' and a new tab will open with 3 tables: [1] Mouse Powers - displays sortable columns for mouse group/subgroup/name, and all 10 power type effectiveness values along with their respective min/max boundaries (calculated using your total trap power and mouse difficulty ratings), [2] Mouse Details - displays mouse group/subgroup/name as well as gold/points and links to specific Adversaries pages, and [3] Trap History - displays a reverse chronological history of the power types and precise/displayed powers captured from the bookmarklet.
 
 There are several options to refine the 'Mouse Powers' table view. You can tick the checkboxes for the power types you'd like to be shown, select the mouse group/subgroup/name you'd like to filter down to, and then click 'Reload Table' to apply your preferences. 'Save Preferences' stores your settings in localStorage for future sessions. 'Reset Data' clears all worksheet data. It may be prudent to reset data if performance starts to take a noticeable hit, or if some unexpected data corruption occurs.
 
@@ -353,18 +353,18 @@ _This is still a work in progress, along with converting the codebase to align w
 
 ### :arrow_down: Useful Links
 
-* MH Data Repository - MP/E, Gold/Points, Groups ([spreadsheet](https://docs.google.com/spreadsheets/d/1l6P9Cp2HceKSXgJKzcOy26lK_5BEAsAO9HhoiSYviTY/edit?usp=sharing))
-* Mouse Wisdom Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing))
-* New Area Mouse Powers + Effectiveness Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1pnS4UVFMUndjX2H2s6hfyf5flMcppZyhZrn8EUH23S8/edit?usp=sharing))
-* Marketplace Analyzer ([forum thread](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost))
-* Useful Userscripts ([Reddit thread](https://www.reddit.com/r/mousehunt/comments/avazpr/resource_useful_userscripts/))
-* Discord (join the [community server](https://discordapp.com/invite/Ya9zEdk))
+- MH Data Repository - MP/E, Gold/Points, Groups ([spreadsheet](https://docs.google.com/spreadsheets/d/1l6P9Cp2HceKSXgJKzcOy26lK_5BEAsAO9HhoiSYviTY/edit?usp=sharing))
+- Mouse Wisdom Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1nzD6iiHauMMwD2eHBuAyRziYJtCVnNwSYzCKbBnrRgc/edit?usp=sharing))
+- New Area Mouse Powers + Effectiveness Values ([spreadsheet](https://docs.google.com/spreadsheets/d/1pnS4UVFMUndjX2H2s6hfyf5flMcppZyhZrn8EUH23S8/edit?usp=sharing))
+- Marketplace Analyzer ([forum thread](https://www.mousehuntgame.com/forum/showthread.php?126255-Marketplace-Analyzer&goto=newpost))
+- Useful Userscripts ([Reddit thread](https://www.reddit.com/r/mousehunt/comments/avazpr/resource_useful_userscripts/))
+- Discord (join the [community server](https://discordapp.com/invite/Ya9zEdk))
 
 ### :heart_decoration: Thanks to...
 
-* Our contributors :thumbsup:
-* haoala for the [original tools](https://dl.dropboxusercontent.com/u/14589881/index.html) (no longer maintained or hosted)
-* [Start Bootstrap](https://github.com/davidtmiller) for the index.html theme
+- Our contributors :thumbsup:
+- haoala for the [original tools](https://dl.dropboxusercontent.com/u/14589881/index.html) (no longer maintained or hosted)
+- [Start Bootstrap](https://github.com/davidtmiller) for the index.html theme
 
 <div align="right"><a href="#book-table-of-contents">Top</a></div>
 

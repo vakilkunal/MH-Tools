@@ -33,10 +33,7 @@
           return el.classification === "weapon" && el.quantity > 0;
         })
         .map(function(el) {
-          // Weapon edge cases
-          if (el.name === "Timesplit Dissonance Trap") {
-            return "Timesplit Dissonance Weapon";
-          }
+          if (el.name === "Ambush Trap") return "Ambush"; // Edge case
           return el.name;
         });
 
@@ -87,8 +84,8 @@
       combinedObj["charms"] = charms;
 
       var newWindow = window.open("");
-      newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
       newWindow.name = JSON.stringify(combinedObj);
+      newWindow.location = "https://tsitu.github.io/MH-Tools/setup.html";
     }
   });
 })();
