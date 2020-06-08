@@ -39,6 +39,9 @@
         var index = mouse.indexOf(" Mouse");
         if (index > 0) mouseName = mouse.slice(0, index);
 
+        // Skip uber-rare prize mice
+        if (mouseName === "Leprechaun" || mouseName === "Mobster") continue;
+
         // Mouse name edge cases
         if (mouseName === "Dread Pirate") mouseName = "Dread Pirate Mousert";
         if (mouseName.indexOf("Thunderlord") >= 0) mouseName = "Thunderlord";
