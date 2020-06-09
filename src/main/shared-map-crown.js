@@ -44,8 +44,8 @@ function initPageLoad(toolType) {
     "#bookmarkletloader"
   );
 
-  // Initialize tablesorter, bind to table
-  initTablesorter();
+  initTablesorter(); // Initialize tablesorter, bind to table
+  initCheeseFilter();
   loadCookies();
 
   // Handle autocomplete preference
@@ -249,89 +249,110 @@ function initTablesorter() {
       filter_selectSourceSeparator: "|"
     }
   });
+}
 
-  $(".cheese-filter").change(function() {
-    var filterList = {
-      common: [
-        "Brie",
-        "Brie String",
-        "Cheddar",
-        "Gouda",
-        "Marble",
-        "Marble String",
-        "Swiss",
-        "Swiss String"
-      ],
-      crafted: [
-        "Resonator",
-        "Vanilla Stilton",
-        "Vengeful Vanilla Stilton",
-        "White Cheddar" // etc
-      ],
-      magicEssence: [
-        "SB+",
-        "Moon",
-        "Maki",
-        "Maki String",
-        "Magical String",
-        "Magical Rancid Radioactive Blue"
-      ],
-      marketplace: [
-        "Crescent",
-        "Magical String",
-        "Maki",
-        "Maki String",
-        "Moon",
-        "Rancid Radioactive Blue",
-        "SB+"
-      ],
-      shoppe: [
-        "Dewthief Camembert",
-        "Duskshade Camembert",
-        "Fishy Fromage",
-        "Graveblossom Camembert",
-        "Grilled",
-        "Lunaria Camembert",
-        "Sunrise"
-      ]
-    };
-    if (this.checked) {
-      filterList[this.name].forEach(function(cheese) {
+function processCheeseFilter() {
+  var filterList = {
+    common: [
+      "Brie",
+      "Brie String",
+      "Cheddar",
+      "Gouda",
+      "Marble",
+      "Marble String",
+      "Swiss",
+      "Swiss String"
+    ],
+    crafted: [
+      "Resonator",
+      "Vanilla Stilton",
+      "Vengeful Vanilla Stilton",
+      "White Cheddar" // etc
+    ],
+    magicEssence: [
+      "SB+",
+      "Moon",
+      "Maki",
+      "Maki String",
+      "Magical String",
+      "Magical Rancid Radioactive Blue"
+    ],
+    marketplace: [
+      "Crescent",
+      "Magical String",
+      "Maki",
+      "Maki String",
+      "Moon",
+      "Rancid Radioactive Blue",
+      "SB+"
+    ],
+    shoppe: [
+      "Dewthief Camembert",
+      "Duskshade Camembert",
+      "Fishy Fromage",
+      "Graveblossom Camembert",
+      "Grilled",
+      "Lunaria Camembert",
+      "Sunrise"
+    ],
+    eventLoc: ["Ronza", "Event"]
+  };
+
+  // Build master array of filtered terms
+  document.querySelectorAll(".cheese-filter").forEach(function(el) {
+    if (el.checked) {
+      filterList[el.name].forEach(function(cheese) {
         if (!FILTERED_CHEESES.includes(cheese)) {
           FILTERED_CHEESES.push(cheese);
         }
       });
     } else {
-      filterList[this.name].forEach(function(cheese) {
+      filterList[el.name].forEach(function(cheese) {
         if (FILTERED_CHEESES.includes(cheese)) {
           FILTERED_CHEESES.splice(FILTERED_CHEESES.indexOf(cheese), 1);
         }
       });
     }
-    var displayString = "";
-    FILTERED_CHEESES.forEach(function(cheese) {
-      displayString += cheese + ", ";
-    });
-    displayString = displayString.slice(0, -2);
-    $("#combinedFilter").text(displayString);
   });
 
-  $("#applyFilter").click(function() {
-    var filterString = "";
-    FILTERED_CHEESES.forEach(function(cheese) {
-      if (cheese === "SB+") {
-        // negative lookahead <3
-        filterString += "/^(?!.*sb\\+).*$/i && ";
-      } else {
-        filterString += "!" + cheese + " && ";
+  // Output terms to readonly <textarea>
+  var displayString = "";
+  FILTERED_CHEESES.forEach(function(cheese) {
+    displayString += cheese + ", ";
+  });
+  displayString = displayString.slice(0, -2);
+  $("#combinedFilter").text(displayString);
+
+  // Apply filter to tablesorter
+  var filterString = "";
+  FILTERED_CHEESES.forEach(function(cheese) {
+    if (cheese === "SB+") {
+      // negative lookahead <3
+      filterString += "/^(?!.*sb\\+).*$/i && ";
+    } else {
+      filterString += "!" + cheese + " && ";
+    }
+  });
+  if (filterString.length > 0) {
+    // Trim the last &&
+    filterString = filterString.slice(0, -4);
+  }
+  var filters = [filterString];
+  $.tablesorter.setFilters($("#bestLocation"), filters, true);
+  $("#bestLocation").trigger("search", true);
+}
+
+function initCheeseFilter() {
+  $(".cheese-filter").change(function() {
+    // Cache checked state
+    var checkedArr = [];
+    $(".cheese-filter").each(function() {
+      if (this.checked) {
+        checkedArr.push(this.name);
       }
     });
-    if (filterString.length > 0) {
-      // Trim the last &&
-      filterString = filterString.slice(0, -4);
-    }
-    var filters = [filterString];
-    $.tablesorter.setFilters($("#bestLocation"), filters, true);
+    localStorage.setItem("cheese-filter-cache", JSON.stringify(checkedArr));
+    processCheeseFilter();
   });
 
   $("#clearFilter").click(function() {
@@ -340,7 +361,20 @@ function initTablesorter() {
     });
     $("#combinedFilter").text("");
     FILTERED_CHEESES = [];
+    localStorage.setItem("cheese-filter-cache", JSON.stringify([]));
+    processCheeseFilter();
   });
+
+  // Load in cheese filter checked state
+  var cfCacheRaw = localStorage.getItem("cheese-filter-cache");
+  if (cfCacheRaw) {
+    var cfCache = JSON.parse(cfCacheRaw);
+    document.querySelectorAll(".cheese-filter").forEach(function(el) {
+      if (cfCache.indexOf(el.name) >= 0) {
+        el.checked = true;
+      }
+    });
+  }
 }
 
 function checkLoadState(toolType) {
@@ -870,6 +904,7 @@ function printBestLocation(sortedLocation, mouseLocationArray, toolType) {
       }
     };
   $("#bestLocation").trigger("updateAll", [resort, callback]);
+  processCheeseFilter();
 
   $(".ml-tip").click(function() {
     var titleClass = $(this).find(".title");
