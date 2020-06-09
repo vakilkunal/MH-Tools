@@ -14,7 +14,6 @@ var user = "map";
 var EMPTY_SELECTION = "-";
 var NULL_URL_PARAM = null;
 var POPULATION_JSON_URL = "data/json/populations-map.json";
-var FILTERED_CHEESES = [];
 var NAME_MAP = {};
 
 var autoCompleteSettings = {
@@ -299,17 +298,12 @@ function processCheeseFilter() {
   };
 
   // Build master array of filtered terms
+  var filteredCheeses = [];
   document.querySelectorAll(".cheese-filter").forEach(function(el) {
     if (el.checked) {
       filterList[el.name].forEach(function(cheese) {
-        if (!FILTERED_CHEESES.includes(cheese)) {
-          FILTERED_CHEESES.push(cheese);
-        }
-      });
-    } else {
-      filterList[el.name].forEach(function(cheese) {
-        if (FILTERED_CHEESES.includes(cheese)) {
-          FILTERED_CHEESES.splice(FILTERED_CHEESES.indexOf(cheese), 1);
+        if (!filteredCheeses.includes(cheese)) {
+          filteredCheeses.push(cheese);
         }
       });
     }
@@ -317,7 +311,7 @@ function processCheeseFilter() {
 
   // Output terms to readonly <textarea>
   var displayString = "";
-  FILTERED_CHEESES.forEach(function(cheese) {
+  filteredCheeses.forEach(function(cheese) {
     displayString += cheese + ", ";
   });
   displayString = displayString.slice(0, -2);
@@ -325,7 +319,7 @@ function processCheeseFilter() {
 
   // Apply filter to tablesorter
   var filterString = "";
-  FILTERED_CHEESES.forEach(function(cheese) {
+  filteredCheeses.forEach(function(cheese) {
     if (cheese === "SB+") {
       // negative lookahead <3
       filterString += "/^(?!.*sb\\+).*$/i && ";
@@ -360,7 +354,6 @@ function initCheeseFilter() {
       $(this).prop("checked", false);
     });
     $("#combinedFilter").text("");
-    FILTERED_CHEESES = [];
     localStorage.setItem("cheese-filter-cache", JSON.stringify([]));
     processCheeseFilter();
   });
