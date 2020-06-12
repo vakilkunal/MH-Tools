@@ -405,7 +405,7 @@ function showPop(type) {
           var dAmp = deltaAmp[mouseName];
           var ampMultiplier = 1;
           if (charmName === "Amplifier Charm") ampMultiplier += 1;
-          if (weaponName === "Chesla's Revenge") ampMultiplier += 0.5; // 50% proc additional charge
+          if (weaponName === "Chesla's Revenge") ampMultiplier += 0.125; // 12.5% proc additional charge
           dAmp *= ampMultiplier;
 
           // TODO: For SS/Harvester, dAmp = (max - current) / 2
@@ -417,7 +417,7 @@ function showPop(type) {
           //   dAmp = 87.5; // 50% proc full charge (0.5 * 175)
           // }
 
-          mouseRow += "<td>" + dAmp + "%</td>";
+          mouseRow += "<td>" + dAmp.toFixed(2) + "%</td>";
           deltaAmpOverall += (dAmp * catches) / 100;
         } else if (locationName === "Whisker Woods Rift") {
           var crazedRageIncrease = rage_increase_table[mouseName]["Crazed"];
